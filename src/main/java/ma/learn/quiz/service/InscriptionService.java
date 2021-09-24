@@ -80,6 +80,8 @@ public class InscriptionService {
 	}
 
 
+
+
 	public int valider(Inscription inscription){	
 		    System.out.println(inscription.getEtatInscription().getId());
 			Inscription loadedInscription = findInscriptionById(inscription.getId());
