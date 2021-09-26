@@ -9,5 +9,8 @@ import ma.learn.quiz.bean.EtudiantCours;
 
 public interface EtudiantCoursDao extends JpaRepository<EtudiantCours,Long> {
 	EtudiantCours findByCoursIdAndEtudiantId(Long id, Long ids);
-
+	EtudiantCours findEtudiantCoursById(Long id);
+	int deleteEtudiantCoursById(Long id);
+	List<EtudiantCours> findByProfId(Long id);
+	List<EtudiantCours> findByProfIdAndEtudiantId(Long id,Long ids);
 }
