@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/Prof/profReview")
+@RequestMapping("/prof/profReview")
 public class ProfReviewProfRest {
     @GetMapping("/review/{review}")
     public ProfReview findByReview(@PathVariable int review) {
