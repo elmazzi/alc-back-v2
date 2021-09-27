@@ -1,6 +1,7 @@
 package ma.learn.quiz.bean;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class EtudiantReview {
@@ -14,6 +15,24 @@ public class EtudiantReview {
     @ManyToOne
     private Cours cours;
     private int review;
+    private String comment;
+    private Date dateReview;
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public Date getDateReview() {
+        return dateReview;
+    }
+
+    public void setDateReview(Date dateReview) {
+        this.dateReview = dateReview;
+    }
 
     public Long getId() {
         return id;
