@@ -60,15 +60,16 @@ public class EtudiantService {
 	}
 	private void prepareMessage(Etudiant etudiant) {
 		System.out.println("prepare email ");
-			SimpleMailMessage message = new SimpleMailMessage();
-			message.setFrom("elearningMarrakech@gmail.com");
-			message.setTo(etudiant.getGmail());
-			message.setSubject("accepted on the platform e-learning");
-			message.setText("you have been accepted on the e-learning platform. \n" +
-					"username:"+ etudiant.getLogin()+"\n"+
-					"passeword:"+ etudiant.getPassword());
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setFrom("elearningMarrakech@gmail.com");
+		message.setTo(etudiant.getLogin());
+		message.setSubject("accepted on the platform e-learning");
+		message.setText("Your online registration on the site: http://localhost:4200/#/ is validated. \n" + "You can log into your account now.\n" +
+				"Your account settings are :"  +"\n"+
+				"username : "+ etudiant.getLogin() +"\n"+
+				"password : "+ etudiant.getPassword());
 		mailSender.send(message);
-			System.out.println("email send");
+		System.out.println("email send");
 
 	}
 	public Etudiant findEtudiantById(Long id) {
@@ -123,11 +124,13 @@ public class EtudiantService {
 		if (etd != null){
 			return -1;
 		}else {
-			etudiantDao.save(etudiant);
 			prepareMessage(etudiant);
+			etudiantDao.save(etudiant);
+
 			return 1;
 		}
 	}
+
 
 	public int save(Etudiant etudiant) {
 
