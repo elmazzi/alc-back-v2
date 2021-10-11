@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import ma.learn.quiz.bean.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ma.learn.quiz.bean.EtatEtudiantSchedule;
-import ma.learn.quiz.bean.Etudiant;
-import ma.learn.quiz.bean.Quiz;
-import ma.learn.quiz.bean.ScheduleProf;
 import ma.learn.quiz.dao.ScheduleProfDao;
 import ma.learn.quiz.vo.SchdeduleVo;
 
@@ -37,10 +34,20 @@ public class ScheduleProfService {
 	}
 
 	public int save(ScheduleProf scheduleProf) {
-		Etudiant etudiant = etudiantService.findByRef(scheduleProf.getEtudiant().getRef());
+		Etudiant etudiant = etudiantService.findEtudiantById(scheduleProf.getEtudiant().getId());
+		Prof prof = profService.findProfById(scheduleProf.getProf().getId());
 		EtatEtudiantSchedule etatEtudiantSchedule = etatEtudiantScheduleService
 				.findByRef(scheduleProf.getEtudiant().getEtatEtudiantSchedule().getRef());
-		scheduleProf.setEtudiant(etudiant);
+		if (etudiant != null){
+			scheduleProf.setEtudiant(etudiant);
+		}else{
+			return -3;
+		}
+		if (prof != null){
+			scheduleProf.setProf(prof);
+		}else{
+			return -2;
+		}
 		if (findByRef(scheduleProf.getRef()) != null) {
 			return -1;
 		} else {
@@ -94,4 +101,6 @@ public ScheduleProf update(ScheduleProf scheduleProf) {
 	private EtudiantService etudiantService;
 	@Autowired
 	private EtatEtudiantScheduleService etatEtudiantScheduleService;
+	@Autowired
+	private ProfService profService;
 }
