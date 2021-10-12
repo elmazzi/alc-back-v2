@@ -13,4 +13,5 @@ public interface EtudiantCoursDao extends JpaRepository<EtudiantCours,Long> {
 	int deleteEtudiantCoursById(Long id);
 	List<EtudiantCours> findByProfId(Long id);
 	List<EtudiantCours> findByProfIdAndEtudiantId(Long id,Long ids);
+EtudiantCours findEtudiantCoursByProfIdAndEtudiantIdAndCoursId(long idprof,long idstudent,long idcours);
 }

@@ -15,47 +15,14 @@ public class SessionCours implements Serializable {
     private String reference;
     @ManyToOne
     private Prof prof;
+
     @ManyToOne
     private Etudiant etudiant;
-    private String dateDebut;
-    private String dateFin;
-    private BigDecimal duree;
-    private String payer;
 
-    
-    
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 
-	public String getPayer() {
-		return payer;
-	}
-
-	public void setPayer(String payer) {
-		this.payer = payer;
-	}
-
-	public BigDecimal getDuree() {
-        return duree;
-    }
-
-    public void setDuree(BigDecimal duree) {
-        this.duree = duree;
-    }
-
-    public String getDateDebut() {
-        return dateDebut;
-    }
-
-    public void setDateDebut(String dateDebut) {
-        this.dateDebut = dateDebut;
-    }
-
-    public String getDateFin() {
-        return dateFin;
-    }
-
-    public void setDateFin(String dateFin) {
-        this.dateFin = dateFin;
-    }
+    private Date dateFin;
+    private boolean payer;
 
 
     public Long getId() {
@@ -88,5 +55,21 @@ public class SessionCours implements Serializable {
 
     public void setEtudiant(Etudiant etudiant) {
         this.etudiant = etudiant;
+    }
+
+    public Date getDateFin() {
+        return dateFin;
+    }
+
+    public void setDateFin(Date dateFin) {
+        this.dateFin = dateFin;
+    }
+
+    public boolean isPayer() {
+        return payer;
+    }
+
+    public void setPayer(boolean payer) {
+        this.payer = payer;
     }
 }

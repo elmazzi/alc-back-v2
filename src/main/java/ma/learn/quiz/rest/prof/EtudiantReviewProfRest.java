@@ -27,13 +27,19 @@ public class EtudiantReviewProfRest {
         return etudiantReviewService.findAll();
     }
 
-    @PostMapping("/")
-    public int save(@RequestBody EtudiantReview etudiantReview) {
-        return etudiantReviewService.save(etudiantReview);
+    @PostMapping("/{idprof}/{idstudent}/{idcours}/{comment}")
+    public int save(@PathVariable Long idprof,@PathVariable Long idstudent,@PathVariable Long idcours,@PathVariable String comment) {
+        return etudiantReviewService.save(idprof, idstudent, idcours, comment);
     }
 
+    @GetMapping("/{id}")
+
+    public List<EtudiantReview> findEtudiantReviewByProfId(@PathVariable Long id) {
+        return etudiantReviewService.findEtudiantReviewByProfId(id);
+    }
     @GetMapping("/etudiant/id/{id}/cours/id/{ids}")
     public EtudiantReview findByEtudiantIdAndCoursId(@PathVariable long id,@PathVariable long ids) {
         return etudiantReviewService.findByEtudiantIdAndCoursId(id, ids);
     }
+
 }
