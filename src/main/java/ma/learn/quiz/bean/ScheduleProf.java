@@ -22,6 +22,14 @@ public class ScheduleProf {
 	@ManyToOne
 	private Prof prof;
 
+	public Prof getProf() {
+		return prof;
+	}
+
+	public void setProf(Prof prof) {
+		this.prof = prof;
+	}
+
 	public Date getStart() {
 		return dateDebut;
 	}
