@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin/etudiantReview")
 public class EtudiantReviewAdminRest {
+
     @Autowired
     public EtudiantReviewService etudiantReviewService;
     @GetMapping("/review/{review}")
@@ -27,9 +28,14 @@ public class EtudiantReviewAdminRest {
         return etudiantReviewService.findAll();
     }
 
-    @PostMapping("/")
-    public int save(@RequestBody EtudiantReview etudiantReview) {
-        return etudiantReviewService.save(etudiantReview);
+    @PostMapping("/{idprof}/{idstudent}/{idcours}/{comment}")
+    public int save(@PathVariable Long idprof,@PathVariable Long idstudent,@PathVariable Long idcours,@PathVariable String comment) {
+        return etudiantReviewService.save(idprof, idstudent, idcours, comment);
+    }
+    @GetMapping("/{id}")
+
+    public List<EtudiantReview> findEtudiantReviewByProfId(@PathVariable Long id) {
+        return etudiantReviewService.findEtudiantReviewByProfId(id);
     }
 
     @GetMapping("/etudiant/id/{id}/cours/id/{ids}")

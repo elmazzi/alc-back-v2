@@ -83,9 +83,10 @@ public class CalendrierProfService {
 		}
 		return calendrierVos;
 	}
+
 	public List<CalendrierVo> findAllSchedule() {
 		List<CalendrierProf> sheduls = calendrierProfDao.findAll();
-		List<CalendrierVo> calendrierVos = new ArrayList<CalendrierVo>();
+		List<CalendrierVo> calendrierVos = new ArrayList<>();
 		for (CalendrierProf s : sheduls) {
 			CalendrierVo calendrierVo = new CalendrierVo();
 			calendrierVo.setId(s.getId());
@@ -95,7 +96,7 @@ public class CalendrierProfService {
 			calendrierVo.setStartTime(s.getStartTime());
 			calendrierVo.setEndTime(s.getEndTime());
 			calendrierVo.setTitleProf(s.getProf().getNom());
-			calendrierVo.setColor(s.getEtudiant().getEtatEtudiantSchedule().getCouleur());
+			calendrierVo.setColor("yellow");
 			calendrierVos.add(calendrierVo);
 		}
 		return calendrierVos;

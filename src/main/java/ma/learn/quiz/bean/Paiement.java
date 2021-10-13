@@ -1,34 +1,61 @@
 package ma.learn.quiz.bean;
 
-import java.math.BigDecimal;
-import java.sql.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.*;
 
 @Entity
 public class Paiement {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Date dateDebut;
-    private Date dateFin;
-    private BigDecimal nbrSeceance;
-    private BigDecimal totalHeure;
-    private BigDecimal montant;
+    private double totalHeure;
+    private double montant;
     private int nonPaye;
     @ManyToOne
     private Prof prof;
+    private int totalcours;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date datePaiement;
+    @OneToOne
+    private SessionCours sessionCours;
 
+    public SessionCours getSessionCours() {
+        return sessionCours;
+    }
 
+    public void setSessionCours(SessionCours sessionCours) {
+        this.sessionCours = sessionCours;
+    }
 
-    public BigDecimal getMontant() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public double getTotalHeure() {
+        return totalHeure;
+    }
+
+    public void setTotalHeure(double totalHeure) {
+        this.totalHeure = totalHeure;
+    }
+
+    public double getMontant() {
         return montant;
     }
 
+    public void setMontant(double montant) {
+        this.montant = montant;
+    }
 
     public int getNonPaye() {
         return nonPaye;
@@ -46,49 +73,19 @@ public class Paiement {
         this.prof = prof;
     }
 
-    public Date getDateDebut() {
-        return dateDebut;
+    public int getTotalcours() {
+        return totalcours;
     }
 
-    public void setDateDebut(Date dateDebut) {
-        this.dateDebut = dateDebut;
+    public void setTotalcours(int totalcours) {
+        this.totalcours = totalcours;
     }
 
-    public Date getDateFin() {
-        return dateFin;
+    public Date getDatePaiement() {
+        return datePaiement;
     }
 
-    public void setDateFin(Date dateFin) {
-        this.dateFin = dateFin;
+    public void setDatePaiement(Date datePaiement) {
+        this.datePaiement = datePaiement;
     }
-
-    public BigDecimal getNbrSeceance() {
-        return nbrSeceance;
-    }
-
-    public void setNbrSeceance(BigDecimal nbrSeceance) {
-        this.nbrSeceance = nbrSeceance;
-    }
-
-    public void setMontant(BigDecimal montant) {
-        this.montant = montant;
-    }
-
-    public BigDecimal getTotalHeure() {
-        return totalHeure;
-    }
-
-    public void setTotalHeure(BigDecimal totalHeure) {
-        this.totalHeure = totalHeure;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    
 }

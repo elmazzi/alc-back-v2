@@ -1,7 +1,10 @@
 package ma.learn.quiz.service;
 
 
+import ma.learn.quiz.bean.Cours;
+import ma.learn.quiz.bean.Etudiant;
 import ma.learn.quiz.bean.EtudiantReview;
+import ma.learn.quiz.bean.Prof;
 import ma.learn.quiz.dao.EtudiantReviewDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,12 @@ public
 class EtudiantReviewService {
     @Autowired
     private EtudiantReviewDao etudiantReviewDao;
+    @Autowired
+    private EtudiantService etudiantService;
+    @Autowired
+    private ProfService profService ;
+    @Autowired
+    private CoursService coursService;
 
     public EtudiantReview findByReview(int review) {
         return etudiantReviewDao.findByReview(review);
@@ -30,16 +39,32 @@ class EtudiantReviewService {
         return etudiantReviewDao.findByEtudiantIdAndCoursId(id, ids);
     }
 
-    public int save(EtudiantReview etudiantReview) {
-        EtudiantReview ETDV = etudiantReviewDao.findByEtudiantIdAndCoursId(etudiantReview.getEtudiant().getId(),etudiantReview.getCours().getId());
-        if (etudiantReview.getReview() == 0) {
+    public List<EtudiantReview> findEtudiantReviewByProfId(Long id) {
+        return etudiantReviewDao.findEtudiantReviewByProfId(id);
+    }
+
+    public int save(Long idprof, Long idstudent, Long idcours, String comment) {
+        Cours cours=coursService.findCoursById(idcours);
+        Etudiant etudiant=etudiantService.findEtudiantById(idstudent);
+        Prof prof=profService.findProfById(idprof);
+        if (prof==null || etudiant==null) {
             return -1;
-        }else if (ETDV != null) {
+        }
+        else if(findEtudiantReviewByProfIdAndEtudiantIdAndCoursId(idprof,idstudent,idcours)!=null){
             return -2;
-        } else {
-            etudiantReview.setProf(etudiantReview.getEtudiant().getProf());
-            etudiantReviewDao.save(etudiantReview);
+        }else {
+            EtudiantReview etudiantReview1=new EtudiantReview();
+            etudiantReview1.setEtudiant(etudiant);
+            etudiantReview1.setProf(prof);
+            etudiantReview1.setComment(comment);
+            etudiantReview1.setCours(cours);
+            etudiantReview1.setDateReview(new java.sql.Date(System.currentTimeMillis()+3600*1000*24));
+             etudiantReviewDao.save(etudiantReview1);
             return 1;
         }
+    }
+
+    public EtudiantReview findEtudiantReviewByProfIdAndEtudiantIdAndCoursId(long id, long ids, long idc) {
+        return etudiantReviewDao.findEtudiantReviewByProfIdAndEtudiantIdAndCoursId(id, ids, idc);
     }
 }
