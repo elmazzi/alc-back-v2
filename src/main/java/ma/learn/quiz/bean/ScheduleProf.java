@@ -14,9 +14,10 @@ public class ScheduleProf {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private Date dateDebut;
-	private Date dateFin;
+	private Date startTime;
+	private Date endTime;
 	private String ref;
+	private String subject;
 	@ManyToOne
 	private Etudiant etudiant;
 	@ManyToOne
@@ -30,20 +31,28 @@ public class ScheduleProf {
 		this.prof = prof;
 	}
 
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
 	public Date getStart() {
-		return dateDebut;
+		return startTime;
 	}
 
 	public void setStart(Date start) {
-		this.dateDebut = start;
+		this.startTime = start;
 	}
 
 	public Date getEnd() {
-		return dateFin;
+		return endTime;
 	}
 
 	public void setEnd(Date end) {
-		this.dateFin = end;
+		this.endTime = end;
 	}
 
 	public Long getId() {
@@ -62,20 +71,20 @@ public class ScheduleProf {
 		this.ref = ref;
 	}
 
-	public Date getDateDebut() {
-		return dateDebut;
+	public Date getStartTime() {
+		return startTime;
 	}
 
-	public void setDateDebut(Date dateDebut) {
-		this.dateDebut = dateDebut;
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
 	}
 
-	public Date getDateFin() {
-		return dateFin;
+	public Date getEndTime() {
+		return endTime;
 	}
 
-	public void setDateFin(Date dateFin) {
-		this.dateFin = dateFin;
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 	public Etudiant getEtudiant() {
