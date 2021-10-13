@@ -10,17 +10,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin/paiement")
 public class PaiementAdminRest {
-    
+	@PostMapping("/{id}")
+	public int save(@PathVariable Long id) {
+		return paiementService.save(id);
+	}
 
-	    @GetMapping("/")
+	@GetMapping("/")
 	    public List<Paiement> findAll() {
 	        return paiementService.findAll();
 	    }
 
-	    @PostMapping("/")
-	    public int save(@RequestBody Paiement paiement) {
-	        return paiementService.save(paiement);
-	    }
+
 
 	    @Autowired
 	    private PaiementService paiementService;

@@ -17,10 +17,12 @@ public class PaiementProfRest {
 	        return paiementService.findAll();
 	    }
 
-	    @PostMapping("/")
-	    public int save(@RequestBody Paiement paiement) {
-	        return paiementService.save(paiement);
-	    }
+	@PostMapping("/")
+	public int save(Long id) {
+		return paiementService.save(id);
+	}
+
+
 
 	    @Autowired
 	    private PaiementService paiementService;

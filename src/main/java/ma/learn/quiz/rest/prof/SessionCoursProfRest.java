@@ -1,5 +1,8 @@
 package ma.learn.quiz.rest.prof;
 
+import ma.learn.quiz.bean.Cours;
+import ma.learn.quiz.bean.Etudiant;
+import ma.learn.quiz.bean.Prof;
 import ma.learn.quiz.bean.SessionCours;
 import ma.learn.quiz.service.SessionCoursService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/prof/session")
 public class SessionCoursProfRest {
+    @GetMapping("/prof/nom/{nom}")
+
+    public SessionCours findSessionCoursByProfNom(@PathVariable String nom) {
+        return sessionCoursService.findSessionCoursByProfNom(nom);
+    }
 
     @GetMapping("/id/{id}")
     public SessionCours findSessionCoursById(@PathVariable Long id) {
@@ -19,14 +27,14 @@ public class SessionCoursProfRest {
     public List<SessionCours> findByCriteria(@RequestBody SessionCours sessionCours) {
 		return sessionCoursService.findByCriteria(sessionCours);
 	}
-
-	@PostMapping("/")
-    public int save(@RequestBody SessionCours sessionCours) {
-        return sessionCoursService.save(sessionCours);
+    @PostMapping("/{profid}/{etudiantid}")
+    public int save(@PathVariable Long profid,@PathVariable Long etudiantid) {
+        return sessionCoursService.save(profid, etudiantid);
     }
 
+
     @PutMapping("/")
-    public SessionCours update(@RequestBody SessionCours sessionCours) {
+    public int update(@RequestBody SessionCours sessionCours) {
         return sessionCoursService.update(sessionCours);
     }
     @GetMapping("/prof/id/{id}")
@@ -52,7 +60,11 @@ public class SessionCoursProfRest {
     public List<SessionCours> findByProfIdAndEtudiantId(@PathVariable Long id,@PathVariable Long ids) {
         return sessionCoursService.findByProfIdAndEtudiantId(id, ids);
     }
+    @GetMapping("/etudiant/id/{id}")
 
+    public List<SessionCours> findSessionCoursByEtudiantId(@PathVariable Long id) {
+        return sessionCoursService.findSessionCoursByEtudiantId(id);
+    }
     @Autowired
     private SessionCoursService sessionCoursService;
 }

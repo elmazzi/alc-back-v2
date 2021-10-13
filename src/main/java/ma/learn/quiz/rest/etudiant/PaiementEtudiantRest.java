@@ -17,11 +17,12 @@ public class PaiementEtudiantRest {
 	        return paiementService.findAll();
 	    }
 
-	    @PostMapping("/")
-	    public int save(@RequestBody Paiement paiement) {
-	        return paiementService.save(paiement);
-	    }
 
-	    @Autowired
+	@PostMapping("/{id}")
+	public int save(@PathVariable Long id) {
+		return paiementService.save(id);
+	}
+
+	@Autowired
 	    private PaiementService paiementService;
 }
