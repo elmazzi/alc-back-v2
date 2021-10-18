@@ -12,21 +12,6 @@ import java.util.List;
 @RequestMapping("/admin/scheduleProf")
 public class ScheduleProfAdminRest {
 
-	/*@DeleteMapping("/id/{id}")
-	public int deleteByScheduleId(Long id) {
-		return scheduleProfService.deleteByScheduleId(id);
-	}
-
-	@PutMapping("/")
-	public ScheduleProf update(@RequestBody ScheduleProf scheduleProf) {
-		return scheduleProfService.update(scheduleProf);
-	}*/
-
-/*	@GetMapping("/id/{id}")
-	public List<ScheduleProf> findByScheduleId(Long id) {
-		return scheduleProfService.findByScheduleId(id);
-	}*/
-
 	@PostMapping("/save/")
 	public int saveAll(ScheduleProf scheduleProf) {
 		return scheduleProfService.saveAll(scheduleProf);

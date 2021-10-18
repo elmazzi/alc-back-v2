@@ -20,33 +20,17 @@ public class EtudiantCours {
 	private Cours cours ;
 	@ManyToOne
 	private Prof prof ;
-	private Date dateDebut;
 	private Date dateFin;
-	private BigDecimal duree;
-	private String payer;
+	private boolean payer;
 
-	public BigDecimal getDuree() {
-		return duree;
-	}
 
-	public void setDuree(BigDecimal duree) {
-		this.duree = duree;
-	}
 
-	public String getPayer() {
+	public boolean isPayer() {
 		return payer;
 	}
 
-	public void setPayer(String payer) {
+	public void setPayer(boolean payer) {
 		this.payer = payer;
-	}
-
-	public Date getDateDebut() {
-		return dateDebut;
-	}
-
-	public void setDateDebut(Date dateDebut) {
-		this.dateDebut = dateDebut;
 	}
 
 	public Date getDateFin() {

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import ma.learn.quiz.bean.EtudiantCours;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,12 @@ public class ProfService {
 		}
 
 		return  entityManager.createQuery(query).getResultList();
+	}
+	public EtudiantCours findProfByEtuID (Long id,Long idcours){
+
+		String query = "SELECT e FROM EtudiantCours e WHERE e.etudiant.id="+id+"AND e.cours.id="+idcours;
+
+		return (EtudiantCours) entityManager.createQuery(query).getSingleResult();
 	}
 
 	public Prof findByNumero(String ref) {
@@ -117,7 +124,7 @@ public class ProfService {
 		return profDao.deleteProfById(id);
 	}
 
-	public List<Prof> findByNom(String nom) {
+	public Prof findByNom(String nom) {
 		return profDao.findByNom(nom);
 	}
 
@@ -127,7 +134,7 @@ public class ProfService {
 		return entityManager.createQuery(query).getSingleResult();
 	}
 
-	public List<Paiement> paiementProfs() {
+/*	public List<Paiement> paiementProfs() {
 		List<Paiement> ps = new ArrayList<>();
 		List<Prof> profs = this.findAll();
 		for (i = 0; i < profs.size(); i++) {//<1profs.size()
@@ -137,7 +144,7 @@ public class ProfService {
 			BigDecimal total = BigDecimal.ZERO;
 			int nonPaye = 0;
 			for (j = 0; j < sessionCours.size(); j++) {//<2
-				if (sessionCours.get(i).getPayer() == "false") {
+				if (sessionCours.get(i).isPayer() == false) {
 					total = total.add(sessionCours.get(i).getDuree());
 					nonPaye++;
 
@@ -149,7 +156,7 @@ public class ProfService {
 			ps.add(p);
 		}
 		return ps;
-	}
+	}*/
 
 	public List<SessionCours> findSessionsNonPayer(Long idProf)
 	{

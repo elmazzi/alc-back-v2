@@ -2,30 +2,17 @@ package ma.learn.quiz.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+import ma.learn.quiz.bean.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ma.learn.quiz.bean.EtatEtudiantSchedule;
-import ma.learn.quiz.bean.Etudiant;
-import ma.learn.quiz.bean.Quiz;
-import ma.learn.quiz.bean.ScheduleProf;
 import ma.learn.quiz.dao.ScheduleProfDao;
 import ma.learn.quiz.vo.SchdeduleVo;
 
 @Service
 public class ScheduleProfService {
-	
-	/*@Transactional
-	public int deleteByScheduleId(Long id) {
-		return scheduleProfDao.deleteByScheduleId(id);
-	}
-
-	public List<ScheduleProf> findByScheduleId(Long id) {
-		return scheduleProfDao.findByScheduleId(id);
-	}*/
 
 	public ScheduleProf findByRef(String ref) {
 		return scheduleProfDao.findByRef(ref);
@@ -36,18 +23,35 @@ public class ScheduleProfService {
 		return scheduleProfDao.deleteByRef(ref);
 	}
 
+
+
 	public int save(ScheduleProf scheduleProf) {
-		Etudiant etudiant = etudiantService.findByRef(scheduleProf.getEtudiant().getRef());
-		EtatEtudiantSchedule etatEtudiantSchedule = etatEtudiantScheduleService
-				.findByRef(scheduleProf.getEtudiant().getEtatEtudiantSchedule().getRef());
-		scheduleProf.setEtudiant(etudiant);
-		if (findByRef(scheduleProf.getRef()) != null) {
-			return -1;
-		} else {
-			etudiantService.save(etudiant);
-			etatEtudiantScheduleService.update(etatEtudiantSchedule);
-			scheduleProfDao.save(scheduleProf);
-			return 1;
+		if (scheduleProf.getId() == null  || scheduleProf.getId() == 0 ){
+			Etudiant etudiant = etudiantService.findEtudiantById(scheduleProf.getEtudiant().getId());
+			Prof prof = profService.findProfById(scheduleProf.getProf().getId());
+			EtatEtudiantSchedule etatEtudiantSchedule = etatEtudiantScheduleService
+					.findByRef(scheduleProf.getEtudiant().getEtatEtudiantSchedule().getRef());
+			if (etudiant != null){
+				scheduleProf.setEtudiant(etudiant);
+			}else{
+				return -3;
+			}
+			if (prof != null){
+				scheduleProf.setProf(prof);
+			}else{
+				return -2;
+			}
+			if (findByRef(scheduleProf.getRef()) != null) {
+				return -1;
+			} else {
+				etudiantService.save(etudiant);
+				etatEtudiantScheduleService.update(etatEtudiantSchedule);
+				scheduleProfDao.save(scheduleProf);
+				return 1;
+			}
+		}  else{
+			this.update(scheduleProf);
+			return 0 ;
 		}
 
 	}
@@ -69,8 +73,8 @@ public class ScheduleProfService {
 			SchdeduleVo schdeduleVo = new SchdeduleVo();
 			schdeduleVo.setId(s.getId());
 			schdeduleVo.setTitle(s.getEtudiant().getNom());
-			schdeduleVo.setStart(s.getDateDebut());
-			schdeduleVo.setEnd(s.getDateFin());
+			schdeduleVo.setStart(s.getStartTime());
+			schdeduleVo.setEnd(s.getEndTime());
 			schdeduleVo.setRef(s.getRef());
 			schdeduleVo.setColor(s.getEtudiant().getEtatEtudiantSchedule().getCouleur());
 			schdeduleVos.add(schdeduleVo);
@@ -94,4 +98,6 @@ public ScheduleProf update(ScheduleProf scheduleProf) {
 	private EtudiantService etudiantService;
 	@Autowired
 	private EtatEtudiantScheduleService etatEtudiantScheduleService;
+	@Autowired
+	private ProfService profService;
 }

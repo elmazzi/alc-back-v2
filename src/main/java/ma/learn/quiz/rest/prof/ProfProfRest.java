@@ -1,5 +1,6 @@
 package ma.learn.quiz.rest.prof;
 
+import ma.learn.quiz.bean.EtudiantCours;
 import ma.learn.quiz.bean.Paiement;
 import ma.learn.quiz.bean.Prof;
 import ma.learn.quiz.bean.SessionCours;
@@ -13,6 +14,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/prof/prof")
 public class ProfProfRest {
+    @GetMapping("/{id}/{idcours}")
+
+
+    public EtudiantCours findProfByEtuID(@PathVariable Long id,@PathVariable Long idcours) {
+        return profService.findProfByEtuID(id, idcours);
+    }
+
     @GetMapping("/numero/{numro}")
     public Prof findByNumero(@PathVariable String numro) {
         return profService.findByNumero(numro);
@@ -40,9 +48,9 @@ public class ProfProfRest {
 		return profService.calcStatistique(salaryVo);
 	}
     @GetMapping("/nom/{nom}")
-    public List<Prof> findByNom(@PathVariable String nom) {
-		return profService.findByNom(nom);
-	}
+    public Prof findByNom(@PathVariable String nom) {
+        return profService.findByNom(nom);
+    }
 	@GetMapping("/ref/{ref}")
     public Prof findByRef(@PathVariable String ref) {
         return profService.findByRef(ref);
@@ -68,10 +76,10 @@ public class ProfProfRest {
 		return profService.findByCriteria(prof);
 	}
 
-    @GetMapping("/paiement")
+/*    @GetMapping("/paiement")
     public List<Paiement> paiementProfs() {
         return profService.paiementProfs();
-    }
+    }*/
 	@Autowired
     private ProfService profService;
 	

@@ -16,11 +16,12 @@ public class PaiementPublicRest {
 	    public List<Paiement> findAll() {
 	        return paiementService.findAll();
 	    }
+	@PostMapping("/")
+	public int save(Long id) {
+		return paiementService.save(id);
+	}
 
-	    @PostMapping("/")
-	    public int save(@RequestBody Paiement paiement) {
-	        return paiementService.save(paiement);
-	    }
+
 
 	    @Autowired
 	    private PaiementService paiementService;
