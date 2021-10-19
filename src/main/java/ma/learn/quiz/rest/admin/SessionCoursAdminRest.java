@@ -5,6 +5,7 @@ import ma.learn.quiz.bean.Etudiant;
 import ma.learn.quiz.bean.Prof;
 import ma.learn.quiz.bean.SessionCours;
 import ma.learn.quiz.service.SessionCoursService;
+import ma.learn.quiz.service.vo.SessionCoursVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +15,12 @@ import java.util.List;
 @RequestMapping("/admin/session")
 public class SessionCoursAdminRest {
 
-    @PostMapping("/{profid}/{etudiantid}")
-    public int save(@PathVariable Long profid,@PathVariable Long etudiantid) {
-        return sessionCoursService.save(profid, etudiantid);
+    @PostMapping("/{profid}/{etudiantid}/{coursid}")
+    public int save(@PathVariable Long profid,@PathVariable Long etudiantid,@PathVariable Long coursid) {
+        return sessionCoursService.save(profid, etudiantid,coursid);
     }
+
+
 
 
 
@@ -68,6 +71,30 @@ public class SessionCoursAdminRest {
 
     public List<SessionCours> findSessionCoursByEtudiantId(@PathVariable Long id) {
         return sessionCoursService.findSessionCoursByEtudiantId(id);
+    }
+@PostMapping("/bycoursname")
+    public List<SessionCours> findByCriteriaCoursName(@RequestBody SessionCoursVO sessionCoursVO) {
+        return sessionCoursService.findByCriteriaCoursName(sessionCoursVO);
+    }
+    @PostMapping("/byprofname")
+
+    public List<SessionCours> findByCriteriaProfName(@RequestBody SessionCoursVO sessionCoursVO) {
+        return sessionCoursService.findByCriteriaProfName(sessionCoursVO);
+    }
+    @PostMapping("/bydate")
+
+    public List<SessionCours> findByCriteriaDate(@RequestBody SessionCoursVO sessionCoursVO) {
+        return sessionCoursService.findByCriteriaDate(sessionCoursVO);
+    }
+    @PostMapping("/bystudentname")
+
+    public List<SessionCours> findByCriteriaStudentName(@RequestBody SessionCoursVO sessionCoursVO) {
+        return sessionCoursService.findByCriteriaStudentName(sessionCoursVO);
+    }
+    @PostMapping("/byReference")
+
+    public List<SessionCours> findByCriteriaReference(@RequestBody SessionCoursVO sessionCoursVO) {
+        return sessionCoursService.findByCriteriaReference(sessionCoursVO);
     }
 
     @Autowired

@@ -62,9 +62,9 @@ public class SessionCoursEtudiantRest {
     public List<SessionCours> findSessionCoursByEtudiantId(@PathVariable Long id) {
         return sessionCoursService.findSessionCoursByEtudiantId(id);
     }
-    @PostMapping("/{profid}/{etudiantid}")
-    public int save(@PathVariable Long profid,@PathVariable Long etudiantid) {
-        return sessionCoursService.save(profid, etudiantid);
+    @PostMapping("/{profid}/{etudiantid}/{coursid}")
+    public int save(@PathVariable Long profid,@PathVariable Long etudiantid,@PathVariable Long coursid) {
+        return sessionCoursService.save(profid, etudiantid,coursid);
     }
 
 

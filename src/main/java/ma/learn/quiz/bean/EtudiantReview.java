@@ -1,5 +1,7 @@
 package ma.learn.quiz.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -16,6 +18,8 @@ public class EtudiantReview {
     private Cours cours;
     private int review;
     private String comment;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+
     private Date dateReview;
 
     public String getComment() {

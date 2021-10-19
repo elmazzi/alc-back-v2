@@ -14,24 +14,14 @@ public class Paiement {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private double totalHeure;
+    private int totalHeure;
     private double montant;
-    private int nonPaye;
     @ManyToOne
     private Prof prof;
-    private int totalcours;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date datePaiement;
     @OneToOne
     private SessionCours sessionCours;
-
-    public SessionCours getSessionCours() {
-        return sessionCours;
-    }
-
-    public void setSessionCours(SessionCours sessionCours) {
-        this.sessionCours = sessionCours;
-    }
 
     public Long getId() {
         return id;
@@ -41,11 +31,11 @@ public class Paiement {
         this.id = id;
     }
 
-    public double getTotalHeure() {
+    public int getTotalHeure() {
         return totalHeure;
     }
 
-    public void setTotalHeure(double totalHeure) {
+    public void setTotalHeure(int totalHeure) {
         this.totalHeure = totalHeure;
     }
 
@@ -57,14 +47,6 @@ public class Paiement {
         this.montant = montant;
     }
 
-    public int getNonPaye() {
-        return nonPaye;
-    }
-
-    public void setNonPaye(int nonPaye) {
-        this.nonPaye = nonPaye;
-    }
-
     public Prof getProf() {
         return prof;
     }
@@ -73,19 +55,19 @@ public class Paiement {
         this.prof = prof;
     }
 
-    public int getTotalcours() {
-        return totalcours;
-    }
-
-    public void setTotalcours(int totalcours) {
-        this.totalcours = totalcours;
-    }
-
     public Date getDatePaiement() {
         return datePaiement;
     }
 
     public void setDatePaiement(Date datePaiement) {
         this.datePaiement = datePaiement;
+    }
+
+    public SessionCours getSessionCours() {
+        return sessionCours;
+    }
+
+    public void setSessionCours(SessionCours sessionCours) {
+        this.sessionCours = sessionCours;
     }
 }

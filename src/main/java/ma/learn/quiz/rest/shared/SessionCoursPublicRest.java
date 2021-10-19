@@ -27,10 +27,11 @@ public class SessionCoursPublicRest {
     public List<SessionCours> findByCriteria(@RequestBody SessionCours sessionCours) {
 		return sessionCoursService.findByCriteria(sessionCours);
 	}
-    @PostMapping("/{profid}/{etudiantid}")
-    public int save(@PathVariable Long profid,@PathVariable Long etudiantid) {
-        return sessionCoursService.save(profid, etudiantid);
+    @PostMapping("/{profid}/{etudiantid}/{coursid}")
+    public int save(@PathVariable Long profid,@PathVariable Long etudiantid,@PathVariable Long coursid) {
+        return sessionCoursService.save(profid, etudiantid,coursid);
     }
+
 
 
 
