@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class QuizClassRoom {
 	@Id
-	   @GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@ManyToOne
 	private ClassRoom classRoom;
@@ -34,6 +34,7 @@ public class QuizClassRoom {
 	public void setQuiz(Quiz quiz) {
 		this.quiz = quiz;
 	}
+
 	public QuizClassRoom(ClassRoom classRoom, Quiz quiz) {
 		super();
 		this.classRoom = classRoom;

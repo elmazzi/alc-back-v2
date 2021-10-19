@@ -26,10 +26,6 @@ public class ReponseEtudiantHomeWorkEtudiantRest {
 		reponseEtudiantHomeWorkService.deleteById(id);
 	}
 
-	@GetMapping("/reponse/question/id/{id}")
-	public List<ReponseEtudiant> findByReponseQuestionId(@PathVariable Long id) {
-		return reponseEtudiantHomeWorkService.findByReponseQuestionId(id);
-	}
 
 	@GetMapping("/homeWorkEtudiant/id/{id}")
 	public List<ReponseEtudiant> findByHomeWorkEtudiantId(@PathVariable Long id) {
@@ -46,11 +42,6 @@ public class ReponseEtudiantHomeWorkEtudiantRest {
 		return reponseEtudiantHomeWorkService.findByHomeWorkEtudiantHomeWorkId(id);
 	}
 
-	@Transactional
-	@DeleteMapping("/reponse/question/id/{id}")
-	public int deleteByReponseQuestionId(@PathVariable Long id) {
-		return reponseEtudiantHomeWorkService.deleteByReponseQuestionId(id);
-	}
 
 	@Transactional
 	@DeleteMapping("/homeWorkEtudiant/id/{id}")

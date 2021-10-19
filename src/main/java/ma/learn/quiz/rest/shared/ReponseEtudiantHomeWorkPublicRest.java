@@ -26,11 +26,6 @@ public class ReponseEtudiantHomeWorkPublicRest {
 		reponseEtudiantHomeWorkService.deleteById(id);
 	}
 
-	@GetMapping("/reponse/question/id/{id}")
-	public List<ReponseEtudiant> findByReponseQuestionId(@PathVariable Long id) {
-		return reponseEtudiantHomeWorkService.findByReponseQuestionId(id);
-	}
-
 	@GetMapping("/homeWorkEtudiant/id/{id}")
 	public List<ReponseEtudiant> findByHomeWorkEtudiantId(@PathVariable Long id) {
 		return reponseEtudiantHomeWorkService.findByHomeWorkEtudiantId(id);
@@ -44,12 +39,6 @@ public class ReponseEtudiantHomeWorkPublicRest {
 	@GetMapping("/homeWorkEtudiant/homeWork/id/{id}")
 	public List<ReponseEtudiant> findByHomeWorkEtudiantHomeWorkId(@PathVariable Long id) {
 		return reponseEtudiantHomeWorkService.findByHomeWorkEtudiantHomeWorkId(id);
-	}
-
-	@Transactional
-	@DeleteMapping("/reponse/question/id/{id}")
-	public int deleteByReponseQuestionId(@PathVariable Long id) {
-		return reponseEtudiantHomeWorkService.deleteByReponseQuestionId(id);
 	}
 
 	@Transactional

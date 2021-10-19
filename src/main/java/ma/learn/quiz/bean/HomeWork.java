@@ -14,16 +14,32 @@ public class HomeWork {
     private String libelle;
     private String urlImage;
     private String urlVideo;
-    private String question;
+    @OneToMany(mappedBy = "homeWork")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<HomeWorkQuestion> questions;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "homeWork")
      private List<HomeWorkEtudiant> homeWorkEtudiant;
     @OneToOne
     private Section section;
     @OneToOne
-    private Quiz quiz;
-    @OneToOne
     private TypeHomeWork typeHomeWork;
+
+    public List<HomeWorkQuestion> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<HomeWorkQuestion> questions) {
+        this.questions = questions;
+    }
+
+    public List<HomeWorkEtudiant> getHomeWorkEtudiant() {
+        return homeWorkEtudiant;
+    }
+
+    public void setHomeWorkEtudiant(List<HomeWorkEtudiant> homeWorkEtudiant) {
+        this.homeWorkEtudiant = homeWorkEtudiant;
+    }
 
     public Long getId() {
         return id;
@@ -57,13 +73,7 @@ public class HomeWork {
         this.urlVideo = urlVideo;
     }
 
-    public String getQuestion() {
-        return question;
-    }
 
-    public void setQuestion(String question) {
-        this.question = question;
-    }
 
     public Section getSection() {
         return section;
@@ -73,13 +83,6 @@ public class HomeWork {
         this.section = section;
     }
 
-    public Quiz getQuiz() {
-        return quiz;
-    }
-
-    public void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
-    }
 
     public TypeHomeWork getTypeHomeWork() {
         return typeHomeWork;
