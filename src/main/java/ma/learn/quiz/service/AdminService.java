@@ -1,6 +1,7 @@
 package ma.learn.quiz.service;
 
 import ma.learn.quiz.bean.Admin;
+import ma.learn.quiz.bean.User;
 import ma.learn.quiz.dao.AdminDao;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -42,10 +43,14 @@ public class AdminService {
 			return -2;
 		}
 		else {
-			char[] possibleCharacters = (new String("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~&*-_")).toCharArray();
-			String pass = RandomStringUtils.random( 10, 0, possibleCharacters.length-1, false, false, possibleCharacters, new SecureRandom() );
-			admin.setPassword(pass);
-			adminDao.save(admin);
+//			char[] possibleCharacters = (new String("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~&*-_")).toCharArray();
+//			String pass = RandomStringUtils.random( 10, 0, possibleCharacters.length-1, false, false, possibleCharacters, new SecureRandom() );
+//			admin.setPassword(pass);
+			String password = this.generatePassword();
+			admin.setPassword(password);
+			User user = new User(admin.getUsername(), admin.getPassword());
+			System.out.println(user.getUsername() + "/n" + user.getPassword());
+//			adminDao.save(admin);
 			return 1;
 		}
 
@@ -57,6 +62,9 @@ public class AdminService {
 		return entityManager.createQuery(query).getSingleResult();
 	}
 
+	private String generatePassword() {
+		return RandomStringUtils.randomAlphanumeric(10);
+	}
 	@Autowired
 	private AdminDao adminDao;
 	@Autowired

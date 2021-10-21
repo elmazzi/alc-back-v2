@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Admin {
+public class Admin extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -17,7 +17,16 @@ public class Admin {
     private String image;
     private String password;
     public String addresse;
-    public Long getId() {
+
+	public Admin(String username, String password) {
+		super(username, password);
+	}
+
+	public Admin() {
+
+	}
+
+	public Long getId() {
         return id;
     }
 
