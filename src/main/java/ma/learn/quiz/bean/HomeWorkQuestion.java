@@ -1,13 +1,12 @@
 package ma.learn.quiz.bean;
 
-import java.util.List;
-
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.*;
+import java.util.List;
+
 @Entity
-public class Question {
+public class HomeWorkQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -16,17 +15,23 @@ public class Question {
     private Long numero;
     private double pointReponseJuste;
     private double pointReponsefausse;
-    
     @ManyToOne
     private TypeDeQuestion typeDeQuestion;
-    
-    @ManyToOne
-    private Quiz quiz;
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "question")
-    private List<Reponse> reponses;
+    @OneToMany(mappedBy = "homeWorkQuestion")
+    private List<HoweWorkQSTReponse> reponses;
+
     @ManyToOne
     private HomeWork homeWork;
+
+    public List<HoweWorkQSTReponse> getReponses() {
+        return reponses;
+    }
+
+    public void setReponses(List<HoweWorkQSTReponse> reponses) {
+        this.reponses = reponses;
+    }
 
     public HomeWork getHomeWork() {
         return homeWork;
@@ -36,23 +41,16 @@ public class Question {
         this.homeWork = homeWork;
     }
 
-    public List<Reponse> getReponses() {
-        return reponses;
-    }
-
-    public void setReponses(List<Reponse> reponses) {
-        this.reponses = reponses;
-    }
 
     public String getLibelle() {
-		return libelle;
-	}
+        return libelle;
+    }
 
-	public void setLibelle(String libelle) {
-		this.libelle = libelle;
-	}
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
 
-	public TypeDeQuestion getTypeDeQuestion() {
+    public TypeDeQuestion getTypeDeQuestion() {
         return typeDeQuestion;
     }
 
@@ -85,17 +83,6 @@ public class Question {
     }
 
 
-
-
-    public Quiz getQuiz() {
-        return quiz;
-    }
-
-    public void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
-    }
-   
-
     public Long getId() {
         return id;
     }
@@ -111,12 +98,4 @@ public class Question {
     public void setRef(String ref) {
         this.ref = ref;
     }
-
-  /*  public Reponse getReponse() {
-        return reponse;
-    }
-
-    public void setReponse(Reponse reponse) {
-        this.reponse = reponse;
-    }*/
 }

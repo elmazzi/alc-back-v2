@@ -25,9 +25,6 @@ public class ReponseEtudiantHomeWorkService {
 		reponseEtudiantHomeWorkDao.deleteById(id);
 	}
 
-	public List<ReponseEtudiant> findByReponseQuestionId(Long id) {
-		return reponseEtudiantHomeWorkDao.findByReponseQuestionId(id);
-	}
 
 	public List<ReponseEtudiant> findByHomeWorkEtudiantId(Long id) {
 		return reponseEtudiantHomeWorkDao.findByHomeWorkEtudiantId(id);
@@ -41,10 +38,6 @@ public class ReponseEtudiantHomeWorkService {
 		return reponseEtudiantHomeWorkDao.findByHomeWorkEtudiantHomeWorkId(id);
 	}
 
-	@Transactional
-	public int deleteByReponseQuestionId(Long id) {
-		return reponseEtudiantHomeWorkDao.deleteByReponseQuestionId(id);
-	}
 
 	@Transactional
 	public int deleteByHomeWorkEtudiantId(Long id) {

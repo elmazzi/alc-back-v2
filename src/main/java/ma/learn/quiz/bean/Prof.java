@@ -43,10 +43,6 @@ public class Prof {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	
-
-	
 	public List<Etudiant> getEtudiantList() {
 		return etudiantList;
 	}

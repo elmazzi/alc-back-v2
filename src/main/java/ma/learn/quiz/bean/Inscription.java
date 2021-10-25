@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 
 	@Entity
 	public class Inscription  {
-		 @Id
+		   @Id
 		    @GeneratedValue(strategy = GenerationType.AUTO)
 		    private Long id ;
 			private String ref;
