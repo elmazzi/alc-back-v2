@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class GroupeEtudeDetail implements Serializable {
+public class GroupeEtudiantDetail implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ManyToOne
     private GroupeEtudiant groupeEtudiant;
     @ManyToOne
-    private GroupeEtude groupeEtude;
+    private Etudiant etudiant;
 /*
    @OneToMany(mappedBy = "groupeEtudiant")
     private List<Etudiant> etudiants;
@@ -27,12 +27,14 @@ public class GroupeEtudeDetail implements Serializable {
 
  */
 
-    public GroupeEtude getGroupeEtude() {
-        return groupeEtude;
+    public Etudiant getEtudiant() {
+        return etudiant;
     }
-    public void setGroupeEtude(GroupeEtude groupeEtude) {
-        this.groupeEtude = groupeEtude;
+
+    public void setEtudiant(Etudiant etudiant) {
+        this.etudiant = etudiant;
     }
+
     public void setId(Long id) {
         this.id = id;
     }

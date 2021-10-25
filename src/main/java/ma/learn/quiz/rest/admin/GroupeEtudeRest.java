@@ -37,4 +37,5 @@ public class GroupeEtudeRest {
     public Optional<GroupeEtude> findById(Long id) {
         return groupeEtudeService.findById(id);
     }
+
 }
