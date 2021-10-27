@@ -42,12 +42,9 @@ import javax.persistence.TemporalType;
 		    @Temporal (TemporalType.DATE)
 			   private Date datefininscription;
 		    
-		  
-	
-		   
-		
-		
-			public Prof getProf() {
+
+
+		public Prof getProf() {
 			return prof;
 		}
 		public void setProf(Prof prof) {
