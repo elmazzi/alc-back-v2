@@ -12,6 +12,7 @@ import java.util.Optional;
 @Repository
 public interface ReponseEtudiantHomeWorkDao extends JpaRepository<ReponseEtudiantHomeWork, Long> {
 	Optional<ReponseEtudiantHomeWork> findById(Long id);
+	List<ReponseEtudiantHomeWork> findReponseEtudiantHomeWorkByQuestionId(Long id);
 	void deleteById(Long id);
 	List<ReponseEtudiant> findByHomeWorkEtudiantId(Long id);
 	List<ReponseEtudiant> findByHomeWorkEtudiantEtudiantId(Long id);

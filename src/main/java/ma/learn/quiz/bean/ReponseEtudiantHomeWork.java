@@ -13,9 +13,20 @@ public class ReponseEtudiantHomeWork {
 	private String answer;
 	@ManyToOne
 	private HomeWorkEtudiant homeWorkEtudiant;
+	@ManyToOne
+    private HomeWorkQuestion question;
+
 
 	public Long getId() {
 		return id;
+	}
+
+	public HomeWorkQuestion getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(HomeWorkQuestion question) {
+		this.question = question;
 	}
 
 	public void setId(Long id) {
