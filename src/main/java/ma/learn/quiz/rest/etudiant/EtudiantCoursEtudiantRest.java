@@ -43,7 +43,7 @@ public class EtudiantCoursEtudiantRest {
 	public int save(@RequestBody EtudiantCours etudiantCours) {
 		return etudiantCoursService.save(etudiantCours);
 	}*/
-	@PostMapping("/{idprof}/{idetudiant}/{idcours}")
+	@GetMapping("/{idprof}/{idetudiant}/{idcours}")
 
 	public int save(@PathVariable Long idprof,@PathVariable Long idetudiant,@PathVariable Long idcours) {
 		return etudiantCoursService.save(idprof, idetudiant, idcours);

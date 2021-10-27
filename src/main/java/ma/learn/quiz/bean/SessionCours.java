@@ -16,8 +16,8 @@ public class SessionCours implements Serializable {
     private int totalheure;
     @ManyToOne
     private Prof prof;
-@OneToOne
-private Cours cours;
+    @OneToOne
+    private Cours cours;
     @ManyToOne
     private Etudiant etudiant;
 

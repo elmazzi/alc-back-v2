@@ -20,8 +20,8 @@ public class Paiement {
     private Prof prof;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date datePaiement;
-    @OneToOne
-    private SessionCours sessionCours;
+    @ManyToOne
+    private Etudiant etudiant;
 
     public Long getId() {
         return id;
@@ -63,11 +63,11 @@ public class Paiement {
         this.datePaiement = datePaiement;
     }
 
-    public SessionCours getSessionCours() {
-        return sessionCours;
+    public Etudiant getEtudiant() {
+        return etudiant;
     }
 
-    public void setSessionCours(SessionCours sessionCours) {
-        this.sessionCours = sessionCours;
+    public void setEtudiant(Etudiant etudiant) {
+        this.etudiant = etudiant;
     }
 }

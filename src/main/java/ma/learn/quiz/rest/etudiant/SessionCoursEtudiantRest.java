@@ -30,9 +30,9 @@ public class SessionCoursEtudiantRest {
 
 
 
-    @PutMapping("/")
-    public int update(@RequestBody SessionCours sessionCours) {
-        return sessionCoursService.update(sessionCours);
+    @GetMapping("/update/{id}")
+    public int update(@PathVariable Long id) {
+        return sessionCoursService.update(id);
     }
     @GetMapping("/prof/id/{id}")
     public List<SessionCours> findByProfId(@PathVariable Long id) {
@@ -62,13 +62,16 @@ public class SessionCoursEtudiantRest {
     public List<SessionCours> findSessionCoursByEtudiantId(@PathVariable Long id) {
         return sessionCoursService.findSessionCoursByEtudiantId(id);
     }
-    @PostMapping("/{profid}/{etudiantid}/{coursid}")
+    @GetMapping("/{profid}/{etudiantid}/{coursid}")
     public int save(@PathVariable Long profid,@PathVariable Long etudiantid,@PathVariable Long coursid) {
         return sessionCoursService.save(profid, etudiantid,coursid);
     }
 
+    @GetMapping("/idc/{idc}/ids/{ids}/idp/{idp}")
 
-
+    public SessionCours findSessionCoursByCoursIdAndEtudiantIdAndProfId(@PathVariable  Long idc,@PathVariable  Long ids,@PathVariable  Long idp) {
+        return sessionCoursService.findSessionCoursByCoursIdAndEtudiantIdAndProfId(idc, ids, idp);
+    }
 
     @Autowired
     private SessionCoursService sessionCoursService;

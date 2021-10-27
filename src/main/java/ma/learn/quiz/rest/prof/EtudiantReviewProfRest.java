@@ -28,7 +28,7 @@ public class EtudiantReviewProfRest {
         return etudiantReviewService.findAll();
     }
 
-    @PostMapping("/{idprof}/{idstudent}/{idcours}/{comment}")
+    @GetMapping("/{idprof}/{idstudent}/{idcours}/{comment}")
     public int save(@PathVariable Long idprof,@PathVariable Long idstudent,@PathVariable Long idcours,@PathVariable String comment) {
         return etudiantReviewService.save(idprof, idstudent, idcours, comment);
     }
@@ -42,19 +42,8 @@ public class EtudiantReviewProfRest {
     public EtudiantReview findByEtudiantIdAndCoursId(@PathVariable long id,@PathVariable long ids) {
         return etudiantReviewService.findByEtudiantIdAndCoursId(id, ids);
     }
-    @PostMapping("/bystudentname")
-
-    public List<EtudiantReview> findByCriteriaStudentname(@RequestBody EtudiantReviewVo etudiantReviewVo) {
-        return etudiantReviewService.findByCriteriaStudentname(etudiantReviewVo);
-    }
-    @PostMapping("/coursname")
-
-    public List<EtudiantReview> findByCriteriacoursname(@RequestBody EtudiantReviewVo etudiantReviewVo) {
-        return etudiantReviewService.findByCriteriacoursname(etudiantReviewVo);
-    }
-    @PostMapping("/bydate")
-
-    public List<EtudiantReview> findByCriteriaDate(@RequestBody EtudiantReviewVo etudiantReviewVo) {
-        return etudiantReviewService.findByCriteriaDate(etudiantReviewVo);
+@PostMapping("/ByCriteria")
+    public List<EtudiantReview> findByCriteria(@RequestBody EtudiantReviewVo etudiantReviewVo) {
+        return etudiantReviewService.findByCriteria(etudiantReviewVo);
     }
 }

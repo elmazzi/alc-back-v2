@@ -27,17 +27,16 @@ public class SessionCoursProfRest {
     public List<SessionCours> findByCriteria(@RequestBody SessionCours sessionCours) {
 		return sessionCoursService.findByCriteria(sessionCours);
 	}
-    @PostMapping("/{profid}/{etudiantid}/{coursid}")
+    @GetMapping("/{profid}/{etudiantid}/{coursid}")
     public int save(@PathVariable Long profid,@PathVariable Long etudiantid,@PathVariable Long coursid) {
         return sessionCoursService.save(profid, etudiantid,coursid);
     }
 
 
 
-
-    @PutMapping("/")
-    public int update(@RequestBody SessionCours sessionCours) {
-        return sessionCoursService.update(sessionCours);
+    @GetMapping("/update/{id}")
+    public int update(@PathVariable Long id) {
+        return sessionCoursService.update(id);
     }
     @GetMapping("/prof/id/{id}")
     public List<SessionCours> findByProfId(@PathVariable Long id) {

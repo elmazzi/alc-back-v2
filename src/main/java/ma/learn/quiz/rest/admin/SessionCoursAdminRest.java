@@ -16,33 +16,32 @@ import java.util.List;
 public class SessionCoursAdminRest {
 
     @PostMapping("/{profid}/{etudiantid}/{coursid}")
-    public int save(@PathVariable Long profid,@PathVariable Long etudiantid,@PathVariable Long coursid) {
-        return sessionCoursService.save(profid, etudiantid,coursid);
+    public int save(@PathVariable Long profid, @PathVariable Long etudiantid, @PathVariable Long coursid) {
+        return sessionCoursService.save(profid, etudiantid, coursid);
     }
-
-
-
 
 
     @GetMapping("/id/{id}")
     public SessionCours findSessionCoursById(@PathVariable Long id) {
         return sessionCoursService.findSessionCoursById(id);
     }
+
     @PostMapping("/search")
     public List<SessionCours> findByCriteria(@RequestBody SessionCours sessionCours) {
-		return sessionCoursService.findByCriteria(sessionCours);
-	}
+        return sessionCoursService.findByCriteria(sessionCours);
+    }
 
 
-    @PutMapping("/")
-    public int update(@RequestBody SessionCours sessionCours) {
-        return sessionCoursService.update(sessionCours);
+    @GetMapping("/update/{id}")
+    public int update(@PathVariable Long id) {
+        return sessionCoursService.update(id);
     }
 
     @GetMapping("/prof/id/{id}")
     public List<SessionCours> findByProfId(@PathVariable Long id) {
         return sessionCoursService.findByProfId(id);
     }
+
     @GetMapping("/prof/nom/{nom}")
 
     public SessionCours findSessionCoursByProfNom(@PathVariable String nom) {
@@ -63,38 +62,21 @@ public class SessionCoursAdminRest {
     public int deleteSessionCoursById(@RequestBody List<SessionCours> sessionCourss) {
         return sessionCoursService.deleteSessionCoursById(sessionCourss);
     }
+
     @GetMapping("/prof/id/{id}/etudiant/id/{ids}")
-    public List<SessionCours> findByProfIdAndEtudiantId(@PathVariable Long id,@PathVariable Long ids) {
+    public List<SessionCours> findByProfIdAndEtudiantId(@PathVariable Long id, @PathVariable Long ids) {
         return sessionCoursService.findByProfIdAndEtudiantId(id, ids);
     }
+
     @GetMapping("/etudiant/id/{id}")
 
     public List<SessionCours> findSessionCoursByEtudiantId(@PathVariable Long id) {
         return sessionCoursService.findSessionCoursByEtudiantId(id);
     }
-@PostMapping("/bycoursname")
-    public List<SessionCours> findByCriteriaCoursName(@RequestBody SessionCoursVO sessionCoursVO) {
-        return sessionCoursService.findByCriteriaCoursName(sessionCoursVO);
-    }
-    @PostMapping("/byprofname")
 
-    public List<SessionCours> findByCriteriaProfName(@RequestBody SessionCoursVO sessionCoursVO) {
-        return sessionCoursService.findByCriteriaProfName(sessionCoursVO);
-    }
-    @PostMapping("/bydate")
-
-    public List<SessionCours> findByCriteriaDate(@RequestBody SessionCoursVO sessionCoursVO) {
-        return sessionCoursService.findByCriteriaDate(sessionCoursVO);
-    }
-    @PostMapping("/bystudentname")
-
-    public List<SessionCours> findByCriteriaStudentName(@RequestBody SessionCoursVO sessionCoursVO) {
-        return sessionCoursService.findByCriteriaStudentName(sessionCoursVO);
-    }
-    @PostMapping("/byReference")
-
-    public List<SessionCours> findByCriteriaReference(@RequestBody SessionCoursVO sessionCoursVO) {
-        return sessionCoursService.findByCriteriaReference(sessionCoursVO);
+    @PostMapping("/allByCriteria")
+    public List<SessionCours> findAllByCriteria(@RequestBody SessionCoursVO sessionCoursVO) {
+        return sessionCoursService.findAllByCriteria(sessionCoursVO);
     }
 
     @Autowired

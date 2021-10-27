@@ -76,10 +76,6 @@ public class ProfProfRest {
 		return profService.findByCriteria(prof);
 	}
 
-/*    @GetMapping("/paiement")
-    public List<Paiement> paiementProfs() {
-        return profService.paiementProfs();
-    }*/
 	@Autowired
     private ProfService profService;
 	
@@ -87,4 +83,5 @@ public class ProfProfRest {
 	public List<SessionCours> findSessionsNonPayer(@PathVariable Long idProf) {
 		return profService.findSessionsNonPayer(idProf);
 	}
+
 }

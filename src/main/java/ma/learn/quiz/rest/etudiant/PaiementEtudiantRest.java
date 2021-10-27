@@ -18,7 +18,7 @@ public class PaiementEtudiantRest {
 	    }
 
 
-	@PostMapping("/{id}")
+	@GetMapping("/{id}")
 	public int save(@PathVariable Long id) {
 		return paiementService.save(id);
 	}
