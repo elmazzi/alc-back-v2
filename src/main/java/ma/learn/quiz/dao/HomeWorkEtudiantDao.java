@@ -16,4 +16,5 @@ public interface HomeWorkEtudiantDao extends JpaRepository<HomeWorkEtudiant, Lon
 	List<HomeWorkEtudiant> findByHomeWorkId(Long id);
 	int deleteByEtudiantId(Long id);
 	int deleteByHomeWorkId(Long id);
+	HomeWorkEtudiant findByIdAndEtudiantId(Long idhomework,Long idstudent);
 }

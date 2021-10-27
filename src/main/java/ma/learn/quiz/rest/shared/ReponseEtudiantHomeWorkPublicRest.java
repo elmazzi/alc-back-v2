@@ -64,16 +64,15 @@ public class ReponseEtudiantHomeWorkPublicRest {
 		return reponseEtudiantHomeWorkService.findAll();
 	}
 
-	@PostMapping("/")
-	public int save(@RequestBody ReponseEtudiantHomeWork reponseEtudiantHomeWork) {
-		return reponseEtudiantHomeWorkService.save(reponseEtudiantHomeWork);
-	}
-
 	@GetMapping("/homeWorkEtudiant/id/{id}/homeWorkEtudiant/reponse/question/numero/{numeroQuestion}")
 	public List<ReponseEtudiantHomeWork> findByCriteria(@PathVariable Long idHomeWorkEtudiant, @PathVariable Long numeroQuestion) {
 		return reponseEtudiantHomeWorkService.findByCriteria(idHomeWorkEtudiant, numeroQuestion);
 	}
 
+	@GetMapping("/QuestionId/{id}")
+	public List<ReponseEtudiantHomeWork> findReponseEtudiantHomeWorkByQuestionId(@PathVariable Long id) {
+		return reponseEtudiantHomeWorkService.findReponseEtudiantHomeWorkByQuestionId(id);
+	}
 	@Autowired
 	private ReponseEtudiantHomeWorkService reponseEtudiantHomeWorkService;
 

@@ -37,7 +37,24 @@ public class Etudiant {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@OneToMany(mappedBy = "etudiant")
 	private List<QuizEtudiant> quizEtudiant;
+/*    @ManyToOne
+	private  GroupeEtudiantDetail groupeEtudiantDetail ;
 
+ */
+	/*
+	@ManyToOne
+	private GroupeEtudeDetail groupeEtudeDetail ;
+
+	public GroupeEtudeDetail getGroupeEtudeDetail() {
+		return groupeEtudeDetail;
+	}
+
+	public void setGroupeEtudeDetail(GroupeEtudeDetail groupeEtudeDetail) {
+		this.groupeEtudeDetail = groupeEtudeDetail;
+	}
+
+
+	 */
 	public Etudiant() {
 		super();
 		// TODO Auto-generated constructor stub
