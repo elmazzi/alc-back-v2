@@ -14,46 +14,46 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class Etudiant extends User {
-	private String ref;
-	@ManyToOne
-	private Prof prof;
-	@ManyToOne
-	private EtatEtudiantSchedule etatEtudiantSchedule;
-	@ManyToOne
-	private Parcours parcours;
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@OneToMany(mappedBy = "etudiant")
-	private List<QuizEtudiant> quizEtudiant;
+    private String ref;
+    @ManyToOne
+    private Prof prof;
+    @ManyToOne
+    private EtatEtudiantSchedule etatEtudiantSchedule;
+    @ManyToOne
+    private Parcours parcours;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "etudiant")
+    private List<QuizEtudiant> quizEtudiant;
 
-	public Etudiant(User user, String ref, Prof prof, EtatEtudiantSchedule etatEtudiantSchedule, Parcours parcours, List<QuizEtudiant> quizEtudiant) {
-		super(user.id, user.username, user.password, user.nom, user.prenom,
-				user.numero, user.addresse, user.ville, user.age, user.image, user.accountNonExpired,
-				user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role);
-		this.ref = ref;
-		this.prof = prof;
-		this.etatEtudiantSchedule = etatEtudiantSchedule;
-		this.parcours = parcours;
-		this.quizEtudiant = quizEtudiant;
-	}
+    public Etudiant(User user, String ref, Prof prof, EtatEtudiantSchedule etatEtudiantSchedule, Parcours parcours, List<QuizEtudiant> quizEtudiant) {
+        super(user.id, user.username, user.password, user.nom, user.prenom,
+                user.numero, user.addresse, user.ville, user.age, user.image, user.accountNonExpired,
+                user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role);
+        this.ref = ref;
+        this.prof = prof;
+        this.etatEtudiantSchedule = etatEtudiantSchedule;
+        this.parcours = parcours;
+        this.quizEtudiant = quizEtudiant;
+    }
 
-	public Etudiant() {
-	}
+    public Etudiant() {
+    }
 
-	public String getNumero() {
-		return numero;
-	}
+    public String getNumero() {
+        return numero;
+    }
 
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
 
     public Prof getProf() {
-		return prof;
-	}
+        return prof;
+    }
 
-	public void setProf(Prof prof) {
-		this.prof = prof;
-	}
+    public void setProf(Prof prof) {
+        this.prof = prof;
+    }
 
     public Etudiant(String ref, String nom, String prenom, int age, String username, String ville, String address, String password, String image, String gmail, Prof prof, EtatEtudiantSchedule etatEtudiantSchedule, Parcours parcours, List<QuizEtudiant> quizEtudiant) {
         this.ref = ref;
@@ -69,93 +69,93 @@ public class Etudiant extends User {
         this.quizEtudiant = quizEtudiant;
     }
 
-	
-	public List<QuizEtudiant> getQuizEtudiant() {
-		return quizEtudiant;
-	}
 
-	public void setQuizEtudiant(List<QuizEtudiant> quizEtudiant) {
-		this.quizEtudiant = quizEtudiant;
-	}
+    public List<QuizEtudiant> getQuizEtudiant() {
+        return quizEtudiant;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public void setQuizEtudiant(List<QuizEtudiant> quizEtudiant) {
+        this.quizEtudiant = quizEtudiant;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getRef() {
-		return ref;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setRef(String ref) {
-		this.ref = ref;
-	}
+    public String getRef() {
+        return ref;
+    }
 
-	public String getNom() {
-		return nom;
-	}
+    public void setRef(String ref) {
+        this.ref = ref;
+    }
 
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
+    public String getNom() {
+        return nom;
+    }
 
-	public String getPrenom() {
-		return prenom;
-	}
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
+    public String getPrenom() {
+        return prenom;
+    }
 
-	public int getAge() {
-		return age;
-	}
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
 
-	public void setAge(int age) {
-		this.age = age;
-	}
+    public int getAge() {
+        return age;
+    }
 
-	public String getVille() {
-		return ville;
-	}
+    public void setAge(int age) {
+        this.age = age;
+    }
 
-	public void setVille(String ville) {
-		this.ville = ville;
-	}
+    public String getVille() {
+        return ville;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public void setVille(String ville) {
+        this.ville = ville;
+    }
 
-	public void setUsername(String login) {
-		this.username = login;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setUsername(String login) {
+        this.username = login;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public Parcours getParcours() {
-		return parcours;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setParcours(Parcours parcours) {
-		this.parcours = parcours;
-	}
+    public Parcours getParcours() {
+        return parcours;
+    }
 
-	public EtatEtudiantSchedule getEtatEtudiantSchedule() {
-		return etatEtudiantSchedule;
-	}
+    public void setParcours(Parcours parcours) {
+        this.parcours = parcours;
+    }
 
-	public void setEtatEtudiantSchedule(EtatEtudiantSchedule etatEtudiantSchedule) {
-		this.etatEtudiantSchedule = etatEtudiantSchedule;
-	}
+    public EtatEtudiantSchedule getEtatEtudiantSchedule() {
+        return etatEtudiantSchedule;
+    }
+
+    public void setEtatEtudiantSchedule(EtatEtudiantSchedule etatEtudiantSchedule) {
+        this.etatEtudiantSchedule = etatEtudiantSchedule;
+    }
 
 }
