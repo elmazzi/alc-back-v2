@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Optional;
 
 
 @Entity
@@ -37,11 +38,11 @@ public class HomeWorkEtudiant {
 		this.etudiant = etudiant;
 	}
 
-	public HomeWork getHomeWok() {
+	public HomeWork getHomeWork() {
 		return homeWork;
 	}
 
-	public void setHomeWok(HomeWork homeWork) {
+	public void setHomeWork(HomeWork homeWork) {
 		this.homeWork = homeWork;
 	}
 
@@ -60,8 +61,5 @@ public class HomeWorkEtudiant {
 	public void setNote(Double note) {
 		this.note = note;
 	}
-
-
-
 
 }

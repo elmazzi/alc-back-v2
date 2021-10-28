@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 
 	@Entity
 	public class Inscription  {
-		 @Id
+		   @Id
 		    @GeneratedValue(strategy = GenerationType.AUTO)
 		    private Long id ;
 			private String ref;
@@ -42,12 +42,9 @@ import javax.persistence.TemporalType;
 		    @Temporal (TemporalType.DATE)
 			   private Date datefininscription;
 		    
-		  
-	
-		   
-		
-		
-			public Prof getProf() {
+
+
+		public Prof getProf() {
 			return prof;
 		}
 		public void setProf(Prof prof) {

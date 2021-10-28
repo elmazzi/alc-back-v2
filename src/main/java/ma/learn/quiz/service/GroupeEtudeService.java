@@ -14,7 +14,7 @@ public class GroupeEtudeService {
     @Autowired
     private GroupeEtudeDao groupeEtudeDao;
     @Autowired
-    private GroupeEtudeDetailService groupeEtudeDetailService;
+    private GroupeEtudiantDetailService groupeEtudiantDetailService;
     public int save(GroupeEtude groupeEtude)
     {
         if(findByLibelle(groupeEtude.getLibelle())!=null)
@@ -23,17 +23,21 @@ public class GroupeEtudeService {
         }
         else
             groupeEtudeDao.save(groupeEtude);
-           groupeEtudeDetailService.save(groupeEtude, groupeEtude.getGroupeEtudeDetails());
-        return 1;
-    }
-    public int update(GroupeEtude groupeEtude){
-        groupeEtudeDao.save(groupeEtude);
+      /*     groupeEtudeDetailService.save(groupeEtude, groupeEtude.getGroupeEtudeDetails());
+
+       */
         return 1;
     }
 
-    public GroupeEtude findByLibelle(String libelle) {
-        return groupeEtudeDao.findByLibelle(libelle);
+    public int update(GroupeEtude groupeEtude){
+        groupeEtudeDao.save(groupeEtude);
+   /*     groupeEtudeDetailService.save(groupeEtude, groupeEtude.getGroupeEtudeDetails());
+
+    */
+        return 1;
     }
+
+
     @Transactional
     public int deleteByLibelle(String libelle) {
         return groupeEtudeDao.deleteByLibelle(libelle);
@@ -47,4 +51,11 @@ public class GroupeEtudeService {
         return groupeEtudeDao.findAll();
     }
 
+    public GroupeEtude findByLibelle(String libelle) {
+        return groupeEtudeDao.findByLibelle(libelle);
+    }
+
+    public GroupeEtude findGroupeEtudeById(Long id) {
+        return groupeEtudeDao.findGroupeEtudeById(id);
+    }
 }

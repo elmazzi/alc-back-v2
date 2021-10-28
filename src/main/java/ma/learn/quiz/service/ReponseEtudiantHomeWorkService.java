@@ -1,7 +1,9 @@
 package ma.learn.quiz.service;
 
+import ma.learn.quiz.bean.HomeWorkEtudiant;
 import ma.learn.quiz.bean.ReponseEtudiant;
 import ma.learn.quiz.bean.ReponseEtudiantHomeWork;
+import ma.learn.quiz.dao.HomeWorkEtudiantDao;
 import ma.learn.quiz.dao.ReponseEtudiantDao;
 import ma.learn.quiz.dao.ReponseEtudiantHomeWorkDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +27,6 @@ public class ReponseEtudiantHomeWorkService {
 		reponseEtudiantHomeWorkDao.deleteById(id);
 	}
 
-	public List<ReponseEtudiant> findByReponseQuestionId(Long id) {
-		return reponseEtudiantHomeWorkDao.findByReponseQuestionId(id);
-	}
 
 	public List<ReponseEtudiant> findByHomeWorkEtudiantId(Long id) {
 		return reponseEtudiantHomeWorkDao.findByHomeWorkEtudiantId(id);
@@ -41,10 +40,6 @@ public class ReponseEtudiantHomeWorkService {
 		return reponseEtudiantHomeWorkDao.findByHomeWorkEtudiantHomeWorkId(id);
 	}
 
-	@Transactional
-	public int deleteByReponseQuestionId(Long id) {
-		return reponseEtudiantHomeWorkDao.deleteByReponseQuestionId(id);
-	}
 
 	@Transactional
 	public int deleteByHomeWorkEtudiantId(Long id) {
@@ -65,13 +60,30 @@ public class ReponseEtudiantHomeWorkService {
 		return reponseEtudiantHomeWorkDao.findAll();
 	}
 
-	public int save(ReponseEtudiantHomeWork reponseEtudiantHomeWork) {
-		reponseEtudiantHomeWorkDao.save(reponseEtudiantHomeWork);
+	public int save(HomeWorkEtudiant homeWorkEtudiant, List<ReponseEtudiantHomeWork> reponseEtudiantHomeWork) {
+
+		for (ReponseEtudiantHomeWork reponseEtudiantHomeWork1: reponseEtudiantHomeWork) {
+			reponseEtudiantHomeWork1.setHomeWorkEtudiant(homeWorkEtudiant);
+			reponseEtudiantHomeWorkDao.save(reponseEtudiantHomeWork1);
+		}
+
 		return 1;
 	}
 
+	public int update(HomeWorkEtudiant homeWorkEtudiant, List<ReponseEtudiantHomeWork> reponseEtudiantHomeWork){
+		int result = reponseEtudiantHomeWorkDao.deleteByHomeWorkEtudiantId(homeWorkEtudiant.getId());
+		for (ReponseEtudiantHomeWork reponseEtudiantHomeWork1: reponseEtudiantHomeWork) {
+			reponseEtudiantHomeWork1.setHomeWorkEtudiant(homeWorkEtudiant);
+			reponseEtudiantHomeWorkDao.save(reponseEtudiantHomeWork1);
+		}
+
+		return 1 + result;
+
+	}
 	@Autowired
 	private ReponseEtudiantHomeWorkDao reponseEtudiantHomeWorkDao;
+	@Autowired
+	private HomeWorkEtudiantDao homeWorkEtudiantDao;
 
 	@Autowired
     private EntityManager entityManager;
@@ -82,6 +94,7 @@ public class ReponseEtudiantHomeWorkService {
 	}
 
 
-
-	
+	public List<ReponseEtudiantHomeWork> findReponseEtudiantHomeWorkByQuestionId(Long id) {
+		return reponseEtudiantHomeWorkDao.findReponseEtudiantHomeWorkByQuestionId(id);
+	}
 }

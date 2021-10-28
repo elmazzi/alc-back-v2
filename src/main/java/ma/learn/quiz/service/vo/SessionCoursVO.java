@@ -1,11 +1,24 @@
 package ma.learn.quiz.service.vo;
 
+import ma.learn.quiz.bean.Cours;
+import ma.learn.quiz.bean.Etudiant;
+import ma.learn.quiz.bean.Prof;
+
 public class SessionCoursVO {
     private String reference;
-    private String profname;
-    private String etudiantname;
-    private String dateDebut;
-    private String dateFin;
+    private Prof prof;
+    private Cours cours;
+    private Etudiant etudiant;
+     private String dateFin;
+     private boolean payer;
+
+    public boolean isPayer() {
+        return payer;
+    }
+
+    public void setPayer(boolean payer) {
+        this.payer = payer;
+    }
 
     public String getReference() {
         return reference;
@@ -15,29 +28,6 @@ public class SessionCoursVO {
         this.reference = reference;
     }
 
-    public String getProfname() {
-        return profname;
-    }
-
-    public void setProfname(String profname) {
-        this.profname = profname;
-    }
-
-    public String getEtudiantname() {
-        return etudiantname;
-    }
-
-    public void setEtudiantname(String etudiantname) {
-        this.etudiantname = etudiantname;
-    }
-
-    public String getDateDebut() {
-        return dateDebut;
-    }
-
-    public void setDateDebut(String dateDebut) {
-        this.dateDebut = dateDebut;
-    }
 
     public String getDateFin() {
         return dateFin;
@@ -45,5 +35,29 @@ public class SessionCoursVO {
 
     public void setDateFin(String dateFin) {
         this.dateFin = dateFin;
+    }
+
+    public Prof getProf() {
+        return prof;
+    }
+
+    public void setProf(Prof prof) {
+        this.prof = prof;
+    }
+
+    public Cours getCours() {
+        return cours;
+    }
+
+    public void setCours(Cours cours) {
+        this.cours = cours;
+    }
+
+    public Etudiant getEtudiant() {
+        return etudiant;
+    }
+
+    public void setEtudiant(Etudiant etudiant) {
+        this.etudiant = etudiant;
     }
 }

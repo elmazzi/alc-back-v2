@@ -1,7 +1,4 @@
 package ma.learn.quiz.bean;
-
-
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,17 +11,11 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-
 @Entity
 public class Cours implements Serializable {
-
-
-
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-	
 
 	    private String description;
 	    private String image;

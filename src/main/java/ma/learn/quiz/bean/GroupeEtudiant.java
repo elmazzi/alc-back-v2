@@ -1,12 +1,16 @@
 package ma.learn.quiz.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 @Entity
 public class GroupeEtudiant implements Serializable {
     @Id
@@ -22,26 +26,40 @@ public class GroupeEtudiant implements Serializable {
     private Long nombrePlace ;
     private Long  nombrePlacevide;
     private Long  nombrePlaceNonVide; // nombre de place non disponible
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+
     @OneToMany(mappedBy = "groupeEtudiant")
-    private List<GroupeEtudeDetail> groupeEtudeDetails;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<GroupeEtudiantDetail> groupeEtudiantDetails;
     @ManyToOne
     private GroupeEtude groupeEtude;
+   /* @ManyToOne
+    private Parcours parcours;
 
-    public List<GroupeEtudeDetail> getGroupeEtudeDetails() {
-        return groupeEtudeDetails;
+    public Parcours getParcours() {
+        return parcours;
     }
 
-    public void setGroupeEtudeDetails(List<GroupeEtudeDetail> groupeEtudeDetails) {
-        this.groupeEtudeDetails = groupeEtudeDetails;
+    public void setParcours(Parcours parcours) {
+        this.parcours = parcours;
     }
 
-    public GroupeEtude getGrpEtude() {
+    */
+
+    public GroupeEtude getGroupeEtude() {
         return groupeEtude;
     }
 
-    public void setGrpEtude(GroupeEtude groupeEtude) {
+    public void setGroupeEtude(GroupeEtude groupeEtude) {
         this.groupeEtude = groupeEtude;
+    }
+    @JsonIgnore
+    public List<GroupeEtudiantDetail> getGroupeEtudeDetails() {
+        return groupeEtudiantDetails;
+    }
+
+    public void setGroupeEtudeDetails(List<GroupeEtudiantDetail> groupeEtudiantDetails) {
+        this.groupeEtudiantDetails = groupeEtudiantDetails;
     }
 
     public void setId(Long id) {
@@ -106,21 +124,5 @@ public class GroupeEtudiant implements Serializable {
 
     public void setNombrePlaceNonVide(Long nombrePlaceNonVide) {
         this.nombrePlaceNonVide = nombrePlaceNonVide;
-    }
-
-    public List<GroupeEtudeDetail> getGroupeEtudiantDetails() {
-        return groupeEtudeDetails;
-    }
-
-    public void setGroupeEtudiantDetails(List<GroupeEtudeDetail> groupeEtudeDetails) {
-        this.groupeEtudeDetails = groupeEtudeDetails;
-    }
-
-    public GroupeEtude getGroupeEtude() {
-        return groupeEtude;
-    }
-
-    public void setGroupeEtude(GroupeEtude groupeEtude) {
-        this.groupeEtude = groupeEtude;
     }
 }

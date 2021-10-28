@@ -26,11 +26,6 @@ public class ReponseEtudiantHomeWorkPublicRest {
 		reponseEtudiantHomeWorkService.deleteById(id);
 	}
 
-	@GetMapping("/reponse/question/id/{id}")
-	public List<ReponseEtudiant> findByReponseQuestionId(@PathVariable Long id) {
-		return reponseEtudiantHomeWorkService.findByReponseQuestionId(id);
-	}
-
 	@GetMapping("/homeWorkEtudiant/id/{id}")
 	public List<ReponseEtudiant> findByHomeWorkEtudiantId(@PathVariable Long id) {
 		return reponseEtudiantHomeWorkService.findByHomeWorkEtudiantId(id);
@@ -44,12 +39,6 @@ public class ReponseEtudiantHomeWorkPublicRest {
 	@GetMapping("/homeWorkEtudiant/homeWork/id/{id}")
 	public List<ReponseEtudiant> findByHomeWorkEtudiantHomeWorkId(@PathVariable Long id) {
 		return reponseEtudiantHomeWorkService.findByHomeWorkEtudiantHomeWorkId(id);
-	}
-
-	@Transactional
-	@DeleteMapping("/reponse/question/id/{id}")
-	public int deleteByReponseQuestionId(@PathVariable Long id) {
-		return reponseEtudiantHomeWorkService.deleteByReponseQuestionId(id);
 	}
 
 	@Transactional
@@ -75,16 +64,15 @@ public class ReponseEtudiantHomeWorkPublicRest {
 		return reponseEtudiantHomeWorkService.findAll();
 	}
 
-	@PostMapping("/")
-	public int save(@RequestBody ReponseEtudiantHomeWork reponseEtudiantHomeWork) {
-		return reponseEtudiantHomeWorkService.save(reponseEtudiantHomeWork);
-	}
-
 	@GetMapping("/homeWorkEtudiant/id/{id}/homeWorkEtudiant/reponse/question/numero/{numeroQuestion}")
 	public List<ReponseEtudiantHomeWork> findByCriteria(@PathVariable Long idHomeWorkEtudiant, @PathVariable Long numeroQuestion) {
 		return reponseEtudiantHomeWorkService.findByCriteria(idHomeWorkEtudiant, numeroQuestion);
 	}
 
+	@GetMapping("/QuestionId/{id}")
+	public List<ReponseEtudiantHomeWork> findReponseEtudiantHomeWorkByQuestionId(@PathVariable Long id) {
+		return reponseEtudiantHomeWorkService.findReponseEtudiantHomeWorkByQuestionId(id);
+	}
 	@Autowired
 	private ReponseEtudiantHomeWorkService reponseEtudiantHomeWorkService;
 

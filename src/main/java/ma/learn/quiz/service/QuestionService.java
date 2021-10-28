@@ -1,5 +1,6 @@
 package ma.learn.quiz.service;
 
+import ma.learn.quiz.bean.HomeWork;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -83,7 +84,7 @@ public class QuestionService {
 		}
 	}
 
-	
+
 public void saveAll(Quiz quiz , List<Question> questions) {
 	for (Question question : questions) {
 		question.setQuiz(quiz);
@@ -95,6 +96,7 @@ public void saveAll(Quiz quiz , List<Question> questions) {
 	}
 	
 } 
+
 
 	public Question findByNumero(Long numero) {
 		return questionDao.findByNumero(numero);

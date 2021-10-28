@@ -39,6 +39,11 @@ public class HomeWorkEtudiantRest {
 		return homeWorkService.save(homeWork);
 	}
 
+	@GetMapping("/cours/{id}")
+	public List<HomeWork> findhomeworkbysectioncours(Long id) {
+		return homeWorkService.findhomeworkbysectioncours(id);
+	}
+
 	@Autowired
 	private HomeWorkService homeWorkService;
 

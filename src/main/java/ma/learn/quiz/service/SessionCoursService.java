@@ -7,6 +7,8 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import ma.learn.quiz.bean.Cours;
+import ma.learn.quiz.service.Util.UtilString;
+import ma.learn.quiz.service.vo.SessionCoursVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,8 @@ public class SessionCoursService {
     private EtudiantService etudiantService;
     @Autowired
     private ProfService profService;
+    @Autowired
+    private CoursService coursService;
 
     public List<SessionCours> findByCriteria(SessionCours sessionCours) {
         String query = "SELECT e FROM SessionCours e WHERE 1=1";
@@ -39,6 +43,33 @@ public class SessionCoursService {
 
         return entityManager.createQuery(query).getResultList();
     }
+    public List<SessionCours> findAllByCriteria(SessionCoursVO sessionCoursVO) {
+        String query = "SELECT c FROM SessionCours c WHERE 1=1 ";
+
+        if (UtilString.isnotEmpty(sessionCoursVO.getCours().getLibelle()))
+
+            query += " AND c.cours.libelle LIKE '%" + sessionCoursVO.getCours().getLibelle() + "%'";
+
+        if (UtilString.isnotEmpty(sessionCoursVO.getProf().getNom()))
+
+            query += " AND c.prof.nom LIKE '%" + sessionCoursVO.getProf().getNom() + "%'";
+
+        if (UtilString.isnotEmpty(sessionCoursVO.getEtudiant().getNom()))
+
+            query += " AND c.etudiant.nom LIKE '%" + sessionCoursVO.getEtudiant().getNom() + "%'";
+
+        if (UtilString.isnotEmpty(sessionCoursVO.getReference()))
+
+            query += " AND c.reference LIKE '%" + sessionCoursVO.getReference() + "%'";
+
+        if (UtilString.isnotEmpty(sessionCoursVO.getDateFin()))
+            query += " AND c.dateFin LIKE '%" + sessionCoursVO.getDateFin() + "%'";
+
+        return entityManager.createQuery(query).getResultList();
+
+
+    }
+
 
 
     public SessionCours findSessionCoursById(Long id) {
@@ -46,26 +77,6 @@ public class SessionCoursService {
     }
 
 
-    /*
-        public int save(SessionCours sessionCours) {
-            SessionCours session = findSessionCoursById(sessionCours.getId());
-            Etudiant etd = etudiantService.findEtudiantById(sessionCours.getEtudiant().getId());
-            Prof prof = profService.findProfById(sessionCours.getProf().getId());
-            if (findSessionCoursById(sessionCours.getId()) != null) {
-                return -1;
-            } else {
-                SessionCours sessionCours1 = new SessionCours();
-                sessionCours1.setProf(prof);
-                sessionCours1.setDateFin(session.getDateFin());
-                sessionCours1.setReference(session.getReference());
-                sessionCours1.setPayer(false);
-                sessionCours1.setEtudiant(etd);
-
-                sessionCoursDao.save(sessionCours1);
-                return 1;
-            }
-        }
-    */
     public static String generateStringUppercaseAndLowercase(int len) {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         Random rnd = new Random();
@@ -74,35 +85,50 @@ public class SessionCoursService {
             sb.append(chars.charAt(rnd.nextInt(chars.length())));
         return sb.toString();
     }
-    public int save(Long profid, Long etudiantid) {
+
+    public SessionCours findSessionCoursByCoursIdAndEtudiantIdAndProfId(Long idc, Long ids, Long idp) {
+        return sessionCoursDao.findSessionCoursByCoursIdAndEtudiantIdAndProfId(idc, ids, idp);
+    }
+
+    public int save(Long profid, Long etudiantid, Long coursid) {
         Prof prof1 = profService.findProfById(profid);
         Etudiant etudiant1 = etudiantService.findEtudiantById(etudiantid);
-        if (prof1 == null || etudiant1 == null) {
+        Cours cours = coursService.findCoursById(coursid);
+        SessionCours session = findSessionCoursByCoursIdAndEtudiantIdAndProfId(coursid, etudiantid, profid);
+        if (prof1 == null || etudiant1 == null || cours == null) {
             return -1;
         }
-        else {
-            SessionCours sessionCours=new SessionCours();
+        else if (session != null && !session.isPayer()) {
+            session.setTotalheure(session.getTotalheure() + 1);
+            sessionCoursDao.save(session);
+            return 2;
+        }  else {
+            SessionCours sessionCours = new SessionCours();
             sessionCours.setEtudiant(etudiant1);
-            sessionCours.setDateFin(new java.sql.Date(System.currentTimeMillis()+3600*1000*24));
+            sessionCours.setDateFin(new java.sql.Date(System.currentTimeMillis() + 3600 * 1000 * 24));
             sessionCours.setReference(generateStringUppercaseAndLowercase(6));
             sessionCours.setPayer(false);
             sessionCours.setProf(prof1);
+            sessionCours.setTotalheure(1);
+            sessionCours.setCours(cours);
             sessionCoursDao.save(sessionCours);
             return 1;
         }
     }
 
+
     public List<SessionCours> findByProfIdAndEtudiantId(Long id, Long ids) {
         return sessionCoursDao.findByProfIdAndEtudiantId(id, ids);
     }
 
-    public int update(SessionCours sessionCours) {
-        SessionCours session = findSessionCoursById(sessionCours.getId());
-
+    public int update(Long id) {
+        SessionCours session = findSessionCoursById(id);
         if (session == null) {
             return -1;
-        } else {
-            session.setPayer(true);
+        }
+        else {
+            session.setTotalheure(0);
+            session.setPayer(false);
             sessionCoursDao.save(session);
             return 1;
         }

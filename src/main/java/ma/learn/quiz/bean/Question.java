@@ -25,8 +25,17 @@ public class Question {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "question")
     private List<Reponse> reponses;
-    
-    
+    @ManyToOne
+    private HomeWork homeWork;
+
+    public HomeWork getHomeWork() {
+        return homeWork;
+    }
+
+    public void setHomeWork(HomeWork homeWork) {
+        this.homeWork = homeWork;
+    }
+
     public List<Reponse> getReponses() {
         return reponses;
     }

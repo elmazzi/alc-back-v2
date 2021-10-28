@@ -1,5 +1,6 @@
 package ma.learn.quiz.rest.admin;
 
+import ma.learn.quiz.bean.Cours;
 import ma.learn.quiz.bean.HomeWork;
 import ma.learn.quiz.service.HomeWorkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,11 @@ public class HomeWorkAdminRest {
 	@PostMapping("/")
 	public int save(@RequestBody HomeWork homeWork) {
 		return homeWorkService.save(homeWork);
+	}
+
+	@GetMapping("/cours/{id}")
+	public List<HomeWork> findhomeworkbysectioncours(@PathVariable Long id) {
+		return homeWorkService.findhomeworkbysectioncours(id);
 	}
 
 	@Autowired

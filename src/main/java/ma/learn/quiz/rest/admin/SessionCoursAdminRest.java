@@ -5,6 +5,7 @@ import ma.learn.quiz.bean.Etudiant;
 import ma.learn.quiz.bean.Prof;
 import ma.learn.quiz.bean.SessionCours;
 import ma.learn.quiz.service.SessionCoursService;
+import ma.learn.quiz.service.vo.SessionCoursVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,32 +15,33 @@ import java.util.List;
 @RequestMapping("/admin/session")
 public class SessionCoursAdminRest {
 
-    @PostMapping("/{profid}/{etudiantid}")
-    public int save(@PathVariable Long profid,@PathVariable Long etudiantid) {
-        return sessionCoursService.save(profid, etudiantid);
+    @PostMapping("/{profid}/{etudiantid}/{coursid}")
+    public int save(@PathVariable Long profid, @PathVariable Long etudiantid, @PathVariable Long coursid) {
+        return sessionCoursService.save(profid, etudiantid, coursid);
     }
-
 
 
     @GetMapping("/id/{id}")
     public SessionCours findSessionCoursById(@PathVariable Long id) {
         return sessionCoursService.findSessionCoursById(id);
     }
+
     @PostMapping("/search")
     public List<SessionCours> findByCriteria(@RequestBody SessionCours sessionCours) {
-		return sessionCoursService.findByCriteria(sessionCours);
-	}
+        return sessionCoursService.findByCriteria(sessionCours);
+    }
 
 
-    @PutMapping("/")
-    public int update(@RequestBody SessionCours sessionCours) {
-        return sessionCoursService.update(sessionCours);
+    @GetMapping("/update/{id}")
+    public int update(@PathVariable Long id) {
+        return sessionCoursService.update(id);
     }
 
     @GetMapping("/prof/id/{id}")
     public List<SessionCours> findByProfId(@PathVariable Long id) {
         return sessionCoursService.findByProfId(id);
     }
+
     @GetMapping("/prof/nom/{nom}")
 
     public SessionCours findSessionCoursByProfNom(@PathVariable String nom) {
@@ -60,14 +62,21 @@ public class SessionCoursAdminRest {
     public int deleteSessionCoursById(@RequestBody List<SessionCours> sessionCourss) {
         return sessionCoursService.deleteSessionCoursById(sessionCourss);
     }
+
     @GetMapping("/prof/id/{id}/etudiant/id/{ids}")
-    public List<SessionCours> findByProfIdAndEtudiantId(@PathVariable Long id,@PathVariable Long ids) {
+    public List<SessionCours> findByProfIdAndEtudiantId(@PathVariable Long id, @PathVariable Long ids) {
         return sessionCoursService.findByProfIdAndEtudiantId(id, ids);
     }
+
     @GetMapping("/etudiant/id/{id}")
 
     public List<SessionCours> findSessionCoursByEtudiantId(@PathVariable Long id) {
         return sessionCoursService.findSessionCoursByEtudiantId(id);
+    }
+
+    @PostMapping("/allByCriteria")
+    public List<SessionCours> findAllByCriteria(@RequestBody SessionCoursVO sessionCoursVO) {
+        return sessionCoursService.findAllByCriteria(sessionCoursVO);
     }
 
     @Autowired
