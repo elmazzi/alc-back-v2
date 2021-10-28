@@ -13,7 +13,7 @@ public interface EtudiantDao extends JpaRepository<Etudiant, Long> {
 
     Etudiant findByNom(String nom);
 
-    Etudiant findByLogin(String login);
+    Etudiant findByUsername(String username);
 
     int deleteByRef(String ref);
 

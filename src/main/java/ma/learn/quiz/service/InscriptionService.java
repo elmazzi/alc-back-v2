@@ -2,7 +2,6 @@ package ma.learn.quiz.service;
 
 import java.security.SecureRandom;
 import java.util.List;
-import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -17,10 +16,6 @@ import ma.learn.quiz.bean.Inscription;
 import ma.learn.quiz.bean.Parcours;
 import ma.learn.quiz.bean.Prof;
 import ma.learn.quiz.dao.InscriptionDao;
-import ma.learn.quiz.service.vo.EtudiantVo;
-
-
-
 
 
 @Service
@@ -64,8 +59,8 @@ public class InscriptionService {
 		Inscription inscriptionLogin = findInscriptionByLogin(inscription.getLogin());
 		List<Prof> profs=profService.findAll();
 		List<Parcours> parcours=parcoursService.findAll();
-		Prof prof = profs.get(1);
-		Parcours parcrs = parcours.get(1);
+		Prof prof = profs.get(0);
+		Parcours parcrs = parcours.get(0);
 		if (inscriptionLogin != null || inscription.getNumero().isEmpty() || inscription.getNom().isEmpty() || inscription.getPrenom().isEmpty() || inscription.getLogin().isEmpty() ) {
 			return -1;
 		}else {
@@ -95,9 +90,9 @@ public class InscriptionService {
 		loadedInscription.setProf(inscription.getProf());
 		if (etatInscription.getId() == 2) {
 			Etudiant etudiant = new Etudiant();
-			etudiant.setAddress(loadedInscription.getAddress());
+			etudiant.setAddresse(loadedInscription.getAddress());
 			etudiant.setAge(loadedInscription.getAge());
-			etudiant.setLogin(loadedInscription.getLogin());
+			etudiant.setUsername(loadedInscription.getLogin());
 			etudiant.setNom(loadedInscription.getNom());
 			etudiant.setParcours(loadedInscription.getParcours());
 			etudiant.setProf(inscription.getProf());
@@ -105,7 +100,6 @@ public class InscriptionService {
 			etudiant.setPrenom(loadedInscription.getPrenom());
 			etudiant.setRef(loadedInscription.getRef());
 			etudiant.setVille(loadedInscription.getVille());
-			etudiant.setGmail(loadedInscription.getGmail());
 			etudiant.setNumero(loadedInscription.getNumero());
 			System.out.println(etudiant.getNom());
 			etudiantService.create(etudiant);

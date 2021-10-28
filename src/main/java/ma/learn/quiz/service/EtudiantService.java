@@ -1,50 +1,34 @@
 package ma.learn.quiz.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import ma.learn.quiz.bean.*;
+import ma.learn.quiz.service.facade.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import ma.learn.quiz.bean.EtatEtudiantSchedule;
-import ma.learn.quiz.bean.Etudiant;
-import ma.learn.quiz.bean.Parcours;
-import ma.learn.quiz.bean.Prof;
-import ma.learn.quiz.bean.ScheduleProf;
 import ma.learn.quiz.dao.EtudiantDao;
 import ma.learn.quiz.dao.ScheduleProfDao;
 import ma.learn.quiz.service.vo.EtudiantVo;
 
+import static ma.learn.quiz.filter.RoleConstant.ROLE_STUDENT;
+
 @Service
 public class EtudiantService {
-	@Autowired
-	public EtudiantDao etudiantDao;
-	@Autowired
-	public EtatEtudiantScheduleService etatEtudiantScheduleService;
-	@Autowired
-	public CentreService centreService;
-	@Autowired
-	public ParcoursService parcoursService;
-	@Autowired
-	public ProfService profService;
-	@Autowired
-	public ScheduleProfDao scheduleProfDao;
-	@Autowired
-	public JavaMailSender mailSender;
-	@Autowired
-	public EntityManager entityManager;
 
 	public List<Etudiant> findByParcoursCode(String code) {
 		return etudiantDao.findByParcoursCode(code);
 	}
 
 	public Etudiant findByLogin(String login) {
-		return etudiantDao.findByLogin(login);
+		return etudiantDao.findByUsername(login);
 	}
 
 	public Etudiant update(Etudiant etudiant) {
@@ -55,22 +39,8 @@ public class EtudiantService {
 		loadedEtudiant.setProf(prof);
 		loadedEtudiant.setNom(etudiant.getNom());
 		loadedEtudiant.setPrenom(etudiant.getPrenom());
-		loadedEtudiant.setLogin(etudiant.getLogin());
+		loadedEtudiant.setUsername(etudiant.getUsername());
 		return etudiantDao.save(loadedEtudiant);
-	}
-	private void prepareMessage(Etudiant etudiant) {
-		System.out.println("prepare email ");
-		SimpleMailMessage message = new SimpleMailMessage();
-		message.setFrom("elearningMarrakech@gmail.com");
-		message.setTo(etudiant.getLogin());
-		message.setSubject("accepted on the platform e-learning");
-		message.setText("Your online registration on the site: http://localhost:4200/#/ is validated. \n" + "You can log into your account now.\n" +
-				"Your account settings are :"  +"\n"+
-				"username : "+ etudiant.getLogin() +"\n"+
-				"password : "+ etudiant.getPassword());
-		mailSender.send(message);
-		System.out.println("email send");
-
 	}
 	public Etudiant findEtudiantById(Long id) {
 		return etudiantDao.findEtudiantById(id);
@@ -120,20 +90,24 @@ public class EtudiantService {
 	}
 
 	public int create(Etudiant etudiant) {
-		Etudiant etd = findByLogin(etudiant.getLogin());
+		Etudiant etd = findByLogin(etudiant.getUsername());
 		if (etd != null){
 			return -1;
 		}else {
-			prepareMessage(etudiant);
-			etudiantDao.save(etudiant);
-
+			etudiant.setParcours(null);
+			etudiant.setProf(null);
+			etudiant.setEtatEtudiantSchedule(null);
+			String password = this.userService.generatePassword();
+			etudiant.setPassword(password);
+			etudiant.setAuthorities(Arrays.asList(new Role(ROLE_STUDENT)));
+			etudiant.setRole("STUDENT");
+			userService.save(etudiant);
 			return 1;
 		}
 	}
 
 
-	public int save(Etudiant etudiant) {
-
+	public int save(Etudiant   etudiant) {
 		Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
 		Prof prof = profService.findProfById(etudiant.getProf().getId());
 		Optional<EtatEtudiantSchedule> etat = etatEtudiantScheduleService.findById((long) 1);
@@ -172,8 +146,24 @@ public class EtudiantService {
 	}
 
 	public Object findByCritere(String login, String password) {
-		String query = "SELECT a FROM Etudiant a WHERE a.login= '" + login + "' and a.password='" + password + "'";
+		String query = "SELECT a FROM Etudiant a WHERE a.username= '" + login + "' and a.password='" + password + "'";
 		return entityManager.createQuery(query).getSingleResult();
 	}
 
+	@Autowired
+	public EtudiantDao etudiantDao;
+	@Autowired
+	public EtatEtudiantScheduleService etatEtudiantScheduleService;
+	@Autowired
+	public CentreService centreService;
+	@Autowired
+	public ParcoursService parcoursService;
+	@Autowired
+	public ProfService profService;
+	@Autowired
+	public ScheduleProfDao scheduleProfDao;
+	@Autowired
+	public EntityManager entityManager;
+	@Autowired
+	private UserService userService;
 }
