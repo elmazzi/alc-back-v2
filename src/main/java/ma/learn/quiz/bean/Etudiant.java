@@ -1,5 +1,6 @@
 package ma.learn.quiz.bean;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -12,22 +13,8 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-public class Etudiant {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+public class Etudiant extends User {
 	private String ref;
-	private String nom;
-	private String prenom;
-	private int age;
-	private String login;
-	private String numero;
-	private String ville;
-	private String address;
-	private String password;
-	private String image;
-	private String gmail;
 	@ManyToOne
 	private Prof prof;
 	@ManyToOne
@@ -38,9 +25,18 @@ public class Etudiant {
 	@OneToMany(mappedBy = "etudiant")
 	private List<QuizEtudiant> quizEtudiant;
 
+	public Etudiant(User user, String ref, Prof prof, EtatEtudiantSchedule etatEtudiantSchedule, Parcours parcours, List<QuizEtudiant> quizEtudiant) {
+		super(user.id, user.username, user.password, user.nom, user.prenom,
+				user.numero, user.addresse, user.ville, user.age, user.image, user.accountNonExpired,
+				user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role);
+		this.ref = ref;
+		this.prof = prof;
+		this.etatEtudiantSchedule = etatEtudiantSchedule;
+		this.parcours = parcours;
+		this.quizEtudiant = quizEtudiant;
+	}
+
 	public Etudiant() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getNumero() {
@@ -51,14 +47,6 @@ public class Etudiant {
 		this.numero = numero;
 	}
 
-	public String getGmail() {
-        return gmail;
-    }
-
-    public void setGmail(String gmail) {
-        this.gmail = gmail;
-    }
-
     public Prof getProf() {
 		return prof;
 	}
@@ -67,38 +55,19 @@ public class Etudiant {
 		this.prof = prof;
 	}
 
-    public Etudiant(String ref, String nom, String prenom, int age, String login, String ville, String address, String password, String image, String gmail, Prof prof, EtatEtudiantSchedule etatEtudiantSchedule, Parcours parcours, List<QuizEtudiant> quizEtudiant) {
+    public Etudiant(String ref, String nom, String prenom, int age, String username, String ville, String address, String password, String image, String gmail, Prof prof, EtatEtudiantSchedule etatEtudiantSchedule, Parcours parcours, List<QuizEtudiant> quizEtudiant) {
         this.ref = ref;
         this.nom = nom;
         this.prenom = prenom;
         this.age = age;
-        this.login = login;
+        this.username = username;
         this.ville = ville;
-        this.address = address;
         this.password = password;
-        this.image = image;
-        this.gmail = gmail;
         this.prof = prof;
         this.etatEtudiantSchedule = etatEtudiantSchedule;
         this.parcours = parcours;
         this.quizEtudiant = quizEtudiant;
     }
-
-    public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
 
 	
 	public List<QuizEtudiant> getQuizEtudiant() {
@@ -157,12 +126,12 @@ public class Etudiant {
 		this.ville = ville;
 	}
 
-	public String getLogin() {
-		return login;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setUsername(String login) {
+		this.username = login;
 	}
 
 	public String getPassword() {

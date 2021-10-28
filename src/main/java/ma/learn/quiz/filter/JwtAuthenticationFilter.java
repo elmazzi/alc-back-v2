@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static ma.learn.quiz.filter.JwtConstant.AUTORIZATION;
+import static ma.learn.quiz.filter.JwtConstant.BEARER;
+
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
 
@@ -40,6 +43,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         User principal = (User) authResult.getPrincipal();
         String token = new JwtUtil().generateToken(principal);
-        response.addHeader(JwtConstant.AUTORIZATION,JwtConstant.BEARER+token);
+        response.addHeader(AUTORIZATION, BEARER+token);
     }
 }

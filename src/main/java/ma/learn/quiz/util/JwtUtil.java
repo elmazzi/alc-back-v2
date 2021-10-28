@@ -24,7 +24,7 @@ import java.util.function.Function;
 public class JwtUtil implements Serializable {
 
     private static final long serialVersionUID = 234234523523L;
-    private String secretKey = "myScret123";
+    private final String secretKey = "myScret123";
 
 
     //generate token for user

@@ -17,6 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static ma.learn.quiz.filter.RoleConstant.*;
+
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -34,8 +36,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         http.authorizeRequests()
+//                .antMatchers("/public/**").permitAll()
                 .antMatchers("/**").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+//                .antMatchers("/user/**").permitAll()
+//                .antMatchers("/admin/**").hasAuthority(ROLE_ADMIN)
+//                .antMatchers("/prof/**").hasAuthority(ROLE_PROF)
+//                .antMatchers("/etudiant/**").hasAuthority(ROLE_STUDENT)
                 .anyRequest().authenticated();
 
         http.sessionManagement()

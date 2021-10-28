@@ -4,26 +4,23 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Collection;
 
 @Entity
 public class Admin extends User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String numero;
-    private String nom;
-    private String prenom;
-    private String login;
-    private String image;
-    private String password;
-    public String addresse;
-
-	public Admin(String username, String password) {
-		super(username, password);
-	}
 
 	public Admin() {
 
+	}
+
+	public Admin(User user) {
+		super(user.id, user.username, user.password, user.nom, user.prenom,
+				user.numero, user.addresse, user.ville, user.age, user.image, user.accountNonExpired,
+				user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role);
+	}
+
+	public Admin(String username, String password) {
+		super(username, password);
 	}
 
 	public Long getId() {
@@ -74,12 +71,12 @@ public class Admin extends User {
 		this.numero = numero;
 	}
 
-	public String getLogin() {
-		return login;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setUsername(String login) {
+		this.username = login;
 	}
 
 	public String getPassword() {
