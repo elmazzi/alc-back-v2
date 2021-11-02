@@ -6,6 +6,7 @@ import ma.learn.quiz.service.GroupeEtudeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,5 +38,8 @@ public class GroupeEtudeRest {
     public Optional<GroupeEtude> findById(Long id) {
         return groupeEtudeService.findById(id);
     }
-
+    @PostMapping("/delete-multiple-by-id")
+    public int deleteGroupeEtudeById( @RequestBody List<GroupeEtude> groupeEtude) {
+        return groupeEtudeService.deleteGroupeEtudeById(groupeEtude);
+    }
 }

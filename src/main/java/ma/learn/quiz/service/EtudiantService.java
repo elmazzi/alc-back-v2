@@ -176,4 +176,7 @@ public class EtudiantService {
 		return entityManager.createQuery(query).getSingleResult();
 	}
 
+	public List<Etudiant> findByParcoursLibelle(String libelle) {
+		return etudiantDao.findByParcoursLibelle(libelle);
+	}
 }
