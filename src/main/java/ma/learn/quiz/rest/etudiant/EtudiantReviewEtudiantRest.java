@@ -27,7 +27,7 @@ public class EtudiantReviewEtudiantRest {
         return etudiantReviewService.findAll();
     }
 
-    @PostMapping("/{idprof}/{idstudent}/{idcours}/{comment}")
+    @GetMapping("/{idprof}/{idstudent}/{idcours}/{comment}")
     public int save(@PathVariable Long idprof,@PathVariable Long idstudent,@PathVariable Long idcours,@PathVariable String comment) {
         return etudiantReviewService.save(idprof, idstudent, idcours, comment);
     }

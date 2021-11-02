@@ -1,5 +1,7 @@
 package ma.learn.quiz.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -20,6 +22,8 @@ public class EtudiantCours {
 	private Cours cours ;
 	@ManyToOne
 	private Prof prof ;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+
 	private Date dateFin;
 	private boolean payer;
 

@@ -4,6 +4,7 @@ package ma.learn.quiz.rest.prof;
 
 import ma.learn.quiz.bean.EtudiantReview;
 import ma.learn.quiz.service.EtudiantReviewService;
+import ma.learn.quiz.service.vo.EtudiantReviewVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class EtudiantReviewProfRest {
         return etudiantReviewService.findAll();
     }
 
-    @PostMapping("/{idprof}/{idstudent}/{idcours}/{comment}")
+    @GetMapping("/{idprof}/{idstudent}/{idcours}/{comment}")
     public int save(@PathVariable Long idprof,@PathVariable Long idstudent,@PathVariable Long idcours,@PathVariable String comment) {
         return etudiantReviewService.save(idprof, idstudent, idcours, comment);
     }
@@ -41,5 +42,8 @@ public class EtudiantReviewProfRest {
     public EtudiantReview findByEtudiantIdAndCoursId(@PathVariable long id,@PathVariable long ids) {
         return etudiantReviewService.findByEtudiantIdAndCoursId(id, ids);
     }
-
+@PostMapping("/ByCriteria")
+    public List<EtudiantReview> findByCriteria(@RequestBody EtudiantReviewVo etudiantReviewVo) {
+        return etudiantReviewService.findByCriteria(etudiantReviewVo);
+    }
 }

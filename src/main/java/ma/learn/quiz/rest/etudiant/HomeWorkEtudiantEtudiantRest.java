@@ -57,8 +57,13 @@ public class HomeWorkEtudiantEtudiantRest {
 		return homeWorkEtudiantService.save(homeWorkEtudiant);
 	}
 
-	@GetMapping("/homeWork/id/{idHomeWork}/etudiant/id/{idEtudiant}")
-	public Object findByCritere(@PathVariable Long idEtudiant, @PathVariable Long idHomeWork) {
+	@PostMapping("/update")
+	public int update(@RequestBody HomeWorkEtudiant homeWorkEtudiant) {
+		return homeWorkEtudiantService.update(homeWorkEtudiant);
+	}
+
+	@GetMapping("/etudiant/id/{idEtudiant}/homeWork/id/{idHomeWork}")
+	public HomeWorkEtudiant findByCritere(@PathVariable Long idEtudiant, @PathVariable Long idHomeWork) {
 		return homeWorkEtudiantService.findByCritere(idEtudiant, idHomeWork);
 	}
 

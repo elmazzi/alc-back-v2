@@ -39,7 +39,7 @@ public class EtudiantCoursAdminRest {
 	public EtudiantCours findByCoursIdAndEtudiantId(@PathVariable Long id,@PathVariable  Long ids) {
 		return etudiantCoursService.findByCoursIdAndEtudiantId(id, ids);
 	}
-	@PostMapping("/{idprof}/{idetudiant}/{idcours}")
+	@GetMapping("/{idprof}/{idetudiant}/{idcours}")
 
 	public int save(@PathVariable Long idprof,@PathVariable Long idetudiant,@PathVariable Long idcours) {
 		return etudiantCoursService.save(idprof, idetudiant, idcours);

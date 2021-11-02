@@ -1,6 +1,7 @@
 package ma.learn.quiz.service;
 
 import ma.learn.quiz.bean.*;
+import ma.learn.quiz.dao.HomeWorkDao;
 import ma.learn.quiz.dao.HomeWorkEtudiantDao;
 import ma.learn.quiz.dao.QuizEtudiantDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,28 +48,38 @@ public class HomeWorkEtudiantService {
 	}
 
 	public int save(HomeWorkEtudiant homeWorkEtudiant) {
-		if(homeWorkService.findById(homeWorkEtudiant.getHomeWok().getId()) == null)
-		{
-			return -1;
+		HomeWork homeWork = homeWorkDao.findBySectionId(homeWorkEtudiant.getHomeWork().getSection().getId());
+        if (homeWorkEtudiant.getEtudiant() == null){
+			return -2;
+		} else {
+        	homeWorkEtudiant.setHomeWork(homeWork);
+			homeWorkEtudiantDao.save(homeWorkEtudiant);
+			reponseEtudiantHomeWorkService.save(homeWorkEtudiant,homeWorkEtudiant.getReponseEtudiantHomeWork());
+			return 1;
 		}
-		homeWorkEtudiantDao.save(homeWorkEtudiant);
-		return 1;
+	}
+
+	public int update(HomeWorkEtudiant homeWorkEtudiant){
+		//HomeWorkEtudiant newhomeWorkEtudiant = homeWorkEtudiantDao.findByIdAndEtudiantId(homeWorkEtudiant.getEtudiant().getId(),homeWorkEtudiant.getId());
+		reponseEtudiantHomeWorkService.update(homeWorkEtudiant,homeWorkEtudiant.getReponseEtudiantHomeWork());
+		return 1 ;
 	}
 
 	@Autowired
 		private HomeWorkEtudiantDao homeWorkEtudiantDao;
 	@Autowired
-		private HomeWorkService homeWorkService;
+	    private HomeWorkDao homeWorkDao;
+
 	@Autowired
-		private EtudiantService etudiantService;
+	private ReponseEtudiantHomeWorkService reponseEtudiantHomeWorkService;
 	@Autowired
 		private EntityManager entityManager;
 
 
-	public Object findByCritere(Long idEtudiant, Long idHomeWork)
+	public HomeWorkEtudiant findByCritere(Long idEtudiant, Long idHomeWork)
 	{
-		String query = "SELECT h FROM HomeWorkEtudiant h WHERE h.etudiant.id= '"+idEtudiant+"' and h.homeWok.id"+idEtudiant+"'";
-		return entityManager.createQuery(query).getSingleResult();
+		String query = "SELECT h FROM HomeWorkEtudiant h WHERE h.etudiant.id= '"+idEtudiant+"' and h.homeWork.id='"+idHomeWork+"'";
+		return (HomeWorkEtudiant) entityManager.createQuery(query).getSingleResult();
 	}
 
 }
