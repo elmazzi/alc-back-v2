@@ -62,7 +62,8 @@ public class EtudiantAdminRest {
 	public Etudiant update(@RequestBody Etudiant etudiant) {
 		return etudiantService.update(etudiant);
 	}
-	
-	
-	
+	@GetMapping("/libelle/{libelle}")
+	public List<Etudiant> findByParcoursLibelle(@PathVariable String libelle) {
+		return etudiantService.findByParcoursLibelle(libelle);
+	}
 }

@@ -1,12 +1,7 @@
 package ma.learn.quiz.bean;
 
-import java.util.Collection;
 import java.util.List;
-
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -15,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 public class Etudiant extends User {
     private String ref;
+    private String teacherLocality; //  native || non-native
+    private String groupOption;
     @ManyToOne
     private Prof prof;
     @ManyToOne
@@ -34,6 +31,11 @@ public class Etudiant extends User {
         this.etatEtudiantSchedule = etatEtudiantSchedule;
         this.parcours = parcours;
         this.quizEtudiant = quizEtudiant;
+    }
+    public Etudiant(User user) {
+        super(user.id, user.username, user.password, user.nom, user.prenom,
+                user.numero, user.addresse, user.ville, user.age, user.image, user.accountNonExpired,
+                user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role);
     }
 
     public Etudiant() {
@@ -84,6 +86,22 @@ public class Etudiant extends User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTeacherLocality() {
+        return teacherLocality;
+    }
+
+    public void setTeacherLocality(String teacherLocality) {
+        this.teacherLocality = teacherLocality;
+    }
+
+    public String getGroupOption() {
+        return groupOption;
+    }
+
+    public void setGroupOption(String groupOption) {
+        this.groupOption = groupOption;
     }
 
     public String getRef() {

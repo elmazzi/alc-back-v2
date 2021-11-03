@@ -9,5 +9,5 @@ public interface GroupeEtudeDao extends JpaRepository<GroupeEtude,Long> {
     GroupeEtude findGroupeEtudeById(Long id);
     public GroupeEtude findByLibelle(String libelle);
     public int deleteByLibelle(String libelle);
-
+    public int deleteGroupeEtudeById(Long id );
 }
