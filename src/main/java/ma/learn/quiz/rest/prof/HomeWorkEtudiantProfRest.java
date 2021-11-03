@@ -62,9 +62,17 @@ public class HomeWorkEtudiantProfRest {
 		return homeWorkEtudiantService.findByCritere(idEtudiant, idHomeWork);
 	}
 
+	@GetMapping("/homeworklist/{id}")
+	public List<HomeWorkEtudiant> findByProfId(@PathVariable Long id) {
+		return homeWorkEtudiantService.findByProfId(id);
+	}
+
+	@PostMapping("Vo/")
+	public List<HomeWorkEtudiant> findByVo(@RequestBody HomeWorkEtudiant homeWorkEtudiant) {
+		return homeWorkEtudiantService.findByVo(homeWorkEtudiant);
+	}
+
 	@Autowired
 	private HomeWorkEtudiantService homeWorkEtudiantService;
-
-
 
 }
