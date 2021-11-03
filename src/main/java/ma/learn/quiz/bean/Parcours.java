@@ -23,7 +23,6 @@ public class Parcours implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     @Temporal(TemporalType.DATE)
     private Date datePublication ;
     @Temporal(TemporalType.DATE)
@@ -57,6 +56,8 @@ public class Parcours implements Serializable {
 		this.centre = centre;
 		this.etudiant = etudiant;
 	}
+
+
 
 	public int getNombreCours() {
 		return nombreCours;

@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -53,6 +54,7 @@ public class UserServiceImpl implements UserService {
     private AuthenticationManager authenticationManager;
     @Autowired
     private JwtUtil jwtUtil;
+
 
     @Override
     public ResponseEntity<User> signIn(User user) {
@@ -87,8 +89,7 @@ public class UserServiceImpl implements UserService {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setImage(getTemporaryProfileImageUrl(user.getUsername()));
             roleService.save(user.getAuthorities());
-            userDao.save(user);
-            return user;
+            return userDao.save(user);
         }
     }
 
@@ -99,9 +100,9 @@ public class UserServiceImpl implements UserService {
         message.setTo(user.getUsername());
         message.setSubject("accepted on the platform e-learning");
         message.setText("Your online registration on the site: http://localhost:4200/#/ is validated. \n" + "You can log into your account now.\n" +
-                "Your account settings are :"  +"\n"+
-                "username : "+ user.getUsername() +"\n"+
-                "password : "+ user.getPassword());
+                "Your account settings are :" + "\n" +
+                "username : " + user.getUsername() + "\n" +
+                "password : " + user.getPassword());
         mailSender.send(message);
         System.out.println("email send");
 
@@ -161,7 +162,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserById(Long id) {
-         userDao.deleteById(id);
+        userDao.deleteById(id);
     }
 
     @Override
@@ -181,6 +182,23 @@ public class UserServiceImpl implements UserService {
         User user = this.loadUserByUsername(username);
         saveProfileImage(user, profileImage);
         return user;
+    }
+
+
+    public int resetPassword(String username) {
+        User user = this.loadUserByUsername(username);
+        if (user == null) {
+            return -1;
+        } else {
+            String password = this.generatePassword();
+            user.setPassword(password);
+            System.out.println(user.getPassword());
+            System.out.println(user.getUsername());
+            prepareMessage(user);
+            user.setPassword(passwordEncoder.encode(password));
+            userDao.save(user);
+            return 0;
+        }
     }
 
 }
