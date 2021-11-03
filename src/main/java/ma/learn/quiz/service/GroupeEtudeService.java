@@ -1,5 +1,6 @@
 package ma.learn.quiz.service;
 
+import ma.learn.quiz.bean.Etudiant;
 import ma.learn.quiz.bean.GroupeEtude;
 import ma.learn.quiz.dao.GroupeEtudeDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,20 @@ public class GroupeEtudeService {
     */
         return 1;
     }
+    @Transactional
+    public int deleteGroupeEtudeById(Long id) {
+        return groupeEtudeDao.deleteGroupeEtudeById(id);
+    }
 
+
+    @Transactional
+    public int deleteGroupeEtudeById(List<GroupeEtude> groupeEtude) {
+        int res = 0;
+        for (int i = 0; i < groupeEtude.size(); i++) {
+            res += deleteGroupeEtudeById(groupeEtude.get(i).getId());
+        }
+        return res;
+    }
 
     @Transactional
     public int deleteByLibelle(String libelle) {

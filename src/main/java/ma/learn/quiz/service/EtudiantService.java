@@ -118,6 +118,9 @@ public class EtudiantService {
         if (etd != null) {
             return -1;
         } else {
+			etudiant.setParcours(null);
+			etudiant.setProf(null);
+			etudiant.setEtatEtudiantSchedule(null);
             String password = this.userService.generatePassword();
             etudiant.setPassword(password);
             etudiant.setAuthorities(Arrays.asList(new Role(ROLE_STUDENT)));
@@ -196,6 +199,9 @@ public class EtudiantService {
     public EntityManager entityManager;
     @Autowired
     private UserService userService;
+	public List<Etudiant> findByParcoursLibelle(String libelle) {
+		return etudiantDao.findByParcoursLibelle(libelle);
+	}
     @Autowired
     private InscriptionService inscriptionService;
 }
