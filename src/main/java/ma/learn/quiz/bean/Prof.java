@@ -44,6 +44,12 @@ public class Prof extends User {
         this.etudiantList = etudiantList;
     }
 
+    public Prof(User user) {
+        super(user.id, user.username, user.password, user.nom, user.prenom,
+                user.numero, user.addresse, user.ville, user.age, user.image, user.accountNonExpired,
+                user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role);
+    }
+
     public Prof(String username, String password) {
         super(username, password);
     }

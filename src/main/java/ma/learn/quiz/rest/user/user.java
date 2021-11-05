@@ -27,6 +27,7 @@ import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin("http://localhost:4200")
 public class user
 {
 
@@ -94,13 +95,13 @@ public class user
                 return admin;
             }
             case "TEACHER": {
-                Prof prof = new Prof(user,null,null,null,null,null);
+                Prof prof = new Prof(user);
                 profService.save(prof);
                 return prof;
                 }
 
             case "STUDENT": {
-                Etudiant etudiant = new Etudiant(user,null,null,null,null,null);
+                Etudiant etudiant = new Etudiant(user);
                 etudiantService.create(etudiant);
                 return etudiant;
             }
@@ -111,6 +112,11 @@ public class user
     @DeleteMapping("/delete/id/{id}")
     public void deleteUserById(@PathVariable Long id) {
          userService.deleteUserById(id);
+    }
+
+    @PostMapping("/resetPassword/username/{username}")
+    public int resetPassword(@PathVariable String username) {
+        return userService.resetPassword(username);
     }
 
     @Autowired

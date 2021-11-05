@@ -11,6 +11,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/etudiant/etudiant")
 public class EtudiantEtudiantRest {
+
+    @GetMapping("/id/{id}")
+    public Etudiant findEtudiantById(@PathVariable Long id) {
+        return etudiantService.findEtudiantById(id);
+    }
+
     @Autowired
     public EtudiantService etudiantService;
 
