@@ -60,4 +60,9 @@ public class ScheduleProfProfRest {
 		return scheduleProfService.findAll();
 	}
 
+
+	@GetMapping("/prof/id/{id}")
+	public List<ScheduleProf> findByProfId(@PathVariable Long id) {
+		return scheduleProfService.findByProfId(id);
+	}
 }

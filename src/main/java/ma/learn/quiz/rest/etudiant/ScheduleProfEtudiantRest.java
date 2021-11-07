@@ -37,8 +37,6 @@ public class ScheduleProfEtudiantRest {
 		return scheduleProfService.findSchedule();
 	}
 
-	@Autowired
-	private ScheduleProfService scheduleProfService;
 
 	@GetMapping("/ref/{ref}")
 	public ScheduleProf findByRef(@PathVariable String ref) {
@@ -59,5 +57,15 @@ public class ScheduleProfEtudiantRest {
 	public List<ScheduleProf> findAll() {
 		return scheduleProfService.findAll();
 	}
+
+
+
+	@GetMapping("/etudiant/id/{id}")
+	public List<ScheduleProf> findByEtudiantId(@PathVariable Long id) {
+		return scheduleProfService.findByEtudiantId(id);
+	}
+
+	@Autowired
+	private ScheduleProfService scheduleProfService;
 
 }

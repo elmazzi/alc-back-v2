@@ -40,6 +40,12 @@ public class ScheduleProfAdminRest {
 		return scheduleProfService.save(scheduleProf);
 	}
 
+	@PostMapping("/all/")
+	public List<ScheduleProf> findByCriteriaStudent(@RequestBody ScheduleProf schedule)
+	{
+		return scheduleProfService.findByCriteriaStudent(schedule);
+	}
+
 	@GetMapping("/")
 	public List<ScheduleProf> findAll() {
 		return scheduleProfService.findAll();
