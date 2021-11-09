@@ -58,6 +58,7 @@ public class GroupeEtudeService {
         }
         return res;
     }
+
     public List<GroupeEtude> findAllByCriteria(GroupeEtudeVo groupeEtudeVo) {
         String query = "SELECT c FROM GroupeEtude c WHERE 1=1 ";
 
@@ -70,10 +71,7 @@ public class GroupeEtudeService {
             query += " AND c.nombreEtudiant LIKE '%" + groupeEtudeVo.getNombreEtudiant() + "%'";
 
         return entityManager.createQuery(query).getResultList();
-
-
     }
-
     @Transactional
     public int deleteByLibelle(String libelle) {
         return groupeEtudeDao.deleteByLibelle(libelle);

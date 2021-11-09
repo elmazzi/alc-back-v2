@@ -14,6 +14,7 @@ public interface GroupeEtudiantDao extends JpaRepository<GroupeEtudiant,Long> {
     public GroupeEtudiant findGroupeEtudiantById(Long id);
     public GroupeEtudiant findByLibelle(String libelle);
     public int deleteGroupeEtudiantById(Long id);
+    List<GroupeEtudiant> findByParcoursLibelleAndNombrePlacevideGreaterThan(String libelle, Long nombrePlacevide);
 
 
 

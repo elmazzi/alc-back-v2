@@ -30,7 +30,16 @@ public class Inscription {
     private Date datedebutinscription;
     @Temporal(TemporalType.DATE)
     private Date datefininscription;
+    @ManyToOne
+    private GroupeEtude groupeEtude;
 
+    public GroupeEtude getGroupeEtude() {
+        return groupeEtude;
+    }
+
+    public void setGroupeEtude(GroupeEtude groupeEtude) {
+        this.groupeEtude = groupeEtude;
+    }
 
     public Prof getProf() {
         return prof;

@@ -33,7 +33,7 @@ public class GroupeEtudiant implements Serializable {
     private List<GroupeEtudiantDetail> groupeEtudiantDetails;
     @ManyToOne
     private GroupeEtude groupeEtude;
-   /* @ManyToOne
+   @ManyToOne
     private Parcours parcours;
 
     public Parcours getParcours() {
@@ -44,7 +44,7 @@ public class GroupeEtudiant implements Serializable {
         this.parcours = parcours;
     }
 
-    */
+
 
     public GroupeEtude getGroupeEtude() {
         return groupeEtude;

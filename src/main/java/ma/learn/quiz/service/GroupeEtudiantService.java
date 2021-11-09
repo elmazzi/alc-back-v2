@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class GroupeEtudiantService {
     @Autowired
@@ -24,27 +25,27 @@ public class GroupeEtudiantService {
     @Autowired
     private GroupeEtudiantDetailService groupeEtudiantDetailService;
 
-    public int save(GroupeEtudiant groupeEtudiant)
+    public int save(GroupeEtudiant groupeEtudiant) {
 
-    {
-
-     //   Parcours parcours = parcoursService.findParcoursByLibelle(groupeEtudiant.getParcours().getLibelle());
-        if(findByLibelle(groupeEtudiant.getLibelle())!=null)
-        {
+        Parcours parcours = parcoursService.findParcoursByLibelle(groupeEtudiant.getParcours().getLibelle());
+        if (findByLibelle(groupeEtudiant.getLibelle()) != null) {
             return -1;
-        }
-        else {
-            GroupeEtude groupeEtude =  groupeEtudeService.findGroupeEtudeById(groupeEtudiant.getGroupeEtude().getId());
+        } else {
+            GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(groupeEtudiant.getGroupeEtude().getId());
             groupeEtudiant.setGroupeEtude(groupeEtude);
-           // groupeEtudiant.setParcours(parcours);
+            groupeEtudiant.setParcours(parcours);
             groupeEtudiantDao.save(groupeEtudiant);
-                groupeEtudiantDetailService.save(groupeEtudiant, groupeEtudiant.getGroupeEtudeDetails());
+            groupeEtudiantDetailService.save(groupeEtudiant, groupeEtudiant.getGroupeEtudeDetails());
 
             return 1;
         }
 
     }
-    public int update(GroupeEtudiant groupeEtudiant){
+
+
+
+
+    public int update(GroupeEtudiant groupeEtudiant) {
         groupeEtudiantDao.save(groupeEtudiant);
         return 1;
     }
@@ -57,14 +58,41 @@ public class GroupeEtudiantService {
     public int deleteGroupeEtudiantById(Long id) {
         int x = groupeEtudiantDetailService.deleteByGroupeEtudiantId(id);
         int y = groupeEtudiantDao.deleteGroupeEtudiantById(id);
-        return x+y;
+        return x + y;
     }
 
+    @Transactional
+    public int deleteGroupeEtudiantById(List<GroupeEtudiant> groupeEtudiant) {
+        int res1 = 0;
+        int res2 = 0;
+
+        for (int i = 0; i < groupeEtudiant.size(); i++) {
+            res1 += deleteGroupeEtudiantById(groupeEtudiant.get(i).getId());
+            res2 += groupeEtudiantDetailService.deleteByGroupeEtudiantId(groupeEtudiant.get(i).getId());
+        }
+        return res1 + res2;
+    }
+    /*
+    @Transactional
+    public int deleteGroupeEtudeById(List<GroupeEtude> groupeEtude) {
+        int res = 0;
+        for (int i = 0; i < groupeEtude.size(); i++) {
+            res += deleteGroupeEtudeById(groupeEtude.get(i).getId());
+        }
+        return res;
+    }
+
+
+ */
 
 
     public List<GroupeEtudiant> findAll() {
         return groupeEtudiantDao.findAll();
     }
 
+
+    public List<GroupeEtudiant> findByParcoursLibelleAndNombrePlacevideGreaterThan(String libelle, Long nombrePlacevide) {
+        return groupeEtudiantDao.findByParcoursLibelleAndNombrePlacevideGreaterThan(libelle, nombrePlacevide);
+    }
 
 }
