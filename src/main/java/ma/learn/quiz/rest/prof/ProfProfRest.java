@@ -1,15 +1,14 @@
 package ma.learn.quiz.rest.prof;
 
-import ma.learn.quiz.bean.EtudiantCours;
-import ma.learn.quiz.bean.Paiement;
-import ma.learn.quiz.bean.Prof;
-import ma.learn.quiz.bean.SessionCours;
+import ma.learn.quiz.bean.*;
 import ma.learn.quiz.service.ProfService;
+import ma.learn.quiz.service.UserServiceImpl;
 import ma.learn.quiz.vo.SalaryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/prof/prof")
@@ -83,5 +82,22 @@ public class ProfProfRest {
 	public List<SessionCours> findSessionsNonPayer(@PathVariable Long idProf) {
 		return profService.findSessionsNonPayer(idProf);
 	}
+
+    @GetMapping("/connected-student")
+    public Map<Long, User> getConnectedStudent(){
+        System.out.println(this.userService.connectedStudent.size());
+        return this.userService.connectedStudent;
+    }
+
+    @GetMapping("/remove-student/{id}")
+    public Map<Long, User> removeStudentConnected(@PathVariable Long id){
+        System.out.println( this.userService.connectedStudent.values().size());
+        this.userService.connectedStudent.remove(id);
+        System.out.println( this.userService.connectedStudent.values().size());
+        return this.userService.connectedStudent;
+    }
+
+    @Autowired
+    private UserServiceImpl userService;
 
 }
