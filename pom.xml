@@ -114,6 +114,11 @@
 
     <build>
         <plugins>
+            <plugin>
+                <version>2.4.3</version>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 </project>
