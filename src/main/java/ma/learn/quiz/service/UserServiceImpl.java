@@ -1,9 +1,11 @@
 package ma.learn.quiz.service;
 
 
+import ma.learn.quiz.bean.Etudiant;
 import ma.learn.quiz.bean.User;
 import ma.learn.quiz.dao.UserDao;
 import ma.learn.quiz.exception.NotAnImageFileException;
+import ma.learn.quiz.filter.RoleConstant;
 import ma.learn.quiz.service.facade.RoleService;
 import ma.learn.quiz.service.facade.UserService;
 import ma.learn.quiz.util.JwtUtil;
@@ -30,8 +32,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static ma.learn.quiz.filter.JwtConstant.*;
@@ -41,6 +42,8 @@ import static org.springframework.http.MediaType.*;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    public Map<Long , User> connectedStudent = new HashMap<>();
     private Logger LOGGER = LoggerFactory.getLogger(getClass());
     @Autowired
     public JavaMailSender mailSender;
@@ -67,6 +70,10 @@ public class UserServiceImpl implements UserService {
         }
         User loadUserByUsername = loadUserByUsername(user.getUsername());
         HttpHeaders jwtHeader = getJwtHeader(user);
+
+        if (loadUserByUsername.getRole().equals("STUDENT")){
+            this.connectedStudent.put(loadUserByUsername.getId(), loadUserByUsername);
+        }
         return new ResponseEntity<>(loadUserByUsername, jwtHeader, OK);
     }
 

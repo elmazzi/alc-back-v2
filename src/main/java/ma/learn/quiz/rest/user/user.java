@@ -114,10 +114,15 @@ public class user
          userService.deleteUserById(id);
     }
 
-    @PostMapping("/resetPassword/username/{username}")
+    @GetMapping("/resetpassword/username/{username}")
     public int resetPassword(@PathVariable String username) {
         return userService.resetPassword(username);
     }
+
+//    @GetMapping("/resetpassword/{email}")
+//    public int resetPassword(@PathVariable("email") String email) {
+//        return userService.resetPassword(email);
+//    }
 
     @Autowired
     private UserServiceImpl userService;

@@ -11,8 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import ma.learn.quiz.dao.ScheduleProfDao;
 import ma.learn.quiz.vo.SchdeduleVo;
 
+import javax.persistence.EntityManager;
+
 @Service
-public class ScheduleProfService {
+public class ScheduleProfService extends AbstractService {
 
 	public ScheduleProf findByRef(String ref) {
 		return scheduleProfDao.findByRef(ref);
@@ -44,7 +46,8 @@ public class ScheduleProfService {
 			if (findByRef(scheduleProf.getRef()) != null) {
 				return -1;
 			} else {
-				etudiantService.save(etudiant);
+				etudiant.setEtatEtudiantSchedule(etatEtudiantSchedule);
+				etudiantService.updateEtudiant(etudiant);
 				etatEtudiantScheduleService.update(etatEtudiantSchedule);
 				scheduleProfDao.save(scheduleProf);
 				return 1;
@@ -91,6 +94,24 @@ public ScheduleProf update(ScheduleProf scheduleProf) {
 }
 
 
+	public List<ScheduleProf> findByProfId(Long id) {
+		return scheduleProfDao.findByProfId(id);
+	}
+
+	public List<ScheduleProf> findByEtudiantId(Long id) {
+		return scheduleProfDao.findByEtudiantId(id);
+	}
+
+	public List<ScheduleProf> findByCriteriaStudent(ScheduleProf schedule) {
+		String query = this.init("ScheduleProf");
+		if (schedule.getEtudiant() != null ) {
+			query+= this.addCriteria("etudiant.nom", schedule.getEtudiant().getNom(), "LIKE");
+			query+= this.addCriteria("etudiant.prenom", schedule.getEtudiant().getPrenom(), "LIKE");
+			query+= this.addCriteria("etudiant.username", schedule.getEtudiant().getUsername(), "LIKE");
+		}
+		System.out.println("query = " + query);
+		return entityManager.createQuery(query).getResultList();
+	}
 
 	@Autowired
 	private ScheduleProfDao scheduleProfDao;
@@ -100,4 +121,6 @@ public ScheduleProf update(ScheduleProf scheduleProf) {
 	private EtatEtudiantScheduleService etatEtudiantScheduleService;
 	@Autowired
 	private ProfService profService;
+	@Autowired
+	private EntityManager entityManager;
 }

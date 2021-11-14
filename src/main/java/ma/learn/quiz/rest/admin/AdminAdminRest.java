@@ -4,7 +4,6 @@ import ma.learn.quiz.bean.Admin;
 import ma.learn.quiz.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
