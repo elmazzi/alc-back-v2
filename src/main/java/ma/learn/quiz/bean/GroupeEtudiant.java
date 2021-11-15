@@ -22,30 +22,22 @@ public class GroupeEtudiant implements Serializable {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date dateFin;
     private String niveau;
-
     private Long nombrePlace ;
     private Long  nombrePlacevide;
     private Long  nombrePlaceNonVide; // nombre de place non disponible
-
     @OneToMany(mappedBy = "groupeEtudiant")
-
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<GroupeEtudiantDetail> groupeEtudiantDetails;
     @ManyToOne
     private GroupeEtude groupeEtude;
    @ManyToOne
     private Parcours parcours;
-
     public Parcours getParcours() {
         return parcours;
     }
-
     public void setParcours(Parcours parcours) {
         this.parcours = parcours;
     }
-
-
-
     public GroupeEtude getGroupeEtude() {
         return groupeEtude;
     }

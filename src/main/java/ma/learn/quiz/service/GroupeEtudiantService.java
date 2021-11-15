@@ -28,17 +28,14 @@ public class GroupeEtudiantService {
     public int save(GroupeEtudiant groupeEtudiant) {
 
         Parcours parcours = parcoursService.findParcoursByLibelle(groupeEtudiant.getParcours().getLibelle());
-        if (findByLibelle(groupeEtudiant.getLibelle()) != null) {
-            return -1;
-        } else {
+
             GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(groupeEtudiant.getGroupeEtude().getId());
             groupeEtudiant.setGroupeEtude(groupeEtude);
             groupeEtudiant.setParcours(parcours);
             groupeEtudiantDao.save(groupeEtudiant);
             groupeEtudiantDetailService.save(groupeEtudiant, groupeEtudiant.getGroupeEtudeDetails());
 
-            return 1;
-        }
+      return 1;
 
     }
 
@@ -91,8 +88,8 @@ public class GroupeEtudiantService {
     }
 
 
-    public List<GroupeEtudiant> findByParcoursLibelleAndNombrePlacevideGreaterThan(String libelle, Long nombrePlacevide) {
-        return groupeEtudiantDao.findByParcoursLibelleAndNombrePlacevideGreaterThan(libelle, nombrePlacevide);
+    public List<GroupeEtudiant> findByParcoursIdAndNombrePlacevideGreaterThan(Long id, Long nombrePlacevide) {
+        return groupeEtudiantDao.findByParcoursIdAndNombrePlacevideGreaterThan(id, nombrePlacevide);
     }
 
 }

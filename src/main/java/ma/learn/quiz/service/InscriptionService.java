@@ -1,11 +1,13 @@
 package ma.learn.quiz.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import ma.learn.quiz.bean.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,9 @@ public class InscriptionService {
     public GroupeEtudiantService groupeEtudiantService;
     @Autowired
     private GroupeEtudeService groupeEtudeService;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    Date dateActuelle = new Date();
+
 
 
     @Autowired
@@ -54,17 +59,22 @@ public class InscriptionService {
         return entityManager.createQuery(query).getResultList();
     }
     public int affecter(Parcours parcours , GroupeEtude groupeEtude, Etudiant etudiant){
-        List<GroupeEtudiant> list = groupeEtudiantService.findByParcoursLibelleAndNombrePlacevideGreaterThan(parcours.getLibelle(), 0L);
+        List<GroupeEtudiant> list = groupeEtudiantService.findByParcoursIdAndNombrePlacevideGreaterThan(parcours.getId(), 0L);
         System.out.println("hanaa f affecter !!!!!");
         if(list==null || list.isEmpty()){
+
             System.out.println("rah lista vida");
             GroupeEtudiant groupeEtudiant= new GroupeEtudiant();
             groupeEtudiant.setGroupeEtude(groupeEtude);
             groupeEtudiant.setParcours(parcours);
+            groupeEtudiant.setLibelle(dateActuelle.toString());
             groupeEtudiant.setGroupeEtudeDetails(new ArrayList<>());
             GroupeEtudiantDetail groupeEtudiantDetail = new GroupeEtudiantDetail();
             groupeEtudiantDetail.setEtudiant(etudiant);
             groupeEtudiant.getGroupeEtudeDetails().add(groupeEtudiantDetail);
+            groupeEtudiant.setNombrePlace(groupeEtudiant.getGroupeEtude().getNombreEtudiant());
+            groupeEtudiant.setNombrePlacevide(groupeEtudiant.getGroupeEtude().getNombreEtudiant()-1);
+            groupeEtudiant.setNombrePlaceNonVide(1L);
             groupeEtudiantService.save(groupeEtudiant);
             return 1;
         }else{
@@ -79,29 +89,34 @@ public class InscriptionService {
             }
     }
     public int save(Inscription inscription) {
-        inscription.setGroupeEtude(groupeEtudeService.findById(4485L).get());
-        inscription.setParcours(parcoursService.findByCode("Elementary 1"));
+       // inscription.setGroupeEtude(groupeEtudeService.findById(4485L).get());
+       // inscription.setParcours(parcoursService.findByCode("Elementary 1"));
         if (inscription.getProf() == null) {
             inscription.setProf(new Prof());
         }
         if (inscription.getParcours() == null) {
             inscription.setParcours(new Parcours());
         }
+        if (inscription.getGroupeEtude() == null) {
+            inscription.setGroupeEtude(new GroupeEtude());
+        }
         if (inscription.getEtudiant() == null) {
             inscription.setEtudiant(new Etudiant());
         }
         EtatInscription etatInscription = etatInscriptionService.findEtatInscriptionById((long) 1);
         Etudiant etudiant = this.etudiantService.findEtudiantById(inscription.getEtudiant().getId());
+         Parcours parcours = parcoursService.findParcoursById(inscription.getParcours().getId());
         GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(inscription.getGroupeEtude().getId());
         Prof prof = this.profService.findProfById((inscription.getProf().getId()));
-        Parcours parcrs = this.parcoursService.findParcoursById(inscription.getParcours().getId());
+     //   Parcours parcrs = this.parcoursService.findParcoursById(inscription.getParcours().getId());
         if (etudiant == null) {
             System.out.println("etudiant is null");
             return -1;
         } else {
             System.out.println("Nv etudiant");
+            inscription.setParcours(parcours);
             inscription.setProf(prof);
-            inscription.setParcours(parcrs);
+         //   inscription.setParcours(parcrs);
             inscription.setEtatInscription(etatInscription);
             inscription.setEtudiant(etudiant);
             inscription.setGroupeEtude(groupeEtude);

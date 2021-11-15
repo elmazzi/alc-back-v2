@@ -42,7 +42,7 @@ public class GroupeEtudiantRest {
         return groupeEtudiantService.update(groupeEtudiant);
     }
     @GetMapping("/libelle/{libelle}/nombrePlacevide/{nombrePlacevide}")
-    public List<GroupeEtudiant> findByParcoursLibelleAndNombrePlacevideGreaterThan(String libelle, Long nombrePlacevide) {
-        return groupeEtudiantService.findByParcoursLibelleAndNombrePlacevideGreaterThan(libelle, nombrePlacevide);
+    public List<GroupeEtudiant> findByParcoursIdAndNombrePlacevideGreaterThan(Long id, Long nombrePlacevide) {
+        return groupeEtudiantService.findByParcoursIdAndNombrePlacevideGreaterThan(id, nombrePlacevide);
     }
 }

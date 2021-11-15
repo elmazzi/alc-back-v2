@@ -66,4 +66,5 @@ public class EtudiantAdminRest {
 	public List<Etudiant> findByParcoursLibelle(@PathVariable String libelle) {
 		return etudiantService.findByParcoursLibelle(libelle);
 	}
+
 }

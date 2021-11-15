@@ -21,6 +21,11 @@ public class Etudiant extends User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "etudiant")
     private List<QuizEtudiant> quizEtudiant;
+    @ManyToOne
+    private GroupeEtude groupeEtude;
+    @OneToMany(mappedBy = "etudiant")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<GroupeEtudiantDetail> groupeEtudiantDetails;
 
     public Etudiant(User user, String ref, Prof prof, EtatEtudiantSchedule etatEtudiantSchedule, Parcours parcours, List<QuizEtudiant> quizEtudiant) {
         super(user.id, user.username, user.password, user.nom, user.prenom,
@@ -32,6 +37,7 @@ public class Etudiant extends User {
         this.parcours = parcours;
         this.quizEtudiant = quizEtudiant;
     }
+
     public Etudiant(User user) {
         super(user.id, user.username, user.password, user.nom, user.prenom,
                 user.numero, user.addresse, user.ville, user.age, user.image, user.accountNonExpired,
@@ -39,6 +45,14 @@ public class Etudiant extends User {
     }
 
     public Etudiant() {
+    }
+
+    public GroupeEtude getGroupeEtude() {
+        return groupeEtude;
+    }
+
+    public void setGroupeEtude(GroupeEtude groupeEtude) {
+        this.groupeEtude = groupeEtude;
     }
 
     public String getNumero() {
@@ -55,6 +69,14 @@ public class Etudiant extends User {
 
     public void setProf(Prof prof) {
         this.prof = prof;
+    }
+
+    public List<GroupeEtudiantDetail> getGroupeEtudiantDetails() {
+        return groupeEtudiantDetails;
+    }
+
+    public void setGroupeEtudiantDetails(List<GroupeEtudiantDetail> groupeEtudiantDetails) {
+        this.groupeEtudiantDetails = groupeEtudiantDetails;
     }
 
     public Etudiant(String ref, String nom, String prenom, int age, String username, String ville, String address, String password, String image, String gmail, Prof prof, EtatEtudiantSchedule etatEtudiantSchedule, Parcours parcours, List<QuizEtudiant> quizEtudiant) {
