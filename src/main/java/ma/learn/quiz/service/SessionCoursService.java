@@ -19,7 +19,7 @@ import ma.learn.quiz.dao.SessionCoursDao;
 
 
 @Service
-public class SessionCoursService {
+public class SessionCoursService extends AbstractService {
     @Autowired
     public EntityManager entityManager;
     @Autowired
@@ -43,33 +43,32 @@ public class SessionCoursService {
 
         return entityManager.createQuery(query).getResultList();
     }
+
     public List<SessionCours> findAllByCriteria(SessionCoursVO sessionCoursVO) {
-        String query = "SELECT c FROM SessionCours c WHERE 1=1 ";
+        String query = this.init("SessionCours");
+        if (sessionCoursVO.getEtudiant() != null) {
+            query += this.addCriteria("etudiant.nom", sessionCoursVO.getEtudiant().getNom(), "LIKE");
+        }
+        if (sessionCoursVO.getReference() != null) {
+            query += this.addCriteria("reference", sessionCoursVO.getReference(), "LIKE");
+        }
+        if (sessionCoursVO.getDateFin() != null) {
+            query += this.addCriteria("dateFin", sessionCoursVO.getDateFin(), "LIKE");
+        }
+        if (sessionCoursVO.getCours().getLibelle() != null) {
+            query += this.addCriteria("cours.libelle", sessionCoursVO.getCours().getLibelle(), "LIKE");
+        }
+        if (sessionCoursVO.getProf().getNom() != null) {
+            query += this.addCriteria("prof.nom", sessionCoursVO.getProf().getNom(), "LIKE");
+        }
+        System.out.println("query = " + query);
 
-        if (UtilString.isnotEmpty(sessionCoursVO.getCours().getLibelle()))
 
-            query += " AND c.cours.libelle LIKE '%" + sessionCoursVO.getCours().getLibelle() + "%'";
-
-        if (UtilString.isnotEmpty(sessionCoursVO.getProf().getNom()))
-
-            query += " AND c.prof.nom LIKE '%" + sessionCoursVO.getProf().getNom() + "%'";
-
-        if (UtilString.isnotEmpty(sessionCoursVO.getEtudiant().getNom()))
-
-            query += " AND c.etudiant.nom LIKE '%" + sessionCoursVO.getEtudiant().getNom() + "%'";
-
-        if (UtilString.isnotEmpty(sessionCoursVO.getReference()))
-
-            query += " AND c.reference LIKE '%" + sessionCoursVO.getReference() + "%'";
-
-        if (UtilString.isnotEmpty(sessionCoursVO.getDateFin()))
-            query += " AND c.dateFin LIKE '%" + sessionCoursVO.getDateFin() + "%'";
 
         return entityManager.createQuery(query).getResultList();
 
 
     }
-
 
 
     public SessionCours findSessionCoursById(Long id) {
@@ -97,12 +96,11 @@ public class SessionCoursService {
         SessionCours session = findSessionCoursByCoursIdAndEtudiantIdAndProfId(coursid, etudiantid, profid);
         if (prof1 == null || etudiant1 == null || cours == null) {
             return -1;
-        }
-        else if (session != null && !session.isPayer()) {
+        } else if (session != null && !session.isPayer()) {
             session.setTotalheure(session.getTotalheure() + 1);
             sessionCoursDao.save(session);
             return 2;
-        }  else {
+        } else {
             SessionCours sessionCours = new SessionCours();
             sessionCours.setEtudiant(etudiant1);
             sessionCours.setDateFin(new java.sql.Date(System.currentTimeMillis() + 3600 * 1000 * 24));
@@ -125,8 +123,7 @@ public class SessionCoursService {
         SessionCours session = findSessionCoursById(id);
         if (session == null) {
             return -1;
-        }
-        else {
+        } else {
             session.setTotalheure(0);
             session.setPayer(false);
             sessionCoursDao.save(session);
