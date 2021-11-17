@@ -5,7 +5,9 @@ import ma.learn.quiz.dao.GroupeEtudiantDetailDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+
 @Service
 public class GroupeEtudiantDetailService {
     @Autowired
@@ -28,17 +30,36 @@ public class GroupeEtudiantDetailService {
 
         for (GroupeEtudiantDetail groupeEtudiantDetail : groupeEtudiantDetails) {
             Etudiant etudiant = etudiantService.findEtudiantById(groupeEtudiantDetail.getEtudiant().getId());
+            //  groupeEtudeDetail.setEtudiants( findEtudiantByGroupeEtudeDetail(groupeEtudeDetail));
+         //   groupeEtudiant.setNombrePlacevide(groupeEtudiant.getGroupeEtude().getNombreEtudiant()-1);
+            groupeEtudiantDetail.setEtudiant(etudiant);
+            groupeEtudiantDetail.setGroupeEtudiant(groupeEtudiant);
+            groupeEtudiantDetailDao.save(groupeEtudiantDetail);
+
+        }
+    }
+    public void save(GroupeEtudiant groupeEtudiant, GroupeEtudiantDetail groupeEtudiantDetail) {
+        Etudiant etudiant = etudiantService.findEtudiantById(groupeEtudiantDetail.getEtudiant().getId());
+        groupeEtudiantDetail.setEtudiant(etudiant);
+        groupeEtudiantDetail.setGroupeEtudiant(groupeEtudiant);
+        groupeEtudiantDetailDao.save(groupeEtudiantDetail);
+
+    }
+
+    public int deleteByGroupeEtudiantId(Long id) {
+        return groupeEtudiantDetailDao.deleteByGroupeEtudiantId(id);
+    }
+
+    public void update(GroupeEtudiant groupeEtudiant, List<GroupeEtudiantDetail> groupeEtudiantDetails) {
+
+        for (GroupeEtudiantDetail groupeEtudiantDetail : groupeEtudiantDetails) {
+            Etudiant etudiant = etudiantService.findEtudiantById(groupeEtudiantDetail.getEtudiant().getId());
 
             //  groupeEtudeDetail.setEtudiants( findEtudiantByGroupeEtudeDetail(groupeEtudeDetail));
             groupeEtudiantDetail.setEtudiant(etudiant);
             groupeEtudiantDetail.setGroupeEtudiant(groupeEtudiant);
             groupeEtudiantDetailDao.save(groupeEtudiantDetail);
         }
-
-    }
-
-    public int deleteByGroupeEtudiantId(Long id) {
-        return groupeEtudiantDetailDao.deleteByGroupeEtudiantId(id);
     }
 
     public List<GroupeEtudiantDetail> findByGroupeEtudiantId(Long id) {
@@ -57,4 +78,8 @@ public class GroupeEtudiantDetailService {
     }
 
      */
+@Transactional
+    public int deleteGroupeEtudiantDetailById(Long id) {
+        return groupeEtudiantDetailDao.deleteGroupeEtudiantDetailById(id);
+    }
 }

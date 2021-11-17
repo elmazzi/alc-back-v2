@@ -26,11 +26,20 @@ public class Inscription {
     private Prof prof;
     @ManyToOne
     private Parcours parcours;
+    @ManyToOne
+    private GroupeEtude groupeEtude;
     @Temporal(TemporalType.DATE)
     private Date datedebutinscription;
     @Temporal(TemporalType.DATE)
     private Date datefininscription;
 
+    public GroupeEtude getGroupeEtude() {
+        return groupeEtude;
+    }
+
+    public void setGroupeEtude(GroupeEtude groupeEtude) {
+        this.groupeEtude = groupeEtude;
+    }
 
     public Prof getProf() {
         return prof;

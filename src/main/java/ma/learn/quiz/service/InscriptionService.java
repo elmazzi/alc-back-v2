@@ -1,18 +1,17 @@
 package ma.learn.quiz.service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import ma.learn.quiz.bean.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ma.learn.quiz.bean.EtatInscription;
-import ma.learn.quiz.bean.Etudiant;
-import ma.learn.quiz.bean.Inscription;
-import ma.learn.quiz.bean.Parcours;
-import ma.learn.quiz.bean.Prof;
 import ma.learn.quiz.dao.InscriptionDao;
 
 
@@ -32,7 +31,17 @@ public class InscriptionService {
     public EtudiantService etudiantService;
     @Autowired
     public EntityManager entityManager;
+    @Autowired
+    public GroupeEtudiantService groupeEtudiantService;
+    @Autowired
+    private GroupeEtudeService groupeEtudeService;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    Date dateActuelle = new Date();
 
+
+
+    @Autowired
+    private GroupeEtudiantDetailService groupeEtudiantDetailService;
 
     public List<Inscription> findByCriteria(Inscription inscrit) {
         String query = "SELECT e FROM Inscription e WHERE 1=1";
@@ -49,30 +58,70 @@ public class InscriptionService {
 
         return entityManager.createQuery(query).getResultList();
     }
+    public int affecter(Parcours parcours , GroupeEtude groupeEtude, Etudiant etudiant){
+        List<GroupeEtudiant> list = groupeEtudiantService.findByParcoursIdAndNombrePlacevideGreaterThan(parcours.getId(), 0L);
+        System.out.println("hanaa f affecter !!!!!");
+        if(list==null || list.isEmpty()){
 
+            System.out.println("rah lista vida");
+            GroupeEtudiant groupeEtudiant= new GroupeEtudiant();
+            groupeEtudiant.setGroupeEtude(groupeEtude);
+            groupeEtudiant.setParcours(parcours);
+            groupeEtudiant.setLibelle(dateActuelle.toString());
+            groupeEtudiant.setGroupeEtudeDetails(new ArrayList<>());
+            GroupeEtudiantDetail groupeEtudiantDetail = new GroupeEtudiantDetail();
+            groupeEtudiantDetail.setEtudiant(etudiant);
+            groupeEtudiant.getGroupeEtudeDetails().add(groupeEtudiantDetail);
+            groupeEtudiant.setNombrePlace(groupeEtudiant.getGroupeEtude().getNombreEtudiant());
+            groupeEtudiant.setNombrePlacevide(groupeEtudiant.getGroupeEtude().getNombreEtudiant()-1);
+            groupeEtudiant.setNombrePlaceNonVide(1L);
+            groupeEtudiantService.save(groupeEtudiant);
+            return 1;
+        }else{
+            System.out.println("rah lista 3amera");
+            GroupeEtudiant groupeEtudiant = list.get(0);
+            groupeEtudiant.setNombrePlacevide(groupeEtudiant.getNombrePlacevide()-1);
+            groupeEtudiant.setNombrePlaceNonVide(groupeEtudiant.getNombrePlaceNonVide()+1);
+            GroupeEtudiantDetail groupeEtudiantDetail = new GroupeEtudiantDetail();
+            groupeEtudiantDetail.setEtudiant(etudiant);
+            groupeEtudiantDetailService.save(groupeEtudiant,groupeEtudiantDetail);
+            return 2;
+            }
+    }
     public int save(Inscription inscription) {
+       // inscription.setGroupeEtude(groupeEtudeService.findById(4485L).get());
+       // inscription.setParcours(parcoursService.findByCode("Elementary 1"));
         if (inscription.getProf() == null) {
             inscription.setProf(new Prof());
         }
         if (inscription.getParcours() == null) {
             inscription.setParcours(new Parcours());
         }
+        if (inscription.getGroupeEtude() == null) {
+            inscription.setGroupeEtude(new GroupeEtude());
+        }
         if (inscription.getEtudiant() == null) {
             inscription.setEtudiant(new Etudiant());
         }
         EtatInscription etatInscription = etatInscriptionService.findEtatInscriptionById((long) 1);
         Etudiant etudiant = this.etudiantService.findEtudiantById(inscription.getEtudiant().getId());
+         Parcours parcours = parcoursService.findParcoursById(inscription.getParcours().getId());
+        GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(inscription.getGroupeEtude().getId());
         Prof prof = this.profService.findProfById((inscription.getProf().getId()));
-        Parcours parcrs = this.parcoursService.findParcoursById(inscription.getParcours().getId());
+     //   Parcours parcrs = this.parcoursService.findParcoursById(inscription.getParcours().getId());
         if (etudiant == null) {
             System.out.println("etudiant is null");
             return -1;
         } else {
+            System.out.println("Nv etudiant");
+            inscription.setParcours(parcours);
             inscription.setProf(prof);
-            inscription.setParcours(parcrs);
+         //   inscription.setParcours(parcrs);
             inscription.setEtatInscription(etatInscription);
             inscription.setEtudiant(etudiant);
+            inscription.setGroupeEtude(groupeEtude);
             inscriptionDao.save(inscription);
+            affecter(inscription.getParcours() , inscription.getGroupeEtude(), inscription.getEtudiant());
             return 1;
         }
     }
