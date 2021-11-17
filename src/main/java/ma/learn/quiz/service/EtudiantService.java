@@ -20,7 +20,8 @@ import static ma.learn.quiz.filter.RoleConstant.ROLE_STUDENT;
 
 @Service
 public class EtudiantService {
-
+    @Autowired
+    private GroupeEtudeService groupeEtudeService;
     public List<Etudiant> findByParcoursCode(String code) {
         return etudiantDao.findByParcoursCode(code);
     }
@@ -98,17 +99,21 @@ public class EtudiantService {
         Prof prof = new Prof();
         prof = this.profService.findProfById(etudiant.getProf().getId());
         EtatEtudiantSchedule etudiantSchedule = this.etatEtudiantScheduleService.findByRef(etudiant.getEtatEtudiantSchedule().getRef());
-        Parcours parcours = this.parcoursService.findParcoursById(etudiant.getParcours().getId());
+        Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
+        GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(etudiant.getGroupeEtude().getId());
+
         if (prof == null) {
             etudiant.setProf(null);
         } else {
             etudiant.setProf(prof);
         }
 
+        if (groupeEtude == null) {
+            etudiant.setGroupeEtude(null);
+        }
+
         if (parcours == null) {
             etudiant.setParcours(null);
-        } else {
-            etudiant.setParcours(parcours);
         }
         if (etudiantSchedule == null) {
             etudiant.setEtatEtudiantSchedule(null);
@@ -118,13 +123,16 @@ public class EtudiantService {
         if (etd != null) {
             return -1;
         } else {
-			etudiant.setParcours(null);
+    //     etudiant.setParcours(parcoursService.findParcoursById(7L));
+            etudiant.setParcours(parcours);
 			etudiant.setProf(null);
+			etudiant.setGroupeEtude(groupeEtude);
 			etudiant.setEtatEtudiantSchedule(null);
             String password = this.userService.generatePassword();
             etudiant.setPassword(password);
             etudiant.setAuthorities(Arrays.asList(new Role(ROLE_STUDENT)));
             etudiant.setRole("STUDENT");
+            inscription.setGroupeEtude(etudiant.getGroupeEtude());
             inscription.setParcours(etudiant.getParcours());
             User user = userService.save(etudiant);
             System.out.println(user.getId());
@@ -181,6 +189,10 @@ public class EtudiantService {
     public Object findByCritere(String login, String password) {
         String query = "SELECT a FROM Etudiant a WHERE a.username= '" + login + "' and a.password='" + password + "'";
         return entityManager.createQuery(query).getSingleResult();
+    }
+
+    public List<Etudiant> findEtudiantByGroupeEtudiantDetailsGroupeEtudiantParcours(String libelle) {
+        return etudiantDao.findEtudiantByGroupeEtudiantDetailsGroupeEtudiantParcours(libelle);
     }
 
     @Autowired

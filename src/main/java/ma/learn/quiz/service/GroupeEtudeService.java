@@ -2,10 +2,15 @@ package ma.learn.quiz.service;
 
 import ma.learn.quiz.bean.Etudiant;
 import ma.learn.quiz.bean.GroupeEtude;
+import ma.learn.quiz.bean.SessionCours;
 import ma.learn.quiz.dao.GroupeEtudeDao;
+import ma.learn.quiz.service.Util.UtilString;
+import ma.learn.quiz.service.vo.GroupeEtudeVo;
+import ma.learn.quiz.service.vo.SessionCoursVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +19,8 @@ import java.util.Optional;
 public class GroupeEtudeService {
     @Autowired
     private GroupeEtudeDao groupeEtudeDao;
+    @Autowired
+    public EntityManager entityManager;
     @Autowired
     private GroupeEtudiantDetailService groupeEtudiantDetailService;
     public int save(GroupeEtude groupeEtude)
@@ -52,6 +59,19 @@ public class GroupeEtudeService {
         return res;
     }
 
+    public List<GroupeEtude> findAllByCriteria(GroupeEtudeVo groupeEtudeVo) {
+        String query = "SELECT c FROM GroupeEtude c WHERE 1=1 ";
+
+        if ( UtilString.isnotEmpty(groupeEtudeVo.getLibelle()))
+
+            query += " AND c.libelle LIKE '%" + groupeEtudeVo.getLibelle() + "%'";
+
+        if (UtilString.isnotEmpty(groupeEtudeVo.getNombreEtudiant()))
+
+            query += " AND c.nombreEtudiant LIKE '%" + groupeEtudeVo.getNombreEtudiant() + "%'";
+
+        return entityManager.createQuery(query).getResultList();
+    }
     @Transactional
     public int deleteByLibelle(String libelle) {
         return groupeEtudeDao.deleteByLibelle(libelle);

@@ -2,7 +2,10 @@ package ma.learn.quiz.rest.admin;
 
 
 import ma.learn.quiz.bean.GroupeEtude;
+import ma.learn.quiz.bean.SessionCours;
 import ma.learn.quiz.service.GroupeEtudeService;
+import ma.learn.quiz.service.vo.GroupeEtudeVo;
+import ma.learn.quiz.service.vo.SessionCoursVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,4 +45,9 @@ public class GroupeEtudeRest {
     public int deleteGroupeEtudeById( @RequestBody List<GroupeEtude> groupeEtude) {
         return groupeEtudeService.deleteGroupeEtudeById(groupeEtude);
     }
+    @PostMapping("/allByCriteria")
+    public List<GroupeEtude> findAllByCriteria( @RequestBody GroupeEtudeVo groupeEtudeVo) {
+        return groupeEtudeService.findAllByCriteria(groupeEtudeVo);
+    }
+
 }
