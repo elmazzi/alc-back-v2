@@ -44,6 +44,7 @@ public class GroupeEtudiantService {
 
     public int update(GroupeEtudiant groupeEtudiant) {
         groupeEtudiantDao.save(groupeEtudiant);
+        groupeEtudiantDetailService.save(groupeEtudiant, groupeEtudiant.getGroupeEtudeDetails());
         return 1;
     }
 
