@@ -72,16 +72,27 @@ public class ParcoursService {
 	}
 
 
-	public void save(Parcours parcours) {
-		
-		create(parcours);
+	public int save(Parcours parcours) {
+		Centre centre=centreService.findByRef(parcours.getCentre().getRef());
+
+		if(centre == null) {
+			return -1;
+		} else {
+			int totalCoursesCreated = 0;
+			parcours.setCentre(centre);
+			parcoursDao.save(parcours);
 			for(int i=0;i<parcours.getNombreCours();i++) {
 				Cours cours= new Cours();
 				cours.setParcours(parcours);
-				coursService.save(cours);
+				totalCoursesCreated += coursService.save(cours);
 			}
-		
-		
+			if (totalCoursesCreated == parcours.getNombreCours()){
+				return 1;
+			}
+           else return -2;
+
+		}
+
 	}
 
 	 public int create(Parcours  parcours ) {
