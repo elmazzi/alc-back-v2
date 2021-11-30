@@ -49,7 +49,7 @@ public class ScheduleProfEtudiantRest {
 	}
 
 	@PostMapping("/")
-	public int save(@RequestBody ScheduleProf scheduleProf) {
+	public ScheduleProf save(@RequestBody ScheduleProf scheduleProf) {
 		return scheduleProfService.save(scheduleProf);
 	}
 
