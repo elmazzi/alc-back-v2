@@ -83,6 +83,8 @@ public class ParcoursService {
 			parcoursDao.save(parcours);
 			for(int i=0;i<parcours.getNombreCours();i++) {
 				Cours cours= new Cours();
+				cours.setNumeroOrder(i);
+				cours.setLibelle("course-"+ (i+1));
 				cours.setParcours(parcours);
 				totalCoursesCreated += coursService.save(cours);
 			}
