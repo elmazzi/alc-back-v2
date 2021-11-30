@@ -78,7 +78,7 @@ public class ParcoursService {
 			for(int i=0;i<parcours.getNombreCours();i++) {
 				Cours cours= new Cours();
 				cours.setParcours(parcours);
-				coursService.create(cours);
+				coursService.save(cours);
 			}
 		
 		
