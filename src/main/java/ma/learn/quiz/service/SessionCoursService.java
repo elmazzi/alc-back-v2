@@ -96,18 +96,13 @@ public class SessionCoursService extends AbstractService {
         SessionCours session = findSessionCoursByCoursIdAndEtudiantIdAndProfId(coursid, etudiantid, profid);
         if (prof1 == null || etudiant1 == null || cours == null) {
             return -1;
-        } else if (session != null && !session.isPayer()) {
-            session.setTotalheure(session.getTotalheure() + 1);
-            sessionCoursDao.save(session);
-            return 2;
-        } else {
+        }  else {
             SessionCours sessionCours = new SessionCours();
             sessionCours.setEtudiant(etudiant1);
             sessionCours.setDateFin(new java.sql.Date(System.currentTimeMillis() + 3600 * 1000 * 24));
             sessionCours.setReference(generateStringUppercaseAndLowercase(6));
             sessionCours.setPayer(false);
             sessionCours.setProf(prof1);
-            sessionCours.setTotalheure(1);
             sessionCours.setCours(cours);
             sessionCoursDao.save(sessionCours);
             return 1;
@@ -124,7 +119,6 @@ public class SessionCoursService extends AbstractService {
         if (session == null) {
             return -1;
         } else {
-            session.setTotalheure(0);
             session.setPayer(false);
             sessionCoursDao.save(session);
             return 1;

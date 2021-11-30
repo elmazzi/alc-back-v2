@@ -86,12 +86,15 @@ public class ParcoursService {
 
 	 public int create(Parcours  parcours ) {
 		 Centre centre=centreService.findByRef(parcours.getCentre().getRef());
-			parcours.setCentre(centre);
+
 			if(centre == null) {
 				return -1;
 			} else {
-		 parcoursDao.save(parcours);}
-			return 1;
+				parcours.setCentre(centre);
+		        parcoursDao.save(parcours);
+				return 1;
+			}
+
 	 }
 
 	public List<Parcours> findByCentreRef(String ref) {
