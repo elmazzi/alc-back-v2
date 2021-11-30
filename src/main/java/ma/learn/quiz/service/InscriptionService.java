@@ -59,6 +59,9 @@ public class InscriptionService {
         return entityManager.createQuery(query).getResultList();
     }
     public int affecter(Parcours parcours , GroupeEtude groupeEtude, Etudiant etudiant){
+        System.out.println(parcours.getId());
+        System.out.println(groupeEtude.getId());
+        System.out.println(etudiant.getId());
         List<GroupeEtudiant> list = groupeEtudiantService.findByParcoursIdAndNombrePlacevideGreaterThan(parcours.getId(), 0L);
         System.out.println("hanaa f affecter !!!!!");
         if(list==null || list.isEmpty()){
@@ -121,7 +124,7 @@ public class InscriptionService {
             inscription.setEtudiant(etudiant);
             inscription.setGroupeEtude(groupeEtude);
             inscriptionDao.save(inscription);
-            affecter(inscription.getParcours() , inscription.getGroupeEtude(), inscription.getEtudiant());
+            affecter(parcours , groupeEtude, etudiant);
             return 1;
         }
     }
