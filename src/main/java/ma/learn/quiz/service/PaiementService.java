@@ -37,10 +37,8 @@ public class PaiementService {
           paiement.setDatePaiement(new java.sql.Date(System.currentTimeMillis()+3600*1000*24));
           paiement.setEtudiant(etudiant);
           sessionCours.setPayer(true);
-          paiement.setTotalHeure(sessionCours.getTotalheure());
           paiement.setProf(prof);
           int level=prof.getCategorieProf().getLessonRate().intValue();
-          paiement.setMontant(sessionCours.getTotalheure()*level);
           sessionCoursDao.save(sessionCours);
           paiementDao.save(paiement);
           return 1;

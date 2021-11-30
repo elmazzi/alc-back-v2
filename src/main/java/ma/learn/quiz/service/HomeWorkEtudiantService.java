@@ -82,4 +82,23 @@ public class HomeWorkEtudiantService {
 		return (HomeWorkEtudiant) entityManager.createQuery(query).getSingleResult();
 	}
 
+	public List<HomeWorkEtudiant> findByProfId(Long id){
+		String query = "SELECT h FROM HomeWorkEtudiant h WHERE h.etudiant.prof.id='" +id+"'";
+		return entityManager.createQuery(query).getResultList();
+	}
+
+	public List<HomeWorkEtudiant> findByVo(HomeWorkEtudiant homeWorkEtudiant){
+		String query = "SELECT h FROM HomeWorkEtudiant h WHERE 1=1";
+		if (homeWorkEtudiant.getEtudiant().getNom()!=null){
+			query+= "AND h.etudiant.nom = 'homeWorkEtudiant.getEtudiant().getNom()'";
+		}
+		if (homeWorkEtudiant.getHomeWork().getLibelle()!= null){
+			query+= "AND h.homework.libelle = 'homeWorkEtudiant.getHomeWork().getLibelle()'";
+		}
+		if (homeWorkEtudiant.getNote()!= null){
+			query+= "AND h.note = 'homeWorkEtudiant.getNote()'";
+		}
+		return entityManager.createQuery(query).getResultList();
+	}
+
 }

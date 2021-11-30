@@ -100,7 +100,7 @@ public class CoursService {
     }
 
     public int save(Cours cours) {
-        Parcours parcours = parcoursService.findByCode(cours.getParcours().getCode());
+        Parcours parcours = parcoursService.findParcoursByLibelle(cours.getParcours().getLibelle());
         if (parcours == null)
             return -1;
         cours.setParcours(parcours);

@@ -37,8 +37,8 @@ public class ParcoursProfRest {
 	}
 
 @PostMapping("/")
-public void save(@RequestBody Parcours parcours) {
-		parcoursService.save(parcours);
+public int  save(@RequestBody Parcours parcours) {
+	return	parcoursService.save(parcours);
 	}
 
 @PutMapping("/")

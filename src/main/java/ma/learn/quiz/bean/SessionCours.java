@@ -13,7 +13,7 @@ public class SessionCours implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String reference;
-    private int totalheure;
+
     @ManyToOne
     private Prof prof;
     @OneToOne
@@ -25,14 +25,6 @@ public class SessionCours implements Serializable {
 
     private Date dateFin;
     private boolean payer;
-
-    public int getTotalheure() {
-        return totalheure;
-    }
-
-    public void setTotalheure(int totalheure) {
-        this.totalheure = totalheure;
-    }
 
     public Cours getCours() {
         return cours;
