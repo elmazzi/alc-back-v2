@@ -22,6 +22,7 @@ import static ma.learn.quiz.filter.RoleConstant.ROLE_STUDENT;
 public class EtudiantService {
     @Autowired
     private GroupeEtudeService groupeEtudeService;
+
     public List<Etudiant> findByParcoursCode(String code) {
         return etudiantDao.findByParcoursCode(code);
     }
@@ -91,43 +92,19 @@ public class EtudiantService {
 
     public int create(Etudiant etudiant) {
         Etudiant etudiant1 = this.findByLogin(etudiant.getUsername());
-        if (etudiant1 != null){
-            return -2;
-        }
-        Inscription inscription = new Inscription();
-        Etudiant etd = findByLogin(etudiant.getUsername());
-        Prof prof = new Prof();
-        prof = this.profService.findProfById(etudiant.getProf().getId());
-        EtatEtudiantSchedule etudiantSchedule = this.etatEtudiantScheduleService.findByRef(etudiant.getEtatEtudiantSchedule().getRef());
-        Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
-        GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(etudiant.getGroupeEtude().getId());
-
-        if (prof == null) {
-            etudiant.setProf(null);
-        } else {
-            etudiant.setProf(prof);
-        }
-
-        if (groupeEtude == null) {
-            etudiant.setGroupeEtude(null);
-        }
-
-        if (parcours == null) {
-            etudiant.setParcours(null);
-        }
-        if (etudiantSchedule == null) {
-            etudiant.setEtatEtudiantSchedule(null);
-        } else {
-            etudiant.setEtatEtudiantSchedule(etudiantSchedule);
-        }
-        if (etd != null) {
+        if (etudiant1 != null) {
             return -1;
         } else {
-    //     etudiant.setParcours(parcoursService.findParcoursById(7L));
+
+            Inscription inscription = new Inscription();
+            Prof prof = this.profService.findProfById(etudiant.getProf().getId());
+            EtatEtudiantSchedule etudiantSchedule = this.etatEtudiantScheduleService.findByRef(etudiant.getEtatEtudiantSchedule().getRef());
+            Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
+            GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(etudiant.getGroupeEtude().getId());
+            etudiant.setProf(prof);
+            etudiant.setEtatEtudiantSchedule(etudiantSchedule);
             etudiant.setParcours(parcours);
-			etudiant.setProf(null);
-			etudiant.setGroupeEtude(groupeEtude);
-			etudiant.setEtatEtudiantSchedule(null);
+            etudiant.setGroupeEtude(groupeEtude);
             String password = this.userService.generatePassword();
             etudiant.setPassword(password);
             etudiant.setAuthorities(Arrays.asList(new Role(ROLE_STUDENT)));
@@ -141,6 +118,7 @@ public class EtudiantService {
             inscriptionService.save(inscription);
             return 1;
         }
+
     }
 
 
@@ -160,8 +138,8 @@ public class EtudiantService {
         }
     }
 
-    public Etudiant updateEtudiant(Etudiant etudiant){
-       return  this.etudiantDao.save(etudiant);
+    public Etudiant updateEtudiant(Etudiant etudiant) {
+        return this.etudiantDao.save(etudiant);
     }
 
     public List<Etudiant> findAll() {
@@ -211,9 +189,11 @@ public class EtudiantService {
     public EntityManager entityManager;
     @Autowired
     private UserService userService;
-	public List<Etudiant> findByParcoursLibelle(String libelle) {
-		return etudiantDao.findByParcoursLibelle(libelle);
-	}
+
+    public List<Etudiant> findByParcoursLibelle(String libelle) {
+        return etudiantDao.findByParcoursLibelle(libelle);
+    }
+
     @Autowired
     private InscriptionService inscriptionService;
 }
