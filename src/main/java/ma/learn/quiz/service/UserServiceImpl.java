@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
         if (loadedUser != null)
             return null;
         else {
-//            prepareMessage(user);
+            prepareMessage(user);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setImage(getTemporaryProfileImageUrl(user.getUsername()));
             roleService.save(user.getAuthorities());
