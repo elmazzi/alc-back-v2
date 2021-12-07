@@ -21,6 +21,7 @@ public class GroupeEtudiantRest {
     public int save(@RequestBody  GroupeEtudiant groupeEtudiant) {
         return groupeEtudiantService.save(groupeEtudiant);
     }
+
     @GetMapping("/")
     public List<GroupeEtudiant> findAll() {
         return groupeEtudiantService.findAll();

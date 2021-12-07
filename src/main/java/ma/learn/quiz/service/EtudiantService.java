@@ -83,12 +83,12 @@ public class EtudiantService {
         return etudiantDao.findByNom(nom);
     }
 
-    public void saveAll(ScheduleProf scheduleProf, Etudiant etudiant) {
-        scheduleProf.setEtudiant(etudiant);
-        EtatEtudiantSchedule etatEtudiantSchedule = etatEtudiantScheduleService.findByRef(scheduleProf.getEtudiant().getEtatEtudiantSchedule().getRef());
-        etatEtudiantScheduleService.update(etatEtudiantSchedule);
-        scheduleProfDao.save(scheduleProf);
-    }
+//    public void saveAll(ScheduleProf scheduleProf, Etudiant etudiant) {
+//        scheduleProf.setEtudiant(etudiant);
+//        EtatEtudiantSchedule etatEtudiantSchedule = etatEtudiantScheduleService.findByRef(scheduleProf.getEtudiant().getEtatEtudiantSchedule().getRef());
+//        etatEtudiantScheduleService.update(etatEtudiantSchedule);
+//        scheduleProfDao.save(scheduleProf);
+//    }
 
     public int create(Etudiant etudiant) {
         Etudiant etudiant1 = this.findByLogin(etudiant.getUsername());

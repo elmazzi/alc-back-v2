@@ -35,23 +35,19 @@ public class GroupeEtudiantDetail implements Serializable {
         this.etudiant = etudiant;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public void setGrpEtudiant(GroupeEtudiant groupeEtudiant) {
-        this.groupeEtudiant = groupeEtudiant;
-    }
     public Long getId() {
         return id;
     }
-    public GroupeEtudiant getGrpEtudiant() {
-        return groupeEtudiant;
+
+    public void setId(Long id) {
+        this.id = id;
     }
+
     public GroupeEtudiant getGroupeEtudiant() {
         return groupeEtudiant;
     }
+
     public void setGroupeEtudiant(GroupeEtudiant groupeEtudiant) {
         this.groupeEtudiant = groupeEtudiant;
     }
-
 }
