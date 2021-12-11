@@ -13,11 +13,7 @@ import java.util.List;
 public class CoursAdminRest {
 
     @Autowired
-    private CoursService coursService ;
-    
-
-   
-  
+    private CoursService coursService;
 
     @GetMapping("/order/id/{id}")
     public List<Cours> findByCriteria(@PathVariable Long id) {

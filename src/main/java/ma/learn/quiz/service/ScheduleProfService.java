@@ -28,12 +28,11 @@ public class ScheduleProfService extends AbstractService {
 
     public ScheduleProf save(ScheduleProf scheduleProf) {
         if (scheduleProf.getId() == null || scheduleProf.getId() == 0) {
-            Etudiant etudiant = etudiantService.findEtudiantById(scheduleProf.getEtudiant().getId());
+            GroupeEtudiant groupeEtudiant = groupeEtudiantService.findGroupeEtudiantById(scheduleProf.getGroupeEtudiant().getId());
             Prof prof = profService.findProfById(scheduleProf.getProf().getId());
-            EtatEtudiantSchedule etatEtudiantSchedule = etatEtudiantScheduleService
-                    .findByRef(scheduleProf.getEtudiant().getEtatEtudiantSchedule().getRef());
-            if (etudiant != null) {
-                scheduleProf.setEtudiant(etudiant);
+            Cours cours = this.courseService.findCoursById(scheduleProf.getCours().getId());
+            if (groupeEtudiant != null) {
+                scheduleProf.setGroupeEtudiant(groupeEtudiant);
             } else {
                 return null;
             }
@@ -42,14 +41,16 @@ public class ScheduleProfService extends AbstractService {
             } else {
                 return null;
             }
+
+            if (cours != null){
+                scheduleProf.setCours(cours);
+            } else {
+                return null;
+            }
             if (findByRef(scheduleProf.getRef()) != null) {
                 return null;
             } else {
-                etudiant.setEtatEtudiantSchedule(etatEtudiantSchedule);
-                etudiantService.updateEtudiant(etudiant);
-                etatEtudiantScheduleService.update(etatEtudiantSchedule);
                 return scheduleProfDao.save(scheduleProf);
-
             }
         } else {
 
@@ -63,7 +64,7 @@ public class ScheduleProfService extends AbstractService {
             return -1;
         } else {
             scheduleProfDao.save(scheduleProf);
-            etudiantService.saveAll(scheduleProf, scheduleProf.getEtudiant());
+//            groupeEtudiantService.saveAll(scheduleProf, scheduleProf.getGroupeEtudiant()); //TODO create saveAll
             return 1;
         }
     }
@@ -74,11 +75,10 @@ public class ScheduleProfService extends AbstractService {
         for (ScheduleProf s : sheduls) {
             SchdeduleVo schdeduleVo = new SchdeduleVo();
             schdeduleVo.setId(s.getId());
-            schdeduleVo.setTitle(s.getEtudiant().getNom());
+            schdeduleVo.setTitle(s.getGroupeEtudiant().getLibelle());
             schdeduleVo.setStart(s.getStartTime());
             schdeduleVo.setEnd(s.getEndTime());
             schdeduleVo.setRef(s.getRef());
-            schdeduleVo.setColor(s.getEtudiant().getEtatEtudiantSchedule().getCouleur());
             schdeduleVos.add(schdeduleVo);
         }
         return schdeduleVos;
@@ -97,16 +97,16 @@ public class ScheduleProfService extends AbstractService {
         return scheduleProfDao.findByProfId(id);
     }
 
-    public List<ScheduleProf> findByEtudiantId(Long id) {
-        return scheduleProfDao.findByEtudiantId(id);
+    public List<ScheduleProf> findByGroupeEtudiantId(Long id) {
+        return scheduleProfDao.findByGroupeEtudiantId(id);
     }
 
     public List<ScheduleProf> findByCriteriaStudent(ScheduleProf schedule) {
         String query = this.init("ScheduleProf");
-        if (schedule.getEtudiant() != null) {
-            query += this.addCriteria("etudiant.nom", schedule.getEtudiant().getNom(), "LIKE");
-            query += this.addCriteria("etudiant.prenom", schedule.getEtudiant().getPrenom(), "LIKE");
-            query += this.addCriteria("etudiant.username", schedule.getEtudiant().getUsername(), "LIKE");
+        if (schedule.getGroupeEtudiant() != null) {
+            query += this.addCriteria("groupeEtudiant.libelle", schedule.getGroupeEtudiant().getLibelle(), "LIKE");
+//            query += this.addCriteria("etudiant.prenom", schedule.getEtudiant().getPrenom(), "LIKE");
+//            query += this.addCriteria("etudiant.username", schedule.getEtudiant().getUsername(), "LIKE");
         }
         System.out.println("query = " + query);
         return entityManager.createQuery(query).getResultList();
@@ -115,11 +115,13 @@ public class ScheduleProfService extends AbstractService {
     @Autowired
     private ScheduleProfDao scheduleProfDao;
     @Autowired
-    private EtudiantService etudiantService;
+    private GroupeEtudiantService groupeEtudiantService;
     @Autowired
     private EtatEtudiantScheduleService etatEtudiantScheduleService;
     @Autowired
     private ProfService profService;
     @Autowired
     private EntityManager entityManager;
+    @Autowired
+    private CoursService courseService;
 }

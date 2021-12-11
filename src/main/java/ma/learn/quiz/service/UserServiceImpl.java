@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
                     user.getUsername(), user.getPassword()
             ));
         } catch (BadCredentialsException e) {
-            throw new BadCredentialsException("bad creditiel for username " + user.getUsername());
+            throw new BadCredentialsException("bad credited for username " + user.getUsername());
         }
         User loadUserByUsername = loadUserByUsername(user.getUsername());
         HttpHeaders jwtHeader = getJwtHeader(user);
