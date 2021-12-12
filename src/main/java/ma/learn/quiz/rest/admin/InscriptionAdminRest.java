@@ -20,7 +20,7 @@ public class InscriptionAdminRest {
 	
 	@GetMapping("/")
 	public List<Inscription> findAll() {
-		return inscriptionService.findAll();
+		return inscriptionService.findAllByOrderByIdDesc();
 	}
 
 

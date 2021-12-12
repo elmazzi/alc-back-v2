@@ -16,7 +16,7 @@ import ma.learn.quiz.dao.InscriptionDao;
 
 
 @Service
-public class InscriptionService {
+public class InscriptionService  extends AbstractService {
     @Autowired
     public InscriptionDao inscriptionDao;
     @Autowired
@@ -43,21 +43,26 @@ public class InscriptionService {
     @Autowired
     private GroupeEtudiantDetailService groupeEtudiantDetailService;
 
-    public List<Inscription> findByCriteria(Inscription inscrit) {
-        String query = "SELECT e FROM Inscription e WHERE 1=1";
-        if (inscrit.getEtudiant().getNom() != null) {
-            query += " AND  e.etudiant.nom LIKE '%" + inscrit.getEtudiant().getNom() + "%'";
+    public List<Inscription> findByCriteria(Inscription inscription) {
+        String query = this.init("Inscription");
+        if (inscription.getEtudiant() != null) {
+            if(inscription.getEtudiant().getNom() != null){
+                query += this.addCriteria("etudiant.nom", inscription.getEtudiant().getNom(), "LIKE");
+            }
+            if(inscription.getEtudiant().getPrenom() != null){
+                query += this.addCriteria("etudiant.prenom", inscription.getEtudiant().getPrenom(), "LIKE");
+            }
+            if(inscription.getEtudiant().getUsername() != null){
+                query += this.addCriteria("etudiant.username", inscription.getEtudiant().getUsername(), "LIKE");
+            }
         }
-        if (inscrit.getEtudiant().getPrenom() != null) {
-            query += "  AND  e.etudiant.prenom LIKE '%" + inscrit.getEtudiant().getPrenom() + "'";
-        }
-
-        if (inscrit.getEtudiant().getUsername() != null) {
-            query += "  AND  e.etudiant.username LIKE '%" + inscrit.getEtudiant().getUsername() + "'";
-        }
-
+        System.out.println("query = " + query);
+        System.out.println(entityManager.createQuery(query).getResultList().size());
         return entityManager.createQuery(query).getResultList();
     }
+
+
+
     public int affecter(Parcours parcours , GroupeEtude groupeEtude, Etudiant etudiant){
         System.out.println(parcours.getId());
         System.out.println(groupeEtude.getId());
@@ -197,4 +202,7 @@ public class InscriptionService {
     }
 
 
+    public List<Inscription> findAllByOrderByIdDesc() {
+        return inscriptionDao.findAllByOrderByIdDesc();
+    }
 }
