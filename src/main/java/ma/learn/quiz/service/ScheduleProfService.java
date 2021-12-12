@@ -47,11 +47,7 @@ public class ScheduleProfService extends AbstractService {
             } else {
                 return null;
             }
-            if (findByRef(scheduleProf.getRef()) != null) {
-                return null;
-            } else {
                 return scheduleProfDao.save(scheduleProf);
-            }
         } else {
 
             return this.update(scheduleProf);
