@@ -38,6 +38,7 @@ public class DictionaryService {
 	}
 	 
 	 public Dictionary save(Dictionary dictionary ) {
+		System.out.println(dictionary.getDefinition());
 		 Etudiant etudiant = etudiantService.findEtudiantById(dictionary.getEtudiant().getId());
 		 if(etudiant == null) {
 			 return null;

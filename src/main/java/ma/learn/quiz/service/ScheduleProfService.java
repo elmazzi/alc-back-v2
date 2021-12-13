@@ -101,9 +101,19 @@ public class ScheduleProfService extends AbstractService {
         String query = this.init("ScheduleProf");
         if (schedule.getGroupeEtudiant() != null) {
             query += this.addCriteria("groupeEtudiant.libelle", schedule.getGroupeEtudiant().getLibelle(), "LIKE");
-//            query += this.addCriteria("etudiant.prenom", schedule.getEtudiant().getPrenom(), "LIKE");
-//            query += this.addCriteria("etudiant.username", schedule.getEtudiant().getUsername(), "LIKE");
         }
+        if (schedule.getProf() != null) {
+            if (schedule.getProf().getNom() != null){
+                query += this.addCriteria("prof.nom", schedule.getProf().getNom(), "LIKE");
+            }
+            if (schedule.getProf().getPrenom() != null){
+                query += this.addCriteria("prof.prenom", schedule.getProf().getPrenom(), "LIKE");
+            }
+            if (schedule.getProf().getUsername() != null){
+                query += this.addCriteria("prof.username", schedule.getProf().getUsername(), "LIKE");
+            }
+        }
+
         System.out.println("query = " + query);
         return entityManager.createQuery(query).getResultList();
     }
