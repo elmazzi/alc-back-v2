@@ -1,5 +1,6 @@
 package ma.learn.quiz.handler;
 
+import ma.learn.quiz.bean.Section;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -8,10 +9,10 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ChatWebSocketHandler extends TextWebSocketHandler {
 
     private final List<WebSocketSession> webSocketSessions = new ArrayList<>();
-
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         webSocketSessions.add(session);
@@ -28,4 +29,6 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         webSocketSessions.remove(session);
     }
+
+
 }
