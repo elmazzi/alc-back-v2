@@ -12,5 +12,6 @@ public interface DictionaryDao extends JpaRepository<Dictionary, Long>  {
 	Dictionary findByWordAndEtudiantId(String word,Long id);
 	List<Dictionary> findByEtudiantId(Long id);
 	int deleteByWordAndEtudiantId(String word,Long id);
+	int deleteDictionaryByEtudiantId(Long id);
 
 }

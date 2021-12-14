@@ -87,4 +87,8 @@ public class GroupeEtudiantDetailService {
     public int deleteGroupeEtudiantDetailById(Long id) {
         return groupeEtudiantDetailDao.deleteGroupeEtudiantDetailById(id);
     }
+
+    public int deleteGroupeEtudiantDetailByEtudiantId(Long id) {
+        return groupeEtudiantDetailDao.deleteGroupeEtudiantDetailByEtudiantId(id);
+    }
 }

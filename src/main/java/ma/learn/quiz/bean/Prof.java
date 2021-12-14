@@ -33,7 +33,7 @@ public class Prof extends User {
 
     public Prof(User user , String ref, CategorieProf categorieProf, List<ClassRoom> classRooms, List<RecommendTeacher> recommendTeacher, List<Etudiant> etudiantList) {
         super(user.id, user.username, user.password, user.nom, user.prenom,
-                user.numero, user.addresse, user.ville, user.age, user.image, user.accountNonExpired,
+                user.numero, user.addresse,user.dateNaissance, user.country, user.ville, user.age, user.image, user.accountNonExpired,
                 user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role);
         this.ref = ref;
         this.categorieProf = categorieProf;
@@ -44,7 +44,7 @@ public class Prof extends User {
 
     public Prof(User user) {
         super(user.id, user.username, user.password, user.nom, user.prenom,
-                user.numero, user.addresse, user.ville, user.age, user.image, user.accountNonExpired,
+                user.numero, user.addresse,user.dateNaissance, user.country, user.ville, user.age, user.image, user.accountNonExpired,
                 user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role);
     }
 

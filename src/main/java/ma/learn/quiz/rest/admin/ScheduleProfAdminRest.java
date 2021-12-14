@@ -22,8 +22,6 @@ public class ScheduleProfAdminRest {
 		return scheduleProfService.findSchedule();
 	}
 
-	@Autowired
-	private ScheduleProfService scheduleProfService;
 
 	@GetMapping("/ref/{ref}")
 	public ScheduleProf findByRef(@PathVariable String ref) {
@@ -51,4 +49,12 @@ public class ScheduleProfAdminRest {
 		return scheduleProfService.findAll();
 	}
 
+
+	@DeleteMapping("/id/{id}")
+	public void deleteScheduleProfById(@PathVariable Long id) {
+		 scheduleProfService.deleteScheduleProfById(id);
+	}
+
+	@Autowired
+	private ScheduleProfService scheduleProfService;
 }

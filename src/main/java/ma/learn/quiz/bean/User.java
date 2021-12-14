@@ -4,6 +4,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 
 import static javax.persistence.FetchType.EAGER;
 
@@ -19,8 +20,10 @@ public class User implements UserDetails {
     protected String prenom;
     protected String numero;
     protected String addresse;
+    protected String country;
     protected String ville;
     protected int age;
+    protected Date dateNaissance;
     protected String image;
     protected boolean accountNonExpired=true;
     protected boolean credentialsNonExpired=true;
@@ -34,7 +37,8 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(Long id, String username, String password, String nom, String prenom, String numero, String addresse, String ville, int age, String image, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, boolean enabled, Collection<Role> authorities, String role) {
+    public User(Long id, String username, String password, String nom, String prenom, String numero,
+                String addresse, Date dateNaissance,String country, String ville, int age, String image, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, boolean enabled, Collection<Role> authorities, String role) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -51,6 +55,8 @@ public class User implements UserDetails {
         this.enabled = enabled;
         this.authorities = authorities;
         this.role = role;
+        this.dateNaissance = dateNaissance;
+        this.country = country;
     }
 
     public User(String username, String password) {
@@ -194,5 +200,11 @@ public class User implements UserDetails {
         this.authorities = authorities;
     }
 
+    public Date getDateNaissance() {
+        return dateNaissance;
+    }
 
+    public void setDateNaissance(Date dateNaissance) {
+        this.dateNaissance = dateNaissance;
+    }
 }

@@ -17,22 +17,24 @@ import ma.learn.quiz.vo.SalaryVo;
 import static ma.learn.quiz.filter.RoleConstant.ROLE_PROF;
 
 @Service
-public class ProfService {
+public class ProfService extends AbstractService{
 
 
     public List<Prof> findByCriteria(Prof prof) {
-        String query = "SELECT e FROM Prof e WHERE 1=1";
-        if (prof.getNom() != null) {
-            query += " AND  e.nom LIKE '%" + prof.getNom() + "%'";
+        String query = this.init("Prof");
+        if (prof!= null) {
+            if(prof.getNom() != null){
+                query += this.addCriteria("nom", prof.getNom(), "LIKE");
+            }
+            if(prof.getPrenom() != null){
+                query += this.addCriteria("prenom", prof.getPrenom(), "LIKE");
+            }
+            if(prof.getUsername() != null){
+                query += this.addCriteria("username", prof.getUsername(), "LIKE");
+            }
         }
-        if (prof.getPrenom() != null) {
-            query += "  AND  e.prenom LIKE '%" + prof.getPrenom() + "'";
-        }
-
-        if (prof.getUsername() != null) {
-            query += "  AND  e.login LIKE '%" + prof.getUsername() + "'";
-        }
-
+        System.out.println("query = " + query);
+        System.out.println(entityManager.createQuery(query).getResultList().size());
         return entityManager.createQuery(query).getResultList();
     }
 

@@ -19,7 +19,7 @@ import ma.learn.quiz.service.vo.EtudiantVo;
 import static ma.learn.quiz.filter.RoleConstant.ROLE_STUDENT;
 
 @Service
-public class EtudiantService {
+public class EtudiantService extends AbstractService {
     @Autowired
     private GroupeEtudeService groupeEtudeService;
 
@@ -157,6 +157,17 @@ public class EtudiantService {
 
     @Transactional
     public int deleteEtudiantById(Long id) {
+        this.inscriptionService.deleteInscriptionByEtudiantId(id);
+        List<GroupeEtudiantDetail> detailList = this.groupeEtudiantDetailService.findByEtudiantId(id);
+        for (GroupeEtudiantDetail groupeDetail: detailList)
+        {
+            GroupeEtudiant groupeEtudiant = this.groupeEtudiantService.findGroupeEtudiantById(groupeDetail.getGroupeEtudiant().getId());
+            groupeEtudiant.setNombrePlaceNonVide(groupeEtudiant.getNombrePlaceNonVide() - 1);
+            groupeEtudiant.setNombrePlacevide(groupeEtudiant.getNombrePlacevide() + 1);
+            this.groupeEtudiantService.update(groupeEtudiant);
+        }
+        this.groupeEtudiantDetailService.deleteGroupeEtudiantDetailByEtudiantId(id);
+        this.dictionaryService.deleteDictionaryByEtudiantId(id);
         return etudiantDao.deleteEtudiantById(id);
     }
 
@@ -172,6 +183,29 @@ public class EtudiantService {
     public List<Etudiant> findEtudiantByGroupeEtudiantDetailsGroupeEtudiantParcours(String libelle) {
         return etudiantDao.findEtudiantByGroupeEtudiantDetailsGroupeEtudiantParcours(libelle);
     }
+    public List<Etudiant> findByParcoursLibelle(String libelle) {
+        return etudiantDao.findByParcoursLibelle(libelle);
+    }
+
+    public List<Etudiant> findByCriteria(Etudiant etudiant) {
+        String query = this.init("Etudiant");
+        if (etudiant!= null) {
+            if(etudiant.getNom() != null){
+                query += this.addCriteria("nom", etudiant.getNom(), "LIKE");
+            }
+            if(etudiant.getPrenom() != null){
+                query += this.addCriteria("prenom", etudiant.getPrenom(), "LIKE");
+            }
+            if(etudiant.getProf() != null){
+                query += this.addCriteria("prof.nom", etudiant.getProf().getNom(), "LIKE");
+                query += this.addCriteria("prof.prenom", etudiant.getProf().getPrenom(), "LIKE");
+            }
+        }
+        System.out.println("query = " + query);
+        System.out.println(entityManager.createQuery(query).getResultList().size());
+        return entityManager.createQuery(query).getResultList();
+    }
+
 
     @Autowired
     public EtudiantDao etudiantDao;
@@ -189,11 +223,12 @@ public class EtudiantService {
     public EntityManager entityManager;
     @Autowired
     private UserService userService;
-
-    public List<Etudiant> findByParcoursLibelle(String libelle) {
-        return etudiantDao.findByParcoursLibelle(libelle);
-    }
-
     @Autowired
     private InscriptionService inscriptionService;
+    @Autowired
+    private GroupeEtudiantDetailService groupeEtudiantDetailService;
+    @Autowired
+    private DictionaryService dictionaryService;
+    @Autowired
+    private GroupeEtudiantService groupeEtudiantService;
 }

@@ -201,6 +201,13 @@ public class InscriptionService  extends AbstractService {
         return inscriptionDao.findByNumeroInscription(numeroInscription);
     }
 
+    public int deleteInscriptionByEtudiantId(Long id) {
+        return inscriptionDao.deleteInscriptionByEtudiantId(id);
+    }
+
+    public List<Inscription> findInscriptionsByEtudiantId(Long id) {
+        return inscriptionDao.findInscriptionsByEtudiantId(id);
+    }
 
     public List<Inscription> findAllByOrderByIdDesc() {
         return inscriptionDao.findAllByOrderByIdDesc();

@@ -118,12 +118,15 @@ public class ScheduleProfService extends AbstractService {
         return entityManager.createQuery(query).getResultList();
     }
 
+    public void deleteScheduleProfById(Long id) {
+         scheduleProfDao.deleteById(id);
+    }
+
+
     @Autowired
     private ScheduleProfDao scheduleProfDao;
     @Autowired
     private GroupeEtudiantService groupeEtudiantService;
-    @Autowired
-    private EtatEtudiantScheduleService etatEtudiantScheduleService;
     @Autowired
     private ProfService profService;
     @Autowired

@@ -75,4 +75,8 @@ public class DictionaryService {
 			return 1;
 		}
 	}
+
+	public int deleteDictionaryByEtudiantId(Long id) {
+		return dictionaryDao.deleteDictionaryByEtudiantId(id);
+	}
 }

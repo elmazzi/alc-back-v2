@@ -29,7 +29,7 @@ public class Etudiant extends User {
 
     public Etudiant(User user, String ref, Prof prof, EtatEtudiantSchedule etatEtudiantSchedule, Parcours parcours, List<QuizEtudiant> quizEtudiant) {
         super(user.id, user.username, user.password, user.nom, user.prenom,
-                user.numero, user.addresse, user.ville, user.age, user.image, user.accountNonExpired,
+                user.numero, user.addresse,user.dateNaissance,user.country, user.ville, user.age, user.image, user.accountNonExpired,
                 user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role);
         this.ref = ref;
         this.prof = prof;
@@ -40,9 +40,8 @@ public class Etudiant extends User {
 
     public Etudiant(User user) {
         super(user.id, user.username, user.password, user.nom, user.prenom,
-                user.numero, user.addresse, user.ville, user.age, user.image, user.accountNonExpired,
-                user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role);
-    }
+                user.numero, user.addresse,user.dateNaissance, user.country, user.ville, user.age, user.image, user.accountNonExpired,
+                user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role);    }
 
     public Etudiant() {
     }
