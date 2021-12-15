@@ -49,5 +49,4 @@ public class GroupeEtudeRest {
     public List<GroupeEtude> findAllByCriteria( @RequestBody GroupeEtudeVo groupeEtudeVo) {
         return groupeEtudeService.findAllByCriteria(groupeEtudeVo);
     }
-
 }

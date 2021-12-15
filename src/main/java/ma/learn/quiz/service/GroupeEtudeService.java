@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class GroupeEtudeService {
+public class GroupeEtudeService extends AbstractService {
     @Autowired
     private GroupeEtudeDao groupeEtudeDao;
     @Autowired
@@ -58,7 +58,7 @@ public class GroupeEtudeService {
         }
         return res;
     }
-
+/*
     public List<GroupeEtude> findAllByCriteria(GroupeEtudeVo groupeEtudeVo) {
         String query = "SELECT c FROM GroupeEtude c WHERE 1=1 ";
 
@@ -71,6 +71,21 @@ public class GroupeEtudeService {
             query += " AND c.nombreEtudiant LIKE '%" + groupeEtudeVo.getNombreEtudiant() + "%'";
 
         return entityManager.createQuery(query).getResultList();
+    }
+
+ */
+    public List<GroupeEtude> findAllByCriteria(GroupeEtudeVo groupeEtudeVo) {
+        String query = this.init("GroupeEtude");
+        if (groupeEtudeVo.getLibelle() != null) {
+            query += this.addCriteria("libelle", groupeEtudeVo.getLibelle(), "LIKE");
+        }
+        if (groupeEtudeVo.getNombreEtudiant() != null) {
+            query += this.addCriteria("nombreEtudiant", groupeEtudeVo.getNombreEtudiant(), "LIKE");
+        }
+        System.out.println("query = " + query);
+        return entityManager.createQuery(query).getResultList();
+
+
     }
     @Transactional
     public int deleteByLibelle(String libelle) {
