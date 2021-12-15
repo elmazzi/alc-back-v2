@@ -60,9 +60,9 @@ public class ScheduleProfEtudiantRest {
 
 
 
-	@GetMapping("/etudiant/id/{id}")
+	@GetMapping("/groupe/etudiant/id/{id}")
 	public List<ScheduleProf> findByEtudiantId(@PathVariable Long id) {
-		return scheduleProfService.findByEtudiantId(id);
+		return scheduleProfService.findByGroupeEtudiantId(id);
 	}
 
 	@Autowired

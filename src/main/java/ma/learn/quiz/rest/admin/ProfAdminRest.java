@@ -74,6 +74,8 @@ public class ProfAdminRest {
 	public Prof update(@RequestBody Prof prof) {
 	return profService.update(prof);
 }
+
+
     @PostMapping("/search")
 	public List<Prof> findByCriteria(@RequestBody Prof prof) {
 		return profService.findByCriteria(prof);

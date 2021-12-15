@@ -15,29 +15,33 @@ import java.util.Optional;
 public class GroupeEtudiant implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id ;
+    private Long id;
     private String libelle;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date dateDebut;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date dateFin;
     private String niveau;
-    private Long nombrePlace ;
-    private Long  nombrePlacevide;
-    private Long  nombrePlaceNonVide; // nombre de place non disponible
+    private Long nombrePlace;
+    private Long nombrePlacevide;
+    private Long nombrePlaceNonVide; // nombre de place non disponible
     @OneToMany(mappedBy = "groupeEtudiant")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<GroupeEtudiantDetail> groupeEtudiantDetails;
     @ManyToOne
     private GroupeEtude groupeEtude;
-   @ManyToOne
+    @ManyToOne
     private Parcours parcours;
+
+
     public Parcours getParcours() {
         return parcours;
     }
+
     public void setParcours(Parcours parcours) {
         this.parcours = parcours;
     }
+
     public GroupeEtude getGroupeEtude() {
         return groupeEtude;
     }
@@ -45,6 +49,7 @@ public class GroupeEtudiant implements Serializable {
     public void setGroupeEtude(GroupeEtude groupeEtude) {
         this.groupeEtude = groupeEtude;
     }
+
     @JsonIgnore
     public List<GroupeEtudiantDetail> getGroupeEtudeDetails() {
         return groupeEtudiantDetails;
@@ -53,6 +58,15 @@ public class GroupeEtudiant implements Serializable {
     public void setGroupeEtudeDetails(List<GroupeEtudiantDetail> groupeEtudiantDetails) {
         this.groupeEtudiantDetails = groupeEtudiantDetails;
     }
+
+    public List<GroupeEtudiantDetail> getGroupeEtudiantDetails() {
+        return groupeEtudiantDetails;
+    }
+
+    public void setGroupeEtudiantDetails(List<GroupeEtudiantDetail> groupeEtudiantDetails) {
+        this.groupeEtudiantDetails = groupeEtudiantDetails;
+    }
+
 
     public void setId(Long id) {
         this.id = id;

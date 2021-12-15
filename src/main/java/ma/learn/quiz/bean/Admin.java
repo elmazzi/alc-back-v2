@@ -15,7 +15,7 @@ public class Admin extends User {
 
 	public Admin(User user) {
 		super(user.id, user.username, user.password, user.nom, user.prenom,
-				user.numero, user.addresse, user.ville, user.age, user.image, user.accountNonExpired,
+				user.numero, user.addresse,user.dateNaissance, user.country, user.ville, user.age, user.image, user.accountNonExpired,
 				user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role);
 	}
 

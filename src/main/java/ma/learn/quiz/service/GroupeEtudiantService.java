@@ -39,8 +39,9 @@ public class GroupeEtudiantService {
 
     }
 
-
-
+    public GroupeEtudiant findGroupeEtudiantById(Long id) {
+        return groupeEtudiantDao.findGroupeEtudiantById(id);
+    }
 
     public int update(GroupeEtudiant groupeEtudiant) {
         groupeEtudiantDao.save(groupeEtudiant);

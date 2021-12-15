@@ -1,6 +1,7 @@
 package ma.learn.quiz.rest.admin;
 
 import ma.learn.quiz.bean.Etudiant;
+import ma.learn.quiz.bean.Inscription;
 import ma.learn.quiz.service.EtudiantService;
 import ma.learn.quiz.service.vo.EtudiantVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +51,18 @@ public class EtudiantAdminRest {
 	public int deleteEtudiantById(@RequestBody List<Etudiant> etudiant) {
 		return etudiantService.deleteEtudiantById(etudiant);
 	}
+
+
 	@DeleteMapping("/id/{id}")
 	public int deleteByEtudiantId(@PathVariable Long id) {
 		return etudiantService.deleteEtudiantById(id);
 	}
+
+	@PostMapping("/search-all/")
+	public List<Etudiant> findByCriteria(@RequestBody Etudiant etudiant) {
+		return etudiantService.findByCriteria(etudiant);
+	}
+
 	@GetMapping("/login/{login}/password/{password}")
 	public Object findByCritere(@PathVariable String login,@PathVariable String password) {
 		return etudiantService.findByCritere(login, password);

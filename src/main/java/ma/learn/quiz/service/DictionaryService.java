@@ -37,23 +37,23 @@ public class DictionaryService {
 		return dictionaryDao.findAll();
 	}
 	 
-	 public int save(Dictionary dictionary ) {
+	 public Dictionary save(Dictionary dictionary ) {
+		System.out.println(dictionary.getDefinition());
 		 Etudiant etudiant = etudiantService.findEtudiantById(dictionary.getEtudiant().getId());
 		 if(etudiant == null) {
-			 return -2;
+			 return null;
 		 }
 			if(findDictionaryById(dictionary.getId())!=null) {
-				return -1;
+				return null;
 			}
 			if(findByWordAndEtudiantId(dictionary.getWord(), dictionary.getEtudiant().getId()) != null) {
-				return -3;
+				return null;
 			}
 			else {
 				
 				 dictionary.setEtudiant(etudiant);
-				dictionaryDao.save(dictionary);
 				System.out.println("haddii hya"+dictionary);
-				return 1;
+				return dictionaryDao.save(dictionary);
 			}
 				
 		}
@@ -74,5 +74,9 @@ public class DictionaryService {
 			dictionaryDao.save(dict);
 			return 1;
 		}
+	}
+
+	public int deleteDictionaryByEtudiantId(Long id) {
+		return dictionaryDao.deleteDictionaryByEtudiantId(id);
 	}
 }

@@ -78,8 +78,17 @@ public class GroupeEtudiantDetailService {
     }
 
      */
-@Transactional
+
+    public List<GroupeEtudiantDetail> findByEtudiantId(Long id) {
+        return groupeEtudiantDetailDao.findByEtudiantId(id);
+    }
+
+    @Transactional
     public int deleteGroupeEtudiantDetailById(Long id) {
         return groupeEtudiantDetailDao.deleteGroupeEtudiantDetailById(id);
+    }
+
+    public int deleteGroupeEtudiantDetailByEtudiantId(Long id) {
+        return groupeEtudiantDetailDao.deleteGroupeEtudiantDetailByEtudiantId(id);
     }
 }

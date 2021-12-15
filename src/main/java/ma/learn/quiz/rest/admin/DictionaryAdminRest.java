@@ -49,7 +49,7 @@ public class DictionaryAdminRest {
     }
 
     @PostMapping("/")
-    public int save(@RequestBody Dictionary dictionary) {
+    public Dictionary Dictionary(@RequestBody Dictionary dictionary) {
 		System.out.println("haddii hya"+dictionary);
 		return dictionaryService.save(dictionary);
     }

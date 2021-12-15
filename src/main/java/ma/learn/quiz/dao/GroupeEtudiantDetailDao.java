@@ -12,7 +12,10 @@ public interface GroupeEtudiantDetailDao extends JpaRepository<GroupeEtudiantDet
     public Optional<GroupeEtudiantDetail> findById(Long id);
 
     List<GroupeEtudiantDetail>  findByGroupeEtudiantId(Long id);
+    List<GroupeEtudiantDetail>  findByEtudiantId(Long id);
     //  List<Etudiant> findEtudiantByGroupeEtudeDetail (GroupeEtudeDetail groupeEtudeDetail);
     public int deleteByGroupeEtudiantId(Long id);
     public int deleteGroupeEtudiantDetailById(Long id );
+    int deleteGroupeEtudiantDetailByEtudiantId(Long id);
+
 }
