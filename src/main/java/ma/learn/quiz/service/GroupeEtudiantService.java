@@ -10,12 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class GroupeEtudiantService {
+public class GroupeEtudiantService extends AbstractService  {
     @Autowired
     private GroupeEtudiantDao groupeEtudiantDao;
     @Autowired
@@ -24,7 +25,8 @@ public class GroupeEtudiantService {
     private ParcoursService parcoursService;
     @Autowired
     private GroupeEtudiantDetailService groupeEtudiantDetailService;
-
+    @Autowired
+    public EntityManager entityManager;
     public int save(GroupeEtudiant groupeEtudiant) {
 
         Parcours parcours = parcoursService.findParcoursByLibelle(groupeEtudiant.getParcours().getLibelle());
@@ -92,6 +94,22 @@ public class GroupeEtudiantService {
 
     public List<GroupeEtudiant> findByParcoursIdAndNombrePlacevideGreaterThan(Long id, Long nombrePlacevide) {
         return groupeEtudiantDao.findByParcoursIdAndNombrePlacevideGreaterThan(id, nombrePlacevide);
+    }
+
+
+    public List<GroupeEtudiant> findByCriteria(GroupeEtudiant groupeEtudiant) {
+        String query = this.init("GroupeEtudiant");
+        if (groupeEtudiant.getParcours() != null) {
+            if(groupeEtudiant.getParcours().getLibelle() != null){
+                query += this.addCriteria("parcours.libelle", groupeEtudiant.getParcours().getLibelle(), "LIKE");
+            }
+            if(groupeEtudiant.getLibelle() != null){
+                query += this.addCriteria("libelle", groupeEtudiant.getLibelle(), "LIKE");
+            }
+        }
+        System.out.println("query = " + query);
+        System.out.println(entityManager.createQuery(query).getResultList().size());
+        return entityManager.createQuery(query).getResultList();
     }
 
 }

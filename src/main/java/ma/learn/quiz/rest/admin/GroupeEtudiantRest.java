@@ -46,4 +46,9 @@ public class GroupeEtudiantRest {
     public List<GroupeEtudiant> findByParcoursIdAndNombrePlacevideGreaterThan(Long id, Long nombrePlacevide) {
         return groupeEtudiantService.findByParcoursIdAndNombrePlacevideGreaterThan(id, nombrePlacevide);
     }
+
+    @PostMapping("/search/")
+    public List<GroupeEtudiant> findByCriteria(@RequestBody GroupeEtudiant groupeEtudiant) {
+        return groupeEtudiantService.findByCriteria(groupeEtudiant);
+    }
 }
