@@ -1,12 +1,9 @@
 package ma.learn.quiz.service;
 
-import ma.learn.quiz.bean.HomeWork;
+import ma.learn.quiz.bean.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ma.learn.quiz.bean.Question;
-import ma.learn.quiz.bean.Quiz;
-import ma.learn.quiz.bean.TypeDeQuestion;
 import ma.learn.quiz.dao.QuestionDao;
 
 import javax.persistence.EntityManager;
@@ -18,7 +15,15 @@ import java.util.Optional;
 public class QuestionService {
 
 	public List<Question> findByQuizRef(String ref) {
-		return questionDao.findByQuizRef(ref);
+		List<Question> questionList =  questionDao.findByQuizRef(ref);
+		for (Question value : questionList) {
+			List<Reponse> reponseList = this.reponseService.findByQuestionId(value.getId());
+			value.setReponses(reponseList);
+		}
+		for (Question question : questionList) {
+			System.out.println(question.getReponses().size());
+		}
+		return questionList;
 	}
 
 	@Transactional
