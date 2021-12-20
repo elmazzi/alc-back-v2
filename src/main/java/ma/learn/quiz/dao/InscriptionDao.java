@@ -18,4 +18,5 @@ public interface InscriptionDao extends JpaRepository<Inscription,Long>  {
 	Inscription findInscriptionById(Long id);
 	Inscription findInscriptionByEtudiantUsername(String username);
 	List<Inscription> findAllByOrderByIdDesc();
+	List<Inscription> findAllByEtatInscriptionLibelle(String libelle);
 }

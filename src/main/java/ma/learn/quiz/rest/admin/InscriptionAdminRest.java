@@ -24,8 +24,11 @@ public class InscriptionAdminRest {
 	}
 
 
-	
-	
+	@GetMapping("/etat/libelle/{libelle}")
+	public List<Inscription> findAllByEtatInscriptionLibelle(@PathVariable String libelle) {
+		return inscriptionService.findAllByEtatInscriptionLibelle(libelle);
+	}
+
 	@PostMapping("/search")
 	public List<Inscription> findByCriteria(@RequestBody Inscription inscrit) {
 		return inscriptionService.findByCriteria(inscrit);

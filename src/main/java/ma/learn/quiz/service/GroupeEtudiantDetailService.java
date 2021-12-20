@@ -5,11 +5,12 @@ import ma.learn.quiz.dao.GroupeEtudiantDetailDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-public class GroupeEtudiantDetailService {
+public class GroupeEtudiantDetailService extends AbstractService {
     @Autowired
     private GroupeEtudiantDetailDao groupeEtudiantDetailDao;
     @Autowired
@@ -20,6 +21,8 @@ public class GroupeEtudiantDetailService {
     private InscriptionService inscriptionService;
     @Autowired
     private EtudiantService etudiantService;
+    @Autowired
+    public EntityManager entityManager;
 
     /*
         public List<Etudiant> findEtudiantByGroupeEtudeDetail(GroupeEtudeDetail groupeEtudeDetail) {
@@ -91,4 +94,28 @@ public class GroupeEtudiantDetailService {
     public int deleteGroupeEtudiantDetailByEtudiantId(Long id) {
         return groupeEtudiantDetailDao.deleteGroupeEtudiantDetailByEtudiantId(id);
     }
+
+
+    public List<GroupeEtudiantDetail> findByCriteria(GroupeEtudiantDetail groupeEtudiantDetail) {
+        String query = this.init("GroupeEtudiantDetail");
+        if (groupeEtudiantDetail.getEtudiant() != null) {
+            if(groupeEtudiantDetail.getEtudiant().getNom() != null){
+                query += this.addCriteria("etudiant.nom", groupeEtudiantDetail.getEtudiant().getNom(), "LIKE");
+            }
+            if(groupeEtudiantDetail.getEtudiant().getPrenom() != null){
+                query += this.addCriteria("etudiant.prenom", groupeEtudiantDetail.getEtudiant().getPrenom(), "LIKE");
+            }
+
+        }
+        if (groupeEtudiantDetail.getGroupeEtudiant() != null) {
+            if(groupeEtudiantDetail.getGroupeEtudiant().getLibelle() != null){
+                query += this.addCriteria("groupeEtudiant.libelle", groupeEtudiantDetail.getGroupeEtudiant().getLibelle(), "LIKE");
+            }
+
+        }
+        System.out.println("query = " + query);
+        System.out.println(entityManager.createQuery(query).getResultList().size());
+        return entityManager.createQuery(query).getResultList();
+    }
+
 }
