@@ -10,7 +10,7 @@ import java.util.Collection;
 public class Admin extends User {
 
 	public Admin() {
-
+		super();
 	}
 
 	public Admin(User user) {
