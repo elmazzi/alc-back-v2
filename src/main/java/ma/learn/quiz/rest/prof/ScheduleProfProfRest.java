@@ -65,4 +65,8 @@ public class ScheduleProfProfRest {
 	public List<ScheduleProf> findByProfId(@PathVariable Long id) {
 		return scheduleProfService.findByProfId(id);
 	}
+	@PostMapping("/all/")
+	public List<ScheduleProf> findByCriteriaStudent( @RequestBody ScheduleProf schedule) {
+		return scheduleProfService.findByCriteriaStudent(schedule);
+	}
 }

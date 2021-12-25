@@ -1,7 +1,10 @@
 package ma.learn.quiz.bean;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +24,8 @@ public class RecommendTeacher {
 		private String commentaire;
 		private String telephone;
 		private String login;
+
+	private String dateRecommamdation;
 		@ManyToOne
 		private Prof prof;
 		
@@ -98,9 +103,12 @@ public class RecommendTeacher {
 		public void setLogin(String login) {
 			this.login = login;
 		}
-		
 
-	
-	
+	public String getDateRecommamdation() {
+		return dateRecommamdation;
+	}
 
+	public void setDateRecommamdation(String dateRecommamdation) {
+		this.dateRecommamdation = dateRecommamdation;
+	}
 }

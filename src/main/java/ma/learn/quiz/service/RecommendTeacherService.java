@@ -1,10 +1,12 @@
 package ma.learn.quiz.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,8 @@ public class RecommendTeacherService {
 	public ProfService profService;
 	@Autowired 
 	public EntityManager entityManager;
+	@JsonFormat(pattern = "dd-MM-yyyy")
+	Date dateRecommamdation = new Date();
 	/*
 	public RecommendTeacher findByRef(String ref) {
 		return recommendTeacherDao.findByRef(ref);
@@ -61,6 +65,7 @@ public class RecommendTeacherService {
 		}
 		else {
 			System.out.println("id::: " + recommendTeacher.getId());
+			recommendTeacher.setDateRecommamdation(dateRecommamdation.toString());
 			recommendTeacherDao.save(recommendTeacher);
 			return 1;
 		}

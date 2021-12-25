@@ -112,6 +112,7 @@ public class ScheduleProfService extends AbstractService {
             if (schedule.getProf().getUsername() != null){
                 query += this.addCriteria("prof.username", schedule.getProf().getUsername(), "LIKE");
             }
+
         }
 
         System.out.println("query = " + query);
