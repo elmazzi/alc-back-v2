@@ -1,6 +1,9 @@
 package ma.learn.quiz.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -10,7 +13,8 @@ public class TrancheHoraireProf {
     private Long id;
     @ManyToOne
     private Prof prof;
-    private Date horaire;
+    @JsonFormat(pattern = "yyyy-MM-dd h:mm:ss")
+    private LocalDateTime horaire;
 
     public Long getId() {
         return id;
@@ -28,11 +32,11 @@ public class TrancheHoraireProf {
         this.prof = prof;
     }
 
-    public Date getHoraire() {
+    public LocalDateTime getHoraire() {
         return horaire;
     }
 
-    public void setHoraire(Date horaire) {
+    public void setHoraire(LocalDateTime horaire) {
         this.horaire = horaire;
     }
 }
