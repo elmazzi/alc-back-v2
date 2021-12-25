@@ -1,5 +1,6 @@
 package ma.learn.quiz.bean;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -7,12 +8,23 @@ import javax.persistence.Entity;
 
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class Prof extends User {
     private String ref;
+
+/*    -----------------tache hiba ----------------*/
+
+    @OneToOne
+    Parcours levelMin = new Parcours();
+    @OneToOne
+    Parcours levelMax = new Parcours();
+    @OneToMany(mappedBy = "prof")
+    List<TrancheHoraireProf> trancheHoraireProfList = new ArrayList<>();
+/*===========================================================================*/
 
     @ManyToOne
     private CategorieProf categorieProf;
@@ -152,4 +164,27 @@ public class Prof extends User {
         this.categorieProf = categorieProf;
     }
 
+    public Parcours getLevelMin() {
+        return levelMin;
+    }
+
+    public void setLevelMin(Parcours levelMin) {
+        this.levelMin = levelMin;
+    }
+
+    public Parcours getLevelMax() {
+        return levelMax;
+    }
+
+    public void setLevelMax(Parcours levelMax) {
+        this.levelMax = levelMax;
+    }
+
+    public List<TrancheHoraireProf> getTrancheHoraireProfList() {
+        return trancheHoraireProfList;
+    }
+
+    public void setTrancheHoraireProfList(List<TrancheHoraireProf> trancheHoraireProfList) {
+        this.trancheHoraireProfList = trancheHoraireProfList;
+    }
 }
