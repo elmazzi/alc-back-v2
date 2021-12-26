@@ -11,7 +11,6 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class CalendrierProf {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
