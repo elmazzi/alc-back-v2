@@ -12,6 +12,7 @@ import java.util.Optional;
 @Repository
 public interface ReponseDao extends JpaRepository<Reponse, Long> {
     Reponse findByRef(String ref);
+    Reponse findReponseById(Long id);
 
     List<Reponse> findByQuestionId(Long id);
     

@@ -65,7 +65,7 @@ public class ReponseEtudiantEtudiantRest {
 	}
 
 	@PostMapping("/")
-	public int save(@RequestBody ReponseEtudiant reponseEtudiant) {
+	public ReponseEtudiant save(@RequestBody ReponseEtudiant reponseEtudiant) {
 		return reponseEtudiantService.save(reponseEtudiant);
 	}
 
@@ -74,6 +74,13 @@ public class ReponseEtudiantEtudiantRest {
 		return reponseEtudiantService.findAll();
 	}
 
-	
+	@GetMapping("/quizEtudiant/etudiant/id/{id}")
+	public List<ReponseEtudiant> findByQuizEtudiantEtudiantId(@PathVariable Long id) {
+		return reponseEtudiantService.findByQuizEtudiantEtudiantId(id);
+	}
 
+	@GetMapping("/quizEtudiant/id/{id}")
+	public List<ReponseEtudiant> findByQuizEtudiantId(@PathVariable Long id) {
+		return reponseEtudiantService.findByQuizEtudiantId(id);
+	}
 }
