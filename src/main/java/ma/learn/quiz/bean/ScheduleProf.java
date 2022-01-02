@@ -24,7 +24,25 @@ public class ScheduleProf {
 	private Prof prof;
 	@ManyToOne
 	private Cours cours;
+	private String grpName;
+	private String profName;
 
+
+	public String getGrpName() {
+		return grpName;
+	}
+
+	public void setGrpName(String grpName) {
+		this.grpName = grpName;
+	}
+
+	public String getProfName() {
+		return profName;
+	}
+
+	public void setProfName(String profName) {
+		this.profName = profName;
+	}
 
 	public String getSubject() {
 		return subject;

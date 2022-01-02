@@ -45,12 +45,14 @@ C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\admin\Etud
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\etudiant\EtudiantEtudiantRest.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\etudiant\FaqEtudiantEtudiantRest.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\prof\SectionProfRest.java
+C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\etudiant\EtudiantGroupeEtudiantDetailRest.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\dao\CategorieSectionDao.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\bean\Question.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\dao\ClassRoomDao.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\shared\EtatEtudiantPublicRest.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\vo\CalendrierVo.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\admin\HomeWorkAdminRest.java
+C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\prof\SynchronizationRest.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\filter\JwtConstant.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\shared\FaqTypePublicRest.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\dao\DictionaryDao.java
@@ -110,6 +112,7 @@ C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\etudiant\E
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\service\FaqEtudiantService.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\service\QuizEtudiantService.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\admin\EtatEtudiantAdminRest.java
+C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\bean\TrancheHoraireProf.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\bean\Inscription.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\dao\HomeWorkDao.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\shared\TranslationEnArPublicRest.java
@@ -330,6 +333,7 @@ C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\user\user.
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\etudiant\TypeDeQuestionEtudiantRest.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\prof\VocabularyQuizProfRest.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\shared\ProfReviewPublicRest.java
+C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\util\SynchronizationHandler.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\service\GroupeEtudeService.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\service\ProfService.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\shared\ProfPublicRest.java

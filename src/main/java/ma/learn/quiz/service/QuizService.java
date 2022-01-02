@@ -46,6 +46,9 @@ public class QuizService {
         return a+b+c;
     }
 
+    public Quiz findQuizById(Long id) {
+        return quizDao.findQuizById(id);
+    }
 
     public List<Quiz> findAll() {
         return quizDao.findAll();

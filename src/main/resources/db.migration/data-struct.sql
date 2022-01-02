@@ -3,11 +3,10 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 11, 2021 at 11:04 PM
+-- Generation Time: Dec 30, 2021 at 09:10 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.4.1
 
-SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
@@ -245,7 +244,22 @@ CREATE TABLE `dictionary` (
 INSERT INTO `dictionary` (`id`, `definition`, `word`, `etudiant`) VALUES
 (3950, 'يوم', 'day', 5),
 (4151, 'بلد', 'country', 5),
-(4437, 'اسم', 'name', 5);
+(4437, 'اسم', 'name', 5),
+(4670, 'مفضل', 'favourite ', 38),
+(4672, 'هاتف', 'phone ', 38),
+(4675, 'مفضل', 'favourite ', 21),
+(4676, 'بلد', 'country ', 21),
+(4677, 'سعيد', 'happy', 21),
+(4679, 'اسم العائلة', 'surname', 21),
+(4680, 'سفر', 'travelling', 21),
+(4681, 'تهجى', 'spell ', 21),
+(4683, 'الموسيقى', 'music ', 38),
+(4688, 'هاتف', 'phone ', 39),
+(4691, 'مفضل', 'favourite ', 39),
+(4694, 'من', 'from', 39),
+(4695, 'المدينة', 'city ', 39),
+(4697, 'خليل', 'friend ', 39),
+(4710, 'مرحباً', 'from ', 22);
 
 -- --------------------------------------------------------
 
@@ -322,7 +336,7 @@ CREATE TABLE `etat_inscription` (
 INSERT INTO `etat_inscription` (`id`, `libelle`, `ref`) VALUES
 (3, 'refused', 'E3'),
 (2, 'Validated', 'E2'),
-(1, 'pending', 'E1');
+(1, 'Pending', 'E1');
 
 -- --------------------------------------------------------
 
@@ -372,7 +386,30 @@ INSERT INTO `etudiant_cours` (`id`, `cours`, `etudiant`, `date_fin`, `payer`, `p
 (4494, 101, 22, '2021-11-10 14:50:09', '0', 3),
 (4496, 2, 20, '2021-11-10 14:51:11', '0', 3),
 (4498, 566, 21, '2021-11-10 14:59:31', '0', 3),
-(4500, 599, 21, '2021-11-10 15:05:51', '0', 3);
+(4500, 599, 21, '2021-11-10 15:05:51', '0', 3),
+(4510, 101, 20, '2021-11-19 12:53:50', '0', 4),
+(4512, 2, 22, '2021-11-19 14:22:01', '0', 3),
+(4514, 2, 20, '2021-11-19 20:11:45', '0', 4),
+(4519, 101, 23, '2021-11-20 21:19:52', '0', 4),
+(4521, 2, 23, '2021-11-20 21:27:05', '0', 4),
+(4545, 101, 24, '2021-11-24 18:44:30', '0', 3),
+(4556, 566, 26, '2021-11-30 20:42:45', '0', 3),
+(4567, 2, 27, '2021-12-01 17:40:03', '0', 4),
+(4571, 2, 28, '2021-12-01 17:47:49', '0', 3),
+(4578, 2, 30, '2021-12-01 18:39:32', '0', 3),
+(4585, 566, 31, '2021-12-01 19:29:33', '0', 3),
+(4620, 2, 38, '2021-12-07 21:18:48', '0', 3),
+(4629, 101, 38, '2021-12-08 16:24:05', '0', 3),
+(4673, 101, 21, '2021-12-13 18:25:39', '0', 4),
+(4686, 2, 39, '2021-12-13 19:39:04', '0', 4),
+(4689, 101, 39, '2021-12-13 19:49:58', '0', 4),
+(4692, 5, 39, '2021-12-13 19:52:49', '0', 4),
+(4784, 101, 36, '2021-12-17 22:22:25', '0', 3),
+(4820, 2, 36, '2021-12-18 20:29:40', '0', 3),
+(5025, 5, 22, '2021-12-21 19:46:56', '0', 3),
+(5487, 101, 28, '2021-12-29 17:47:05', '0', 3),
+(5495, 5, 28, '2021-12-29 17:51:14', '0', 3),
+(5532, 101, 27, '2021-12-30 13:22:16', '0', 4);
 
 -- --------------------------------------------------------
 
@@ -431,7 +468,9 @@ INSERT INTO `faq` (`id`, `description`, `libelle`, `faq_type`) VALUES
 (4221, 'The teacher sees the actual amount of bonuses accrued for the current month on the last day of the month. During the month, the figure can change both up and down. It is most influenced by the Class Average bonus, which takes its final value only based on the total of all classes held in a month for all the teacher\'s students.', 'When are bonuses for Workload, Lifetime and Class Average credited?', 1486),
 (4222, 'Warm Up, Homework review, Vocabulary, Get to know, Let\'s practice, Discussion are required in every lesson. Role-play, Life story and Games - alternate, which allows you to variably use sections of the lesson in each subsequent lesson, as a result, to make the learning process more interesting and active.', 'Should all sections of the lesson be completed in one lesson? ', 3),
 (4223, 'The certificate is in the student\'s Personal Account in the English via Skype section after the final lesson. It is automatically unlocked upon completion of all lessons of the course and the final test.', 'How can a student get a Certificate?', 3),
-(4224, 'Quizzes and independent work are essential to consolidate a student\'s progress. After passing the block of topics, it is necessary to control the student\'s knowledge using test tasks that are in the Homework section.', 'Knowledge control. Do you need a test to consolidate the passed topic?', 3);
+(4224, 'Quizzes and independent work are essential to consolidate a student\'s progress. After passing the block of topics, it is necessary to control the student\'s knowledge using test tasks that are in the Homework section.', 'Knowledge control. Do you need a test to consolidate the passed topic?', 3),
+(5056, NULL, 'What s you name', 1486),
+(5057, 'youssef', 'What you name', 1486);
 
 -- --------------------------------------------------------
 
@@ -508,6 +547,18 @@ CREATE TABLE `groupe_etude` (
   `nombre_etudiant` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `groupe_etude`
+--
+
+INSERT INTO `groupe_etude` (`id`, `description`, `libelle`, `nombre_etudiant`) VALUES
+(4608, 'this group for 5 person ', 'Group for 5 students', 5),
+(4600, NULL, 'Group for 3', 3),
+(4599, NULL, 'Group for 2', 2),
+(4598, NULL, 'Group for 1', 1),
+(4609, 'this group for 4 student', 'Group of 4 student', 4),
+(4613, '', 'Group of 6 students', 6);
+
 -- --------------------------------------------------------
 
 --
@@ -535,8 +586,21 @@ CREATE TABLE `groupe_etudiant` (
   `nombre_place` bigint(20) DEFAULT NULL,
   `nombre_place_non_vide` bigint(20) DEFAULT NULL,
   `nombre_placevide` bigint(20) DEFAULT NULL,
-  `groupe_etude` bigint(20) DEFAULT NULL
+  `groupe_etude` bigint(20) DEFAULT NULL,
+  `parcours` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `groupe_etudiant`
+--
+
+INSERT INTO `groupe_etudiant` (`id`, `date_debut`, `date_fin`, `libelle`, `niveau`, `nombre_place`, `nombre_place_non_vide`, `nombre_placevide`, `groupe_etude`, `parcours`) VALUES
+(4602, NULL, NULL, 'Group-student-130', NULL, 1, 1, 0, 4598, 5),
+(4611, '0007-06-13 00:00:00', '0028-12-12 00:00:00', 'Group 5', NULL, 5, 4, 1, 4608, 5),
+(4614, '0007-06-13 00:00:00', '0006-11-12 00:00:00', 'Group-6', NULL, 5, 2, 3, 4613, 6),
+(4622, NULL, NULL, 'Group-7', NULL, 6, 2, 4, 4613, 5),
+(4742, '0007-06-13 00:00:00', '0033-08-14 00:00:00', 'Group-8', NULL, 2, 0, 2, 4599, 5),
+(5556, NULL, NULL, 'Group-aicha', NULL, NULL, 1, 0, 4598, 5);
 
 -- --------------------------------------------------------
 
@@ -549,6 +613,21 @@ CREATE TABLE `groupe_etudiant_detail` (
   `etudiant` bigint(20) DEFAULT NULL,
   `groupe_etudiant` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `groupe_etudiant_detail`
+--
+
+INSERT INTO `groupe_etudiant_detail` (`id`, `etudiant`, `groupe_etudiant`) VALUES
+(4603, 36, 4602),
+(4612, 38, 4611),
+(4615, 26, 4614),
+(4623, 38, 4622),
+(4624, 22, 4622),
+(4764, 40, 4611),
+(4783, 36, 4611),
+(5055, 38, 4614),
+(5557, 22, 5556);
 
 -- --------------------------------------------------------
 
@@ -565,7 +644,7 @@ CREATE TABLE `hibernate_sequence` (
 --
 
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES
-(4502),
+(5596),
 (1);
 
 -- --------------------------------------------------------
@@ -585,6 +664,23 @@ CREATE TABLE `home_work` (
   `type_home_work` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `home_work`
+--
+
+INSERT INTO `home_work` (`id`, `libelle`, `question`, `url_image`, `url_video`, `quiz`, `section`, `type_home_work`) VALUES
+(4523, 'Fill in the gaps', NULL, NULL, NULL, NULL, 649, NULL),
+(4775, 'Describe what you see', NULL, NULL, NULL, NULL, 640, NULL),
+(4515, 'Fill in the gaps', NULL, NULL, NULL, NULL, 649, NULL),
+(4527, 'Time to Talk!', NULL, NULL, NULL, NULL, 644, NULL),
+(4538, 'Describe what you see', NULL, NULL, NULL, NULL, 654, NULL),
+(4694, 'Study the information', NULL, NULL, NULL, NULL, 647, NULL),
+(4746, 'Time to Talk!', NULL, NULL, NULL, NULL, 644, NULL),
+(4757, 'Study the information', NULL, NULL, NULL, NULL, 647, NULL),
+(4773, 'Describe what you see', NULL, NULL, NULL, NULL, 659, NULL),
+(4815, 'Describe what you see', NULL, NULL, NULL, NULL, 664, NULL),
+(4844, 'Describe what you see', NULL, NULL, NULL, NULL, 669, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -598,6 +694,22 @@ CREATE TABLE `home_work_etudiant` (
   `home_wok` bigint(20) DEFAULT NULL,
   `home_work` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `home_work_etudiant`
+--
+
+INSERT INTO `home_work_etudiant` (`id`, `note`, `etudiant`, `home_wok`, `home_work`) VALUES
+(4527, NULL, 22, NULL, 4523),
+(4781, NULL, 38, NULL, 4775),
+(5516, NULL, 22, NULL, 4775),
+(4523, NULL, 22, NULL, 4515),
+(4535, NULL, 22, NULL, 4527),
+(4544, NULL, 22, NULL, 4538),
+(4729, NULL, 26, NULL, 4527),
+(4778, NULL, 22, NULL, 4773),
+(4837, NULL, 22, NULL, 4815),
+(4858, NULL, 22, NULL, 4844);
 
 -- --------------------------------------------------------
 
@@ -616,6 +728,32 @@ CREATE TABLE `home_work_question` (
   `type_de_question` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `home_work_question`
+--
+
+INSERT INTO `home_work_question` (`id`, `libelle`, `numero`, `point_reponse_juste`, `point_reponsefausse`, `ref`, `home_work`, `type_de_question`) VALUES
+(4524, 'age ', 1, 1, 0, NULL, 4523, 1),
+(4776, 'are you okey', 1, 1, 0, NULL, 4775, 1),
+(4779, 'My name is youusef', 2, 1, 0, NULL, 4775, 5),
+(4516, 'is it working in heruko ?', 1, 1, 1, NULL, 4515, 1),
+(4519, 'wach heroku zin ?', 2, 1, 0, NULL, 4515, 2),
+(4528, 'khssk deleti l qst ok ?', 1, 1, 0, NULL, 4527, 1),
+(4531, 'how old are you ?', 2, 1, 1, NULL, 4527, 3),
+(4539, 'ach hadchi ?', 1, 1, 1, NULL, 4538, 1),
+(4695, 'how are you doing ?', 1, 1, 1, NULL, 4694, 1),
+(4698, 'what\'s your name', 2, 1, 1, NULL, 4694, 2),
+(4702, 'how old are you ?', 3, 1, 1, NULL, 4694, 3),
+(4747, 'you is fine', 1, 1, 0, NULL, 4746, 4),
+(4749, 'are you ahmed', 2, 1, 0, NULL, 4746, 5),
+(4758, 'are you happy ?', 1, 0, 0, NULL, 4757, 5),
+(4774, 'casa is in Tanger', 1, 0, 0, NULL, 4773, 5),
+(4816, 'how old @is@ you', 1, 1, 1, NULL, 4815, 4),
+(4845, 'are you happy', 1, 1, 0, NULL, 4844, 1),
+(4847, 'are you fine', 2, 1, 1, NULL, 4844, 2),
+(4852, 'how old are you', 3, 1, 1, NULL, 4844, 3),
+(4854, 'how old @are@ she', 4, 1, 1, NULL, 4844, 4);
+
 -- --------------------------------------------------------
 
 --
@@ -631,6 +769,47 @@ CREATE TABLE `howe_workqstreponse` (
   `home_work_question` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `howe_workqstreponse`
+--
+
+INSERT INTO `howe_workqstreponse` (`id`, `etat_reponse`, `lib`, `numero`, `ref`, `home_work_question`) VALUES
+(4525, 'true', '22', 1, NULL, 4524),
+(4526, 'false', '23', 2, NULL, 4524),
+(4777, 'true', 'yes', 1, NULL, 4776),
+(4778, 'false', 'no', 2, NULL, 4776),
+(4780, 'true', 'true', 1, NULL, 4779),
+(4517, 'true', 'yes', 1, NULL, 4516),
+(4518, 'false', 'no', 2, NULL, 4516),
+(4520, 'true', 'ayeeh naddii', 2, NULL, 4519),
+(4521, 'false', 'la 3iyan', 2, NULL, 4519),
+(4522, 'true', 'ma bihch sara7a', 3, NULL, 4519),
+(4529, 'true', 'ok safi', 1, NULL, 4528),
+(4530, 'false', 'blach ma fiach', 2, NULL, 4528),
+(4532, 'true', '22', 1, NULL, 4531),
+(4540, 'true', 'm3art', 1, NULL, 4539),
+(4541, 'false', 'wlah ma3art', 2, NULL, 4539),
+(4696, 'true', 'i am fine', 1, NULL, 4695),
+(4697, 'false', 'he is fine', 2, NULL, 4695),
+(4699, 'true', 'my name is saad', 1, NULL, 4698),
+(4700, 'true', 'i\'m saad', 2, NULL, 4698),
+(4701, 'false', 'i\'m 22 yo', 3, NULL, 4698),
+(4703, 'true', '22', 1, NULL, 4702),
+(4748, 'true', 'you are fine', 1, NULL, 4747),
+(4750, 'true', 'yes', 1, NULL, 4749),
+(4759, 'false', 'true', 1, NULL, 4758),
+(4760, 'true', 'false', 2, NULL, 4758),
+(4775, 'false', 'true', 1, NULL, 4774),
+(4776, 'true', 'false', 2, NULL, 4774),
+(4817, 'true', 'are', 1, NULL, 4816),
+(4846, 'true', 'yes', 1, NULL, 4845),
+(4848, 'true', 'yes', 1, NULL, 4847),
+(4849, 'false', 'no', 2, NULL, 4847),
+(4850, 'false', 'mind your businnes', 3, NULL, 4847),
+(4851, 'true', 'yes i am', 4, NULL, 4847),
+(4853, 'true', '22', 1, NULL, 4852),
+(4855, 'true', 'is', 1, NULL, 4854);
+
 -- --------------------------------------------------------
 
 --
@@ -645,20 +824,34 @@ CREATE TABLE `inscription` (
   `etat_inscription` bigint(20) DEFAULT NULL,
   `etudiant` bigint(20) DEFAULT NULL,
   `parcours` bigint(20) DEFAULT NULL,
-  `prof` bigint(20) DEFAULT NULL
+  `prof` bigint(20) DEFAULT NULL,
+  `groupe_etude` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `inscription`
 --
 
-INSERT INTO `inscription` (`id`, `datedebutinscription`, `datefininscription`, `numero_inscription`, `etat_inscription`, `etudiant`, `parcours`, `prof`) VALUES
-(4473, NULL, NULL, 0, 2, 14, 6, 4),
-(4474, '2021-10-06', '2021-11-23', 0, 2, 18, 601, 4),
-(4475, '2021-11-02', '2022-01-04', 0, 2, 19, 6, 10),
-(4476, '2021-11-02', '2021-11-17', 0, 2, 20, 6, 3),
-(4477, NULL, NULL, 0, 1, 21, NULL, NULL),
-(4478, '2021-10-01', '2021-12-01', 0, 2, 22, 601, 3);
+INSERT INTO `inscription` (`id`, `datedebutinscription`, `datefininscription`, `numero_inscription`, `etat_inscription`, `etudiant`, `parcours`, `prof`, `groupe_etude`) VALUES
+(4473, NULL, NULL, 0, 2, 14, 6, 4, NULL),
+(4475, '2021-11-02', '2022-01-04', 0, 2, 19, 6, 3, NULL),
+(4476, '2021-11-02', '2021-11-17', 0, 2, 20, 6, 3, NULL),
+(4477, '2021-11-01', '2021-11-18', 0, 2, 21, 5, 4, NULL),
+(4478, '2021-10-01', '2021-12-01', 0, 2, 22, 601, 3, NULL),
+(4544, '2021-11-01', '2022-02-04', 0, 2, 24, 5, 3, NULL),
+(4551, '2021-11-01', '2022-01-01', 0, 2, 25, 5, 3, NULL),
+(4555, '2021-11-01', '2021-12-18', 0, 2, 26, 6, 3, NULL),
+(4565, '2021-11-01', '2022-05-01', 0, 2, 27, 5, 4, NULL),
+(4569, '2021-11-01', '2022-11-01', 0, 2, 28, 5, 3, NULL),
+(4576, '2021-08-01', '2022-07-01', 0, 2, 30, 5, 3, NULL),
+(4583, '2021-11-01', '2021-11-01', 0, 2, 31, 6, 3, NULL),
+(4587, '2021-11-01', '2022-06-01', 0, 2, 32, 601, 3, NULL),
+(4590, '2021-11-01', '2022-01-01', 0, 2, 33, 601, 3, NULL),
+(4592, NULL, NULL, 0, 1, 34, 7, NULL, NULL),
+(4596, '2021-12-01', '2022-01-01', 0, 2, 35, 5, 3, NULL),
+(4601, '2021-12-01', '2022-05-01', 0, 1, 36, 5, 4, 4598),
+(4610, '2021-12-01', '2022-03-01', 0, 1, 38, 6, 3, 4608),
+(4763, NULL, NULL, 0, 1, 40, 5, NULL, 4598);
 
 -- --------------------------------------------------------
 
@@ -745,8 +938,7 @@ INSERT INTO `parcours` (`id`, `code`, `date_creation`, `date_publication`, `desc
 (5, 'Elementary 1', NULL, NULL, '', 'Elementary 1', 51, 1, 88),
 (6, 'Intermediate 1', NULL, NULL, '', 'Intermediate 1', 51, 3, 88),
 (7, 'Upper Intermediate', NULL, NULL, '', 'Upper Intermediate', 51, 4, 88),
-(601, 'Pre-Intermediate', NULL, NULL, '', 'Pre-Intermediate', 51, 2, 88),
-(2000, NULL, '2021-07-13', '2021-07-13', 'hshshs', 'hshhs', 1, 0, 88);
+(601, 'Pre-Intermediate', NULL, NULL, '', 'Pre-Intermediate', 51, 2, 88);
 
 -- --------------------------------------------------------
 
@@ -778,39 +970,26 @@ CREATE TABLE `question` (
   `point_reponsefausse` double NOT NULL,
   `ref` varchar(255) DEFAULT NULL,
   `quiz` bigint(20) DEFAULT NULL,
-  `home_work` bigint(20) DEFAULT NULL
+  `home_work` bigint(20) DEFAULT NULL,
+  `type_de_question` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `question`
 --
 
-INSERT INTO `question` (`id`, `libelle`, `numero`, `point_reponse_juste`, `point_reponsefausse`, `ref`, `quiz`, `home_work`) VALUES
-(3298, 'It is raining when I got home last night', 3, 1, 0, NULL, 3287, NULL),
-(3293, 'Edward has always ......... things very quickly and efficiently', 2, 1, 0, NULL, 3287, NULL),
-(3288, 'We get good grades ....... we study', 1, 1, 0, NULL, 3287, NULL),
-(3300, 'Everyone have seen that movie', 4, 1, 0, NULL, 3287, NULL),
-(3302, 'She cannot talk ...... walk at the same time', 5, 1, 0, NULL, 3287, NULL),
-(3307, 'I have lived in Canada since 10 months', 6, 1, 0, NULL, 3287, NULL),
-(3309, '........... the war, most Italians were farmers', 7, 1, 0, NULL, 3287, NULL),
-(3314, 'The students were not interested in the lesson because it was bored', 8, 1, 0, NULL, 3287, NULL),
-(3977, 'FST = Faculté des sciences et techniques', 1, 1, 0, NULL, 3976, NULL),
-(3980, 'my name ....... Mohcine', 2, 1, 0, NULL, 3976, NULL),
-(3985, 'UM6P = universite mohammed 6 polytechniques', 3, 1, 0, NULL, 3976, NULL),
-(3988, 'my name are mohcine', 4, 1, 0, NULL, 3976, NULL),
-(3990, 'TV = computer', 5, 1, 0, NULL, 3976, NULL),
-(4236, 'I ...play... football yesterday', 1, 1, 0, NULL, 4235, NULL),
-(4289, 'I ...play... football yesterday', 6, 1, 0, NULL, 3976, NULL),
-(4291, 'question .... question', 7, 1, 0, NULL, 3976, NULL),
-(4294, 'You ...to be.... Younes', 8, 1, 0, NULL, 3976, NULL),
-(4296, 'My name are Younes', 9, 1, 0, NULL, 3976, NULL),
-(4298, 'Mohcine ...play... football', 10, 1, 0, NULL, 3976, NULL),
-(4300, 'You are Mohcine?', 11, 1, 0, NULL, 3976, NULL),
-(4303, 'He ...to be... Oussama', 12, 1, 0, NULL, 3976, NULL),
-(4439, 'I ... football', 1, 1, 0, NULL, 4438, NULL),
-(4442, 'I ...play... footbal yestrday', 2, 1, 0, NULL, 4438, NULL),
-(4444, 'You is mohcine', 3, 1, 0, NULL, 4438, NULL),
-(4446, 'I\'m mohcine', 4, 1, 0, NULL, 4438, NULL);
+INSERT INTO `question` (`id`, `libelle`, `numero`, `point_reponse_juste`, `point_reponsefausse`, `ref`, `quiz`, `home_work`, `type_de_question`) VALUES
+(5193, 'I\'ve........a terrible headache.', 1, 1, 0, NULL, 5192, NULL, 1),
+(5197, 'je suis désolé', 2, 1, 0, NULL, 5192, NULL, 3),
+(5199, 'The milk is @at@ the refrigerator', 3, 1, 0, NULL, 5192, NULL, 4),
+(5261, 'MARRAKECH is ........ Morocco', 1, 1, 0, NULL, 5260, NULL, 1),
+(5265, 'Je suis Youssef', 2, 1, 0, NULL, 5260, NULL, 3),
+(5267, 'Edward has always @doed@ things very quickly and efficiently.', 3, 1, 0, NULL, 5260, NULL, 4),
+(5269, 'He @want@ all of them.', 4, 1, 0, NULL, 5260, NULL, 6),
+(5283, 'You can have ice cream or cake, but not both.', 1, 1, 0, NULL, 5282, NULL, 5),
+(5286, 'The police went .......all of Karl\'s things, but they didn\'t find any guns.', 2, 1, 0, NULL, 5282, NULL, 1),
+(5291, 'i am a joke for you !', 3, 1, 0, NULL, 5282, NULL, 5),
+(5294, 'Where @are@ the Battle of the Bulge?', 4, 1, 0, NULL, 5282, NULL, 4);
 
 -- --------------------------------------------------------
 
@@ -834,10 +1013,9 @@ CREATE TABLE `quiz` (
 --
 
 INSERT INTO `quiz` (`id`, `date_debut`, `date_fin`, `lib`, `numero`, `ref`, `seuil_reussite`, `section`) VALUES
-(3287, '2021-08-30 18:35:23', '2021-08-30 18:35:23', 'Warm up', NULL, 'quiz-640', 4, 640),
-(3976, '2021-09-07 14:32:06', '2021-09-07 14:32:06', 'Grammar-1', NULL, 'quiz-645', 3, 645),
-(4235, '2021-09-14 21:06:36', '2021-09-14 21:06:36', 'Discussion', NULL, 'quiz-644', NULL, 644),
-(4438, '2021-09-21 21:27:57', '2021-09-21 21:27:57', 'Life story', NULL, 'quiz-646', 2, 646);
+(5192, '2021-12-23 15:03:35', '2021-12-23 15:03:35', 'Warm up', NULL, 'quiz-640', 5, 640),
+(5260, '2021-12-24 15:55:11', '2021-12-24 15:55:11', 'Life story', NULL, 'quiz-649', 5, 649),
+(5282, '2021-12-24 16:42:07', '2021-12-24 16:42:07', 'Grammar-1', NULL, 'quiz-645', NULL, 645);
 
 -- --------------------------------------------------------
 
@@ -850,18 +1028,6 @@ CREATE TABLE `quiz_class_room` (
   `class_room` bigint(20) DEFAULT NULL,
   `quiz` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `quiz_class_room`
---
-
-INSERT INTO `quiz_class_room` (`id`, `class_room`, `quiz`) VALUES
-(927, 3, 493),
-(926, 3, 493),
-(925, 2, 493),
-(924, 2, 493),
-(923, 1, 493),
-(912, 1, 493);
 
 -- --------------------------------------------------------
 
@@ -879,6 +1045,20 @@ CREATE TABLE `quiz_etudiant` (
   `quiz` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `quiz_etudiant`
+--
+
+INSERT INTO `quiz_etudiant` (`id`, `note`, `question_current`, `ref`, `resultat`, `etudiant`, `quiz`) VALUES
+(5427, 2, 3, 'oc5', '2 / 3', 22, 5192),
+(5433, 2, 4, 'oGb', '2 / 4', 38, 5282),
+(5440, 2, 4, 'fmd', '2 / 4', 36, 5282),
+(5471, 2, 4, '9cv', '2 / 4', 22, 5282),
+(5489, 3, 3, 'dPM', '3 / 3', 28, 5192),
+(5504, 3, 4, 'mWe', '3 / 4', 28, 5260),
+(5510, 3, 4, 'RVp', '3 / 4', 28, 5282),
+(5522, 2, 4, 'IW9', '2 / 4', 22, 5260);
+
 -- --------------------------------------------------------
 
 --
@@ -894,20 +1074,21 @@ CREATE TABLE `recommend_teacher` (
   `login` varchar(255) DEFAULT NULL,
   `nom` varchar(255) DEFAULT NULL,
   `prenom` varchar(255) DEFAULT NULL,
-  `telephone` varchar(2000) DEFAULT NULL
+  `telephone` varchar(2000) DEFAULT NULL,
+  `date_recommamdation` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `recommend_teacher`
 --
 
-INSERT INTO `recommend_teacher` (`id`, `nombrevote`, `ref`, `prof`, `commentaire`, `login`, `nom`, `prenom`, `telephone`) VALUES
-(1446, 0, 'C1', 3, 'Good Teacher', 'meryamLouhaidy@gmail.com', 'Louhaidy', 'meryam', '0612452387'),
-(1443, 0, 'C2', 4, 'Good Teacher', 'hakati1999@gmail.com', 'Kati', 'Hajar', '0612172734'),
-(1444, 0, 'C3', 4, 'Good Teacher', 'MourchidMohssin@gmail.com', 'Mourchid', 'Mohssin', '0653733789'),
-(1489, 0, 'C4', 3, 'Good Teacher', 'AnouarLamghari@gmail.com', 'Lamghari', 'Anouar', '0641628309'),
-(1490, 0, 'C5', 3, 'Good Teacher', 'OussamaBentaouil@gmail.com', 'Bentaouil', 'Oussama', '0618394756'),
-(1983, 0, NULL, 4, NULL, 'hakati1999@gmail.com', 'user22', 'user', '0637373737');
+INSERT INTO `recommend_teacher` (`id`, `nombrevote`, `ref`, `prof`, `commentaire`, `login`, `nom`, `prenom`, `telephone`, `date_recommamdation`) VALUES
+(1446, 0, 'C1', 3, 'Good Teacher', 'meryamLouhaidy@gmail.com', 'Louhaidy', 'meryam', '0612452387', NULL),
+(1443, 0, 'C2', 4, 'Good Teacher', 'hakati1999@gmail.com', 'Kati', 'Hajar', '0612172734', NULL),
+(1444, 0, 'C3', 4, 'Good Teacher', 'MourchidMohssin@gmail.com', 'Mourchid', 'Mohssin', '0653733789', NULL),
+(1489, 0, 'C4', 3, 'Good Teacher', 'AnouarLamghari@gmail.com', 'Lamghari', 'Anouar', '0641628309', NULL),
+(1490, 0, 'C5', 3, 'Good Teacher', 'OussamaBentaouil@gmail.com', 'Bentaouil', 'Oussama', '0618394756', NULL),
+(1983, 0, NULL, 4, NULL, 'hakati1999@gmail.com', 'user22', 'user', '0637373737', NULL);
 
 -- --------------------------------------------------------
 
@@ -929,55 +1110,26 @@ CREATE TABLE `reponse` (
 --
 
 INSERT INTO `reponse` (`id`, `etat_reponse`, `lib`, `ref`, `question`, `numero`) VALUES
-(3297, 'false', 'do', NULL, 3293, 4),
-(3296, 'false', 'did', NULL, 3293, 3),
-(3295, 'false', 'does', NULL, 3293, 2),
-(3294, 'true', 'done', NULL, 3293, 1),
-(3292, 'false', 'or', NULL, 3288, 4),
-(3291, 'true', 'because', NULL, 3288, 3),
-(3290, 'false', 'except', NULL, 3288, 2),
-(3289, 'false', 'but', NULL, 3288, 1),
-(4163, 'true', 'It was raining when I got home last night', NULL, 3298, 1),
-(4164, 'true', 'Everyone has seen that movie', NULL, 3300, 1),
-(3303, 'true', 'and', NULL, 3302, 1),
-(3304, 'false', 'if', NULL, 3302, 2),
-(3305, 'false', 'because', NULL, 3302, 3),
-(3306, 'false', 'except', NULL, 3302, 4),
-(4167, 'true', 'I have lived in Canada for 10 months', NULL, 3307, 1),
-(3310, 'false', 'From', NULL, 3309, 1),
-(3311, 'false', 'While', NULL, 3309, 2),
-(3312, 'true', 'Before', NULL, 3309, 3),
-(3313, 'false', 'When', NULL, 3309, 4),
-(4166, 'true', 'The students were not interested in the lesson because it was boring', NULL, 3314, 1),
-(3978, 'true', 'true', NULL, 3977, 1),
-(3979, 'false', 'false', NULL, 3977, 2),
-(3981, 'true', 'is', NULL, 3980, 1),
-(3982, 'false', 'are', NULL, 3980, 2),
-(3983, 'false', 'he', NULL, 3980, 3),
-(3984, 'false', 'we', NULL, 3980, 4),
-(3986, 'true', 'true', NULL, 3985, 1),
-(3987, 'false', 'false', NULL, 3985, 2),
-(3989, 'true', 'my name is mohcine', NULL, 3988, 1),
-(3991, 'false', 'true', NULL, 3990, 1),
-(3992, 'true', 'false', NULL, 3990, 2),
-(4145, 'false', 'podod', NULL, NULL, 2),
-(4146, 'false', 'podod', NULL, NULL, 2),
-(4237, 'true', 'played', NULL, 4236, 1),
-(4290, 'true', 'played', NULL, 4289, 1),
-(4292, 'true', 'is', NULL, 4291, 1),
-(4293, 'false', 'are', NULL, 4291, 2),
-(4295, 'true', 'are', NULL, 4294, 1),
-(4297, 'true', 'My name is Younes', NULL, 4296, 1),
-(4299, 'true', 'play', NULL, 4298, 1),
-(4301, 'true', 'true', NULL, 4300, 1),
-(4302, 'false', 'false', NULL, 4300, 2),
-(4304, 'true', 'is', NULL, 4303, 1),
-(4440, 'true', 'play', NULL, 4439, 1),
-(4441, 'false', 'was', NULL, 4439, 2),
-(4443, 'true', 'played', NULL, 4442, 1),
-(4445, 'true', 'You are mohcine', NULL, 4444, 1),
-(4447, 'true', 'true', NULL, 4446, 1),
-(4448, 'false', 'false', NULL, 4446, 2);
+(5194, 'true', 'got', NULL, 5193, 1),
+(5195, 'false', 'gottin', NULL, 5193, 2),
+(5196, 'false', 'have', NULL, 5193, 3),
+(5198, 'true', 'i am sorry', NULL, 5197, 1),
+(5200, 'true', 'in', NULL, 5199, 1),
+(5262, 'true', 'in', NULL, 5261, 1),
+(5263, 'false', 'at', NULL, 5261, 2),
+(5264, 'false', 'for', NULL, 5261, 3),
+(5266, 'true', 'i am Youssef', NULL, 5265, 1),
+(5268, 'true', 'done', NULL, 5267, 1),
+(5270, 'true', 'wanted', NULL, 5269, 1),
+(5284, 'true', 'true', NULL, 5283, 1),
+(5285, 'false', 'false', NULL, 5283, 2),
+(5287, 'true', 'through', NULL, 5286, 1),
+(5288, 'false', 'past', NULL, 5286, 2),
+(5289, 'false', 'across', NULL, 5286, 3),
+(5290, 'false', 'in', NULL, 5286, 4),
+(5292, 'false', 'true', NULL, 5291, 1),
+(5293, 'true', 'false', NULL, 5291, 2),
+(5295, 'true', 'was', NULL, 5294, 1);
 
 -- --------------------------------------------------------
 
@@ -995,6 +1147,42 @@ CREATE TABLE `reponse_etudiant` (
   `reponse` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `reponse_etudiant`
+--
+
+INSERT INTO `reponse_etudiant` (`id`, `answer`, `note`, `ref`, `question`, `quiz_etudiant`, `reponse`) VALUES
+(5428, 'got', 1, 'X0o', 5193, 5427, 5194),
+(5429, 'i am  sory', 0, 'fzk', 5197, 5427, 5198),
+(5430, 'in', 1, 'pfK', 5199, 5427, 5200),
+(5434, 'past', 0, '8A5', 5286, 5433, 5287),
+(5435, 'false', 1, 'kn7', 5291, 5433, 5293),
+(5436, 'false', 0, 'Mmz', 5283, 5433, 5284),
+(5437, 'was', 1, 'mpX', 5294, 5433, 5295),
+(5441, 'false', 0, 'VTC', 5283, 5440, 5284),
+(5442, 'through', 1, 'VGh', 5286, 5440, 5287),
+(5443, 'aref', 0, 'Dfm', 5294, 5440, 5295),
+(5444, 'false', 1, 'Ljb', 5291, 5440, 5293),
+(5472, 'false', 0, 'GS1', 5283, 5471, 5284),
+(5473, 'past', 0, 'Sot', 5286, 5471, 5287),
+(5475, 'false', 1, '5s9', 5291, 5471, 5293),
+(5474, 'was', 1, 'fiy', 5294, 5471, 5295),
+(5490, 'in', 1, '5if', 5199, 5489, 5200),
+(5491, 'i am sorry', 1, 'LIN', 5197, 5489, 5198),
+(5492, 'got', 1, '9Zg', 5193, 5489, 5194),
+(5506, 'wanted', 1, 'ikz', 5269, 5504, 5270),
+(5507, 'done', 1, 'f8d', 5267, 5504, 5268),
+(5505, 'i am Youssef', 1, '7vj', 5265, 5504, 5266),
+(5508, 'at', 0, 'Qd2', 5261, 5504, 5262),
+(5513, 'through', 1, 'WlN', 5286, 5510, 5287),
+(5511, 'true', 0, 'Kvw', 5291, 5510, 5293),
+(5512, 'true', 1, 'xUz', 5283, 5510, 5284),
+(5514, 'was', 1, '5UY', 5294, 5510, 5295),
+(5523, 'done', 1, 'hUr', 5267, 5522, 5268),
+(5524, 'wantedd', 0, 'iik', 5269, 5522, 5270),
+(5525, 'in', 1, 'ARy', 5261, 5522, 5262),
+(5526, 'i am  sorry', 0, 'mJN', 5265, 5522, 5266);
+
 -- --------------------------------------------------------
 
 --
@@ -1009,6 +1197,14 @@ CREATE TABLE `reponse_etudiant_home_work` (
   `reponse` bigint(20) DEFAULT NULL,
   `question` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `reponse_etudiant_home_work`
+--
+
+INSERT INTO `reponse_etudiant_home_work` (`id`, `answer`, `note`, `home_work_etudiant`, `reponse`, `question`) VALUES
+(4528, '22', NULL, 4527, NULL, 4524),
+(4782, 'yes', NULL, 4781, NULL, 4776);
 
 -- --------------------------------------------------------
 
@@ -1085,30 +1281,67 @@ INSERT INTO `schdedule_vo` (`id`, `color`, `end`, `ref`, `start`, `title`, `prof
 
 CREATE TABLE `schedule_prof` (
   `id` bigint(20) NOT NULL,
-  `ref` varchar(255) DEFAULT NULL,
-  `etudiant` bigint(20) DEFAULT NULL,
-  `prof` bigint(20) DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
+  `ref` varchar(255) DEFAULT NULL,
   `start_time` datetime DEFAULT NULL,
-  `subject` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `cours` bigint(20) DEFAULT NULL,
+  `groupe_etudiant` bigint(20) DEFAULT NULL,
+  `prof` bigint(20) DEFAULT NULL,
+  `subject` varchar(255) DEFAULT NULL,
+  `grp_name` varchar(255) DEFAULT NULL,
+  `prof_name` varchar(255) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `schedule_prof`
 --
 
-INSERT INTO `schedule_prof` (`id`, `ref`, `etudiant`, `prof`, `end_time`, `start_time`, `subject`) VALUES
-(4464, 'I3436FD', 5, 3, '2021-10-11 09:30:01', '2021-10-11 06:30:01', 'Cour JAVA'),
-(4469, '5555', 5, 4, '2021-10-12 15:00:06', '2021-10-12 11:00:06', 'TP JAVA'),
-(4467, '63778', 5, 4, '2021-10-14 15:00:18', '2021-10-14 10:00:18', 'Cour JSON'),
-(4470, '6739', 5, 3, '2021-10-19 16:46:17', '2021-10-20 13:05:17', 'Cour Java'),
-(4480, 'C34', 22, 3, '2021-11-05 17:40:32', '2021-11-05 13:40:32', 'UML'),
-(4481, 'C445', 21, 4, '2021-11-05 09:30:46', '2021-11-05 07:00:46', 'Python'),
-(4482, 'C65', 20, 4, '2021-11-05 15:30:17', '2021-11-05 10:30:17', 'Tp phyton'),
-(4483, 'c45', 22, 4, '2021-11-02 09:30:00', '2021-11-02 07:30:00', 'HTML'),
-(4484, 'c557', 22, 4, '2021-11-01 09:00:00', '2021-11-01 07:00:00', 'CSS'),
-(4485, 'c5676', 5, 3, '2021-11-02 09:30:00', '2021-11-02 07:00:00', 'Bootstrap'),
-(4486, 'c567', 5, 3, '2021-11-02 20:16:00', '2021-11-02 15:16:00', 'Jequery');
+INSERT INTO `schedule_prof` (`id`, `end_time`, `ref`, `start_time`, `cours`, `groupe_etudiant`, `prof`, `subject`, `grp_name`, `prof_name`) VALUES
+(4618, '2021-12-06 11:00:00', '12', '2021-12-06 09:00:00', 2, 4611, 3, 'Say Hello!!', 'Group 5', 'teacher'),
+(4719, '2021-12-13 08:00:00', 'ethtr12451', '2021-12-13 06:00:00', 38, 4611, 4, 'Leisure activities', 'Group 5', 'prof'),
+(4626, '2021-12-08 11:00:00', '345', '2021-12-08 09:00:00', 41, 4622, 3, 'More about you', 'Group-7', 'teacher'),
+(4718, '2021-12-10 08:00:00', 'ethtr1245', '2021-12-10 06:00:00', 39, 4611, 4, 'When youâ€™re free', 'Group 5', 'prof'),
+(4717, '2021-12-09 08:00:00', 'ethtr124', '2021-12-09 06:00:00', 40, 4611, 4, 'Personal profile', 'Group 5', 'prof'),
+(4715, '2021-12-06 08:00:00', 'ethtr1', '2021-12-06 06:00:00', 101, 4611, 4, 'Intro lesson', 'Group 5', 'prof'),
+(4716, '2021-12-07 08:00:00', 'ethtr12', '2021-12-07 06:00:00', 41, 4611, 4, 'More about you', 'Group 5', 'prof'),
+(4659, '2022-01-08 11:00:00', 'cdhk258', '2022-01-08 09:00:00', 40, 4611, 3, 'Personal profile', 'Group 5', 'teacher'),
+(4663, '2022-01-16 11:00:00', 'cdhk2589121516', '2022-01-16 09:00:00', 36, 4611, 3, 'koko', 'Group 5', 'teacher'),
+(4664, '2022-01-19 11:00:00', 'cdhk258912151619', '2022-01-19 09:00:00', 34, 4611, 3, 'For the geeks', 'Group 5', 'teacher'),
+(4665, '2022-01-22 11:00:00', 'cdhk25891215161922', '2022-01-22 09:00:00', 33, 4611, 3, 'Technology', 'Group 5', 'teacher'),
+(4666, '2022-01-23 11:00:00', 'cdhk2589121516192223', '2022-01-23 09:00:00', 32, 4611, 3, 'More occasions', 'Group 5', 'teacher'),
+(4667, '2022-01-26 11:00:00', 'cdhk258912151619222326', '2022-01-26 09:00:00', 31, 4611, 3, 'Events', 'Group 5', 'teacher'),
+(4668, '2022-01-29 11:00:00', 'cdhk25891215161922232629', '2022-01-29 09:00:00', 30, 4611, 3, 'Get emotional', 'Group 5', 'teacher'),
+(4704, '2022-01-01 11:00:00', 'ergerg12151819222526291', '2022-01-01 09:00:00', 33, 4622, 3, 'Technology', 'Group-7', 'teacher'),
+(4720, '2021-12-14 08:00:00', 'ethtr124512', '2021-12-14 06:00:00', 37, 4611, 4, 'Just another day', 'Group 5', 'prof'),
+(4721, '2021-12-17 08:00:00', 'ethtr12451245', '2021-12-17 06:00:00', 34, 4611, 4, 'For the geeks', 'Group 5', 'prof'),
+(4728, '2021-12-20 11:00:00', 'ggg1', '2021-12-20 09:00:00', 25, 4611, 3, 'Grab a bite', 'Group 5', 'teacher'),
+(4735, '2021-10-08 12:30:00', 'sssx5', '2021-10-08 10:30:00', 40, 4614, 3, 'Personal profile', 'Group-6', 'teacher'),
+(4706, '2021-12-29 11:00:00', 'ergerg1215181922252629', '2021-12-29 09:00:00', 34, 4622, 3, 'For the geeks', 'Group-7', 'teacher'),
+(4707, '2021-12-26 11:00:00', 'ergerg12151819222526', '2021-12-26 09:00:00', 36, 4622, 3, 'koko', 'Group-7', 'teacher'),
+(4708, '2021-12-25 11:00:00', 'ergerg121518192225', '2021-12-25 09:00:00', 37, 4622, 3, 'Just another day', 'Group-7', 'teacher'),
+(4722, '2021-12-16 08:00:00', 'ethtr1245124', '2021-12-16 06:00:00', 36, 4611, 4, 'koko', 'Group 5', 'prof'),
+(4723, '2021-12-21 08:00:00', 'ethtr1245124512', '2021-12-21 06:00:00', 32, 4611, 4, 'More occasions', 'Group 5', 'prof'),
+(4724, '2021-12-20 08:00:00', 'ethtr124512451', '2021-12-20 06:00:00', 33, 4611, 4, 'Technology', 'Group 5', 'prof'),
+(4725, '2021-12-23 08:00:00', 'ethtr12451245124', '2021-12-23 06:00:00', 31, 4611, 4, 'Events', 'Group 5', 'prof'),
+(4726, '2021-12-24 08:00:00', 'ethtr124512451245', '2021-12-24 06:00:00', 30, 4611, 4, 'Get emotional', 'Group 5', 'prof'),
+(4727, '2021-12-13 11:00:00', 'ggg1', '2021-12-13 09:00:00', 28, 4611, 3, 'A day in a life', 'Group 5', 'teacher'),
+(4731, '2021-12-23 11:00:00', 'ggg4', '2021-12-23 09:00:00', 24, 4611, 3, 'Food you have', 'Group 5', 'teacher'),
+(4732, '2021-12-16 11:00:00', 'ggg4', '2021-12-16 09:00:00', 27, 4611, 3, 'No place like home', 'Group 5', 'teacher'),
+(4737, '2021-10-15 12:30:00', 'sssx5', '2021-10-15 10:30:00', 37, 4614, 3, 'Just another day', 'Group-6', 'teacher'),
+(4738, '2021-10-13 12:30:00', 'sssx3', '2021-10-13 10:30:00', 38, 4614, 3, 'Leisure activities', 'Group-6', 'teacher'),
+(4739, '2021-10-20 12:30:00', 'sssx3', '2021-10-20 10:30:00', 34, 4614, 3, 'For the geeks', 'Group-6', 'teacher'),
+(4741, '2021-10-22 12:30:00', 'sssx5', '2021-10-22 10:30:00', 33, 4614, 3, 'Technology', 'Group-6', 'teacher'),
+(4749, '2021-11-18 11:00:00', 'free4', '2021-11-18 09:00:00', 37, 4742, 3, 'Just another day', 'Group-8', 'teacher'),
+(4746, '2021-11-21 11:00:00', 'free0', '2021-11-21 09:00:00', 36, 4742, 3, 'koko', 'Group-8', 'teacher'),
+(4748, '2021-11-11 11:00:00', 'free4', '2021-11-11 09:00:00', 40, 4742, 3, 'Personal profile', 'Group-8', 'teacher'),
+(4751, '2021-11-14 11:00:00', 'free0', '2021-11-14 09:00:00', 39, 4742, 3, 'When youâ€™re free', 'Group-8', 'teacher'),
+(4753, '2021-11-25 11:00:00', 'free4', '2021-11-25 09:00:00', 33, 4742, 3, 'Technology', 'Group-8', 'teacher'),
+(4754, '2021-12-14 11:00:00', 'ferf', '2021-12-14 09:00:00', 41, 4742, 3, 'More about you', 'Group-8', 'teacher'),
+(4759, '2022-01-12 09:00:00', 'frttt3', '2022-01-12 07:00:00', 40, 4742, 3, 'Personal profile', 'Group-8', 'teacher'),
+(4760, '2022-01-19 09:00:00', 'frttt3', '2022-01-19 07:00:00', 37, 4742, 3, 'Just another day', 'Group-8', 'teacher'),
+(4756, '2022-01-16 09:00:00', 'frttt0', '2022-01-16 07:00:00', 39, 4742, 3, 'When youâ€™re free', 'Group-8', 'teacher'),
+(5307, '2021-12-21 20:00:00', 'wefwef', '2021-12-21 17:00:00', 34, 4742, 3, 'For the geeks', 'Group-8', 'teacher teacher'),
+(5558, '2021-12-30 11:00:00', 'referf', '2021-12-30 08:00:00', 101, 5556, 3, 'Intro lesson', 'Group-aicha', 'teacher teacher');
 
 -- --------------------------------------------------------
 
@@ -2142,7 +2375,6 @@ CREATE TABLE `section_item_synonyms` (
 CREATE TABLE `session_cours` (
   `id` bigint(20) NOT NULL,
   `date_fin` datetime DEFAULT NULL,
-  `numero` bigint(20) DEFAULT NULL,
   `etudiant` bigint(20) DEFAULT NULL,
   `prof` bigint(20) DEFAULT NULL,
   `reference` varchar(255) DEFAULT NULL,
@@ -2155,16 +2387,27 @@ CREATE TABLE `session_cours` (
 -- Dumping data for table `session_cours`
 --
 
-INSERT INTO `session_cours` (`id`, `date_fin`, `numero`, `etudiant`, `prof`, `reference`, `payer`, `totalheure`, `cours`) VALUES
-(2, '2021-06-29 14:30:00', 2, 5, 3, 'c5', 'true', 0, NULL),
-(1497, '2021-06-29 17:30:00', 1, 5, 4, 'C3', 'true', 0, NULL),
-(4488, '2021-11-08 21:27:42', NULL, 20, 3, 'QVIrYr', '0', 1, 566),
-(4490, '2021-11-08 21:40:29', NULL, 20, 3, 'm7LOhK', '0', 1, 567),
-(4493, '2021-11-08 21:43:45', NULL, 20, 3, 'HsgHCF', '0', 7, 101),
-(4495, '2021-11-10 14:50:09', NULL, 22, 3, '8UVJcC', '0', 2, 101),
-(4497, '2021-11-10 14:51:11', NULL, 20, 3, '2TbbiP', '0', 1, 2),
-(4499, '2021-11-10 14:59:32', NULL, 21, 3, 'ySzBxD', '0', 8, 566),
-(4501, '2021-11-10 15:05:52', NULL, 21, 3, 'bSu9UT', '0', 1, 599);
+INSERT INTO `session_cours` (`id`, `date_fin`, `etudiant`, `prof`, `reference`, `payer`, `totalheure`, `cours`) VALUES
+(2, '2021-06-29 14:30:00', 5, 3, 'c5', 'true', 0, NULL),
+(1497, '2021-06-29 17:30:00', 5, 4, 'C3', 'true', 0, NULL),
+(4488, '2021-11-08 21:27:42', 20, 3, 'QVIrYr', '0', 1, 566),
+(4490, '2021-11-08 21:40:29', 20, 3, 'm7LOhK', '0', 1, 567),
+(4493, '2021-11-08 21:43:45', 20, 3, 'HsgHCF', '0', 7, 101),
+(4495, '2021-11-10 14:50:09', 22, 3, '8UVJcC', '0', 3, 101),
+(4497, '2021-11-10 14:51:11', 20, 3, '2TbbiP', '0', 1, 2),
+(4499, '2021-11-10 14:59:32', 21, 3, 'ySzBxD', '0', 8, 566),
+(4501, '2021-11-10 15:05:52', 21, 3, 'bSu9UT', '0', 1, 599),
+(4511, '2021-11-19 12:53:51', 20, 4, 'wLX8Sz', '0', 46, 101),
+(4513, '2021-11-19 14:22:01', 22, 3, 'VXIfK5', '0', 6, 2),
+(4515, '2021-11-19 20:11:45', 20, 4, 'fwUV71', '0', 9, 2),
+(4520, '2021-11-20 21:19:52', 23, 4, 'nHM2Qo', '0', 1, 101),
+(4522, '2021-11-20 21:27:05', 23, 4, 'mcxkas', '0', 1, 2),
+(4546, '2021-11-24 18:44:31', 24, 3, 'caisBN', '0', 1, 101),
+(4557, '2021-11-30 20:42:45', 26, 3, 'Ydz4Nb', '0', 3, 566),
+(4568, '2021-12-01 17:40:03', 27, 4, 'JKI3SZ', '0', 1, 2),
+(4572, '2021-12-01 17:47:49', 28, 3, '8IweTp', '0', 1, 2),
+(4579, '2021-12-01 18:39:32', 30, 3, 'SqXlyp', '0', 1, 2),
+(4586, '2021-12-01 19:29:33', 31, 3, 'TQp72D', '0', 1, 566);
 
 -- --------------------------------------------------------
 
@@ -2189,6 +2432,18 @@ INSERT INTO `super_categorie_section` (`id`, `code`, `libelle`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tranche_horaire_prof`
+--
+
+CREATE TABLE `tranche_horaire_prof` (
+  `id` bigint(20) NOT NULL,
+  `horaire` datetime DEFAULT NULL,
+  `prof` bigint(20) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `type_de_question`
 --
 
@@ -2207,7 +2462,8 @@ INSERT INTO `type_de_question` (`id`, `lib`, `ref`) VALUES
 (2, 'Choix multiple', 't2'),
 (3, 'input', 't3'),
 (4, 'Correct the mistake', 't4'),
-(5, 'On/Off', 't5');
+(5, 'On/Off', 't5'),
+(6, 'Write the correct form', 't6');
 
 -- --------------------------------------------------------
 
@@ -2249,32 +2505,45 @@ CREATE TABLE `user` (
   `categorie_prof` bigint(20) DEFAULT NULL,
   `role` varchar(255) DEFAULT NULL,
   `group_option` varchar(255) DEFAULT NULL,
-  `teacher_locality` varchar(255) DEFAULT NULL
+  `teacher_locality` varchar(255) DEFAULT NULL,
+  `groupe_etude` bigint(20) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `date_naissance` datetime DEFAULT NULL,
+  `level_max` bigint(20) DEFAULT NULL,
+  `level_min` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`dtype`, `id`, `account_non_expired`, `account_non_locked`, `addresse`, `age`, `credentials_non_expired`, `enabled`, `image`, `nom`, `numero`, `password`, `prenom`, `username`, `ville`, `ref`, `etat_etudiant_schedule`, `parcours`, `prof`, `categorie_prof`, `role`, `group_option`, `teacher_locality`) VALUES
-('Admin', 1, b'1', b'1', 'marrakech', 24, b'1', b'1', NULL, 'elm', '0605120314', '$2a$10$VW1CnG0HpYa5eiGikTlzQOWjAjwjA/ZptHA09uD.LlBE/HWc3YiqC', 'ysf', 'admin@gmail.com', 'marrakech', NULL, NULL, NULL, NULL, NULL, 'ADMIN', NULL, NULL),
-('Prof', 3, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/teacher@gmail.com', 'teacher', '0605120314', '$2a$10$xpy0yulabuTwf8ikJM8j5eM337f81aETiLSRSHsvPaHhDqyUh6bDm', 'teacher', 'teacher@gmail.com', NULL, NULL, NULL, NULL, NULL, 1, 'TEACHER', NULL, NULL),
-('Prof', 4, b'1', b'1', 'Marrakech', 30, b'1', b'1', 'http://localhost:8036/user/image/prof@gmail.com/prof@gmail.com.jpg', 'prof', '0613203310', '$2a$10$I7o4zmXgcErHbiX91EPcW.rc2WPlecYuryGmfarBpHL/ZNyQDBRza', 'prof', 'prof@gmail.com', NULL, NULL, NULL, NULL, NULL, 1, 'TEACHER', NULL, NULL),
-('Etudiant', 5, b'1', b'1', 'ait ourir', 22, b'1', b'1', 'http://localhost:8036/user/image/profile/youssefelmoudene09@gmail.com', 'EL MOUDENE', '0605120314', '$2a$10$SDhVsMN9bzwz5doyS0qyquuZd502FjlZq0NsAK4qJRXYnjHReGlvq', 'YOUSSEF', 'youssefelmoudene09@gmail.com', 'ait ourir', NULL, 1, NULL, NULL, NULL, 'STUDENT', NULL, NULL),
-('Admin', 7, b'1', b'1', 'Marrakech', 22, b'1', b'1', 'http://localhost:8036/user/image/zouani@gmail.com/zouani@gmail.com.jpg', 'Zouani', '0760102030', '$2a$10$G6z1mCKHaDMLUZv9RiK1/OwjvXfK4tnNm/DMA.Wsm7KEadi4GL/Ua', 'Younes', 'zouani@gmail.com', 'Marrakech', NULL, NULL, NULL, NULL, NULL, 'ADMIN', NULL, NULL),
-('Etudiant', 8, b'1', b'1', 'ait ourir', 44, b'1', b'1', 'http://localhost:8036/user/image/profile/youssefelmoudene08@gmail.com', 'Ahmed', '0760213012', '$2a$10$yTnGkIS1laLb8xpsWso8rOvdfL0YDjZQ/xPCjuxaXTHS4qcXoWcE6', 'Ali', 'youssefelmoudene08@gmail.com', 'marrakech', NULL, NULL, NULL, NULL, NULL, 'STUDENT', NULL, NULL),
-('Admin', 9, b'1', b'1', '', 33, b'1', b'1', 'http://localhost:8036/user/image/profile/ahmed@gmail.com', 'amine', NULL, '$2a$10$9knjI8X01RKpgxgquqov..SS.o2KO4/wfDsV0oyuKfTiBV1h6nat2', 'ahmed', 'ahmed@gmail.com', 'marrakech', NULL, NULL, NULL, NULL, NULL, 'ADMIN', NULL, NULL),
-('Prof', 10, b'1', b'1', NULL, 34, b'1', b'1', 'http://localhost:8036/user/image/profile/khadija@gmail.com', 'teacher', NULL, '$2a$10$RMMxBPzhmQg.7b/5iNmZ6udfdzacFGACRm./QFglZposJxf2V7sqW', 'khadija', 'khadija@gmail.com', 'marrakech', NULL, NULL, NULL, NULL, NULL, 'TEACHER', NULL, NULL),
-('Etudiant', 14, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/farid@gmail.com', 'Farid', '0605120212', '$2a$10$P574lgbFf8gRTFQbTdv5ceKOkPVR/k9CuadgNjJ3ngliruQfG5Zcy', 'Soulaimane', 'farid@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 'STUDENT', NULL, NULL),
-('Etudiant', 15, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/amina@gmail.com', 'lola', '0605120212', '$2a$10$Kg/Y9pLkaUuCRT6IAK6J0uEPBy3dRuN7sVhtRuAOQzkuDnJigpJk2', 'Amina', 'amina@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 'STUDENT', NULL, NULL),
-('Etudiant', 16, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/oumam@gmail.com', 'oumam', '0605120212', '$2a$10$Rrc2xinIeviYykr.0eEr4.XophNjT6m3vUj5cgnKDX0oNzqPH/upG', 'oumam', 'oumam@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 'STUDENT', NULL, NULL),
-('Etudiant', 17, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/oumani@gmail.com', 'oumam', '0605120212', '$2a$10$cwoC9VgxjfsXmY4lTO4qquZCUqeZZFV8QWAHiHNEvGXR53OybQuOK', 'oumam', 'oumani@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 'STUDENT', NULL, NULL),
-('Etudiant', 18, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/adnane@gmail.com', 'noh', '06051202165', '$2a$10$2tEVfd9gRudm2liqDxijXOZ8aahg/gduxNe5ZMNC9Pc.7WxH7fs7a', 'adnane', 'adnane@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 'STUDENT', NULL, NULL),
-('Etudiant', 19, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/latifa@gmail.com', 'latifa', '06051202165', '$2a$10$gzMnpo1CzJ.RujMI90s7LeyHSW/9v68VE8znr.Z.JpftFD0PihG7.', 'latifa', 'latifa@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 'STUDENT', NULL, NULL),
-('Etudiant', 20, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/hicham@gmail.com', 'hicham', '06051202165', '$2a$10$8N5urV.VTun.iikmxUlBQe6osQ8bEcIGSfLj2d7f8XbLuXuVI7zyO', 'hicham', 'hicham@gmail.com', NULL, NULL, 2, 5, 4, NULL, 'STUDENT', NULL, NULL),
-('Etudiant', 21, b'1', b'1', 'qu saada', 22, b'1', b'1', 'http://localhost:8036/user/image/profile/aziz@gmail.com', 'Aziz', '06051202165', '$2a$10$s8xVzU9POmxogIOW2yJAKuE9JIsIwAXvdEpZuAOx6TqIalCvnQ62O', 'Aziz', 'aziz@gmail.com', 'marrakech', NULL, 1, 6, 3, NULL, 'STUDENT', NULL, NULL),
-('Etudiant', 22, b'1', b'1', 'Qu saada', 15, b'1', b'1', 'http://localhost:8036/user/image/aicha@gmail.com/aicha@gmail.com.jpg', 'Aicha', '0760102030', '$2a$10$nFjjnXBtq429B3cfHm1DvuEOPRZvGJxGHvTiQLJYa3D0oFyVDggNS', 'Aicha', 'aicha@gmail.com', 'marrakech', NULL, 1, 5, 3, NULL, 'STUDENT', NULL, 'native'),
-('Etudiant', 23, b'1', b'1', 'Qu azilal', 23, b'1', b'1', 'http://localhost:8036/user/image/profile/ali2@gamil.com', 'Ali', '06051202165', '$2a$10$IsVaEsuXj8JBxbk3A38NNuEjNBoTAKDhKrcfMr4MURWoH4zmR3VN6', 'Ali', 'ali2@gamil.com', 'Casablanca', NULL, NULL, NULL, NULL, NULL, 'STUDENT', NULL, 'non-native');
+INSERT INTO `user` (`dtype`, `id`, `account_non_expired`, `account_non_locked`, `addresse`, `age`, `credentials_non_expired`, `enabled`, `image`, `nom`, `numero`, `password`, `prenom`, `username`, `ville`, `ref`, `etat_etudiant_schedule`, `parcours`, `prof`, `categorie_prof`, `role`, `group_option`, `teacher_locality`, `groupe_etude`, `country`, `date_naissance`, `level_max`, `level_min`) VALUES
+('Admin', 1, b'1', b'1', 'marrakech', 23, b'1', b'1', 'http://localhost:8036/user/image/admin@gmail.com/admin@gmail.com.jpg', 'Elmoudene', '0605120314', '$2a$10$VW1CnG0HpYa5eiGikTlzQOWjAjwjA/ZptHA09uD.LlBE/HWc3YiqC', 'Youssef', 'admin@gmail.com', 'marrakech', NULL, NULL, NULL, NULL, NULL, 'ADMIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Prof', 3, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/teacher@gmail.com/teacher@gmail.com.jpg', 'teacher', '0605120314', '$2a$10$xpy0yulabuTwf8ikJM8j5eM337f81aETiLSRSHsvPaHhDqyUh6bDm', 'teacher', 'teacher@gmail.com', NULL, NULL, NULL, NULL, NULL, 1, 'TEACHER', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Prof', 4, b'1', b'1', 'Marrakech', 30, b'1', b'1', 'http://localhost:8036/user/image/prof@gmail.com/prof@gmail.com.jpg', 'prof', '0613203310', '$2a$10$I7o4zmXgcErHbiX91EPcW.rc2WPlecYuryGmfarBpHL/ZNyQDBRza', 'prof', 'prof@gmail.com', NULL, NULL, NULL, NULL, NULL, 1, 'TEACHER', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Admin', 7, b'1', b'1', 'Marrakech', 22, b'1', b'1', 'http://localhost:8036/user/image/zouani@gmail.com/zouani@gmail.com.jpg', 'Zouani', '0760102030', '$2a$10$G6z1mCKHaDMLUZv9RiK1/OwjvXfK4tnNm/DMA.Wsm7KEadi4GL/Ua', 'Younes', 'zouani@gmail.com', 'Marrakech', NULL, NULL, 5, NULL, NULL, 'ADMIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Admin', 9, b'1', b'1', '', 33, b'1', b'1', 'http://localhost:8036/user/image/profile/ahmed@gmail.com', 'amine', NULL, '$2a$10$9knjI8X01RKpgxgquqov..SS.o2KO4/wfDsV0oyuKfTiBV1h6nat2', 'ahmed', 'ahmed@gmail.com', 'marrakech', NULL, NULL, NULL, NULL, NULL, 'ADMIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 31, b'1', b'1', '', 24, b'1', b'1', 'http://localhost:8036/user/image/profile/zouhir@gmail.com', 'Zouhir', NULL, '$2a$10$IALJLp/ztOwiJXOWKUSgvehDRiHYxB37SDP8kMjlYjHNx8lU8qI3G', 'Zouhir', 'zouhir@gmail.com', 'Demnate', NULL, NULL, 6, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 14, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/farid@gmail.com', 'Farid', '0605120212', '$2a$10$P574lgbFf8gRTFQbTdv5ceKOkPVR/k9CuadgNjJ3ngliruQfG5Zcy', 'Soulaimane', 'farid@gmail.com', NULL, NULL, NULL, 5, NULL, NULL, 'STUDENT', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 16, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/oumam@gmail.com', 'oumam', '0605120212', '$2a$10$Rrc2xinIeviYykr.0eEr4.XophNjT6m3vUj5cgnKDX0oNzqPH/upG', 'oumam', 'oumam@gmail.com', NULL, NULL, NULL, 6, NULL, NULL, 'STUDENT', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 19, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/latifa@gmail.com', 'latifa', '06051202165', '$2a$10$gzMnpo1CzJ.RujMI90s7LeyHSW/9v68VE8znr.Z.JpftFD0PihG7.', 'latifa', 'latifa@gmail.com', NULL, NULL, NULL, 5, NULL, NULL, 'STUDENT', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 20, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/hicham@gmail.com', 'hicham', '06051202165', '$2a$10$8N5urV.VTun.iikmxUlBQe6osQ8bEcIGSfLj2d7f8XbLuXuVI7zyO', 'hicham', 'hicham@gmail.com', NULL, NULL, 1, 5, 4, NULL, 'STUDENT', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 21, b'1', b'1', 'qu saada', 22, b'1', b'1', 'http://localhost:8036/user/image/profile/aziz@gmail.com', 'Aziz', '06051202165', '$2a$10$s8xVzU9POmxogIOW2yJAKuE9JIsIwAXvdEpZuAOx6TqIalCvnQ62O', 'Aziz', 'aziz@gmail.com', 'marrakech', NULL, 1, 5, 4, NULL, 'STUDENT', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 22, b'1', b'1', 'Qu saada', 15, b'1', b'1', 'http://localhost:8036/user/image/aicha@gmail.com/aicha@gmail.com.jpg', 'Aicha', '0760102030', '$2a$10$nFjjnXBtq429B3cfHm1DvuEOPRZvGJxGHvTiQLJYa3D0oFyVDggNS', 'Aicha', 'aicha@gmail.com', 'marrakech', NULL, 1, 5, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 23, b'1', b'1', 'Qu azilal', 23, b'1', b'1', 'http://localhost:8036/user/image/profile/ali2@gamil.com', 'Ali', '06051202165', '$2a$10$IsVaEsuXj8JBxbk3A38NNuEjNBoTAKDhKrcfMr4MURWoH4zmR3VN6', 'Ali', 'ali2@gamil.com', 'Casablanca', NULL, 1, 5, 4, NULL, 'STUDENT', NULL, 'non-native', NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 24, b'1', b'1', 'Marrakech', 23, b'1', b'1', 'http://localhost:8036/user/image/profile/mohemad@gmail.com', 'mohemad', '0605120314', '$2a$10$i0BlA7q.1P.djV6eNwy/NeVyFPNTRVb35/dqDs18HghMgoP.GIlqG', 'Mohemad', 'mohemad@gmail.com', 'Marrakech', NULL, NULL, 5, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 25, b'1', b'1', '', 23, b'1', b'1', 'http://localhost:8036/user/image/profile/saad@gmail.com', 'saad', '0605120314', '$2a$10$HW0BJWeruB9eEf/ZtiEx4uujH86E4gCyUzE8wAy.SDP9wa6kScwJ.', 'Saad', 'saad@gmail.com', NULL, NULL, 1, 5, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 26, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/elmoudene.ysf@gmail.com', 'anas', '0605120314', '$2a$10$FC1NX96EIdOVr90FeF6HLuffgU7aD.VllnHx2aQoVA65i0m08EcUK', 'anas', 'elmoudene.ysf@gmail.com', NULL, NULL, 2, 6, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 27, b'1', b'1', 'Qu saada', 23, b'1', b'1', 'http://localhost:8036/user/image/profile/charaf@gmail.com', 'charaf', '075030214', '$2a$10$WGui.FW7fnBhC0OlavM89OQRhR2UI1pknR2ZTp.rmb07KPXYhc7C2', 'Charaf', 'charaf@gmail.com', 'Marrakech', NULL, NULL, 5, 4, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 28, b'1', b'1', NULL, 23, b'1', b'1', 'http://localhost:8036/user/image/aya@gmail.com/aya@gmail.com.jpg', 'aya', '0730213040', '$2a$10$mgeXHKTfZFxvJKF/m2.tquHmTARN4pOepldVQW5c84Rha82aYyDkS', 'aya', 'aya@gmail.com', NULL, NULL, NULL, 5, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 30, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/fatima@gmail.com', 'Fatima', NULL, '$2a$10$na7TVhTlTCyVAkgxfv4WhepsaCf4AgA0AIgBUOB2k7DkUyDDjFiWu', 'Fatima', 'fatima@gmail.com', NULL, NULL, NULL, 5, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 32, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/wissal@gmail.com', 'Wissal', NULL, '$2a$10$jzizZlxVRSqG25X58EeJ6OZhsQBTjM9UqJyDxpd8QG5nzsnHqAVOO', 'Wissal', 'wissal@gmail.com', NULL, NULL, NULL, 601, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 33, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/naim@gmail.com', 'Naim', NULL, '$2a$10$8G.FN2jjMbEzH6skZs25YOl62Zwo6UQffBNAu36VnDUKoVci7CNVu', 'Naim', 'naim@gmail.com', NULL, NULL, 1, 601, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 34, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/etudiant10@gmail.com', 'etudiant10', NULL, '$2a$10$9MOeJv6mK6rrjK6b5olw9Ovk5bXBmG5V/E.9Lgbh3cwNeAGOZ7rgC', 'etudiant10', 'etudiant10@gmail.com', NULL, NULL, NULL, 7, NULL, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 35, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/student33@gmail.com', 'student33', NULL, '$2a$10$qlgTjJhBpGJA3QrG0QbUnu8O6RtM.asZv.zSHg/xYnFjK61rkEH.W', 'Student33', 'student33@gmail.com', NULL, NULL, NULL, 5, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 36, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/student130@gmail.com', '130', NULL, '$2a$10$Nqx7pNPHkB.t6pOesdjUSutvfazJTQGpUmTsp84rU3GMR63TLQBTa', '130', 'student130@gmail.com', NULL, NULL, NULL, 5, 3, NULL, 'STUDENT', NULL, ' ', NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 38, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/wissam@gmail.com', 'Wisam', NULL, '$2a$10$MFKsFqY5diPUb8QOmPPuNeajSTLkyOTb19Dt7XGnhsE1jNLbngHs.', 'Wisam', 'wissam@gmail.com', NULL, NULL, NULL, 5, 3, NULL, 'STUDENT', NULL, 'native', 4608, NULL, NULL, NULL, NULL),
+('Etudiant', 40, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/haytam@gmail.com', 'Haytam', NULL, '$2a$10$Zvw0.jxYwO1MLq0azXKfOeiw4gEflJ5mvNHuyi.1n6oFMyBsc8Duu', 'Haytam', 'haytam@gmail.com', NULL, NULL, NULL, 5, NULL, NULL, 'STUDENT', NULL, 'native', 4598, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2295,23 +2564,33 @@ INSERT INTO `user_authorities` (`user_id`, `authorities`) VALUES
 (1, 1),
 (3, 2),
 (4, 2),
-(5, 3),
 (6, 1),
 (7, 1),
-(8, 3),
 (9, 1),
 (10, 2),
 (13, 3),
 (14, 3),
-(15, 3),
 (16, 3),
-(17, 3),
-(18, 3),
 (19, 3),
 (20, 3),
 (21, 3),
 (22, 3),
-(23, 3);
+(23, 3),
+(24, 3),
+(25, 3),
+(26, 3),
+(27, 3),
+(28, 3),
+(29, 3),
+(30, 3),
+(31, 3),
+(32, 3),
+(33, 3),
+(34, 3),
+(35, 3),
+(36, 3),
+(38, 3),
+(40, 3);
 
 -- --------------------------------------------------------
 
@@ -2502,7 +2781,8 @@ ALTER TABLE `groupe_etude_detail`
 --
 ALTER TABLE `groupe_etudiant`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FKf19chs324x9ei6t5rm3epx4cq` (`groupe_etude`);
+  ADD KEY `FKf19chs324x9ei6t5rm3epx4cq` (`groupe_etude`),
+  ADD KEY `FKhqi2kse6ips4np4365vovd3r6` (`parcours`);
 
 --
 -- Indexes for table `groupe_etudiant_detail`
@@ -2553,7 +2833,8 @@ ALTER TABLE `inscription`
   ADD KEY `FKnrowvydlyvqhipcre6ib7ayg0` (`etat_inscription`),
   ADD KEY `FKalko793fl1gm06kwq53w1gynu` (`etudiant`),
   ADD KEY `FK1ha9gsbcjddy1otsy6djjg7iv` (`parcours`),
-  ADD KEY `FKgovb2g7e2rj9l65r7wn940ncw` (`prof`);
+  ADD KEY `FKgovb2g7e2rj9l65r7wn940ncw` (`prof`),
+  ADD KEY `FK27d0kprttulm0sukspipm7ptk` (`groupe_etude`);
 
 --
 -- Indexes for table `news`
@@ -2591,7 +2872,8 @@ ALTER TABLE `prof_review`
 ALTER TABLE `question`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FKn7rkdf65fl89m8jx2c174tdbk` (`quiz`),
-  ADD KEY `FKt7dwbi0jnjsaligwd3c0sbvqw` (`home_work`);
+  ADD KEY `FKt7dwbi0jnjsaligwd3c0sbvqw` (`home_work`),
+  ADD KEY `FKp3btkmc3gy8byspbfyqn08ubb` (`type_de_question`);
 
 --
 -- Indexes for table `quiz`
@@ -2673,8 +2955,9 @@ ALTER TABLE `schdedule_vo`
 --
 ALTER TABLE `schedule_prof`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FKd5643r7rlr6asngydbirawu1i` (`etudiant`),
-  ADD KEY `FKh79xgq4ag6662xoqjsnyavl11` (`prof`);
+  ADD KEY `FK33a7ip3jqbafu5joohmdklatc` (`cours`),
+  ADD KEY `FK63y8jx726vtsw7oi7li4psr06` (`groupe_etudiant`),
+  ADD KEY `FKnpixsixxies6sowxahl3ehaxu` (`prof`);
 
 --
 -- Indexes for table `section`
@@ -2713,6 +2996,13 @@ ALTER TABLE `super_categorie_section`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tranche_horaire_prof`
+--
+ALTER TABLE `tranche_horaire_prof`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKgfj4fgstpvqmyeycqgrax2t3p` (`prof`);
+
+--
 -- Indexes for table `type_de_question`
 --
 ALTER TABLE `type_de_question`
@@ -2732,7 +3022,10 @@ ALTER TABLE `user`
   ADD KEY `FKox5wi0gtjrgo3p55k09ox4u1b` (`etat_etudiant_schedule`),
   ADD KEY `FKimfpxj5uy18qyitn193rnpj3v` (`parcours`),
   ADD KEY `FKko8co8fj33bvbw3ms5364vmn3` (`prof`),
-  ADD KEY `FKb1foe1690lcirh75bvap2lg3h` (`categorie_prof`);
+  ADD KEY `FKb1foe1690lcirh75bvap2lg3h` (`categorie_prof`),
+  ADD KEY `FKc8bby2o7jdjj7pacpfpo2bj6r` (`groupe_etude`),
+  ADD KEY `FK5ipus6t3o9ypd7kampo69elmu` (`level_max`),
+  ADD KEY `FKher9dxxtkws9oy0n0uw9swvk9` (`level_min`);
 
 --
 -- Indexes for table `user_authorities`
@@ -2782,8 +3075,7 @@ ALTER TABLE `section`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
-SET FOREIGN_KEY_CHECKS=1;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

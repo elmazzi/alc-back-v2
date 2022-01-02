@@ -15,7 +15,9 @@ public interface ReponseEtudiantDao extends JpaRepository<ReponseEtudiant, Long>
 	int deleteByRef(String Ref);
 	List<ReponseEtudiant> findByReponseQuestionRef(String ref);
 	List<ReponseEtudiant> findByQuizEtudiantEtudiantRef(String ref);
+	List<ReponseEtudiant> findByQuizEtudiantEtudiantId(Long id);
 	List<ReponseEtudiant> findByQuizEtudiantRef(String ref);
+	List<ReponseEtudiant> findByQuizEtudiantId(Long id);
 	List<ReponseEtudiant> findByReponseRef(String ref);
 	int deleteByReponseQuestionRef(String ref);
 	int deleteByQuizEtudiantEtudiantRef(String ref);
