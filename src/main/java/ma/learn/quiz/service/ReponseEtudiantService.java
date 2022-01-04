@@ -98,6 +98,6 @@ public class ReponseEtudiantService {
 	}
 
 	public List<ReponseEtudiant> findByQuizEtudiantId(Long id) {
-		return reponseEtudiantDao.findByQuizEtudiantId(id);
+		return reponseEtudiantDao.findByQuizEtudiantIdOrderByQuestionNumero(id);
 	}
 }

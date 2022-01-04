@@ -30,5 +30,4 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         webSocketSessions.remove(session);
     }
 
-
 }
