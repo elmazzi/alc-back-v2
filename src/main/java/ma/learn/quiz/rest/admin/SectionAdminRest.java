@@ -61,6 +61,7 @@ public class SectionAdminRest {
 	public List<Section> findByCoursId(@PathVariable Long id) {
 		return sectionservice.findByCoursId(id);
 	}
+
 	@GetMapping("/order/id/{id}")
 	public List<Section> findByCriteria(@PathVariable Long id) {
 		return sectionservice.findByCriteria(id);
