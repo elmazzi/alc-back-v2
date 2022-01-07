@@ -65,6 +65,7 @@ C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\etudiant\H
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\shared\SessionCoursPublicRest.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\shared\TypeHomeWorkPublicRest.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\dao\QuizDao.java
+C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\dao\TrancheHoraireProfDao.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\admin\InscriptionAdminRest.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\prof\HomeWorkProfRest.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\admin\ReponseEtudiantAdminRest.java
@@ -189,6 +190,7 @@ C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\bean\Parcours.j
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\bean\SectionItem.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\dao\CentreDao.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\admin\FaqTypeAdminRest.java
+C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\service\TrancheHoraireProfService.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\bean\GroupeEtude.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\etudiant\VocabularyEtudiantRest.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\service\ReponseEtudiantService.java
@@ -280,6 +282,7 @@ C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\bean\TypeHomeWo
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\bean\HomeWorkQuestion.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\admin\FaqProfAdminRest.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\prof\TranslationEnArProfRest.java
+C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\admin\TrancheHoraireProfRest.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\rest\etudiant\RecommendTeacherEtudiantRest.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\bean\ReponseEtudiant.java
 C:\Users\hp\IdeaProjects\alc-back-v2\src\main\java\ma\learn\quiz\bean\SuperCategorieSection.java
