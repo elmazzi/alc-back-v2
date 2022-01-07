@@ -62,5 +62,8 @@ public class EtudiantProfRest {
 	public Etudiant update(@RequestBody Etudiant etudiant) {
 		return etudiantService.update(etudiant);
 	}
-
+	@GetMapping("/id/{id}")
+	public Etudiant findEtudiantById( @PathVariable Long id) {
+		return etudiantService.findEtudiantById(id);
+	}
 }
