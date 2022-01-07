@@ -25,7 +25,7 @@ public class RecommendTeacher {
 		private String telephone;
 		private String login;
 
-	private String dateRecommamdation;
+	private Date dateRecommamdation;
 		@ManyToOne
 		private Prof prof;
 		
@@ -104,11 +104,11 @@ public class RecommendTeacher {
 			this.login = login;
 		}
 
-	public String getDateRecommamdation() {
+	public Date getDateRecommamdation() {
 		return dateRecommamdation;
 	}
 
-	public void setDateRecommamdation(String dateRecommamdation) {
+	public void setDateRecommamdation(Date dateRecommamdation) {
 		this.dateRecommamdation = dateRecommamdation;
 	}
 }
