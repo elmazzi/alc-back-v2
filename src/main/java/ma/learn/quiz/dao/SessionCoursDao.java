@@ -15,13 +15,18 @@ public interface SessionCoursDao extends JpaRepository<SessionCours, Long> {
 
 
     SessionCours findSessionCoursByProfNom(String nom);
-     int deleteSessionCoursById(Long id);
-SessionCours findSessionCoursByCoursIdAndEtudiantIdAndProfId(Long idc, Long ids,Long idp);
+
+    int deleteSessionCoursById(Long id);
+
+    SessionCours findSessionCoursByCoursIdAndEtudiantIdAndProfId(Long idc, Long ids, Long idp);
+
     List<SessionCours> findByProfId(Long id);
 
     List<SessionCours> findByProfIdAndEtudiantId(Long id, Long ids);
 
     List<SessionCours> findSessionCoursByEtudiantId(Long id);
+
     List<SessionCours> findSessionCoursByDateFin(Date dateFin);
+
 
 }
