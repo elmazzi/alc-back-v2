@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,41 +50,34 @@ public class QuizEtudiantService {
 		return quizEtudiantDao.findByQuizRef(ref);
 	}
 
-
+	public List<QuizEtudiant> findByQuizId(Long id) {
+		return quizEtudiantDao.findByQuizId(id);
+	}
 
 	@Transactional
 	public int deleteByQuizRef(String ref) {
 		return quizEtudiantDao.deleteByQuizRef(ref);
 	}
 
+	public QuizEtudiant findQuizEtudiantById(Long id) {
+		return quizEtudiantDao.findQuizEtudiantById(id);
+	}
 
-
-	public int save(QuizEtudiant quizEtudiant) {
-		/*if(findByRef(quizEtudiant.getRef()) != null)
-		{
-			return -1;
-		}*/
-		Quiz quiz=quizService.findByRef(quizEtudiant.getQuiz().getRef());
-        Etudiant etudiant = etudiantService.findByRef(quizEtudiant.getEtudiant().getRef());
-        //ReponseEtudiant reponseEtudiant = reponseEtudiantService.findByRef(quizEtudiant.getReponseEtudiant().getRef());
+	public QuizEtudiant save(QuizEtudiant quizEtudiant) {
+		quizEtudiant.setRef(RandomStringUtils.randomAlphanumeric(3));
+		Quiz quiz=quizService.findQuizById(quizEtudiant.getQuiz().getId());
+        Etudiant etudiant = etudiantService.findEtudiantById(quizEtudiant.getEtudiant().getId());
         quizEtudiant.setQuiz(quiz);
         quizEtudiant.setEtudiant(etudiant);
-        //quizEtudiant.setReponseEtudiant(reponseEtudiant);
        if(quiz==null){
-          return -2;
+          return null;
        }
        if(etudiant==null){
-           return -3;
-        }
-       /*if(reponseEtudiant==null){
-           return -4;
-        }*/
-		else
+           return null;
+        } else
 		{
-			quizEtudiantDao.save(quizEtudiant);
-			return 1;
+			return quizEtudiantDao.save(quizEtudiant);
 		}
-		 
 	}
 
 	public List<QuizEtudiant> findAll() {
@@ -96,11 +90,18 @@ public class QuizEtudiantService {
 		quizEtudiantDao.save(quizEtudiant);
 		
 	}
-	
+
+	public List<QuizEtudiant> findByEtudiantId(Long id) {
+		return quizEtudiantDao.findByEtudiantId(id);
+	}
+
 	public Object findByCritere(String refEtudiant, String refQuiz)
 	{
 		String query = "SELECT q FROM QuizEtudiant q WHERE q.etudiant.ref= '"+refEtudiant+"' and q.quiz.ref='"+refQuiz+"'";
 		return entityManager.createQuery(query).getSingleResult();
 	}
-	
+
+	public QuizEtudiant quizByEtudiantIdAndQuizId(Long idEtudiant, Long idQuiz) {
+		return quizEtudiantDao.findByEtudiantIdAndQuizId(idEtudiant, idQuiz);
+	}
 }

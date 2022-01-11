@@ -65,7 +65,7 @@ public class ReponseEtudiantPublicRest {
 	}
 
 	@PostMapping("/")
-	public int save(@RequestBody ReponseEtudiant reponseEtudiant) {
+	public ReponseEtudiant save(@RequestBody ReponseEtudiant reponseEtudiant) {
 		return reponseEtudiantService.save(reponseEtudiant);
 	}
 

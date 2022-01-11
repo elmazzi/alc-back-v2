@@ -20,6 +20,16 @@ public class QuizEtudiantAdminRest {
 		return quizEtudiantService.findByCritere(refEtudiant, refQuiz);
 	}
 
+	@GetMapping("/etudiant/idEtudiant/{idEtudiant}/quiz/idQuiz/{idQuiz}")
+	public QuizEtudiant getQuizByEtudiantIdAndQuizId(@PathVariable Long idEtudiant,@PathVariable Long idQuiz) {
+		return quizEtudiantService.quizByEtudiantIdAndQuizId(idEtudiant, idQuiz);
+	}
+
+	@GetMapping("/etudiant/id/{id}")
+	public List<QuizEtudiant> findByEtudiantId(@PathVariable Long id) {
+		return quizEtudiantService.findByEtudiantId(id);
+	}
+
 	@GetMapping("/resultat/{resultat}")
 	public List<QuizEtudiant> findByResultat(String resultat) {
 		return quizEtudiantService.findByResultat(resultat);
@@ -39,7 +49,10 @@ public class QuizEtudiantAdminRest {
 	public List<QuizEtudiant> findByQuizRef(@PathVariable String ref) {
 		return quizEtudiantService.findByQuizRef(ref);
 	}
-
+	@GetMapping("/quiz/id/{id}")
+	public List<QuizEtudiant> findByQuizId(@PathVariable Long id) {
+		return quizEtudiantService.findByQuizId(id);
+	}
 
 	@DeleteMapping("/quiz/ref/{ref}")
 	public int deleteByQuizRef(@PathVariable String ref) {
@@ -48,7 +61,7 @@ public class QuizEtudiantAdminRest {
 
 
 	@PostMapping("/")
-	public int save(@RequestBody QuizEtudiant quizEtudiant) {
+	public QuizEtudiant save(@RequestBody QuizEtudiant quizEtudiant) {
 		return quizEtudiantService.save(quizEtudiant);
 	}
 

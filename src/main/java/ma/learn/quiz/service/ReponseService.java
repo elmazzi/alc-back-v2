@@ -62,6 +62,9 @@ public class ReponseService {
         return reponseDao.deleteByRef(ref);
     }
 
+    public Reponse findReponseById(Long id) {
+        return reponseDao.findReponseById(id);
+    }
 
     public List<Reponse> findAll() {
         return reponseDao.findAll();

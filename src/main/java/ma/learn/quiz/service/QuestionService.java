@@ -89,6 +89,9 @@ public class QuestionService {
         }
     }
 
+    public Question findQuestionById(Long Id) {
+        return questionDao.findQuestionById(Id);
+    }
 
     public void saveAll(Quiz quiz, List<Question> questions) {
         for (Question question : questions) {

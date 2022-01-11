@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,33 +77,27 @@ public class ReponseEtudiantService {
 		return reponseEtudiantDao.deleteByQuizEtudiantEtudiantRef(ref);
 	}
 
-	public int save(ReponseEtudiant reponseEtudiant) {
-		/*if(findByRef(reponseEtudiant.getRef())!=null)
-		{
-			return -1;
-		}
-        Reponse reponse = reponseService.findByRef(reponseEtudiant.getReponse().getRef());
-        QuizEtudiant quizEtudiant = quizEtudiantService.findByRef(reponseEtudiant.getQuizEtudiant().getRef());
-        reponseEtudiant.setReponse(reponse);
-        reponseEtudiant.setQuizEtudiant(quizEtudiant);
-         if(reponse==null){
-             return -2;
-          }
-         if(quizEtudiant==null)
-         {
-        	 return -3;
-         }
-         else {
-        	 reponseEtudiantDao.save(reponseEtudiant);
-        	 return 1;
-         }*/
-		reponseEtudiantDao.save(reponseEtudiant);
-   	 return 1;
+	public ReponseEtudiant save(ReponseEtudiant reponseEtudiant) {
+		Reponse reponse = this.reponseService.findReponseById(reponseEtudiant.getReponse().getId());
+		QuizEtudiant quizEtudiant = this.quizEtudiantService.findQuizEtudiantById(reponseEtudiant.getQuizEtudiant().getId());
+		Question question = this.questionService.findQuestionById(reponseEtudiant.getQuestion().getId());
+		reponseEtudiant.setReponse(reponse);
+		reponseEtudiant.setQuizEtudiant(quizEtudiant);
+		reponseEtudiant.setQuestion(question);
+		reponseEtudiant.setRef(RandomStringUtils.randomAlphanumeric(3));
+		return reponseEtudiantDao.save(reponseEtudiant);
 	}
 
 	public List<ReponseEtudiant> findAll() {
 		return reponseEtudiantDao.findAll();
 	}
 
-	
+
+	public List<ReponseEtudiant> findByQuizEtudiantEtudiantId(Long id) {
+		return reponseEtudiantDao.findByQuizEtudiantEtudiantId(id);
+	}
+
+	public List<ReponseEtudiant> findByQuizEtudiantId(Long id) {
+		return reponseEtudiantDao.findByQuizEtudiantIdOrderByQuestionNumero(id);
+	}
 }

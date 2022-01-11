@@ -17,4 +17,5 @@ public interface QuestionDao extends JpaRepository<Question, Long> {
     int deleteByRef(String ref);
     int deleteByNumero(Long numero);
     void deleteById(Long id);
+    Question findQuestionById(Long Id);
 }

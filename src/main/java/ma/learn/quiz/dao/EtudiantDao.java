@@ -31,6 +31,7 @@ public interface EtudiantDao extends JpaRepository<Etudiant, Long> {
 
     int deleteByParcoursCode(String code);
 
+
     List <Etudiant> findByParcoursLibelle(String libelle);
 List <Etudiant> findEtudiantByGroupeEtudiantDetailsGroupeEtudiantParcours(String libelle);
 }
