@@ -65,7 +65,7 @@ public class RecommendTeacherService {
 		}
 		else {
 			System.out.println("id::: " + recommendTeacher.getId());
-			recommendTeacher.setDateRecommamdation(dateRecommamdation.toString());
+
 			recommendTeacherDao.save(recommendTeacher);
 			return 1;
 		}

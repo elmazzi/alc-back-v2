@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ma.learn.quiz.dao.ProfDao;
-import ma.learn.quiz.vo.SalaryVo;
+import ma.learn.quiz.bean.Salary;
 
 import static ma.learn.quiz.filter.RoleConstant.ROLE_PROF;
 
@@ -72,6 +72,9 @@ public class ProfService extends AbstractService{
         profLoaded.setAddresse(prof.getAddresse());
         profLoaded.setUsername(prof.getUsername());
         profLoaded.setPassword(prof.getPassword());
+        profLoaded.setLevelMax(prof.getLevelMax());
+        profLoaded.setLevelMin(prof.getLevelMin());
+         trancheHoraireProfService.save(prof ,prof.getTrancheHoraireProfList());
         return profDao.save(profLoaded);
     }
 
@@ -92,13 +95,13 @@ public class ProfService extends AbstractService{
 
     }
 
-    public List<SessionCours> calcStatistique(SalaryVo salaryVo) {
-    	/*String query = "SELECT NEW ma.learn.quiz.vo.SalaryVo(COUNT(s.id)) FROM SessionCours s WHERE s.mois = ? and s.annee=?";
+    public List<SessionCours> calcStatistique(Salary salaryVo) {
+    	/*String query = "SELECT NEW ma.learn.quiz.bean.SalaryVo(COUNT(s.id)) FROM SessionCours s WHERE s.mois = ? and s.annee=?";
     	System.out.println("query = " + query);
     	int res = entityManager.createQuery(query).getResultList();
     	System.out.println("res = " + res);
     	return res; */
-        String query = "SELECT Count(s.id) From SessionCours s where s.dateDebut = '" + salaryVo.getAnnee() + "/" + salaryVo.getMois() + "/01'";
+        String query = "SELECT Count(s.id) From SessionCours s where s.dateFin = '" + salaryVo.getAnnee() + "/" + salaryVo.getMois() + "/01'";
         return entityManager.createQuery(query).getResultList();
     }
 
@@ -174,4 +177,6 @@ public class ProfService extends AbstractService{
     private UserService userService;
     @Autowired
     private EtudiantService etudiantService;
+    @Autowired
+    private TrancheHoraireProfService trancheHoraireProfService;
 }

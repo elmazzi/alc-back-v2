@@ -13,8 +13,34 @@ public class TrancheHoraireProf {
     private Long id;
     @ManyToOne
     private Prof prof;
-    @JsonFormat(pattern = "yyyy-MM-dd h:mm:ss")
-    private LocalDateTime horaire;
+    private String datee;
+
+    private Date dateDebut;
+    private Date dateFin;
+
+
+    public String getDatee() {
+        return datee;
+    }
+
+    public void setDatee(String datee) {
+        this.datee = datee;
+    }
+    public Date getDateDebut() {
+        return dateDebut;
+    }
+
+    public void setDateDebut(Date dateDebut) {
+        this.dateDebut = dateDebut;
+    }
+
+    public Date getDateFin() {
+        return dateFin;
+    }
+
+    public void setDateFin(Date dateFin) {
+        this.dateFin = dateFin;
+    }
 
     public Long getId() {
         return id;
@@ -32,6 +58,7 @@ public class TrancheHoraireProf {
         this.prof = prof;
     }
 
+/*
     public LocalDateTime getHoraire() {
         return horaire;
     }
@@ -39,4 +66,8 @@ public class TrancheHoraireProf {
     public void setHoraire(LocalDateTime horaire) {
         this.horaire = horaire;
     }
+
+
+ */
+
 }

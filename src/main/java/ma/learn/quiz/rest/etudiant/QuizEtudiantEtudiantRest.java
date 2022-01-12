@@ -20,6 +20,17 @@ public class QuizEtudiantEtudiantRest {
 		return quizEtudiantService.findByCritere(refEtudiant, refQuiz);
 	}
 
+
+	@GetMapping("/etudiant/idEtudiant/{idEtudiant}/quiz/idQuiz/{idQuiz}")
+	public QuizEtudiant findByEtudiantIdAndQuizId(@PathVariable Long idEtudiant,@PathVariable Long idQuiz) {
+		return quizEtudiantService.quizByEtudiantIdAndQuizId(idEtudiant, idQuiz);
+	}
+
+	@GetMapping("/etudiant/id/{id}")
+	public List<QuizEtudiant> findByEtudiantId(@PathVariable Long id) {
+		return quizEtudiantService.findByEtudiantId(id);
+	}
+
 	@GetMapping("/resultat/{resultat}")
 	public List<QuizEtudiant> findByResultat(String resultat) {
 		return quizEtudiantService.findByResultat(resultat);
@@ -48,7 +59,7 @@ public class QuizEtudiantEtudiantRest {
 
 
 	@PostMapping("/")
-	public int save(@RequestBody QuizEtudiant quizEtudiant) {
+	public QuizEtudiant save(@RequestBody QuizEtudiant quizEtudiant) {
 		return quizEtudiantService.save(quizEtudiant);
 	}
 

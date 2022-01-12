@@ -66,6 +66,7 @@ public class SessionCoursProfRest {
     public List<SessionCours> findSessionCoursByEtudiantId(@PathVariable Long id) {
         return sessionCoursService.findSessionCoursByEtudiantId(id);
     }
+
     @Autowired
     private SessionCoursService sessionCoursService;
 }

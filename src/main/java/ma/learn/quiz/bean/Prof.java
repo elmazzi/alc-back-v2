@@ -16,16 +16,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Prof extends User {
     private String ref;
 
-/*    -----------------tache hiba ----------------*/
-
+/*    -----------------tache hiba  ----------------*/
     @OneToOne
     Parcours levelMin = new Parcours();
     @OneToOne
     Parcours levelMax = new Parcours();
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "prof")
     List<TrancheHoraireProf> trancheHoraireProfList = new ArrayList<>();
 /*===========================================================================*/
-
     @ManyToOne
     private CategorieProf categorieProf;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

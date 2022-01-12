@@ -15,7 +15,7 @@ public class Paiement {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private int totalHeure;
-    private double montant;
+    private BigDecimal montant;
     @ManyToOne
     private Prof prof;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -39,11 +39,11 @@ public class Paiement {
         this.totalHeure = totalHeure;
     }
 
-    public double getMontant() {
+    public BigDecimal getMontant() {
         return montant;
     }
 
-    public void setMontant(double montant) {
+    public void setMontant(BigDecimal montant) {
         this.montant = montant;
     }
 
