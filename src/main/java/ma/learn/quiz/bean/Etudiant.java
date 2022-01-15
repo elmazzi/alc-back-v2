@@ -26,6 +26,8 @@ public class Etudiant extends User {
     @OneToMany(mappedBy = "etudiant")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<GroupeEtudiantDetail> groupeEtudiantDetails;
+    @ManyToOne
+    private PackStudent packStudent;
 
     public Etudiant(User user, String ref, Prof prof, EtatEtudiantSchedule etatEtudiantSchedule, Parcours parcours, List<QuizEtudiant> quizEtudiant) {
         super(user.id, user.username, user.password, user.nom, user.prenom,
@@ -44,6 +46,14 @@ public class Etudiant extends User {
                 user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role);    }
 
     public Etudiant() {
+    }
+
+    public PackStudent getPackStudent() {
+        return packStudent;
+    }
+
+    public void setPackStudent(PackStudent packStudent) {
+        this.packStudent = packStudent;
     }
 
     public GroupeEtude getGroupeEtude() {

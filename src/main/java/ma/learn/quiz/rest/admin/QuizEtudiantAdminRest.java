@@ -49,7 +49,10 @@ public class QuizEtudiantAdminRest {
 	public List<QuizEtudiant> findByQuizRef(@PathVariable String ref) {
 		return quizEtudiantService.findByQuizRef(ref);
 	}
-
+	@GetMapping("/quiz/id/{id}")
+	public List<QuizEtudiant> findByQuizId(@PathVariable Long id) {
+		return quizEtudiantService.findByQuizId(id);
+	}
 
 	@DeleteMapping("/quiz/ref/{ref}")
 	public int deleteByQuizRef(@PathVariable String ref) {

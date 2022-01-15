@@ -18,6 +18,7 @@ public interface QuizEtudiantDao extends JpaRepository<QuizEtudiant, Long> {
 	void deleteById(Long id);
 	List<QuizEtudiant> findByResultat(String resultat);
 	List<QuizEtudiant> findByQuizRef(String ref);
+	List<QuizEtudiant> findByQuizId(Long id);
 	List<QuizEtudiant> findByEtudiantRef(String ref);
 	int deleteByQuizRef(String ref);
 }

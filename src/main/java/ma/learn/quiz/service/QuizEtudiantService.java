@@ -50,7 +50,9 @@ public class QuizEtudiantService {
 		return quizEtudiantDao.findByQuizRef(ref);
 	}
 
-
+	public List<QuizEtudiant> findByQuizId(Long id) {
+		return quizEtudiantDao.findByQuizId(id);
+	}
 
 	@Transactional
 	public int deleteByQuizRef(String ref) {

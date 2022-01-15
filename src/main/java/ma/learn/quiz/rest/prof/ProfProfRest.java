@@ -3,7 +3,7 @@ package ma.learn.quiz.rest.prof;
 import ma.learn.quiz.bean.*;
 import ma.learn.quiz.service.ProfService;
 import ma.learn.quiz.service.UserServiceImpl;
-import ma.learn.quiz.vo.SalaryVo;
+import ma.learn.quiz.bean.Salary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +43,7 @@ public class ProfProfRest {
         return profService.save(prof);
     }
     @PostMapping("/salary/{salaryVo}")
-    public List<SessionCours> calcStatistique(@RequestBody SalaryVo salaryVo) {
+    public List<SessionCours> calcStatistique(@RequestBody Salary salaryVo) {
 		return profService.calcStatistique(salaryVo);
 	}
     @GetMapping("/nom/{nom}")
