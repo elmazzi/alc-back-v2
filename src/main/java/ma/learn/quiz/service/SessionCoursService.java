@@ -44,6 +44,10 @@ public class SessionCoursService extends AbstractService {
         return entityManager.createQuery(query).getResultList();
     }
 
+    public List<SessionCours> findByEtudiantId(Long id) {
+        return sessionCoursDao.findByEtudiantId(id);
+    }
+
     public List<SessionCours> findAllByCriteria(SessionCoursVO sessionCoursVO) {
         String query = this.init("SessionCours");
         if (sessionCoursVO.getEtudiant() != null) {
