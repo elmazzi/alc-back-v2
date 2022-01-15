@@ -12,4 +12,6 @@ public interface SuperCategorieSectionDao extends JpaRepository<SuperCategorieSe
 	SuperCategorieSection findByCode(String code); 
 	List<SuperCategorieSection> findByLibelle(String libelle);
     int deleteByCode(String code);
+	SuperCategorieSection findSuperCategorieSectionByLibelle(String libelle);
+
 }

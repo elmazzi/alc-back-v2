@@ -20,4 +20,6 @@ public interface CoursDao extends JpaRepository<Cours, Long> {
      List<Cours> findByParcoursId(Long id); 
      int deleteByParcoursCode(String code);
      int deleteByParcoursId(Long id);
+     Cours findCoursByLibelleAndParcoursId(String coursLibelle, Long idparcours);
+
 }

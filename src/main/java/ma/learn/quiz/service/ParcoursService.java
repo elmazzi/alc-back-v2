@@ -37,9 +37,7 @@ public class ParcoursService {
 	}
 	
 
-	public List<Parcours> findByLibelle(String libelle) {
-		return parcoursDao.findByLibelle(libelle);
-	}
+
 	@Transactional
 	public int deleteParcoursById(List<Parcours> parcourss) {
 		int res=0;
