@@ -12,7 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Entity
-public class GroupeEtudiant implements Serializable {
+public class
+GroupeEtudiant implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -32,7 +33,16 @@ public class GroupeEtudiant implements Serializable {
     private GroupeEtude groupeEtude;
     @ManyToOne
     private Parcours parcours;
+    @ManyToOne
+    private Prof prof;
 
+    public Prof getProf() {
+        return prof;
+    }
+
+    public void setProf(Prof prof) {
+        this.prof = prof;
+    }
 
     public Parcours getParcours() {
         return parcours;

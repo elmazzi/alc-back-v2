@@ -33,11 +33,13 @@ public class GroupeEtudiantDetailService extends AbstractService {
 
         for (GroupeEtudiantDetail groupeEtudiantDetail : groupeEtudiantDetails) {
             Etudiant etudiant = etudiantService.findEtudiantById(groupeEtudiantDetail.getEtudiant().getId());
+
             //  groupeEtudeDetail.setEtudiants( findEtudiantByGroupeEtudeDetail(groupeEtudeDetail));
          //   groupeEtudiant.setNombrePlacevide(groupeEtudiant.getGroupeEtude().getNombreEtudiant()-1);
             groupeEtudiantDetail.setEtudiant(etudiant);
             groupeEtudiantDetail.setGroupeEtudiant(groupeEtudiant);
             groupeEtudiantDetailDao.save(groupeEtudiantDetail);
+
 
         }
     }
