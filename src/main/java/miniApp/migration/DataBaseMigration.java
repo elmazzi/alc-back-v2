@@ -46,7 +46,42 @@ public class DataBaseMigration {
     private Long id;
 
     public void htmlimagetext() {
-        File imageDirRoot = FileUtil.mkdire(Constants.root, "images", true);
+        File imageDirRoot = FileUtil.mkdire(Constants.root1, "images", true);
+        File directoryPath=new File(Constants.root);
+        String[] contents = directoryPath.list();
+        for(int i=0; i<contents.length; i++) {
+            Centre centre = centreDao.findCentreByLibelle("American Center 1");
+            if (centre != null) {
+                Parcours parcours = parcoursDao.findByLibelle(contents[i]);
+                if (parcours == null) {
+                    parcours = new Parcours();
+                    parcours.setCentre(centre);
+                    parcours.setLibelle(contents[i]);
+                    parcours.setCode(contents[i]);
+                    parcoursDao.save(parcours);
+                }
+                String pathParcoursImages = imageDirRoot.getAbsolutePath() + "\\" + contents[i] + "\\";
+                String pathParcours = Constants.root + contents[i] + "\\";
+                for (String lessonOrHomeWorkOfParkour : Constants.lessonOrHomeWorkOfParkours) {
+                    FileUtil.mkdire(pathParcoursImages, lessonOrHomeWorkOfParkour, true);
+                    String pathLessonOrHomeWork = pathParcours + lessonOrHomeWorkOfParkour;
+                    String pathLessonOrHomeWorkImage = pathParcoursImages + lessonOrHomeWorkOfParkour;
+                    for (String sectionName : Constants.sectionNames) {
+                        System.out.println("  sectionName ::::: " + lessonOrHomeWorkOfParkour + " " + contents[i] + " " + sectionName);
+                        String pathSection = pathLessonOrHomeWork + "\\" + sectionName;
+                        String pathSectionImage = pathLessonOrHomeWorkImage + "\\" + sectionName;
+                        if (new File(pathSection).exists()) {
+                            FileUtil.mkdire(pathSectionImage, pathLessonOrHomeWorkImage, true);
+                            System.out.println("pathSection ==> " + pathSection);
+                            System.out.println("pathImage ==>" + pathSectionImage);
+                            System.out.println("++++++++++++++++++++++++++++++");
+                            extractHtmlImageAndContent(contents[i], sectionName, pathSection, pathSectionImage);
+                        }
+                    }
+                }
+            }
+        }
+/*
         for (String parcour : Constants.parcours) {
             Centre centre = centreDao.findCentreByLibelle("American Center 1");
             if (centre != null) {
@@ -79,11 +114,13 @@ public class DataBaseMigration {
                 }
             }
         }
+*/
     }
 
 
     public void extractHtmlImageAndContent(String nameparcours, String categorieSection, String directoryName, String imagePath) {
         List<File> htmlFiles = FileUtil.findHtmlFiles(directoryName);
+
         htmlFiles.stream()
                 .sorted((f1, f2) -> FileUtil.compare(f1, f2))
                 .forEach(f -> {
