@@ -9,8 +9,8 @@ public class SessionCoursVO {
     private Prof prof;
     private Cours cours;
     private Etudiant etudiant;
-     private String dateFin;
-     private boolean payer;
+    private String dateFin;
+    private boolean payer;
 
     public boolean isPayer() {
         return payer;

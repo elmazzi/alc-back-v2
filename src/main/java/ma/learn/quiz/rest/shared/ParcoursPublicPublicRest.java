@@ -46,10 +46,6 @@ public int save(@RequestBody Parcours parcours) {
 		return parcoursService.update(parcours);
 	}
 
-@GetMapping("/libelle/{libelle}")
-	public List<Parcours> findByLibelle(@PathVariable String libelle) {
-	return parcoursService.findByLibelle(libelle);
-}
 
 
 	@DeleteMapping("/id/{id}")

@@ -22,6 +22,12 @@ import static ma.learn.quiz.filter.RoleConstant.ROLE_STUDENT;
 public class EtudiantService extends AbstractService {
     @Autowired
     private GroupeEtudeService groupeEtudeService;
+    @Autowired
+    public SessionCoursService sessionCoursService;
+
+    public List<SessionCours> findByEtudiantId(Long id) {
+        return sessionCoursService.findByEtudiantId(id);
+    }
 
     public List<Etudiant> findByParcoursCode(String code) {
         return etudiantDao.findByParcoursCode(code);

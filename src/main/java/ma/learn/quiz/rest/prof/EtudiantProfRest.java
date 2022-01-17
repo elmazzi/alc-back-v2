@@ -1,6 +1,7 @@
 package ma.learn.quiz.rest.prof;
 
 import ma.learn.quiz.bean.Etudiant;
+import ma.learn.quiz.bean.SessionCours;
 import ma.learn.quiz.service.EtudiantService;
 import ma.learn.quiz.service.vo.EtudiantVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,11 @@ import java.util.List;
 public class EtudiantProfRest {
 	@Autowired
 	public EtudiantService  etudiantService;
-	
-	
+	@GetMapping("/sessionCours/id/{id}")
+	public List<SessionCours> findByEtudiantId(@PathVariable Long id) {
+		return etudiantService.findByEtudiantId(id);
+	}
+
 	@GetMapping("/prof/id/{id}")
 	public List<Etudiant> findEtudiantByProfId(@PathVariable Long id) {
 		return etudiantService.findEtudiantByProfId(id);
@@ -23,6 +27,7 @@ public class EtudiantProfRest {
 	public List<Etudiant> findByCriteria(@RequestBody EtudiantVo etudiantVo) {
 		return etudiantService.findByCriteria(etudiantVo);
 	}
+
 	@GetMapping("/parcours/code/{code}")
 	public List<Etudiant> findByParcoursCode(@PathVariable String code) {
 		return etudiantService.findByParcoursCode(code);

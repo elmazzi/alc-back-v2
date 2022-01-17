@@ -1,10 +1,7 @@
 package ma.learn.quiz.service;
 
 
-import ma.learn.quiz.bean.GroupeEtude;
-import ma.learn.quiz.bean.GroupeEtudiant;
-import ma.learn.quiz.bean.GroupeEtudiantDetail;
-import ma.learn.quiz.bean.Parcours;
+import ma.learn.quiz.bean.*;
 import ma.learn.quiz.dao.GroupeEtudiantDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,13 +24,19 @@ public class GroupeEtudiantService extends AbstractService  {
     private GroupeEtudiantDetailService groupeEtudiantDetailService;
     @Autowired
     public EntityManager entityManager;
+    @Autowired
+    public ProfService profService ;
+
+
     public int save(GroupeEtudiant groupeEtudiant) {
 
         Parcours parcours = parcoursService.findParcoursByLibelle(groupeEtudiant.getParcours().getLibelle());
-
-            GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(groupeEtudiant.getGroupeEtude().getId());
+        GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(groupeEtudiant.getGroupeEtude().getId());
+       // Prof prof = profService.findProfById(groupeEtudiant.getProf().getId());
             groupeEtudiant.setGroupeEtude(groupeEtude);
+          //  groupeEtudiant.setProf(prof);
             groupeEtudiant.setParcours(parcours);
+            groupeEtudiant.setProf(groupeEtudiant.getProf());
             groupeEtudiantDao.save(groupeEtudiant);
             groupeEtudiantDetailService.save(groupeEtudiant, groupeEtudiant.getGroupeEtudeDetails());
 
