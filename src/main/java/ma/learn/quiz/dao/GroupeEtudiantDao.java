@@ -11,10 +11,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface GroupeEtudiantDao extends JpaRepository<GroupeEtudiant,Long> {
+public interface GroupeEtudiantDao extends JpaRepository<GroupeEtudiant, Long> {
     public GroupeEtudiant findGroupeEtudiantById(Long id);
+
     public GroupeEtudiant findByLibelle(String libelle);
+
     public int deleteGroupeEtudiantById(Long id);
+
     List<GroupeEtudiant> findByParcoursIdAndNombrePlacevideGreaterThan(Long id, Long nombrePlacevide);
 
+    List<GroupeEtudiant> findGroupeEtudiantByProfId(Long idprof);
 }
