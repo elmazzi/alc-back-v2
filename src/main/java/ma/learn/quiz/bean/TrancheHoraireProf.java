@@ -13,33 +13,17 @@ public class TrancheHoraireProf {
     private Long id;
     @ManyToOne
     private Prof prof;
-    private String datee;
+    private String startHour;
+    private String endHour;
+    private int day;
+    private int groupIndex;
 
-    private Date dateDebut;
-    private Date dateFin;
-
-
-    public String getDatee() {
-        return datee;
+    public int getGroupIndex() {
+        return groupIndex;
     }
 
-    public void setDatee(String datee) {
-        this.datee = datee;
-    }
-    public Date getDateDebut() {
-        return dateDebut;
-    }
-
-    public void setDateDebut(Date dateDebut) {
-        this.dateDebut = dateDebut;
-    }
-
-    public Date getDateFin() {
-        return dateFin;
-    }
-
-    public void setDateFin(Date dateFin) {
-        this.dateFin = dateFin;
+    public void setGroupIndex(int groupIndex) {
+        this.groupIndex = groupIndex;
     }
 
     public Long getId() {
@@ -58,16 +42,27 @@ public class TrancheHoraireProf {
         this.prof = prof;
     }
 
-/*
-    public LocalDateTime getHoraire() {
-        return horaire;
+    public String getStartHour() {
+        return startHour;
     }
 
-    public void setHoraire(LocalDateTime horaire) {
-        this.horaire = horaire;
+    public void setStartHour(String startHour) {
+        this.startHour = startHour;
     }
 
+    public String getEndHour() {
+        return endHour;
+    }
 
- */
+    public void setEndHour(String endHour) {
+        this.endHour = endHour;
+    }
 
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
 }

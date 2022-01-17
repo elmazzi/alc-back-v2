@@ -20,7 +20,23 @@ public class TrancheHoraireProfService {
             trancheHoraireProfDao.save(trancheHoraireProf);
         }
     }
-   @Transactional
+    public TrancheHoraireProf edit(TrancheHoraireProf trancheHoraireProf){
+        TrancheHoraireProf trancheHora = this.findTrancheHoraireProfById(trancheHoraireProf.getId());
+        if (trancheHora == null){
+            return trancheHoraireProfDao.save(trancheHoraireProf);
+        } else {
+            trancheHora.setDay(trancheHoraireProf.getDay());
+            trancheHora.setEndHour(trancheHoraireProf.getEndHour());
+            trancheHora.setStartHour(trancheHoraireProf.getStartHour());
+            return this.trancheHoraireProfDao.save(trancheHora);
+        }
+    }
+
+    public TrancheHoraireProf findTrancheHoraireProfById(Long id) {
+        return trancheHoraireProfDao.findTrancheHoraireProfById(id);
+    }
+
+    @Transactional
     public int deleteTrancheHoraireProfById(Long id) {
         return trancheHoraireProfDao.deleteTrancheHoraireProfById(id);
     }

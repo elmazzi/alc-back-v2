@@ -99,6 +99,7 @@ public class QuestionService {
             TypeDeQuestion typeDeQuestion = typeDeQuestionService.findByRef(question.getTypeDeQuestion().getRef());
             question.setTypeDeQuestion(typeDeQuestion);
             typeDeQuestionService.update(typeDeQuestion);
+            System.out.println(question.getLibelle());
             questionDao.save(question);
             reponseService.save(question, question.getReponses());
         }

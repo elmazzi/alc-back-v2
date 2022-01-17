@@ -67,11 +67,6 @@ public class ProfService extends AbstractService{
 
     public Prof update(Prof prof) {
         Prof profLoaded = findProfById(prof.getId());
-        profLoaded.setNom(prof.getNom());
-        profLoaded.setPrenom(prof.getPrenom());
-        profLoaded.setAddresse(prof.getAddresse());
-        profLoaded.setUsername(prof.getUsername());
-        profLoaded.setPassword(prof.getPassword());
         profLoaded.setLevelMax(prof.getLevelMax());
         profLoaded.setLevelMin(prof.getLevelMin());
          trancheHoraireProfService.save(prof ,prof.getTrancheHoraireProfList());
