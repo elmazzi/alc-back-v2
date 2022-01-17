@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 30, 2021 at 09:10 PM
+-- Generation Time: Jan 17, 2022 at 04:04 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.4.1
 
@@ -31,13 +31,13 @@ SET time_zone = "+00:00";
 CREATE TABLE `calendrier_prof` (
   `id` bigint(20) NOT NULL,
   `end_recur` datetime DEFAULT NULL,
-  `end_time` varchar(255) DEFAULT NULL,
-  `ref` varchar(255) DEFAULT NULL,
+  `end_time` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ref` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `start_recur` datetime DEFAULT NULL,
-  `start_time` varchar(255) DEFAULT NULL,
+  `start_time` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `etudiant` bigint(20) DEFAULT NULL,
   `prof` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `calendrier_prof`
@@ -57,10 +57,10 @@ INSERT INTO `calendrier_prof` (`id`, `end_recur`, `end_time`, `ref`, `start_recu
 
 CREATE TABLE `categorie_prof` (
   `id` bigint(20) NOT NULL,
-  `code` varchar(255) DEFAULT NULL,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `lesson_rate` decimal(19,2) DEFAULT NULL,
-  `level` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `level` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `categorie_prof`
@@ -79,11 +79,11 @@ INSERT INTO `categorie_prof` (`id`, `code`, `lesson_rate`, `level`) VALUES
 
 CREATE TABLE `categorie_section` (
   `id` bigint(20) NOT NULL,
-  `code` varchar(255) DEFAULT NULL,
-  `libelle` varchar(255) DEFAULT NULL,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `numero_order` int(11) DEFAULT NULL,
   `super_categorie_section` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `categorie_section`
@@ -107,12 +107,12 @@ INSERT INTO `categorie_section` (`id`, `code`, `libelle`, `numero_order`, `super
 
 CREATE TABLE `centre` (
   `id` bigint(20) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `libelle` varchar(255) DEFAULT NULL,
-  `log` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `ref` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `log` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ref` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `centre`
@@ -125,15 +125,42 @@ INSERT INTO `centre` (`id`, `description`, `libelle`, `log`, `password`, `ref`) 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `class_average_bonus`
+--
+
+CREATE TABLE `class_average_bonus` (
+  `id` bigint(20) NOT NULL,
+  `nombre_session` int(11) NOT NULL,
+  `prix` decimal(19,2) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `class_average_bonus_prof`
+--
+
+CREATE TABLE `class_average_bonus_prof` (
+  `id` bigint(20) NOT NULL,
+  `annee` int(11) NOT NULL,
+  `date_get_bonus` datetime DEFAULT NULL,
+  `mois` int(11) NOT NULL,
+  `class_average_bonus` bigint(20) DEFAULT NULL,
+  `prof` bigint(20) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `class_room`
 --
 
 CREATE TABLE `class_room` (
   `id` bigint(20) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `libelle` varchar(255) DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `responsable` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `class_room`
@@ -152,18 +179,18 @@ INSERT INTO `class_room` (`id`, `description`, `libelle`, `responsable`) VALUES
 
 CREATE TABLE `cours` (
   `id` bigint(20) NOT NULL,
-  `code` varchar(255) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `image` longtext,
-  `libelle` varchar(255) DEFAULT NULL,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` longtext COLLATE utf8mb4_unicode_ci,
+  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `nombre_link_en_cours` int(11) NOT NULL,
   `nombre_link_finalise` int(11) NOT NULL,
   `nombre_section_en_cours` int(11) NOT NULL,
   `nombre_section_finalise` int(11) NOT NULL,
   `numero_order` int(11) NOT NULL,
   `parcours` bigint(20) DEFAULT NULL,
-  `etat_cours` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `etat_cours` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `cours`
@@ -232,10 +259,10 @@ INSERT INTO `cours` (`id`, `code`, `description`, `image`, `libelle`, `nombre_li
 
 CREATE TABLE `dictionary` (
   `id` bigint(20) NOT NULL,
-  `definition` varchar(255) DEFAULT NULL,
-  `word` varchar(255) DEFAULT NULL,
+  `definition` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `word` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `etudiant` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `dictionary`
@@ -259,7 +286,9 @@ INSERT INTO `dictionary` (`id`, `definition`, `word`, `etudiant`) VALUES
 (4694, 'من', 'from', 39),
 (4695, 'المدينة', 'city ', 39),
 (4697, 'خليل', 'friend ', 39),
-(4710, 'مرحباً', 'from ', 22);
+(4710, 'مرحباً', 'from ', 22),
+(5772, 'عنون', 'address ', 30),
+(5845, 'مفضل', 'favourite ', 28);
 
 -- --------------------------------------------------------
 
@@ -269,18 +298,18 @@ INSERT INTO `dictionary` (`id`, `definition`, `word`, `etudiant`) VALUES
 
 CREATE TABLE `etat_etudiant` (
   `id` bigint(20) NOT NULL,
-  `etat` varchar(255) DEFAULT NULL,
+  `etat` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `etat_number` bigint(20) DEFAULT NULL,
-  `first_name` varchar(255) DEFAULT NULL,
-  `last_class` varchar(255) DEFAULT NULL,
-  `last_name` varchar(255) DEFAULT NULL,
-  `nationnalité` varchar(255) DEFAULT NULL,
-  `reference` varchar(255) DEFAULT NULL,
-  `schedule1` varchar(255) DEFAULT NULL,
-  `schedule2` varchar(255) DEFAULT NULL,
-  `username` varchar(255) DEFAULT NULL,
-  `nbr_class` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `last_class` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nationnalité` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reference` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `schedule1` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `schedule2` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nbr_class` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `etat_etudiant`
@@ -304,10 +333,10 @@ INSERT INTO `etat_etudiant` (`id`, `etat`, `etat_number`, `first_name`, `last_cl
 
 CREATE TABLE `etat_etudiant_schedule` (
   `id` bigint(20) NOT NULL,
-  `couleur` varchar(255) DEFAULT NULL,
-  `libelle` varchar(255) DEFAULT NULL,
-  `ref` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `couleur` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ref` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `etat_etudiant_schedule`
@@ -325,9 +354,9 @@ INSERT INTO `etat_etudiant_schedule` (`id`, `couleur`, `libelle`, `ref`) VALUES
 
 CREATE TABLE `etat_inscription` (
   `id` bigint(20) NOT NULL,
-  `libelle` varchar(255) DEFAULT NULL,
-  `ref` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ref` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `etat_inscription`
@@ -348,7 +377,7 @@ CREATE TABLE `etudiant_class_room` (
   `id` bigint(20) NOT NULL,
   `class_room` bigint(20) DEFAULT NULL,
   `etudiant` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `etudiant_class_room`
@@ -371,9 +400,9 @@ CREATE TABLE `etudiant_cours` (
   `cours` bigint(20) DEFAULT NULL,
   `etudiant` bigint(20) DEFAULT NULL,
   `date_fin` datetime DEFAULT NULL,
-  `payer` varchar(255) DEFAULT NULL,
+  `payer` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `prof` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `etudiant_cours`
@@ -409,7 +438,11 @@ INSERT INTO `etudiant_cours` (`id`, `cours`, `etudiant`, `date_fin`, `payer`, `p
 (5025, 5, 22, '2021-12-21 19:46:56', '0', 3),
 (5487, 101, 28, '2021-12-29 17:47:05', '0', 3),
 (5495, 5, 28, '2021-12-29 17:51:14', '0', 3),
-(5532, 101, 27, '2021-12-30 13:22:16', '0', 4);
+(5532, 101, 27, '2021-12-30 13:22:16', '0', 4),
+(5612, 101, 30, '2022-01-01 13:47:05', '0', 3),
+(5695, 13, 32, '2022-01-03 17:20:51', '0', 3),
+(5740, 11, 22, '2022-01-05 14:04:21', '0', 3),
+(5773, 7, 30, '2022-01-06 16:14:40', '0', 3);
 
 -- --------------------------------------------------------
 
@@ -423,9 +456,9 @@ CREATE TABLE `etudiant_review` (
   `cours` bigint(20) DEFAULT NULL,
   `etudiant` bigint(20) DEFAULT NULL,
   `prof` bigint(20) DEFAULT NULL,
-  `comment` varchar(255) DEFAULT NULL,
+  `comment` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date_review` datetime DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `etudiant_review`
@@ -442,10 +475,10 @@ INSERT INTO `etudiant_review` (`id`, `review`, `cours`, `etudiant`, `prof`, `com
 
 CREATE TABLE `faq` (
   `id` bigint(20) NOT NULL,
-  `description` varchar(2550) DEFAULT NULL,
-  `libelle` varchar(255) DEFAULT NULL,
+  `description` varchar(2550) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `faq_type` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `faq`
@@ -480,12 +513,12 @@ INSERT INTO `faq` (`id`, `description`, `libelle`, `faq_type`) VALUES
 
 CREATE TABLE `faq_etudiant` (
   `id` bigint(20) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `libelle` varchar(255) DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `admin` bigint(20) DEFAULT NULL,
   `etudiant` bigint(20) DEFAULT NULL,
   `faq_type` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -495,12 +528,12 @@ CREATE TABLE `faq_etudiant` (
 
 CREATE TABLE `faq_prof` (
   `id` bigint(20) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `libelle` varchar(255) DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `admin` bigint(20) DEFAULT NULL,
   `faq_type` bigint(20) DEFAULT NULL,
   `prof` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `faq_prof`
@@ -517,9 +550,9 @@ INSERT INTO `faq_prof` (`id`, `description`, `libelle`, `admin`, `faq_type`, `pr
 
 CREATE TABLE `faq_type` (
   `id` bigint(20) NOT NULL,
-  `libelle` varchar(255) DEFAULT NULL,
-  `destinataire` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `destinataire` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `faq_type`
@@ -542,10 +575,10 @@ INSERT INTO `faq_type` (`id`, `libelle`, `destinataire`) VALUES
 
 CREATE TABLE `groupe_etude` (
   `id` bigint(20) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `libelle` varchar(255) DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `nombre_etudiant` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `groupe_etude`
@@ -569,7 +602,7 @@ CREATE TABLE `groupe_etude_detail` (
   `id` bigint(20) NOT NULL,
   `groupe_etude` bigint(20) DEFAULT NULL,
   `groupe_etudiant` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -581,26 +614,29 @@ CREATE TABLE `groupe_etudiant` (
   `id` bigint(20) NOT NULL,
   `date_debut` datetime DEFAULT NULL,
   `date_fin` datetime DEFAULT NULL,
-  `libelle` varchar(255) DEFAULT NULL,
-  `niveau` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `niveau` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `nombre_place` bigint(20) DEFAULT NULL,
   `nombre_place_non_vide` bigint(20) DEFAULT NULL,
   `nombre_placevide` bigint(20) DEFAULT NULL,
   `groupe_etude` bigint(20) DEFAULT NULL,
-  `parcours` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `parcours` bigint(20) DEFAULT NULL,
+  `prof` bigint(20) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `groupe_etudiant`
 --
 
-INSERT INTO `groupe_etudiant` (`id`, `date_debut`, `date_fin`, `libelle`, `niveau`, `nombre_place`, `nombre_place_non_vide`, `nombre_placevide`, `groupe_etude`, `parcours`) VALUES
-(4602, NULL, NULL, 'Group-student-130', NULL, 1, 1, 0, 4598, 5),
-(4611, '0007-06-13 00:00:00', '0028-12-12 00:00:00', 'Group 5', NULL, 5, 4, 1, 4608, 5),
-(4614, '0007-06-13 00:00:00', '0006-11-12 00:00:00', 'Group-6', NULL, 5, 2, 3, 4613, 6),
-(4622, NULL, NULL, 'Group-7', NULL, 6, 2, 4, 4613, 5),
-(4742, '0007-06-13 00:00:00', '0033-08-14 00:00:00', 'Group-8', NULL, 2, 0, 2, 4599, 5),
-(5556, NULL, NULL, 'Group-aicha', NULL, NULL, 1, 0, 4598, 5);
+INSERT INTO `groupe_etudiant` (`id`, `date_debut`, `date_fin`, `libelle`, `niveau`, `nombre_place`, `nombre_place_non_vide`, `nombre_placevide`, `groupe_etude`, `parcours`, `prof`) VALUES
+(4602, NULL, NULL, 'Group-student-130', NULL, 1, 1, 0, 4598, 5, NULL),
+(4611, '0007-06-13 00:00:00', '0028-12-12 00:00:00', 'Group 5', NULL, 5, 4, 1, 4608, 5, NULL),
+(4614, '0007-06-13 00:00:00', '0006-11-12 00:00:00', 'Group-6', NULL, 5, 2, 3, 4613, 6, NULL),
+(4622, NULL, NULL, 'Group-7', NULL, 6, 2, 4, 4613, 5, NULL),
+(4742, '0007-06-13 00:00:00', '0033-08-14 00:00:00', 'Group-8', NULL, 2, 0, 2, 4599, 5, NULL),
+(5556, NULL, NULL, 'Group-aicha', NULL, NULL, 1, 0, 4598, 5, NULL),
+(5697, NULL, NULL, 'Group-Aicha-Fatima', NULL, NULL, 2, 0, 4599, 5, NULL),
+(5810, '0006-07-15 00:00:00', '0007-11-12 00:00:00', 'Group-Aya', NULL, NULL, 1, 0, 4598, 5, NULL);
 
 -- --------------------------------------------------------
 
@@ -612,7 +648,7 @@ CREATE TABLE `groupe_etudiant_detail` (
   `id` bigint(20) NOT NULL,
   `etudiant` bigint(20) DEFAULT NULL,
   `groupe_etudiant` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `groupe_etudiant_detail`
@@ -627,7 +663,10 @@ INSERT INTO `groupe_etudiant_detail` (`id`, `etudiant`, `groupe_etudiant`) VALUE
 (4764, 40, 4611),
 (4783, 36, 4611),
 (5055, 38, 4614),
-(5557, 22, 5556);
+(5557, 22, 5556),
+(5698, 22, 5697),
+(5699, 30, 5697),
+(5811, 28, 5810);
 
 -- --------------------------------------------------------
 
@@ -637,14 +676,14 @@ INSERT INTO `groupe_etudiant_detail` (`id`, `etudiant`, `groupe_etudiant`) VALUE
 
 CREATE TABLE `hibernate_sequence` (
   `next_val` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `hibernate_sequence`
 --
 
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES
-(5596),
+(5906),
 (1);
 
 -- --------------------------------------------------------
@@ -655,14 +694,14 @@ INSERT INTO `hibernate_sequence` (`next_val`) VALUES
 
 CREATE TABLE `home_work` (
   `id` bigint(20) NOT NULL,
-  `libelle` varchar(255) DEFAULT NULL,
-  `question` varchar(255) DEFAULT NULL,
-  `url_image` varchar(255) DEFAULT NULL,
-  `url_video` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `question` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `url_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `url_video` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `quiz` bigint(20) DEFAULT NULL,
   `section` bigint(20) DEFAULT NULL,
   `type_home_work` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `home_work`
@@ -693,7 +732,7 @@ CREATE TABLE `home_work_etudiant` (
   `etudiant` bigint(20) DEFAULT NULL,
   `home_wok` bigint(20) DEFAULT NULL,
   `home_work` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `home_work_etudiant`
@@ -719,14 +758,14 @@ INSERT INTO `home_work_etudiant` (`id`, `note`, `etudiant`, `home_wok`, `home_wo
 
 CREATE TABLE `home_work_question` (
   `id` bigint(20) NOT NULL,
-  `libelle` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `numero` bigint(20) DEFAULT NULL,
   `point_reponse_juste` double NOT NULL,
   `point_reponsefausse` double NOT NULL,
-  `ref` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `home_work` bigint(20) DEFAULT NULL,
   `type_de_question` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `home_work_question`
@@ -762,12 +801,12 @@ INSERT INTO `home_work_question` (`id`, `libelle`, `numero`, `point_reponse_just
 
 CREATE TABLE `howe_workqstreponse` (
   `id` bigint(20) NOT NULL,
-  `etat_reponse` varchar(255) DEFAULT NULL,
-  `lib` varchar(255) DEFAULT NULL,
+  `etat_reponse` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lib` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `numero` bigint(20) DEFAULT NULL,
-  `ref` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `home_work_question` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `howe_workqstreponse`
@@ -826,7 +865,7 @@ CREATE TABLE `inscription` (
   `parcours` bigint(20) DEFAULT NULL,
   `prof` bigint(20) DEFAULT NULL,
   `groupe_etude` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `inscription`
@@ -862,26 +901,40 @@ INSERT INTO `inscription` (`id`, `datedebutinscription`, `datefininscription`, `
 CREATE TABLE `news` (
   `id` bigint(20) NOT NULL,
   `date_debut` datetime DEFAULT NULL,
-  `description` varchar(2550) DEFAULT NULL,
-  `image` varchar(45500) DEFAULT NULL,
-  `libelle` varchar(255) DEFAULT NULL,
-  `ref` varchar(255) DEFAULT NULL,
+  `description` varchar(2550) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` text COLLATE utf8mb4_unicode_ci,
+  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ref` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` datetime DEFAULT NULL,
   `date_fin` datetime DEFAULT NULL,
-  `destinataire` varchar(255) DEFAULT NULL,
+  `destinataire` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `numero_ordre` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `news`
 --
 
 INSERT INTO `news` (`id`, `date_debut`, `description`, `image`, `libelle`, `ref`, `date`, `date_fin`, `destinataire`, `numero_ordre`) VALUES
-(776, '2021-09-01 00:00:00', 'L’été est l\'une des quatre saisons de l\'année, dans les zones tempérées et polaires de la planète. L\'été suit le printemps et précède l\'automne.Il existe plusieurs définitions de l\'été : astronomique (saison définie par des phénomènes astronomiques marquants), météorologique (saison comprenant les mois les plus chauds de l’année) et calendaire (dont les dates varient selon les pays).', 'data:image/jpeg;base64,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', 'Welcome SUMMER', 'n5', '2021-09-01 00:00:00', '2021-12-12 00:00:00', 'student', 3),
+(776, '2021-09-01 00:00:00', 'L’été est l\'une des quatre saisons de l\'année, dans les zones tempérées et polaires de la planète. L\'été suit le printemps et précède l\'automne.Il existe plusieurs définitions de l\'été : astronomique (saison définie par des phénomènes astronomiques marquants), météorologique (saison comprenant les mois les plus chauds de l’année) et calendaire (dont les dates varient selon les pays).', 'data:image/jpeg;base64,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', 'Welcome Wanter', 'nFRDHD', '2021-09-01 00:00:00', '2021-12-12 00:00:00', 'student', 3),
 (764, '2021-09-13 00:00:00', 'LES EXAMS cette semaine', 'data:image/jpeg;base64,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', 'EXAMS', 'n4', '2021-09-13 00:00:00', '2021-12-13 00:00:00', 'teacher', 2),
 (762, '2021-09-06 00:00:00', 'La Marche verte est une grande marche pacifique partie du Maroc le 6 novembre 1975 vers le Sahara espagnol (actuel Sahara occidental, disputé avec le Front Polisario), lancée par le roi marocain Hassan II dans le but de le récupérer, car considéré comme faisant historiquement partie du Sahara marocain. Elle mobilisa environ 350 000 volontaires civils marocains.', 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxQTExYTExQXFhYYFhsXGBkZGR4ZHhggGBsZGBkbGxcZHikhGR4mHhkfIjUjJiosLy8vHiA1OjUvOSkuLywBCgoKDg0OHBAQHDAmISc0Li4vLjQsLi4wLzouLi4wMDExLi4uLi4uLjAuLjcuLi4uLi4uLi4uLi4uLi4uLjAuLv/AABEIALwBDAMBIgACEQEDEQH/xAAcAAABBQEBAQAAAAAAAAAAAAAAAgMEBQYBBwj/xABBEAACAQMCBAQDBAgFAwQDAAABAhEAAyESMQQFQVEGEyJhMnGBkaGx8AcUFSNCUsHRYnKC4fFTkqJDY7LCFiQz/8QAGgEAAwEBAQEAAAAAAAAAAAAAAAECAwQFBv/EADARAAICAQMDAgQGAgMBAAAAAAABAhEDEiExBEFRBRMiYZHRFHGBscHwofEyQuEV/9oADAMBAAIRAxEAPwD21BilikptS6ACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAK5XaKAOVyu0UAcTYUqkptSqACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAOVyu0UAcTYUqkrtSqACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAOUUUUAIVth7UuqfieM0XbckBSrKZI+I6Co33IBpnw/zhLq6Z9YBYjsC7gZ9oH2jvWayK6Nnhlp1Lj/f2L2ov67b1lNa6xuJznO1McFzW3dAhgG1FCs5DJIZf/E/MVm/E/Dr5zOZjQDiMwrscnbCEfZRPJUbRWHBrm4ztbG0BoUzkV5WvMriPadWZQyrqg4JQlCCNj6VWrLw/4ne3rstpYWw5Q5khTtPYCenas49TFumdc/S8kY6ou/7ueh1At81sm41nWA6mCpwcgHHffpTPL+bLdti4IByWWZICnS32b/8ANed+I79s3XuTJZnED+HQSmR7wGBxinlzaUmjPpOi92coStV+56urA/h9lKNYjwHz1XQ2Xb16mZZklgRJg9wZx2qDwPi+7aLI48xAxAkw4ycas6o98+9C6iFJvuN+m5nO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', 'Marche VERTE', 'n2', '2021-09-06 00:00:00', '2021-12-21 00:00:00', 'student', 2),
 (760, '2021-09-14 00:00:00', 'La Journée internationale des femmes (selon l\'appellation officielle de l\'ONU1 ; en anglais, International Women\'s Day ou IWD)', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0E6LnpT4P31EIdTp6qLGmf35NFDTGJhf0nw&usqp=CAU', 'HAPPY WOMEN\'S DAY', 'n1', '2021-09-14 00:00:00', '2021-12-08 00:00:00', 'teacher', 1),
 (763, '2021-08-13 00:00:00', 'Aïd al-Fitr est la fête musulmane marquant la rupture du jeûne du mois de ramadan. Elle est célébrée le premier jour du mois de chawwal. Elle est aussi parfois appelée aïd as-Seghir, « la petite fête », par opposition à l\\\'aïd al-Kebir, « la grande fête ».', 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxIQEhUSERMWFhUVGBUZFRIVERcYFhYVGhcWFxcSGBoYHSggGBolGxYVITEjJikrLi4uGB8zODMtNygtLisBCgoKDg0OGxAQGy8mICYtLS8tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAOEA4QMBIgACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAABAUCAwYBB//EAEIQAAEDAgMEBgYIBAUFAAAAAAEAAhEDIQQSMQVBUWEGEyIycbFCUnKBkaEjNGKSssHR8BQzguEHU5PS8RVDc6LC/8QAGQEBAAMBAQAAAAAAAAAAAAAAAAECAwQF/8QANhEAAgIBAgMECQIFBQAAAAAAAAECEQMSIQQxQRNRYXEiMoGhscHR4fAjkQVDYnLxFBUzNEL/2gAMAwEAAhEDEQA/APuCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAixvy+aIDJERAEREAREQBERAEWk1hnyXkiRaxEwfhb4hbkAREQBEVZtDEE04ByBzshcZloIILgQRBHPTxsok6RKRZoq2i4sqCnnzAgkl13SIAaC2ALX03b7qZXrhkEzBIEgTBOk++B4kKFKyDciIrAIiIAiIgCIiAIiIAiIgCLHKeJ+X6LxAZoiIAiIgCIiALCo8NBJIAFySbAcVmue6bB5w0NmC9uePVvY8s2VUyT0Qcu4mKt0VeM6W0v4lrmZixrHs6wC0ucw5gIktGX+y6jZlfrGZ82ZpjK6RcRy5r5izBLtOg9NzWVAe7mGX2oOaPdlXn8NxUp5NL6nRlxqMbR06ItWIDspy67l6UnSs5jatdakHtLXCWuBBHEEQQscPVDhYEAWvx0hbkTUlYaITqBpwKLQ0E3AAAmABI9W14voqDpV0ipU4pMl72vpudliG5HtdlJIIm0RuXR7QLhSqFnfyOy+1Bj5r5ZRwUri4vM8SUY9TfFBS3Z9N2RtWlimZ6R9pps5p4EKeSuH6KYZzK4I0IcHeEb/fC7DGn6N0mLG4EwteHz9rj1MpkgoypHgx1M5oe05YzQZidPH+xW5lQOEtII4gyFS07ua6oerqMEU6QaCINjlP8A3JtMG3LUzdlunrJsc5lmoYSAYB3zOb+qNy1jNt0yjRYIiLQgIiIAiIgCIiAIiIAiIgCIiAIiIAoG26eai4ccv4gp6h7W/lO/p/EFjxP/AAz8n8GWh6y8zk4bkp1RS72XNTzmO+WEzE6CV0+xqIY17RoHu/IKkiwG4aDhefNXexjLHE73HyC8vgZqWbZd/wAPqdGVVEsVrfUAm+gk8YWxVOMxDGPcWmXndaAYiSYnTdK9bLkjjjqk6RzxTbpG/ZDwWECbE689FPVJs7HBnZdoTMgaHnG5XDHgiQZHELDgssZ4kk91zLZI1Jma4zC0Gw8ZILHMh+bvBzSSI3RC7JcrMTziecTHmub+JSrT4p/Ivg6+wm7BcHZH5cuanJbMwc0WJ8FeObIIO9UmxXg1I4MMDlI/VXq6OCaliuurKZVUqIA2cJnO+W9ztdwbwOM/ancpVCiGCGzqTckmSZJkrOo4AEkwBcngOKrxijULYzMkmM1s19Rx7ImDHe4i3S9MWULJEUNlF/WF02n1t0G0e8fsCbN0QTERFICIiAIiIAiIgCIiAIiIAiKJj8QWNGVuZ7jDAZgu1gkd0QDfkjdAlqFth0UXH2fxBe4fEkuLHtyuiYEuGXm6ImZtyKbUotfSc17sjTEutaCDvWWX08cku5otHaSOXdigr7o5UzU3H7R8gql/R7OPoq7Hco/NpPkssDWfhcJiS4Q+m5wHtFjMp8LgrzOFwSxZdUltTN8klKNI8270hOc0aJ0s+oOO9rfzKy2LgH1BmNm8Tv8ADj4qv6G7E6xor1RLfQafSI1eeIn4ruQto8PLiH2mXl0RWU1BaY+1lTjNl2mnu9EnXmFz42s/Cv3ls9qmfMcCu2VTt3Y7cSwxaoB2Xcfsnl5K2Xg6l2mHZ93T88OREMv/AJlyJ2FxTarBUYZa4SD+XiuHrY1T+gldzTXw77ZCHAHcbtePiAqLZmy8Ri70wAz/ADHGG+7e73LHirzxg0t9/kaY0oN34F70TxGauR9g/iauxXN7F2GzBP6ypXBcWlsGGNuQd5ncrqntCi4w2rTJ4Co0nzXZwsHix6JczHK1KVo3VGZgQdCIsYPxGii4fBluXM/NknLAywLiDGvZjXeJ4RORdLijMIoeLxRY4AAaTffrYc7fuIMxE7AREUgItdR8EWJkxbdzWxAEREARY5Tx+QXiAzREQBERAFEx1DrBAdleLsdJ7J0zFoIzDWy8G0qWc084zhwaWelJAOnC4votv8MM+eb2tbcCNYnQqrp7A10MJldnc4udEZtOzaxaOzMiZjepaIpSrkDh9sUhTxDwzs6ERaJANo5yrvHYd2IwVSLvqMmPWe3T3nKAqjpF9Zd4N8gul2J/IZ4HzK8zhl+vkj03+P3OjI/RizbsumG0abRoGMA+6FKRF6aVKjnCKo2rTyQ5hLZJkAkDxW/ZWJLwQ65EX5Fc0eKXbdk1T9z6/Au4ejqRE2dgcuMxNWIa4U2jgXZQXf8Az8VG2rtUt+jo9lotmA4bm8ArnadXLScRrEfEwue2RQD67Z0bLo5jT5wufiZyjKOGDrVzfmzSCTWp9BhujTqvarPLZ3au95OnzWeJ6F03Ds1Hg/aAI+AAXUouiPBYUq02U7WfefP6O0cRs6qKVaX0jumRl9ZhOkcP+V3lGqHtDmmWuAII3g3BXK/4iUpo03x3XwTwBaflIHyV10ZcDhKEf5bR8BB8kw3DJLHe3Ne0me8VItIREXUZBERAaMY4hjiLGD++XjuVZTLm3kzmbLSXnqpcJBk9ufztbSybXa8lkesL6OAgO+Zi68p4Rjbho1n37teG7hoFSSb5EklERXICLHIP2SvEBmiIgC1YgS1wgmxsDBPKd3igrNzZZv8AsxPGNy2qNmChoYin1Rox9KOy5sCetMGSZiSSHd6YurXAsLabAQWkASHOzGd8u3+Kyr0MzHNHZLge0NQ4iA7xFr8lwFbpPjsO406uXM20up68wQQCOYXPOaw7y9y+JooufI+jIvntPpniTup/cd/uWOJ25XrDK58NOrWjKDyO/wCazlx+JLayywS6kra+IFWu9zbiwBG+ABPxldhs2iadJjTqBfxNz5rhMFWLHBwAJGkiRPFXjNvVj6v3f7ri4biIQlKc+b/yaZMcmkkdSi5+nteqfVWX/Vqn2V1/7lg8f2+5l2MiZtvut9r8itWw9X+A/NQsTjXVAA6LXsFjhsU6nOWL6yuCXFY3xKy719mbKD0aS82lSz0nAaxI911zey8SKdYOdYGQTwnf8QFPdtepHoqjxj8xJgCdw0VuJ4mE8kcmPmu9EY4NJxZ3YRcBQ2xWo2Y+w9F1x87hKnS7Ej1Puf3XdH+IY3ztGbwS6HeVKYcCHAEHUESD7lrw2Ep0gRTY1gNyGtAE8YC4fB9JMfXdkpNYSd4ZZvMmYAXbYKkWMa1zi5wHaefSdvPK82XRiyxy7xT86KSi48ySiItigREQGApgEkASdTFzuvxWai1ccxrspmYJMNJjTvR3dd/AqQx4IkEEHQgyCoTQMkRFICIiAIiIDT1Lc2aL+J8JjSY3rciIAhREB5AXsIiAQqXau3WUKjaQGZ5guGmVp/MqXtbGOoMzhocAQCCSDcxIK0uwlHFtp1XNuNDoYm7DxEhYZZydwxupcy8UlvLkb8XtFjKfWC8iWjisNkbUZiWFzbFph7fVP5hScRhW1GZHC0Rbd4LXSwzaFPLSaAGyYO/iSeKfqRnba010XUj0arqTIVMdvMzVGdVWJpRnimDlBEg97gJVhgcUKrZiCNQuWqOazGYg1K4pDNhnhri0Co1oBIuJOm466pLNcYyi9n9GyYx3aZ1OHxTKhIbNg0mWkCHCRB0NuCUsU1z30wDLIzGLSRIHwXN4nFuLqrmueGPbhXHtGWsfOci/ZtAsrTYmXrK5YSWk08pJJkZeJuRMqqzXJRXf8n9A4Ur/ADp9SezFNLzTghwE3AuOIWXXtz5AJIubWHioGLEvdUZc0yzTfqHNWyg2KpDtXM4xJJkgKnbT1afH3br97TROlcyxJgTHuCxo1Q9ocNCq6hVnqhmOaXBwk8DYrTRdDGFhdOV2cAzAgxbQHgo/1e9rlXf/AG/DVuNH5+5douYxVU9XUh5FqWWKjj2yYMHeSNQsNvfQksa+pdlRzc1Z4AdIjJF3PEWBMXKuuKTTdcvHxa+Q7MvqGPa+o+kA4OphpMgQQ6YIM30KmLh6uNPWOrZiaWTDNxDqb4eDfQjQAu7UEHgdV2tOIEXEWMzbx3rXFk13+dWVkqIlXDvzlzHABwhwcOFhljxdrO5SMPSyNDQScoAkxNvAAKBtp0hlIva1tUlrps6InsmRHDj2hCxP0NWmwVB9JZ3WOLnGAYAJdIJ04W46tST5fjIot0RFqQEREAREQBUQ6yo49W52dpIqS+GNbJ+hAi7o0dFoBncr1U1XZ9Qw1uUZZiqHODizMT1JAvBsJk8dbrOaZKJGAqy97WyWNAHaN2PkyznaLydFYqFhcMQ4vcAOyGta0mA0EmDxN/3JTa2PbhqTqr9G7hqSbBo96lPTG2Ob2JqKt2HjX4ii2q9rW57taCTAki5OvwUM42ma9VlWsGhuUUwKuUAR2iYN3ZpseSjtFSfeNJJ6TfV3eLPxBZ9Hfq7P6vxFRdsVM2DnMH9yXjRxDgCR75Uro79XZ/V+IrBO+Jv+n5mn8v2lktdfuu8D5LYteJ7jvA+S6ZcjIr9h6O8R5K1VVsPR3iFaLl4D/rw8vmaZfXZ6sSYUHaeLdSAcACCYI0PxVd0jxJdTphpgVdfC0D5rTJxEYau9V7+XvIjBuvE24vpNh6ZiS/2BI+JIB9yww3SvCvMFxYfttgfESB71ZYHZ9Oi0NY0c3RcniSou2th0sSwgtAfHZqAQQd08RySs63teVfOybh4lm0giRcHeN/NeUO63wHkuH6C7Ue2ocK82IdkB9Fze8wcon4c13GH7jfAeSnFl7SpLufxRE4aXTMR/MPsjzK3LSP5h9keZW5aw6+ZRmsd8+yPMrYtfpn2R5lbEiGaMXhxVY5jphwgkGD4g7iscLg2UpyTeLFxOk8b7ypKKdKuyb6BERSQEWGQc/vH9UQGaIiAIiIAuT/xHJ/h6Y3GqJ+4+B++C6xQdsbNZiqTqT7AwQ4atcNHBZZoOcHFdUWg6kmROiLwcHRgzDYPIgkEK5hcFS6H4ui4mjWaBxFR7CfEAHzU6nsjaI1rj/Wf/ALVjHNNJJ437i8oRbvUi66TfV3eLPxBZ9Hfq7P6vxFU7tjYx4y1KoLTqDUcR5LocBhhSptYDMb+JNyVGPXPP2ji0qrfzEqUdN3uR9oYxzHNYyJdvPMwFLrDsOkz2Tf3FVjvpMTbRsSfC/mVbvbIIO+ynDKU5Td7XS9i+pWaSSK3YejvEeStFTt2fVZIY8AeJHxXpw9ca1NdO0deCx4fJkxYlB45Ou6vqXmoyk3qRl0h/lj2vyK2YXBseyk9wkta3LJMAwLx7gomI2dXeILgfFx/RaDs3GAQ2qABoOsdp8FClPtXN43TS7uhNLSlqOjUfF4llJhfUcGtbck+XMrnH7L2hurj/AFHfoozuieIrEHEV5HtOefdmgBdLz5H6uN340kU0R6yRU9D6bq2N60Czese7lmDgB/7fIr6Nh+63wHkouytl0sMzJSEDUk3c48SVB2viqlNlNtKO2ANCTqxtoNu8q44djD0t3u3XsJlLXLYtAfpSPsjzK2VqrWDM5waOLiAPiVzlPCvyh0mZyzec0xM+KOxVWthK+eCW9kQ0g2deb8uSph4ly1KUa5tCWNKqZajalLNOa0Rm9HXWeCnUqrXgOaQ4HQggg+8Ku6y2a3yj9P3rvW3YDSMNRBEEMbb3LXDOTk1Lz5UVklWxYIiLpKBERAEREAREQBERAEREAREQFKcTWtVDmZHlrW0zzMAl0xM8OWu+ZVZWeIljAdSCXH3SBC2swbGuLg25Mm55btBp58SpKyWN07b/AHLWRsJhG0hDfeTqVJRFeMVFVHkQ3YUPG4PrC0yRHly5qYoj8cwOyyZ0HZMF3qgxBdy8eCrlhCcdM+Qi2naJQC9WunVDhI0vujQwRdbFoQEREAVHtTXD+7fHpUd6vCqXauzn1mUyw3YB2ZAnunUg3loWOW6dK9voWhV7m+kRkH/kN832zaVp6PCRV3zUfz9J3xUClTq9yDmF8tpnj+7K02HgHUWnObuM5ZBy67wBJuuThcksk/Var4mmSKSPW4B+fvdj5xM5Y/NWYRF248Ucd6ersybbCIi0ICIiAIiIAiIgCIiAIiIAiIgCIiAIiIAqIuDXw6HXdlbmING57fsn19bgaG16kKso2SmQtmA5XE3l7jmiM+gzR6Okc4nepqIpSpUQR6WLa52UTqQCRZxGuU79/wACpCjU8KGmZOpIBNgTrHz14qSkb6goX16tSrVp52tbTc0ABpDnBzQ65zaCYR9WrRNMNe0h72sLXNJyzPaFxwWTsOadaq86VMjhyytDTu5fMW4KuHNV9ItNmva8nkJt+/nquBx/Vve/N8r7rrkar1a6fYtRR+kL+QHz/wCFvRF3qKXIysIiKQEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAaMXhW1RDt1weB4rHB4VtMWuTq7j/ZSUVOzhr11v3k6nVBERXICIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiA/9k=', 'AID LFITR', 'n3', '2021-08-13 00:00:00', '2021-12-20 00:00:00', 'teacher', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pack_student`
+--
+
+CREATE TABLE `pack_student` (
+  `id` bigint(20) NOT NULL,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `for_groupe` bit(1) NOT NULL,
+  `nombre_cours` int(11) NOT NULL,
+  `prix` double DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -896,7 +949,7 @@ CREATE TABLE `paiement` (
   `prof` bigint(20) DEFAULT NULL,
   `date_paiement` datetime DEFAULT NULL,
   `etudiant` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `paiement`
@@ -920,15 +973,15 @@ INSERT INTO `paiement` (`id`, `montant`, `total_heure`, `prof`, `date_paiement`,
 
 CREATE TABLE `parcours` (
   `id` bigint(20) NOT NULL,
-  `code` varchar(255) DEFAULT NULL,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date_creation` date DEFAULT NULL,
   `date_publication` date DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `libelle` varchar(255) DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `nombre_cours` int(11) NOT NULL,
   `numero_order` int(11) NOT NULL,
   `centre` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `parcours`
@@ -948,13 +1001,13 @@ INSERT INTO `parcours` (`id`, `code`, `date_creation`, `date_publication`, `desc
 
 CREATE TABLE `prof_review` (
   `id` bigint(20) NOT NULL,
-  `comment` varchar(255) DEFAULT NULL,
+  `comment` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date_review` datetime DEFAULT NULL,
   `review` int(11) NOT NULL,
   `cours` bigint(20) DEFAULT NULL,
   `etudiant` bigint(20) DEFAULT NULL,
   `prof` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -964,32 +1017,26 @@ CREATE TABLE `prof_review` (
 
 CREATE TABLE `question` (
   `id` bigint(20) NOT NULL,
-  `libelle` varchar(25500) DEFAULT NULL,
+  `libelle` text COLLATE utf8mb4_unicode_ci,
   `numero` bigint(20) DEFAULT NULL,
   `point_reponse_juste` double NOT NULL,
   `point_reponsefausse` double NOT NULL,
-  `ref` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `quiz` bigint(20) DEFAULT NULL,
   `home_work` bigint(20) DEFAULT NULL,
   `type_de_question` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `question`
 --
 
 INSERT INTO `question` (`id`, `libelle`, `numero`, `point_reponse_juste`, `point_reponsefausse`, `ref`, `quiz`, `home_work`, `type_de_question`) VALUES
-(5193, 'I\'ve........a terrible headache.', 1, 1, 0, NULL, 5192, NULL, 1),
-(5197, 'je suis désolé', 2, 1, 0, NULL, 5192, NULL, 3),
-(5199, 'The milk is @at@ the refrigerator', 3, 1, 0, NULL, 5192, NULL, 4),
-(5261, 'MARRAKECH is ........ Morocco', 1, 1, 0, NULL, 5260, NULL, 1),
-(5265, 'Je suis Youssef', 2, 1, 0, NULL, 5260, NULL, 3),
-(5267, 'Edward has always @doed@ things very quickly and efficiently.', 3, 1, 0, NULL, 5260, NULL, 4),
-(5269, 'He @want@ all of them.', 4, 1, 0, NULL, 5260, NULL, 6),
-(5283, 'You can have ice cream or cake, but not both.', 1, 1, 0, NULL, 5282, NULL, 5),
-(5286, 'The police went .......all of Karl\'s things, but they didn\'t find any guns.', 2, 1, 0, NULL, 5282, NULL, 1),
-(5291, 'i am a joke for you !', 3, 1, 0, NULL, 5282, NULL, 5),
-(5294, 'Where @are@ the Battle of the Bulge?', 4, 1, 0, NULL, 5282, NULL, 4);
+(5893, 'Can I park here? .....', 1, 1, 0, NULL, 5892, NULL, 1),
+(5897, 'اسمي خالد  و انا من المغرب ', 2, 1, 0, NULL, 5892, NULL, 3),
+(5899, '@You are@ tired from working so much?', 3, 1, 0, NULL, 5892, NULL, 4),
+(5901, 'Are you okey with this Quiz', 4, 1, 0, NULL, 5892, NULL, 5),
+(5904, 'I have never @read@ such a boring book!', 5, 1, 0, NULL, 5892, NULL, 6);
 
 -- --------------------------------------------------------
 
@@ -1001,21 +1048,19 @@ CREATE TABLE `quiz` (
   `id` bigint(20) NOT NULL,
   `date_debut` datetime DEFAULT NULL,
   `date_fin` datetime DEFAULT NULL,
-  `lib` varchar(255) DEFAULT NULL,
+  `lib` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `numero` bigint(20) DEFAULT NULL,
-  `ref` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `seuil_reussite` bigint(20) DEFAULT NULL,
   `section` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `quiz`
 --
 
 INSERT INTO `quiz` (`id`, `date_debut`, `date_fin`, `lib`, `numero`, `ref`, `seuil_reussite`, `section`) VALUES
-(5192, '2021-12-23 15:03:35', '2021-12-23 15:03:35', 'Warm up', NULL, 'quiz-640', 5, 640),
-(5260, '2021-12-24 15:55:11', '2021-12-24 15:55:11', 'Life story', NULL, 'quiz-649', 5, 649),
-(5282, '2021-12-24 16:42:07', '2021-12-24 16:42:07', 'Grammar-1', NULL, 'quiz-645', NULL, 645);
+(5892, '2022-01-16 13:55:32', '2022-01-16 13:55:32', 'Warm up', NULL, 'quiz-640', NULL, 640);
 
 -- --------------------------------------------------------
 
@@ -1027,7 +1072,7 @@ CREATE TABLE `quiz_class_room` (
   `id` bigint(20) NOT NULL,
   `class_room` bigint(20) DEFAULT NULL,
   `quiz` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1039,25 +1084,11 @@ CREATE TABLE `quiz_etudiant` (
   `id` bigint(20) NOT NULL,
   `note` double DEFAULT NULL,
   `question_current` bigint(20) DEFAULT NULL,
-  `ref` varchar(255) DEFAULT NULL,
-  `resultat` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `resultat` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `etudiant` bigint(20) DEFAULT NULL,
   `quiz` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `quiz_etudiant`
---
-
-INSERT INTO `quiz_etudiant` (`id`, `note`, `question_current`, `ref`, `resultat`, `etudiant`, `quiz`) VALUES
-(5427, 2, 3, 'oc5', '2 / 3', 22, 5192),
-(5433, 2, 4, 'oGb', '2 / 4', 38, 5282),
-(5440, 2, 4, 'fmd', '2 / 4', 36, 5282),
-(5471, 2, 4, '9cv', '2 / 4', 22, 5282),
-(5489, 3, 3, 'dPM', '3 / 3', 28, 5192),
-(5504, 3, 4, 'mWe', '3 / 4', 28, 5260),
-(5510, 3, 4, 'RVp', '3 / 4', 28, 5282),
-(5522, 2, 4, 'IW9', '2 / 4', 22, 5260);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1068,15 +1099,15 @@ INSERT INTO `quiz_etudiant` (`id`, `note`, `question_current`, `ref`, `resultat`
 CREATE TABLE `recommend_teacher` (
   `id` bigint(20) NOT NULL,
   `nombrevote` int(11) NOT NULL,
-  `ref` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `prof` bigint(20) DEFAULT NULL,
-  `commentaire` varchar(255) DEFAULT NULL,
-  `login` varchar(255) DEFAULT NULL,
-  `nom` varchar(255) DEFAULT NULL,
-  `prenom` varchar(255) DEFAULT NULL,
-  `telephone` varchar(2000) DEFAULT NULL,
-  `date_recommamdation` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `commentaire` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `login` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nom` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `prenom` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telephone` varchar(2000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `date_recommamdation` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `recommend_teacher`
@@ -1088,7 +1119,8 @@ INSERT INTO `recommend_teacher` (`id`, `nombrevote`, `ref`, `prof`, `commentaire
 (1444, 0, 'C3', 4, 'Good Teacher', 'MourchidMohssin@gmail.com', 'Mourchid', 'Mohssin', '0653733789', NULL),
 (1489, 0, 'C4', 3, 'Good Teacher', 'AnouarLamghari@gmail.com', 'Lamghari', 'Anouar', '0641628309', NULL),
 (1490, 0, 'C5', 3, 'Good Teacher', 'OussamaBentaouil@gmail.com', 'Bentaouil', 'Oussama', '0618394756', NULL),
-(1983, 0, NULL, 4, NULL, 'hakati1999@gmail.com', 'user22', 'user', '0637373737', NULL);
+(1983, 0, NULL, 4, NULL, 'hakati1999@gmail.com', 'user22', 'user', '0637373737', NULL),
+(5667, 0, NULL, 3, NULL, 'youssefelmoudene09@gmail.com', 'Elmooudene', 'Youssef', '0690017683', 'Sun Jan 02 12:26:46 WEST 2022');
 
 -- --------------------------------------------------------
 
@@ -1098,38 +1130,26 @@ INSERT INTO `recommend_teacher` (`id`, `nombrevote`, `ref`, `prof`, `commentaire
 
 CREATE TABLE `reponse` (
   `id` bigint(20) NOT NULL,
-  `etat_reponse` varchar(255) DEFAULT NULL,
-  `lib` varchar(255) DEFAULT NULL,
-  `ref` varchar(255) DEFAULT NULL,
+  `etat_reponse` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lib` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ref` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `question` bigint(20) DEFAULT NULL,
   `numero` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `reponse`
 --
 
 INSERT INTO `reponse` (`id`, `etat_reponse`, `lib`, `ref`, `question`, `numero`) VALUES
-(5194, 'true', 'got', NULL, 5193, 1),
-(5195, 'false', 'gottin', NULL, 5193, 2),
-(5196, 'false', 'have', NULL, 5193, 3),
-(5198, 'true', 'i am sorry', NULL, 5197, 1),
-(5200, 'true', 'in', NULL, 5199, 1),
-(5262, 'true', 'in', NULL, 5261, 1),
-(5263, 'false', 'at', NULL, 5261, 2),
-(5264, 'false', 'for', NULL, 5261, 3),
-(5266, 'true', 'i am Youssef', NULL, 5265, 1),
-(5268, 'true', 'done', NULL, 5267, 1),
-(5270, 'true', 'wanted', NULL, 5269, 1),
-(5284, 'true', 'true', NULL, 5283, 1),
-(5285, 'false', 'false', NULL, 5283, 2),
-(5287, 'true', 'through', NULL, 5286, 1),
-(5288, 'false', 'past', NULL, 5286, 2),
-(5289, 'false', 'across', NULL, 5286, 3),
-(5290, 'false', 'in', NULL, 5286, 4),
-(5292, 'false', 'true', NULL, 5291, 1),
-(5293, 'true', 'false', NULL, 5291, 2),
-(5295, 'true', 'was', NULL, 5294, 1);
+(5894, 'false', 'Sorry, I did that.', NULL, 5893, 1),
+(5895, 'false', 'It\'s the same place.', NULL, 5893, 2),
+(5896, 'true', 'Only for half an hour.', NULL, 5893, 3),
+(5898, 'true', 'My name is khalid and i am from Morocco', NULL, 5897, 1),
+(5900, 'true', 'Are you', NULL, 5899, 1),
+(5902, 'true', 'true', NULL, 5901, 1),
+(5903, 'false', 'false', NULL, 5901, 2),
+(5905, 'true', 'read', NULL, 5904, 1);
 
 -- --------------------------------------------------------
 
@@ -1139,49 +1159,13 @@ INSERT INTO `reponse` (`id`, `etat_reponse`, `lib`, `ref`, `question`, `numero`)
 
 CREATE TABLE `reponse_etudiant` (
   `id` bigint(20) NOT NULL,
-  `answer` varchar(255) DEFAULT NULL,
+  `answer` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `note` double DEFAULT NULL,
-  `ref` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `question` bigint(20) DEFAULT NULL,
   `quiz_etudiant` bigint(20) DEFAULT NULL,
   `reponse` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `reponse_etudiant`
---
-
-INSERT INTO `reponse_etudiant` (`id`, `answer`, `note`, `ref`, `question`, `quiz_etudiant`, `reponse`) VALUES
-(5428, 'got', 1, 'X0o', 5193, 5427, 5194),
-(5429, 'i am  sory', 0, 'fzk', 5197, 5427, 5198),
-(5430, 'in', 1, 'pfK', 5199, 5427, 5200),
-(5434, 'past', 0, '8A5', 5286, 5433, 5287),
-(5435, 'false', 1, 'kn7', 5291, 5433, 5293),
-(5436, 'false', 0, 'Mmz', 5283, 5433, 5284),
-(5437, 'was', 1, 'mpX', 5294, 5433, 5295),
-(5441, 'false', 0, 'VTC', 5283, 5440, 5284),
-(5442, 'through', 1, 'VGh', 5286, 5440, 5287),
-(5443, 'aref', 0, 'Dfm', 5294, 5440, 5295),
-(5444, 'false', 1, 'Ljb', 5291, 5440, 5293),
-(5472, 'false', 0, 'GS1', 5283, 5471, 5284),
-(5473, 'past', 0, 'Sot', 5286, 5471, 5287),
-(5475, 'false', 1, '5s9', 5291, 5471, 5293),
-(5474, 'was', 1, 'fiy', 5294, 5471, 5295),
-(5490, 'in', 1, '5if', 5199, 5489, 5200),
-(5491, 'i am sorry', 1, 'LIN', 5197, 5489, 5198),
-(5492, 'got', 1, '9Zg', 5193, 5489, 5194),
-(5506, 'wanted', 1, 'ikz', 5269, 5504, 5270),
-(5507, 'done', 1, 'f8d', 5267, 5504, 5268),
-(5505, 'i am Youssef', 1, '7vj', 5265, 5504, 5266),
-(5508, 'at', 0, 'Qd2', 5261, 5504, 5262),
-(5513, 'through', 1, 'WlN', 5286, 5510, 5287),
-(5511, 'true', 0, 'Kvw', 5291, 5510, 5293),
-(5512, 'true', 1, 'xUz', 5283, 5510, 5284),
-(5514, 'was', 1, '5UY', 5294, 5510, 5295),
-(5523, 'done', 1, 'hUr', 5267, 5522, 5268),
-(5524, 'wantedd', 0, 'iik', 5269, 5522, 5270),
-(5525, 'in', 1, 'ARy', 5261, 5522, 5262),
-(5526, 'i am  sorry', 0, 'mJN', 5265, 5522, 5266);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1191,12 +1175,12 @@ INSERT INTO `reponse_etudiant` (`id`, `answer`, `note`, `ref`, `question`, `quiz
 
 CREATE TABLE `reponse_etudiant_home_work` (
   `id` bigint(20) NOT NULL,
-  `answer` varchar(255) DEFAULT NULL,
+  `answer` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `note` double DEFAULT NULL,
   `home_work_etudiant` bigint(20) DEFAULT NULL,
   `reponse` bigint(20) DEFAULT NULL,
   `question` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `reponse_etudiant_home_work`
@@ -1214,8 +1198,8 @@ INSERT INTO `reponse_etudiant_home_work` (`id`, `answer`, `note`, `home_work_etu
 
 CREATE TABLE `role` (
   `id` bigint(20) NOT NULL,
-  `authority` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `authority` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `role`
@@ -1229,19 +1213,34 @@ INSERT INTO `role` (`id`, `authority`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `salary`
+--
+
+CREATE TABLE `salary` (
+  `id` bigint(20) NOT NULL,
+  `annee` int(11) NOT NULL,
+  `mois` int(11) NOT NULL,
+  `montant_mensuel` decimal(19,2) DEFAULT NULL,
+  `nbr_session_mensuel` decimal(19,2) DEFAULT NULL,
+  `prof` bigint(20) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `salary_vo`
 --
 
 CREATE TABLE `salary_vo` (
   `id` bigint(20) NOT NULL,
-  `annee` varchar(1000) DEFAULT NULL,
-  `mois` varchar(2000) DEFAULT NULL,
+  `annee` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mois` varchar(2000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `montant_globale` decimal(19,2) DEFAULT NULL,
   `montant_mensuel` decimal(19,2) DEFAULT NULL,
   `nbr_session_globale` decimal(19,2) DEFAULT NULL,
   `nbr_session_mensuel` decimal(19,2) DEFAULT NULL,
   `prof` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `salary_vo`
@@ -1258,13 +1257,13 @@ INSERT INTO `salary_vo` (`id`, `annee`, `mois`, `montant_globale`, `montant_mens
 
 CREATE TABLE `schdedule_vo` (
   `id` bigint(20) NOT NULL,
-  `color` varchar(255) DEFAULT NULL,
+  `color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `end` datetime DEFAULT NULL,
-  `ref` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `start` datetime DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `prof` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `schdedule_vo`
@@ -1282,15 +1281,15 @@ INSERT INTO `schdedule_vo` (`id`, `color`, `end`, `ref`, `start`, `title`, `prof
 CREATE TABLE `schedule_prof` (
   `id` bigint(20) NOT NULL,
   `end_time` datetime DEFAULT NULL,
-  `ref` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `start_time` datetime DEFAULT NULL,
   `cours` bigint(20) DEFAULT NULL,
   `groupe_etudiant` bigint(20) DEFAULT NULL,
   `prof` bigint(20) DEFAULT NULL,
-  `subject` varchar(255) DEFAULT NULL,
-  `grp_name` varchar(255) DEFAULT NULL,
-  `prof_name` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `subject` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `grp_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `prof_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `schedule_prof`
@@ -1304,7 +1303,7 @@ INSERT INTO `schedule_prof` (`id`, `end_time`, `ref`, `start_time`, `cours`, `gr
 (4717, '2021-12-09 08:00:00', 'ethtr124', '2021-12-09 06:00:00', 40, 4611, 4, 'Personal profile', 'Group 5', 'prof'),
 (4715, '2021-12-06 08:00:00', 'ethtr1', '2021-12-06 06:00:00', 101, 4611, 4, 'Intro lesson', 'Group 5', 'prof'),
 (4716, '2021-12-07 08:00:00', 'ethtr12', '2021-12-07 06:00:00', 41, 4611, 4, 'More about you', 'Group 5', 'prof'),
-(4659, '2022-01-08 11:00:00', 'cdhk258', '2022-01-08 09:00:00', 40, 4611, 3, 'Personal profile', 'Group 5', 'teacher'),
+(5694, '2022-01-03 12:00:00', 'ertgee', '2022-01-03 08:00:00', 101, 4611, 3, 'Intro lesson', 'Group 5', 'teacher teacher'),
 (4663, '2022-01-16 11:00:00', 'cdhk2589121516', '2022-01-16 09:00:00', 36, 4611, 3, 'koko', 'Group 5', 'teacher'),
 (4664, '2022-01-19 11:00:00', 'cdhk258912151619', '2022-01-19 09:00:00', 34, 4611, 3, 'For the geeks', 'Group 5', 'teacher'),
 (4665, '2022-01-22 11:00:00', 'cdhk25891215161922', '2022-01-22 09:00:00', 33, 4611, 3, 'Technology', 'Group 5', 'teacher'),
@@ -1341,7 +1340,15 @@ INSERT INTO `schedule_prof` (`id`, `end_time`, `ref`, `start_time`, `cours`, `gr
 (4760, '2022-01-19 09:00:00', 'frttt3', '2022-01-19 07:00:00', 37, 4742, 3, 'Just another day', 'Group-8', 'teacher'),
 (4756, '2022-01-16 09:00:00', 'frttt0', '2022-01-16 07:00:00', 39, 4742, 3, 'When youâ€™re free', 'Group-8', 'teacher'),
 (5307, '2021-12-21 20:00:00', 'wefwef', '2021-12-21 17:00:00', 34, 4742, 3, 'For the geeks', 'Group-8', 'teacher teacher'),
-(5558, '2021-12-30 11:00:00', 'referf', '2021-12-30 08:00:00', 101, 5556, 3, 'Intro lesson', 'Group-aicha', 'teacher teacher');
+(5558, '2021-12-30 11:00:00', 'referf', '2021-12-30 08:00:00', 101, 5556, 3, 'Intro lesson', 'Group-aicha', 'teacher teacher'),
+(5700, '2022-01-04 12:00:00', 'reegeg', '2022-01-04 08:00:00', 101, 5697, 3, 'Intro lesson', 'Group-Aicha-Fatima', 'teacher teacher'),
+(5790, '2022-01-07 11:00:00', 'erferf', '2022-01-07 08:00:00', 5, 5697, 3, 'Let\'s get acquainted', 'Group-Aicha-Fatima', 'teacher teacher'),
+(5791, '2022-01-05 16:00:00', 'wrgwrg', '2022-01-05 13:00:00', 5, 5556, 4, 'Let\'s get acquainted', 'Group-aicha', 'prof prof'),
+(5806, '2022-01-07 17:00:00', 'ererg', '2022-01-07 14:00:00', 101, 4602, 4, 'Intro lesson', 'Group-student-130', 'prof prof'),
+(5807, '2022-01-06 11:00:00', 'fververv', '2022-01-06 08:00:00', 101, 5556, 3, 'Intro lesson', 'Group-aicha', 'teacher teacher'),
+(5812, '2022-01-09 11:00:00', 'rtyujn', '2022-01-09 06:00:00', 101, 5810, 3, 'Intro lesson', 'Group-Aya', 'teacher teacher'),
+(5846, '2022-01-10 11:00:00', 'iiuhiuh', '2022-01-10 07:00:00', 39, 4742, 3, 'When youâ€™re free', 'Group-8', 'teacher teacher'),
+(5847, '2022-01-13 11:00:00', 'kj', '2022-01-13 10:00:00', 38, 4611, 3, 'Leisure activities', 'Group 5', 'teacher teacher');
 
 -- --------------------------------------------------------
 
@@ -1351,21 +1358,21 @@ INSERT INTO `schedule_prof` (`id`, `end_time`, `ref`, `start_time`, `cours`, `gr
 
 CREATE TABLE `section` (
   `id` bigint(20) NOT NULL,
-  `code` varchar(255) DEFAULT NULL,
+  `code` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `content` int(11) NOT NULL,
-  `contenu` varchar(3000) DEFAULT NULL,
-  `indication_prof` varchar(2000) DEFAULT NULL,
-  `libelle` varchar(255) DEFAULT NULL,
+  `contenu` varchar(3000) CHARACTER SET latin1 DEFAULT NULL,
+  `indication_prof` varchar(2000) CHARACTER SET latin1 DEFAULT NULL,
+  `libelle` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `numero_order` int(11) DEFAULT NULL,
-  `questions` varchar(2000) DEFAULT NULL,
+  `questions` varchar(2000) CHARACTER SET latin1 DEFAULT NULL,
   `url` int(11) NOT NULL,
-  `url_image` varchar(2000) DEFAULT NULL,
+  `url_image` varchar(2000) CHARACTER SET latin1 DEFAULT NULL,
   `url_image2` blob,
-  `url_image3` varchar(255) DEFAULT NULL,
-  `url_video` varchar(25500) DEFAULT NULL,
+  `url_image3` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `url_video` varchar(25500) CHARACTER SET latin1 DEFAULT NULL,
   `categorie_section` bigint(20) DEFAULT NULL,
   `cours` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `section`
@@ -2347,13 +2354,13 @@ INSERT INTO `section` (`id`, `code`, `content`, `contenu`, `indication_prof`, `l
 
 CREATE TABLE `section_item` (
   `id` bigint(20) NOT NULL,
-  `example` varchar(255) DEFAULT NULL,
-  `explanation` varchar(255) DEFAULT NULL,
-  `image_url` varchar(255) DEFAULT NULL,
-  `response` varchar(255) DEFAULT NULL,
-  `translation` varchar(255) DEFAULT NULL,
+  `example` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `explanation` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `image_url` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `response` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `translation` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
   `section` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
 
@@ -2363,8 +2370,8 @@ CREATE TABLE `section_item` (
 
 CREATE TABLE `section_item_synonyms` (
   `section_item_id` bigint(20) NOT NULL,
-  `synonyms` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+  `synonyms` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
 
@@ -2377,11 +2384,11 @@ CREATE TABLE `session_cours` (
   `date_fin` datetime DEFAULT NULL,
   `etudiant` bigint(20) DEFAULT NULL,
   `prof` bigint(20) DEFAULT NULL,
-  `reference` varchar(255) DEFAULT NULL,
-  `payer` varchar(255) DEFAULT NULL,
+  `reference` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `payer` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `totalheure` int(11) NOT NULL,
   `cours` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `session_cours`
@@ -2417,9 +2424,9 @@ INSERT INTO `session_cours` (`id`, `date_fin`, `etudiant`, `prof`, `reference`, 
 
 CREATE TABLE `super_categorie_section` (
   `id` bigint(20) NOT NULL,
-  `code` varchar(255) DEFAULT NULL,
-  `libelle` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `code` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `libelle` varchar(255) CHARACTER SET latin1 DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `super_categorie_section`
@@ -2437,9 +2444,25 @@ INSERT INTO `super_categorie_section` (`id`, `code`, `libelle`) VALUES
 
 CREATE TABLE `tranche_horaire_prof` (
   `id` bigint(20) NOT NULL,
-  `horaire` datetime DEFAULT NULL,
-  `prof` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `prof` bigint(20) DEFAULT NULL,
+  `day` int(11) NOT NULL,
+  `end_hour` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `group_index` int(11) NOT NULL,
+  `start_hour` varchar(255) CHARACTER SET utf8 DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+--
+-- Dumping data for table `tranche_horaire_prof`
+--
+
+INSERT INTO `tranche_horaire_prof` (`id`, `prof`, `day`, `end_hour`, `group_index`, `start_hour`) VALUES
+(5848, 3, 1, '21:30', 0, '10:00'),
+(5849, 3, 4, '23:00', 0, '9:40'),
+(5854, 4, 1, '17:30', 0, '10:00'),
+(5851, 3, 0, '13:33', 0, '7:15'),
+(5852, 3, 2, '23:45', 0, '15:40'),
+(5855, 4, 5, '14:50', 0, '7:00'),
+(5856, 4, 3, '23:00', 0, '14:30');
 
 -- --------------------------------------------------------
 
@@ -2449,20 +2472,19 @@ CREATE TABLE `tranche_horaire_prof` (
 
 CREATE TABLE `type_de_question` (
   `id` bigint(20) NOT NULL,
-  `lib` varchar(255) DEFAULT NULL,
-  `ref` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `lib` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `ref` varchar(255) CHARACTER SET latin1 DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `type_de_question`
 --
 
 INSERT INTO `type_de_question` (`id`, `lib`, `ref`) VALUES
-(1, 'Choix unique', 't1'),
-(2, 'Choix multiple', 't2'),
-(3, 'input', 't3'),
+(1, 'Choose the correct alternative', 't1'),
+(3, 'Translate the phrase', 't3'),
 (4, 'Correct the mistake', 't4'),
-(5, 'On/Off', 't5'),
+(5, 'True or False', 't5'),
 (6, 'Write the correct form', 't6');
 
 -- --------------------------------------------------------
@@ -2473,8 +2495,8 @@ INSERT INTO `type_de_question` (`id`, `lib`, `ref`) VALUES
 
 CREATE TABLE `type_home_work` (
   `id` bigint(20) NOT NULL,
-  `lib` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+  `lib` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
 
@@ -2483,67 +2505,68 @@ CREATE TABLE `type_home_work` (
 --
 
 CREATE TABLE `user` (
-  `dtype` varchar(31) NOT NULL,
+  `dtype` varchar(31) CHARACTER SET utf8 NOT NULL,
   `id` bigint(20) NOT NULL,
   `account_non_expired` bit(1) NOT NULL,
   `account_non_locked` bit(1) NOT NULL,
-  `addresse` varchar(255) DEFAULT NULL,
+  `addresse` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `age` int(11) NOT NULL,
   `credentials_non_expired` bit(1) NOT NULL,
   `enabled` bit(1) NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `nom` varchar(255) DEFAULT NULL,
-  `numero` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `prenom` varchar(255) DEFAULT NULL,
-  `username` varchar(255) DEFAULT NULL,
-  `ville` varchar(255) DEFAULT NULL,
-  `ref` varchar(255) DEFAULT NULL,
+  `image` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `nom` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `numero` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `prenom` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `username` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `ville` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `ref` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `etat_etudiant_schedule` bigint(20) DEFAULT NULL,
   `parcours` bigint(20) DEFAULT NULL,
   `prof` bigint(20) DEFAULT NULL,
   `categorie_prof` bigint(20) DEFAULT NULL,
-  `role` varchar(255) DEFAULT NULL,
-  `group_option` varchar(255) DEFAULT NULL,
-  `teacher_locality` varchar(255) DEFAULT NULL,
+  `role` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `group_option` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `teacher_locality` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `groupe_etude` bigint(20) DEFAULT NULL,
-  `country` varchar(255) DEFAULT NULL,
+  `country` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `date_naissance` datetime DEFAULT NULL,
   `level_max` bigint(20) DEFAULT NULL,
-  `level_min` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `level_min` bigint(20) DEFAULT NULL,
+  `pack_student` bigint(20) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`dtype`, `id`, `account_non_expired`, `account_non_locked`, `addresse`, `age`, `credentials_non_expired`, `enabled`, `image`, `nom`, `numero`, `password`, `prenom`, `username`, `ville`, `ref`, `etat_etudiant_schedule`, `parcours`, `prof`, `categorie_prof`, `role`, `group_option`, `teacher_locality`, `groupe_etude`, `country`, `date_naissance`, `level_max`, `level_min`) VALUES
-('Admin', 1, b'1', b'1', 'marrakech', 23, b'1', b'1', 'http://localhost:8036/user/image/admin@gmail.com/admin@gmail.com.jpg', 'Elmoudene', '0605120314', '$2a$10$VW1CnG0HpYa5eiGikTlzQOWjAjwjA/ZptHA09uD.LlBE/HWc3YiqC', 'Youssef', 'admin@gmail.com', 'marrakech', NULL, NULL, NULL, NULL, NULL, 'ADMIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('Prof', 3, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/teacher@gmail.com/teacher@gmail.com.jpg', 'teacher', '0605120314', '$2a$10$xpy0yulabuTwf8ikJM8j5eM337f81aETiLSRSHsvPaHhDqyUh6bDm', 'teacher', 'teacher@gmail.com', NULL, NULL, NULL, NULL, NULL, 1, 'TEACHER', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('Prof', 4, b'1', b'1', 'Marrakech', 30, b'1', b'1', 'http://localhost:8036/user/image/prof@gmail.com/prof@gmail.com.jpg', 'prof', '0613203310', '$2a$10$I7o4zmXgcErHbiX91EPcW.rc2WPlecYuryGmfarBpHL/ZNyQDBRza', 'prof', 'prof@gmail.com', NULL, NULL, NULL, NULL, NULL, 1, 'TEACHER', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('Admin', 7, b'1', b'1', 'Marrakech', 22, b'1', b'1', 'http://localhost:8036/user/image/zouani@gmail.com/zouani@gmail.com.jpg', 'Zouani', '0760102030', '$2a$10$G6z1mCKHaDMLUZv9RiK1/OwjvXfK4tnNm/DMA.Wsm7KEadi4GL/Ua', 'Younes', 'zouani@gmail.com', 'Marrakech', NULL, NULL, 5, NULL, NULL, 'ADMIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('Admin', 9, b'1', b'1', '', 33, b'1', b'1', 'http://localhost:8036/user/image/profile/ahmed@gmail.com', 'amine', NULL, '$2a$10$9knjI8X01RKpgxgquqov..SS.o2KO4/wfDsV0oyuKfTiBV1h6nat2', 'ahmed', 'ahmed@gmail.com', 'marrakech', NULL, NULL, NULL, NULL, NULL, 'ADMIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('Etudiant', 31, b'1', b'1', '', 24, b'1', b'1', 'http://localhost:8036/user/image/profile/zouhir@gmail.com', 'Zouhir', NULL, '$2a$10$IALJLp/ztOwiJXOWKUSgvehDRiHYxB37SDP8kMjlYjHNx8lU8qI3G', 'Zouhir', 'zouhir@gmail.com', 'Demnate', NULL, NULL, 6, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
-('Etudiant', 14, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/farid@gmail.com', 'Farid', '0605120212', '$2a$10$P574lgbFf8gRTFQbTdv5ceKOkPVR/k9CuadgNjJ3ngliruQfG5Zcy', 'Soulaimane', 'farid@gmail.com', NULL, NULL, NULL, 5, NULL, NULL, 'STUDENT', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('Etudiant', 16, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/oumam@gmail.com', 'oumam', '0605120212', '$2a$10$Rrc2xinIeviYykr.0eEr4.XophNjT6m3vUj5cgnKDX0oNzqPH/upG', 'oumam', 'oumam@gmail.com', NULL, NULL, NULL, 6, NULL, NULL, 'STUDENT', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('Etudiant', 19, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/latifa@gmail.com', 'latifa', '06051202165', '$2a$10$gzMnpo1CzJ.RujMI90s7LeyHSW/9v68VE8znr.Z.JpftFD0PihG7.', 'latifa', 'latifa@gmail.com', NULL, NULL, NULL, 5, NULL, NULL, 'STUDENT', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('Etudiant', 20, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/hicham@gmail.com', 'hicham', '06051202165', '$2a$10$8N5urV.VTun.iikmxUlBQe6osQ8bEcIGSfLj2d7f8XbLuXuVI7zyO', 'hicham', 'hicham@gmail.com', NULL, NULL, 1, 5, 4, NULL, 'STUDENT', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('Etudiant', 21, b'1', b'1', 'qu saada', 22, b'1', b'1', 'http://localhost:8036/user/image/profile/aziz@gmail.com', 'Aziz', '06051202165', '$2a$10$s8xVzU9POmxogIOW2yJAKuE9JIsIwAXvdEpZuAOx6TqIalCvnQ62O', 'Aziz', 'aziz@gmail.com', 'marrakech', NULL, 1, 5, 4, NULL, 'STUDENT', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('Etudiant', 22, b'1', b'1', 'Qu saada', 15, b'1', b'1', 'http://localhost:8036/user/image/aicha@gmail.com/aicha@gmail.com.jpg', 'Aicha', '0760102030', '$2a$10$nFjjnXBtq429B3cfHm1DvuEOPRZvGJxGHvTiQLJYa3D0oFyVDggNS', 'Aicha', 'aicha@gmail.com', 'marrakech', NULL, 1, 5, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
-('Etudiant', 23, b'1', b'1', 'Qu azilal', 23, b'1', b'1', 'http://localhost:8036/user/image/profile/ali2@gamil.com', 'Ali', '06051202165', '$2a$10$IsVaEsuXj8JBxbk3A38NNuEjNBoTAKDhKrcfMr4MURWoH4zmR3VN6', 'Ali', 'ali2@gamil.com', 'Casablanca', NULL, 1, 5, 4, NULL, 'STUDENT', NULL, 'non-native', NULL, NULL, NULL, NULL, NULL),
-('Etudiant', 24, b'1', b'1', 'Marrakech', 23, b'1', b'1', 'http://localhost:8036/user/image/profile/mohemad@gmail.com', 'mohemad', '0605120314', '$2a$10$i0BlA7q.1P.djV6eNwy/NeVyFPNTRVb35/dqDs18HghMgoP.GIlqG', 'Mohemad', 'mohemad@gmail.com', 'Marrakech', NULL, NULL, 5, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
-('Etudiant', 25, b'1', b'1', '', 23, b'1', b'1', 'http://localhost:8036/user/image/profile/saad@gmail.com', 'saad', '0605120314', '$2a$10$HW0BJWeruB9eEf/ZtiEx4uujH86E4gCyUzE8wAy.SDP9wa6kScwJ.', 'Saad', 'saad@gmail.com', NULL, NULL, 1, 5, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
-('Etudiant', 26, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/elmoudene.ysf@gmail.com', 'anas', '0605120314', '$2a$10$FC1NX96EIdOVr90FeF6HLuffgU7aD.VllnHx2aQoVA65i0m08EcUK', 'anas', 'elmoudene.ysf@gmail.com', NULL, NULL, 2, 6, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
-('Etudiant', 27, b'1', b'1', 'Qu saada', 23, b'1', b'1', 'http://localhost:8036/user/image/profile/charaf@gmail.com', 'charaf', '075030214', '$2a$10$WGui.FW7fnBhC0OlavM89OQRhR2UI1pknR2ZTp.rmb07KPXYhc7C2', 'Charaf', 'charaf@gmail.com', 'Marrakech', NULL, NULL, 5, 4, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
-('Etudiant', 28, b'1', b'1', NULL, 23, b'1', b'1', 'http://localhost:8036/user/image/aya@gmail.com/aya@gmail.com.jpg', 'aya', '0730213040', '$2a$10$mgeXHKTfZFxvJKF/m2.tquHmTARN4pOepldVQW5c84Rha82aYyDkS', 'aya', 'aya@gmail.com', NULL, NULL, NULL, 5, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
-('Etudiant', 30, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/fatima@gmail.com', 'Fatima', NULL, '$2a$10$na7TVhTlTCyVAkgxfv4WhepsaCf4AgA0AIgBUOB2k7DkUyDDjFiWu', 'Fatima', 'fatima@gmail.com', NULL, NULL, NULL, 5, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
-('Etudiant', 32, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/wissal@gmail.com', 'Wissal', NULL, '$2a$10$jzizZlxVRSqG25X58EeJ6OZhsQBTjM9UqJyDxpd8QG5nzsnHqAVOO', 'Wissal', 'wissal@gmail.com', NULL, NULL, NULL, 601, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
-('Etudiant', 33, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/naim@gmail.com', 'Naim', NULL, '$2a$10$8G.FN2jjMbEzH6skZs25YOl62Zwo6UQffBNAu36VnDUKoVci7CNVu', 'Naim', 'naim@gmail.com', NULL, NULL, 1, 601, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
-('Etudiant', 34, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/etudiant10@gmail.com', 'etudiant10', NULL, '$2a$10$9MOeJv6mK6rrjK6b5olw9Ovk5bXBmG5V/E.9Lgbh3cwNeAGOZ7rgC', 'etudiant10', 'etudiant10@gmail.com', NULL, NULL, NULL, 7, NULL, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
-('Etudiant', 35, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/student33@gmail.com', 'student33', NULL, '$2a$10$qlgTjJhBpGJA3QrG0QbUnu8O6RtM.asZv.zSHg/xYnFjK61rkEH.W', 'Student33', 'student33@gmail.com', NULL, NULL, NULL, 5, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL),
-('Etudiant', 36, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/student130@gmail.com', '130', NULL, '$2a$10$Nqx7pNPHkB.t6pOesdjUSutvfazJTQGpUmTsp84rU3GMR63TLQBTa', '130', 'student130@gmail.com', NULL, NULL, NULL, 5, 3, NULL, 'STUDENT', NULL, ' ', NULL, NULL, NULL, NULL, NULL),
-('Etudiant', 38, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/wissam@gmail.com', 'Wisam', NULL, '$2a$10$MFKsFqY5diPUb8QOmPPuNeajSTLkyOTb19Dt7XGnhsE1jNLbngHs.', 'Wisam', 'wissam@gmail.com', NULL, NULL, NULL, 5, 3, NULL, 'STUDENT', NULL, 'native', 4608, NULL, NULL, NULL, NULL),
-('Etudiant', 40, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/haytam@gmail.com', 'Haytam', NULL, '$2a$10$Zvw0.jxYwO1MLq0azXKfOeiw4gEflJ5mvNHuyi.1n6oFMyBsc8Duu', 'Haytam', 'haytam@gmail.com', NULL, NULL, NULL, 5, NULL, NULL, 'STUDENT', NULL, 'native', 4598, NULL, NULL, NULL, NULL);
+INSERT INTO `user` (`dtype`, `id`, `account_non_expired`, `account_non_locked`, `addresse`, `age`, `credentials_non_expired`, `enabled`, `image`, `nom`, `numero`, `password`, `prenom`, `username`, `ville`, `ref`, `etat_etudiant_schedule`, `parcours`, `prof`, `categorie_prof`, `role`, `group_option`, `teacher_locality`, `groupe_etude`, `country`, `date_naissance`, `level_max`, `level_min`, `pack_student`) VALUES
+('Admin', 1, b'1', b'1', 'marrakech', 23, b'1', b'1', 'http://localhost:8036/user/image/admin@gmail.com/admin@gmail.com.jpg', 'Elmoudene', '0605120314', '$2a$10$VW1CnG0HpYa5eiGikTlzQOWjAjwjA/ZptHA09uD.LlBE/HWc3YiqC', 'Youssef', 'admin@gmail.com', 'marrakech', NULL, NULL, NULL, NULL, NULL, 'ADMIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Prof', 3, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/teacher@gmail.com/teacher@gmail.com.jpg', 'teacher', '0605120314', '$2a$10$xpy0yulabuTwf8ikJM8j5eM337f81aETiLSRSHsvPaHhDqyUh6bDm', 'teacher', 'teacher@gmail.com', NULL, NULL, NULL, NULL, NULL, 1, 'TEACHER', NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL),
+('Prof', 4, b'1', b'1', 'Marrakech', 30, b'1', b'1', 'http://localhost:8036/user/image/prof@gmail.com/prof@gmail.com.jpg', 'prof', '0613203310', '$2a$10$I7o4zmXgcErHbiX91EPcW.rc2WPlecYuryGmfarBpHL/ZNyQDBRza', 'prof', 'prof@gmail.com', NULL, NULL, NULL, NULL, NULL, 1, 'TEACHER', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Admin', 7, b'1', b'1', 'Marrakech', 22, b'1', b'1', 'http://localhost:8036/user/image/zouani@gmail.com/zouani@gmail.com.jpg', 'Zouani', '0760102030', '$2a$10$G6z1mCKHaDMLUZv9RiK1/OwjvXfK4tnNm/DMA.Wsm7KEadi4GL/Ua', 'Younes', 'zouani@gmail.com', 'Marrakech', NULL, NULL, 5, NULL, NULL, 'ADMIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Admin', 9, b'1', b'1', '', 33, b'1', b'1', 'http://localhost:8036/user/image/profile/ahmed@gmail.com', 'amine', NULL, '$2a$10$9knjI8X01RKpgxgquqov..SS.o2KO4/wfDsV0oyuKfTiBV1h6nat2', 'ahmed', 'ahmed@gmail.com', 'marrakech', NULL, NULL, NULL, NULL, NULL, 'ADMIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 31, b'1', b'1', '', 24, b'1', b'1', 'http://localhost:8036/user/image/profile/zouhir@gmail.com', 'Zouhir', NULL, '$2a$10$IALJLp/ztOwiJXOWKUSgvehDRiHYxB37SDP8kMjlYjHNx8lU8qI3G', 'Zouhir', 'zouhir@gmail.com', 'Demnate', NULL, NULL, 6, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 14, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/farid@gmail.com', 'Farid', '0605120212', '$2a$10$P574lgbFf8gRTFQbTdv5ceKOkPVR/k9CuadgNjJ3ngliruQfG5Zcy', 'Soulaimane', 'farid@gmail.com', NULL, NULL, NULL, 5, NULL, NULL, 'STUDENT', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 16, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/oumam@gmail.com', 'oumam', '0605120212', '$2a$10$Rrc2xinIeviYykr.0eEr4.XophNjT6m3vUj5cgnKDX0oNzqPH/upG', 'oumam', 'oumam@gmail.com', NULL, NULL, NULL, 6, NULL, NULL, 'STUDENT', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 19, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/latifa@gmail.com', 'latifa', '06051202165', '$2a$10$gzMnpo1CzJ.RujMI90s7LeyHSW/9v68VE8znr.Z.JpftFD0PihG7.', 'latifa', 'latifa@gmail.com', NULL, NULL, NULL, 5, NULL, NULL, 'STUDENT', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 20, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/hicham@gmail.com', 'hicham', '06051202165', '$2a$10$8N5urV.VTun.iikmxUlBQe6osQ8bEcIGSfLj2d7f8XbLuXuVI7zyO', 'hicham', 'hicham@gmail.com', NULL, NULL, 1, 5, 4, NULL, 'STUDENT', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 21, b'1', b'1', 'qu saada', 22, b'1', b'1', 'http://localhost:8036/user/image/profile/aziz@gmail.com', 'Aziz', '06051202165', '$2a$10$s8xVzU9POmxogIOW2yJAKuE9JIsIwAXvdEpZuAOx6TqIalCvnQ62O', 'Aziz', 'aziz@gmail.com', 'marrakech', NULL, 1, 5, 4, NULL, 'STUDENT', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 22, b'1', b'1', 'Qu saada', 15, b'1', b'1', 'http://localhost:8036/user/image/aicha@gmail.com/aicha@gmail.com.jpg', 'Aicha', '0760102030', '$2a$10$nFjjnXBtq429B3cfHm1DvuEOPRZvGJxGHvTiQLJYa3D0oFyVDggNS', 'Aicha', 'aicha@gmail.com', 'marrakech', NULL, 1, 5, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 23, b'1', b'1', 'Qu azilal', 23, b'1', b'1', 'http://localhost:8036/user/image/profile/ali2@gamil.com', 'Ali', '06051202165', '$2a$10$IsVaEsuXj8JBxbk3A38NNuEjNBoTAKDhKrcfMr4MURWoH4zmR3VN6', 'Ali', 'ali2@gamil.com', 'Casablanca', NULL, 1, 5, 4, NULL, 'STUDENT', NULL, 'non-native', NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 24, b'1', b'1', 'Marrakech', 23, b'1', b'1', 'http://localhost:8036/user/image/profile/mohemad@gmail.com', 'mohemad', '0605120314', '$2a$10$i0BlA7q.1P.djV6eNwy/NeVyFPNTRVb35/dqDs18HghMgoP.GIlqG', 'Mohemad', 'mohemad@gmail.com', 'Marrakech', NULL, NULL, 5, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 25, b'1', b'1', '', 23, b'1', b'1', 'http://localhost:8036/user/image/profile/saad@gmail.com', 'saad', '0605120314', '$2a$10$HW0BJWeruB9eEf/ZtiEx4uujH86E4gCyUzE8wAy.SDP9wa6kScwJ.', 'Saad', 'saad@gmail.com', NULL, NULL, 1, 5, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 26, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/elmoudene.ysf@gmail.com', 'anas', '0605120314', '$2a$10$FC1NX96EIdOVr90FeF6HLuffgU7aD.VllnHx2aQoVA65i0m08EcUK', 'anas', 'elmoudene.ysf@gmail.com', NULL, NULL, 2, 6, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 27, b'1', b'1', 'Qu saada', 23, b'1', b'1', 'http://localhost:8036/user/image/profile/charaf@gmail.com', 'charaf', '075030214', '$2a$10$WGui.FW7fnBhC0OlavM89OQRhR2UI1pknR2ZTp.rmb07KPXYhc7C2', 'Charaf', 'charaf@gmail.com', 'Marrakech', NULL, NULL, 5, 4, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 28, b'1', b'1', NULL, 23, b'1', b'1', 'http://localhost:8036/user/image/aya@gmail.com/aya@gmail.com.jpg', 'aya', '0730213040', '$2a$10$mgeXHKTfZFxvJKF/m2.tquHmTARN4pOepldVQW5c84Rha82aYyDkS', 'aya', 'aya@gmail.com', NULL, NULL, NULL, 5, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 30, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/fatima@gmail.com', 'Fatima', NULL, '$2a$10$na7TVhTlTCyVAkgxfv4WhepsaCf4AgA0AIgBUOB2k7DkUyDDjFiWu', 'Fatima', 'fatima@gmail.com', NULL, NULL, NULL, 5, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 32, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/wissal@gmail.com', 'Wissal', NULL, '$2a$10$jzizZlxVRSqG25X58EeJ6OZhsQBTjM9UqJyDxpd8QG5nzsnHqAVOO', 'Wissal', 'wissal@gmail.com', NULL, NULL, NULL, 601, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 33, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/naim@gmail.com', 'Naim', NULL, '$2a$10$8G.FN2jjMbEzH6skZs25YOl62Zwo6UQffBNAu36VnDUKoVci7CNVu', 'Naim', 'naim@gmail.com', NULL, NULL, 1, 601, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 34, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/etudiant10@gmail.com', 'etudiant10', NULL, '$2a$10$9MOeJv6mK6rrjK6b5olw9Ovk5bXBmG5V/E.9Lgbh3cwNeAGOZ7rgC', 'etudiant10', 'etudiant10@gmail.com', NULL, NULL, NULL, 7, NULL, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 35, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/student33@gmail.com', 'student33', NULL, '$2a$10$qlgTjJhBpGJA3QrG0QbUnu8O6RtM.asZv.zSHg/xYnFjK61rkEH.W', 'Student33', 'student33@gmail.com', NULL, NULL, NULL, 5, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 36, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/student130@gmail.com', '130', NULL, '$2a$10$Nqx7pNPHkB.t6pOesdjUSutvfazJTQGpUmTsp84rU3GMR63TLQBTa', '130', 'student130@gmail.com', NULL, NULL, NULL, 5, 3, NULL, 'STUDENT', NULL, ' ', NULL, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 38, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/wissam@gmail.com', 'Wisam', NULL, '$2a$10$MFKsFqY5diPUb8QOmPPuNeajSTLkyOTb19Dt7XGnhsE1jNLbngHs.', 'Wisam', 'wissam@gmail.com', NULL, NULL, NULL, 5, 3, NULL, 'STUDENT', NULL, 'native', 4608, NULL, NULL, NULL, NULL, NULL),
+('Etudiant', 40, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/haytam@gmail.com', 'Haytam', NULL, '$2a$10$Zvw0.jxYwO1MLq0azXKfOeiw4gEflJ5mvNHuyi.1n6oFMyBsc8Duu', 'Haytam', 'haytam@gmail.com', NULL, NULL, NULL, 5, NULL, NULL, 'STUDENT', NULL, 'native', 4598, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2554,7 +2577,7 @@ INSERT INTO `user` (`dtype`, `id`, `account_non_expired`, `account_non_locked`, 
 CREATE TABLE `user_authorities` (
   `user_id` bigint(20) NOT NULL,
   `authorities` bigint(20) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `user_authorities`
@@ -2600,17 +2623,17 @@ INSERT INTO `user_authorities` (`user_id`, `authorities`) VALUES
 
 CREATE TABLE `vocabulary` (
   `id` bigint(20) NOT NULL,
-  `exemple` varchar(255) DEFAULT NULL,
-  `explication` varchar(255) DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `libelle` varchar(255) DEFAULT NULL,
+  `exemple` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `explication` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `image` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `libelle` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `numero` bigint(20) DEFAULT NULL,
-  `ref` varchar(255) DEFAULT NULL,
-  `result` varchar(255) DEFAULT NULL,
-  `word` varchar(255) DEFAULT NULL,
+  `ref` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `result` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `word` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `section` bigint(20) DEFAULT NULL,
   `vocabulary_quiz` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `vocabulary`
@@ -2630,10 +2653,36 @@ CREATE TABLE `vocabulary_quiz` (
   `id` bigint(20) NOT NULL,
   `date_debut` datetime DEFAULT NULL,
   `date_fin` datetime DEFAULT NULL,
-  `libelle` varchar(255) DEFAULT NULL,
-  `ref` varchar(255) DEFAULT NULL,
+  `libelle` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `ref` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `section` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workload_bonus`
+--
+
+CREATE TABLE `workload_bonus` (
+  `id` bigint(20) NOT NULL,
+  `nombre_session` int(11) NOT NULL,
+  `prix` decimal(19,2) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workload_bonus_prof`
+--
+
+CREATE TABLE `workload_bonus_prof` (
+  `id` bigint(20) NOT NULL,
+  `annee` int(11) NOT NULL,
+  `mois` int(11) NOT NULL,
+  `prof` bigint(20) DEFAULT NULL,
+  `workload_bonus` bigint(20) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Indexes for dumped tables
@@ -2665,6 +2714,20 @@ ALTER TABLE `categorie_section`
 --
 ALTER TABLE `centre`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `class_average_bonus`
+--
+ALTER TABLE `class_average_bonus`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `class_average_bonus_prof`
+--
+ALTER TABLE `class_average_bonus_prof`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK2ase7riwyhkl96qbb4qpk7h5p` (`class_average_bonus`),
+  ADD KEY `FK9jxfo0e0xa7jkktxdsq4jwibq` (`prof`);
 
 --
 -- Indexes for table `class_room`
@@ -2782,7 +2845,8 @@ ALTER TABLE `groupe_etude_detail`
 ALTER TABLE `groupe_etudiant`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FKf19chs324x9ei6t5rm3epx4cq` (`groupe_etude`),
-  ADD KEY `FKhqi2kse6ips4np4365vovd3r6` (`parcours`);
+  ADD KEY `FKhqi2kse6ips4np4365vovd3r6` (`parcours`),
+  ADD KEY `FK53cvqneym1jlajraf8nh4w44i` (`prof`);
 
 --
 -- Indexes for table `groupe_etudiant_detail`
@@ -2840,6 +2904,12 @@ ALTER TABLE `inscription`
 -- Indexes for table `news`
 --
 ALTER TABLE `news`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pack_student`
+--
+ALTER TABLE `pack_student`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -2937,6 +3007,13 @@ ALTER TABLE `role`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `salary`
+--
+ALTER TABLE `salary`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKhtcvy2kfqxnf85cag7if9srhr` (`prof`);
+
+--
 -- Indexes for table `salary_vo`
 --
 ALTER TABLE `salary_vo`
@@ -3024,6 +3101,7 @@ ALTER TABLE `user`
   ADD KEY `FKko8co8fj33bvbw3ms5364vmn3` (`prof`),
   ADD KEY `FKb1foe1690lcirh75bvap2lg3h` (`categorie_prof`),
   ADD KEY `FKc8bby2o7jdjj7pacpfpo2bj6r` (`groupe_etude`),
+  ADD KEY `FK87lvn3d9xb337koefj58gam98` (`pack_student`),
   ADD KEY `FK5ipus6t3o9ypd7kampo69elmu` (`level_max`),
   ADD KEY `FKher9dxxtkws9oy0n0uw9swvk9` (`level_min`);
 
@@ -3048,6 +3126,20 @@ ALTER TABLE `vocabulary`
 ALTER TABLE `vocabulary_quiz`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FKauyg1dqpr4evs5iylq9rf8j7h` (`section`);
+
+--
+-- Indexes for table `workload_bonus`
+--
+ALTER TABLE `workload_bonus`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `workload_bonus_prof`
+--
+ALTER TABLE `workload_bonus_prof`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKjp3saesbvciolabu4np0enqbm` (`prof`),
+  ADD KEY `FKcycvnjjmeip07d0mxvnllhpq4` (`workload_bonus`);
 
 --
 -- AUTO_INCREMENT for dumped tables
