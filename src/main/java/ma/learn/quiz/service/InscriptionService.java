@@ -120,6 +120,7 @@ public class InscriptionService extends AbstractService {
             if (inscription.getProf() == null) {
                 inscription.setProf(new Prof());
             }
+
             if (inscription.getParcours() == null) {
                 inscription.setParcours(new Parcours());
             }
@@ -129,6 +130,7 @@ public class InscriptionService extends AbstractService {
             if (inscription.getEtudiant() == null) {
                 inscription.setEtudiant(new Etudiant());
             }
+
             EtatInscription etatInscription = etatInscriptionService.findEtatInscriptionById((long) 1);
             Etudiant etudiant = this.etudiantService.findEtudiantById(inscription.getEtudiant().getId());
             Parcours parcours = parcoursService.findParcoursById(inscription.getParcours().getId());

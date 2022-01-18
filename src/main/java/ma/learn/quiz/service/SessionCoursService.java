@@ -13,14 +13,11 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import ma.learn.quiz.bean.*;
-import ma.learn.quiz.dao.SalaryDao;
-import ma.learn.quiz.dao.WorkloadBonusProfDao;
+import ma.learn.quiz.dao.*;
 import ma.learn.quiz.service.Util.UtilString;
 import ma.learn.quiz.service.vo.SessionCoursVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import ma.learn.quiz.dao.SessionCoursDao;
 
 
 @Service
@@ -42,11 +39,19 @@ public class SessionCoursService extends AbstractService {
     @Autowired
     private WorkloadBonusService workloadBonusService;
     @Autowired
+    private PaiementService paiementService;
+    @Autowired
     private ClassAverageBonusService classAverageBonusService;
     @Autowired
     private WorkloadBonusProfService workloadBonusProfService;
     @Autowired
     private WorkloadBonusProfDao workloadBonusProfDao;
+    @Autowired
+    private ClassAverageBonusProfDao classAverageBonusProfDao;
+    @Autowired
+    private GroupeEtudiantService groupeEtudiantService;
+    @Autowired
+    private GroupeEtudiantDao groupeEtudiantDao;
 
     public List<SessionCours> findByCriteria(SessionCours sessionCours) {
         String query = "SELECT e FROM SessionCours e WHERE 1=1";
@@ -59,6 +64,10 @@ public class SessionCoursService extends AbstractService {
 
 
         return entityManager.createQuery(query).getResultList();
+    }
+
+    public List<SessionCours> findByEtudiantId(Long id) {
+        return sessionCoursDao.findByEtudiantId(id);
     }
 
     public List<SessionCours> findAllByCriteria(SessionCoursVO sessionCoursVO) {
@@ -120,12 +129,14 @@ public class SessionCoursService extends AbstractService {
             sessionCours.setProf(prof1);
             sessionCours.setCours(cours);
             sessionCoursDao.save(sessionCours);
+            paiementService.save(sessionCours.getId());
             List<SessionCours> sessionCoursList = findByProfId(profid);
             List<WorkloadBonus> workloadBonusList = workloadBonusService.findAll();
             List<ClassAverageBonus> classAverageBonusList = classAverageBonusService.findAll();
+            List<SessionCours> sessionCoursList1 = findAllSessionCoursByProfIdAndCurrentDate(profid);
+            List<GroupeEtudiant> groupeEtudiants = groupeEtudiantDao.findGroupeEtudiantByProfId(profid);
             for (WorkloadBonus workloadBonus : workloadBonusList) {
                 if (workloadBonus.getNombreSession() == sessionCoursList.size()) {
-
                     LocalDate localDate = sessionCours.getDateFin().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                     int month = localDate.getMonthValue();
                     int annee = localDate.getYear();
@@ -151,12 +162,45 @@ public class SessionCoursService extends AbstractService {
                     workloadBonusProfDao.save(workloadBonusProf);
                 }
             }
-
+            for (ClassAverageBonus classAverageBonus : classAverageBonusList) {
+                if (classAverageBonus.getNombreSession() <= sessionCoursList1.size() / groupeEtudiants.size()) {
+                    LocalDate localDate1 = sessionCours.getDateFin().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    int month = localDate1.getMonthValue();
+                    int annee = localDate1.getYear();
+                    Salary salary = salaryService.findSalaryByMoisAndAnneeAndProfId(month, annee, sessionCours.getProf().getId());
+                    if (salary == null) {
+                        Salary salary1 = new Salary();
+                        salary1.setMontantMensuel(classAverageBonus.getPrix());
+                        salary1.setMois(month);
+                        salary1.setAnnee(annee);
+                        salary1.setProf(sessionCours.getProf());
+                        salary1.setNbrSessionMensuel(new BigDecimal(1));
+                        salaryDao.save(salary1);
+                    } else {
+                        salary.setNbrSessionMensuel(salary.getNbrSessionMensuel().add(new BigDecimal(1)));
+                        salary.setMontantMensuel(salary.getMontantMensuel().add(classAverageBonus.getPrix()));
+                        salaryDao.save(salary);
+                    }
+                    ClassAverageBonusProf classAverageBonusProf=new ClassAverageBonusProf();
+                    classAverageBonusProf.setClassAverageBonus(classAverageBonus);
+                    classAverageBonusProf.setProf(sessionCours.getProf());
+                    classAverageBonusProf.setMois(month);
+                    classAverageBonusProf.setAnnee(annee);
+                    classAverageBonusProfDao.save(classAverageBonusProf);
+                }
+            }
             return 1;
         }
     }
 
-    public List<SessionCours> findAllSessionCoursByProfIdAndCurrentMonth(Long idprof,int month,int annee) {
+
+    public List<SessionCours> findAllSessionCoursByProfIdAndCurrentDate(Long idprof) {
+        Date date = new Date();
+        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        String month = String.valueOf(localDate.getMonthValue());
+        String annee = String.valueOf(localDate.getYear());
+
         String query = "SELECT c FROM SessionCours c WHERE 1=1 AND c.prof.id" + "=" + idprof + " AND c.dateFin LIKE '%" + annee + "-" + month + "%'";
         return entityManager.createQuery(query).getResultList();
     }

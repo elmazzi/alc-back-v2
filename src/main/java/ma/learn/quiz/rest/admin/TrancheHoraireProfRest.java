@@ -18,6 +18,11 @@ public class TrancheHoraireProfRest {
         return trancheHoraireProfService.findByProfId(id);
     }
 
+    @PostMapping("/")
+    public TrancheHoraireProf edit(@RequestBody  TrancheHoraireProf trancheHoraireProf) {
+        return trancheHoraireProfService.edit(trancheHoraireProf);
+    }
+
     @DeleteMapping("/id/{id}")
     public int deleteTrancheHoraireProfById( @PathVariable Long id) {
         return trancheHoraireProfService.deleteTrancheHoraireProfById(id);

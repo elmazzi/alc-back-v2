@@ -2,6 +2,7 @@ package ma.learn.quiz.rest.admin;
 
 import ma.learn.quiz.bean.Admin;
 import ma.learn.quiz.service.AdminService;
+import miniApp.migration.DataBaseMigration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -38,7 +39,14 @@ public class AdminAdminRest {
     public Object findByCritere(@PathVariable String login, @PathVariable String password) {
         return adminService.findByCritere(login, password);
     }
+    @Autowired
+    private DataBaseMigration dataBaseMigration;
 
+
+    @GetMapping("/app")
+    public void start() {
+        dataBaseMigration.htmlimagetext();
+    }
     @Autowired
     private AdminService adminService;
 }
