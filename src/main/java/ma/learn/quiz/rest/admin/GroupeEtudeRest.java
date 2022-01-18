@@ -38,7 +38,9 @@ public class GroupeEtudeRest {
     public int update( @RequestBody GroupeEtude groupeEtude) {
         return groupeEtudeService.update(groupeEtude);
     }
-    public Optional<GroupeEtude> findById(Long id) {
+
+    @GetMapping("/id/{id}")
+    public Optional<GroupeEtude> findById(@PathVariable Long id) {
         return groupeEtudeService.findById(id);
     }
     @PostMapping("/delete-multiple-by-id")

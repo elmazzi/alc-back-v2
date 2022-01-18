@@ -16,11 +16,16 @@ public class PackStudent {
     private int nombreCours;
     private boolean forGroupe;
     private String code;
+    private String libelle;
     private Double prix;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "packStudent")
-    private List<Etudiant> students;
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
 
     public Long getId() {
         return id;
@@ -62,11 +67,4 @@ public class PackStudent {
         this.prix = prix;
     }
 
-    public List<Etudiant> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Etudiant> students) {
-        this.students = students;
-    }
 }

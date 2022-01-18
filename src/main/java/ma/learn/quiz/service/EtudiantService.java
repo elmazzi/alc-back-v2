@@ -22,6 +22,8 @@ import static ma.learn.quiz.filter.RoleConstant.ROLE_STUDENT;
 public class EtudiantService extends AbstractService {
     @Autowired
     private GroupeEtudeService groupeEtudeService;
+    @Autowired
+    private PackStudentService packStudentService;
 
     public List<Etudiant> findByParcoursCode(String code) {
         return etudiantDao.findByParcoursCode(code);
@@ -90,12 +92,12 @@ public class EtudiantService extends AbstractService {
 //        scheduleProfDao.save(scheduleProf);
 //    }
 
-    public int create(Etudiant etudiant) {
+    public int create(String pack,Etudiant etudiant) {
         Etudiant etudiant1 = this.findByLogin(etudiant.getUsername());
         if (etudiant1 != null) {
             return -1;
         } else {
-
+            PackStudent packStudent = packStudentService.findPackStudentByCode(pack);
             Inscription inscription = new Inscription();
             Prof prof = this.profService.findProfById(etudiant.getProf().getId());
             EtatEtudiantSchedule etudiantSchedule = this.etatEtudiantScheduleService.findByRef(etudiant.getEtatEtudiantSchedule().getRef());
@@ -115,6 +117,9 @@ public class EtudiantService extends AbstractService {
             System.out.println(user.getId());
             Etudiant etudiant2 = new Etudiant(user);
             inscription.setEtudiant(etudiant2);
+            if (packStudent != null){
+                inscription.setPackStudent(packStudent);
+            }
             inscriptionService.save(inscription);
             return 1;
         }

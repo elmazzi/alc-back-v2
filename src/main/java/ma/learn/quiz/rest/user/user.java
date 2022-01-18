@@ -102,7 +102,8 @@ public class user
 
             case "STUDENT": {
                 Etudiant etudiant = new Etudiant(user);
-                etudiantService.create(etudiant);
+                String code = "indiv1";
+                etudiantService.create(code,etudiant);
                 return etudiant;
             }
             default: return null;
