@@ -28,10 +28,51 @@ public class Inscription {
     private Parcours parcours;
     @ManyToOne
     private GroupeEtude groupeEtude;
+    @ManyToOne
+    private StatutSocial statutSocial;
+    @ManyToOne
+    private InteretEtudiant interetEtudiant;
+    @ManyToOne
+    private NiveauEtude niveauEtude;
+    @ManyToOne
+    private  Fonction fonction;
+
     @Temporal(TemporalType.DATE)
     private Date datedebutinscription;
     @Temporal(TemporalType.DATE)
     private Date datefininscription;
+
+    public StatutSocial getStatutSocial() {
+        return statutSocial;
+    }
+
+    public void setStatutSocial(StatutSocial statutSocial) {
+        this.statutSocial = statutSocial;
+    }
+
+    public InteretEtudiant getInteretEtudiant() {
+        return interetEtudiant;
+    }
+
+    public void setInteretEtudiant(InteretEtudiant interetEtudiant) {
+        this.interetEtudiant = interetEtudiant;
+    }
+
+    public NiveauEtude getNiveauEtude() {
+        return niveauEtude;
+    }
+
+    public void setNiveauEtude(NiveauEtude niveauEtude) {
+        this.niveauEtude = niveauEtude;
+    }
+
+    public Fonction getFonction() {
+        return fonction;
+    }
+
+    public void setFonction(Fonction fonction) {
+        this.fonction = fonction;
+    }
 
     public GroupeEtude getGroupeEtude() {
         return groupeEtude;
