@@ -18,6 +18,15 @@ public class PackStudent {
     private String code;
     private String libelle;
     private Double prix;
+    private int totalStudents;
+
+    public int getTotalStudents() {
+        return totalStudents;
+    }
+
+    public void setTotalStudents(int totalStudents) {
+        this.totalStudents = totalStudents;
+    }
 
     public String getLibelle() {
         return libelle;

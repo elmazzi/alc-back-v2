@@ -15,6 +15,7 @@ public interface PackStudentDao extends JpaRepository<PackStudent, Long> {
     PackStudent findPackStudentByPrix(Double prix);
     List<PackStudent> findPackStudentByForGroupe(boolean forgroupe);
     PackStudent findPackStudentByLibelle(String libelle);
+    List<PackStudent> findByTotalStudents(int totalStudents);
 
     int deleteByCode(String code);
     int deleteByPrix(Double prix);
