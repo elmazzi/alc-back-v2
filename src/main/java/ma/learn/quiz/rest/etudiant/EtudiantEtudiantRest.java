@@ -21,9 +21,9 @@ public class EtudiantEtudiantRest {
     public EtudiantService etudiantService;
 
 
-    @PostMapping("/save/")
-    public int create(@RequestBody Etudiant etudiant) {
-        return etudiantService.create(etudiant);
+    @PostMapping("/save/pack/{pack}")
+    public int create(@PathVariable String pack,@RequestBody Etudiant etudiant) {
+        return etudiantService.create(pack,etudiant);
     }
 
     @GetMapping("/prof/id/{id}")

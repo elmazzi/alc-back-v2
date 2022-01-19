@@ -10,22 +10,15 @@ import ma.learn.quiz.dao.*;
 import miniApp.migration.constant.Constants;
 import miniApp.migration.util.FileUtil;
 import miniApp.migration.util.DownloaderUtil;
-import miniApp.migration.util.FileUtil;
 import miniApp.migration.util.JsoupUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 @Service
 public class DataBaseMigration {
     public DataBaseMigration() {
@@ -47,74 +40,43 @@ public class DataBaseMigration {
 
     public void htmlimagetext() {
         File imageDirRoot = FileUtil.mkdire(Constants.root1, "images", true);
-        File directoryPath=new File(Constants.root);
-        String[] contents = directoryPath.list();
-        for(int i=0; i<contents.length; i++) {
+        File directoryPathParcous = new File(Constants.root);
+        String[] parcour = directoryPathParcous.list();
+        for (int i = 0; i < parcour.length; i++) {
             Centre centre = centreDao.findCentreByLibelle("American Center 1");
             if (centre != null) {
-                Parcours parcours = parcoursDao.findByLibelle(contents[i]);
+                Parcours parcours = parcoursDao.findByLibelle(parcour[i]);
                 if (parcours == null) {
                     parcours = new Parcours();
                     parcours.setCentre(centre);
-                    parcours.setLibelle(contents[i]);
-                    parcours.setCode(contents[i]);
+                    parcours.setLibelle(parcour[i]);
+                    parcours.setCode(parcour[i]);
                     parcoursDao.save(parcours);
                 }
-                String pathParcoursImages = imageDirRoot.getAbsolutePath() + "\\" + contents[i] + "\\";
-                String pathParcours = Constants.root + contents[i] + "\\";
-                for (String lessonOrHomeWorkOfParkour : Constants.lessonOrHomeWorkOfParkours) {
-                    FileUtil.mkdire(pathParcoursImages, lessonOrHomeWorkOfParkour, true);
-                    String pathLessonOrHomeWork = pathParcours + lessonOrHomeWorkOfParkour;
-                    String pathLessonOrHomeWorkImage = pathParcoursImages + lessonOrHomeWorkOfParkour;
-                    for (String sectionName : Constants.sectionNames) {
-                        System.out.println("  sectionName ::::: " + lessonOrHomeWorkOfParkour + " " + contents[i] + " " + sectionName);
-                        String pathSection = pathLessonOrHomeWork + "\\" + sectionName;
-                        String pathSectionImage = pathLessonOrHomeWorkImage + "\\" + sectionName;
+                String pathParcoursImages = imageDirRoot.getAbsolutePath() + "\\" + parcour[i] + "\\";
+                String pathParcours = Constants.root + parcour[i] + "\\";
+                    FileUtil.mkdire(pathParcoursImages, "Lesson", true);
+                    String pathLessonOrHomeWork = pathParcours + "Lesson";
+                    String pathLessonOrHomeWorkImage = pathParcoursImages + "Lesson";
+                    File directoryPathSection = new File(pathLessonOrHomeWork);
+                    String[] section = directoryPathSection.list();
+                    for (int j = 0; j < section.length; j++) {
+                        System.out.println("  sectionName ::::: " + "Lesson" + " " + parcour[i] + " " + section[j]);
+                        String pathSection = pathLessonOrHomeWork + "\\" + section[j];
+                        String pathSectionImage = pathLessonOrHomeWorkImage + "\\" + section[j];
                         if (new File(pathSection).exists()) {
                             FileUtil.mkdire(pathSectionImage, pathLessonOrHomeWorkImage, true);
                             System.out.println("pathSection ==> " + pathSection);
                             System.out.println("pathImage ==>" + pathSectionImage);
                             System.out.println("++++++++++++++++++++++++++++++");
-                            extractHtmlImageAndContent(contents[i], sectionName, pathSection, pathSectionImage);
+                            extractHtmlImageAndContent(parcour[i], section[j], pathSection, pathSectionImage);
                         }
                     }
-                }
+
+
             }
         }
-/*
-        for (String parcour : Constants.parcours) {
-            Centre centre = centreDao.findCentreByLibelle("American Center 1");
-            if (centre != null) {
-                Parcours parcours = parcoursDao.findByLibelle(parcour);
-                if (parcours == null) {
-                    parcours = new Parcours();
-                    parcours.setCentre(centre);
-                    parcours.setLibelle(parcour);
-                    parcours.setCode(parcour);
-                    parcoursDao.save(parcours);
-                }
-                String pathParcoursImages = imageDirRoot.getAbsolutePath() + "\\" + parcour + "\\";
-                String pathParcours = Constants.root + parcour + "\\";
-                for (String lessonOrHomeWorkOfParkour : Constants.lessonOrHomeWorkOfParkours) {
-                    FileUtil.mkdire(pathParcoursImages, lessonOrHomeWorkOfParkour, true);
-                    String pathLessonOrHomeWork = pathParcours + lessonOrHomeWorkOfParkour;
-                    String pathLessonOrHomeWorkImage = pathParcoursImages + lessonOrHomeWorkOfParkour;
-                    for (String sectionName : Constants.sectionNames) {
-                        System.out.println("  sectionName ::::: " + lessonOrHomeWorkOfParkour + " " + parcour + " " + sectionName);
-                        String pathSection = pathLessonOrHomeWork + "\\" + sectionName;
-                        String pathSectionImage = pathLessonOrHomeWorkImage + "\\" + sectionName;
-                        if (new File(pathSection).exists()) {
-                            FileUtil.mkdire(pathSectionImage, pathLessonOrHomeWorkImage, true);
-                            System.out.println("pathSection ==> " + pathSection);
-                            System.out.println("pathImage ==>" + pathSectionImage);
-                            System.out.println("++++++++++++++++++++++++++++++");
-                            extractHtmlImageAndContent(parcour, sectionName, pathSection, pathSectionImage);
-                        }
-                    }
-                }
-            }
-        }
-*/
+
     }
 
 
@@ -165,16 +127,16 @@ public class DataBaseMigration {
                                 parcours.setNombreCours(parcours.getNombreCours() + 1);
                                 parcoursDao.save(parcours);
                             }
-                                Section section = sectionDao.findSectionByLibelleAndCoursId(JsoupUtil.getElementContent(f, "p.title-progress"), cours.getId());
-                                if (section == null) {
-                                    section = new Section();
-                                    section.setLibelle(JsoupUtil.getElementContent(f, "p.title-progress"));
-                                    section.setCategorieSection(categorieSection1);
-                                    section.setCode(JsoupUtil.getElementContent(f, "p.title-progress"));
-                                    section.setContenu(JsoupUtil.getElementContentLesson(f, "div.wrapper-information"));
-                                    section.setCours(cours);
-                                    sectionDao.save(section);
-                                }
+                            Section section = sectionDao.findSectionByLibelleAndCoursId(JsoupUtil.getElementContent(f, "p.title-progress"), cours.getId());
+                            if (section == null) {
+                                section = new Section();
+                                section.setLibelle(JsoupUtil.getElementContent(f, "p.title-progress"));
+                                section.setCategorieSection(categorieSection1);
+                                section.setCode(JsoupUtil.getElementContent(f, "p.title-progress"));
+                                section.setContenu(JsoupUtil.getElementContentLesson(f, "div.wrapper-information"));
+                                section.setCours(cours);
+                                sectionDao.save(section);
+                            }
 
 
                             String imageNameSource = null;

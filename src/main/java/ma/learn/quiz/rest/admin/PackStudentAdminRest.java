@@ -9,35 +9,40 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("packStudent/")
+@RequestMapping("admin/packStudent")
 public class PackStudentAdminRest {
 
     @Autowired
     private PackStudentService packStudentService;
 
 
-    @GetMapping("code/{code}")
+    @GetMapping("/code/{code}")
     public PackStudent findPackStudentByCode(@PathVariable String code) {
         return packStudentService.findPackStudentByCode(code);
     }
 
-    @GetMapping("prix/{prix}")
+    @GetMapping("/prix/{prix}")
     public PackStudent findPackStudentByPrix(@PathVariable Double prix) {
         return packStudentService.findPackStudentByPrix(prix);
     }
 
-    @GetMapping("packForgroupe/{forgroupe}")
+    @GetMapping("/packForgroupe/{forgroupe}")
     public List<PackStudent> findPackStudentByForGroupe(@PathVariable boolean forgroupe) {
         return packStudentService.findPackStudentByForGroupe(forgroupe);
     }
 
+    @PostMapping("/criteria")
+    public List<PackStudent> findbyCriteria(@RequestBody PackStudent packStudent) {
+        return packStudentService.findbyCriteria(packStudent);
+    }
+
     @PostMapping("/")
-    public int save(PackStudent packStudent) {
+    public int save(@RequestBody PackStudent packStudent) {
         return packStudentService.save(packStudent);
     }
 
     @PutMapping("/")
-    public int update(PackStudent packStudent) {
+    public int update(@RequestBody PackStudent packStudent) {
         return packStudentService.update(packStudent);
     }
 
@@ -46,12 +51,12 @@ public class PackStudentAdminRest {
         return packStudentService.deleteByCode(code);
     }
 
-    @DeleteMapping("prix/{prix}")
+    @DeleteMapping("/prix/{prix}")
     public int deleteByPrix(@PathVariable Double prix) {
         return packStudentService.deleteByPrix(prix);
     }
 
-    @DeleteMapping("forgroupe/{forGroupe}")
+    @DeleteMapping("/forgroupe/{forGroupe}")
     public int deleteByForGroupe(@PathVariable boolean forGroupe) {
         return packStudentService.deleteByForGroupe(forGroupe);
     }
