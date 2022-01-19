@@ -8,9 +8,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TrancheHoraireProfDao extends JpaRepository<TrancheHoraireProf, Long>{
+public interface TrancheHoraireProfDao extends JpaRepository<TrancheHoraireProf, Long> {
 
-    public int deleteTrancheHoraireProfById(Long id);
-    public List<TrancheHoraireProf> findByProfId(Long id );
+    int deleteTrancheHoraireProfById(Long id);
+    List<TrancheHoraireProf> findByProfId(Long id);
+    TrancheHoraireProf findTrancheHoraireProfById(Long id);
 
 }

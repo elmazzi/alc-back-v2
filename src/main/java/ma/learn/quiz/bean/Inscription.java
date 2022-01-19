@@ -41,6 +41,8 @@ public class Inscription {
     private Date datedebutinscription;
     @Temporal(TemporalType.DATE)
     private Date datefininscription;
+    @ManyToOne
+    private PackStudent packStudent;
 
     public StatutSocial getStatutSocial() {
         return statutSocial;
@@ -145,6 +147,14 @@ public class Inscription {
 
     public void setEtudiant(Etudiant etudiant) {
         this.etudiant = etudiant;
+    }
+
+    public PackStudent getPackStudent() {
+        return packStudent;
+    }
+
+    public void setPackStudent(PackStudent packStudent) {
+        this.packStudent = packStudent;
     }
 }
 
