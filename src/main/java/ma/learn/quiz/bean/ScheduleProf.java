@@ -26,7 +26,15 @@ public class ScheduleProf {
 	private Cours cours;
 	private String grpName;
 	private String profName;
+	private Long profsId;
 
+	public Long getProfsId() {
+		return profsId;
+	}
+
+	public void setProfsId(Long profsId) {
+		this.profsId = profsId;
+	}
 
 	public String getGrpName() {
 		return grpName;
