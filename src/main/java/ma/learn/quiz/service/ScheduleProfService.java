@@ -47,6 +47,7 @@ public class ScheduleProfService extends AbstractService {
             } else {
                 return null;
             }
+            scheduleProf.setProfsId(prof.getId());
                 return scheduleProfDao.save(scheduleProf);
         } else {
 

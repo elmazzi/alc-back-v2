@@ -17,6 +17,15 @@ public class TrancheHoraireProf {
     private String endHour;
     private int day;
     private int groupIndex;
+    private Long profsId;
+
+    public Long getProfsId() {
+        return profsId;
+    }
+
+    public void setProfsId(Long profsId) {
+        this.profsId = profsId;
+    }
 
     public int getGroupIndex() {
         return groupIndex;
