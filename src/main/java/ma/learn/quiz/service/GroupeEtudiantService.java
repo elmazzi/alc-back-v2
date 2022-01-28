@@ -27,6 +27,13 @@ public class GroupeEtudiantService extends AbstractService  {
     @Autowired
     public ProfService profService ;
 
+    public GroupeEtudiant findGroupeEtudiantByLibelleAndProfId(String libelle, Long idprof) {
+        return groupeEtudiantDao.findGroupeEtudiantByLibelleAndProfId(libelle, idprof);
+    }
+
+    public List<GroupeEtudiant> findGroupeEtudiantByProfId(Long idprof) {
+        return groupeEtudiantDao.findGroupeEtudiantByProfId(idprof);
+    }
 
     public int save(GroupeEtudiant groupeEtudiant) {
 

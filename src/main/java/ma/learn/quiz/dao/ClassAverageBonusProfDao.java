@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface ClassAverageBonusProfDao extends JpaRepository<ClassAverageBonusProf,Long> {
     List<ClassAverageBonusProf> findClassAverageBonusProfByProfId(Long id);
+    List<ClassAverageBonusProf> findClassAverageBonusProfByProfIdAndClassAverageBonusId(Long id,Long idClassAverageBonus);
     List<ClassAverageBonusProf> findClassAverageBonusProfByMoisAndAnneeAndProfId(int mois,int annee,Long idprof);
 
 }

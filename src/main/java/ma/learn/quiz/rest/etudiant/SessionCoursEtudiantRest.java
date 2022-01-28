@@ -53,25 +53,13 @@ public class SessionCoursEtudiantRest {
     public int deleteSessionCoursById(@RequestBody List<SessionCours> sessionCourss) {
         return sessionCoursService.deleteSessionCoursById(sessionCourss);
     }
-    @GetMapping("/prof/id/{id}/etudiant/id/{ids}")
-    public List<SessionCours> findByProfIdAndEtudiantId(@PathVariable Long id,@PathVariable Long ids) {
-        return sessionCoursService.findByProfIdAndEtudiantId(id, ids);
-    }
-    @GetMapping("/etudiant/id/{id}")
 
-    public List<SessionCours> findSessionCoursByEtudiantId(@PathVariable Long id) {
-        return sessionCoursService.findSessionCoursByEtudiantId(id);
-    }
+
     @GetMapping("/{profid}/{etudiantid}/{coursid}")
     public int save(@PathVariable Long profid,@PathVariable Long etudiantid,@PathVariable Long coursid) {
         return sessionCoursService.save(profid, etudiantid,coursid);
     }
 
-    @GetMapping("/idc/{idc}/ids/{ids}/idp/{idp}")
-
-    public SessionCours findSessionCoursByCoursIdAndEtudiantIdAndProfId(@PathVariable  Long idc,@PathVariable  Long ids,@PathVariable  Long idp) {
-        return sessionCoursService.findSessionCoursByCoursIdAndEtudiantIdAndProfId(idc, ids, idp);
-    }
 
     @Autowired
     private SessionCoursService sessionCoursService;

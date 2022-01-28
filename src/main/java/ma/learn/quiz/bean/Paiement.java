@@ -14,14 +14,13 @@ public class Paiement {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private int totalHeure;
     private BigDecimal montant;
     @ManyToOne
     private Prof prof;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date datePaiement;
     @ManyToOne
-    private Etudiant etudiant;
+    private GroupeEtudiant groupeEtudiant;
 
     public Long getId() {
         return id;
@@ -31,13 +30,7 @@ public class Paiement {
         this.id = id;
     }
 
-    public int getTotalHeure() {
-        return totalHeure;
-    }
 
-    public void setTotalHeure(int totalHeure) {
-        this.totalHeure = totalHeure;
-    }
 
     public BigDecimal getMontant() {
         return montant;
@@ -63,11 +56,11 @@ public class Paiement {
         this.datePaiement = datePaiement;
     }
 
-    public Etudiant getEtudiant() {
-        return etudiant;
+    public GroupeEtudiant getGroupeEtudiant() {
+        return groupeEtudiant;
     }
 
-    public void setEtudiant(Etudiant etudiant) {
-        this.etudiant = etudiant;
+    public void setGroupeEtudiant(GroupeEtudiant groupeEtudiant) {
+        this.groupeEtudiant = groupeEtudiant;
     }
 }

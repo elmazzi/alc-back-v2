@@ -19,7 +19,11 @@ import java.util.List;
 public class SalaryProfRest {
     @Autowired
     private SalaryService salaryService;
+    @GetMapping("/prof/idprof/{idprof}")
 
+    public List<Salary> findSalaryByProfId(@PathVariable Long idprof) {
+        return salaryService.findSalaryByProfId(idprof);
+    }
 
     @GetMapping("/{mois}/{annee}/{id}")
     public Salary findSalaryByMoisAndAnneeAndProfId(@PathVariable int mois, @PathVariable int annee, @PathVariable Long id) {
@@ -43,7 +47,7 @@ public class SalaryProfRest {
     public BigDecimal findMontantByAnneeAndProfId(@PathVariable int annee, @PathVariable Long idprof) {
         return salaryService.findMontantByAnneeAndProfId(annee, idprof);
     }
-    @GetMapping("/idprof/{profId}")
+    @GetMapping("/allSalaryProf/idprof/{profId}")
     public BigDecimal findAllMontantByProfId(@PathVariable Long profId) {
         return salaryService.findAllMontantByProfId(profId);
     }

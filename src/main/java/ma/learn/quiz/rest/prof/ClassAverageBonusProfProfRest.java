@@ -24,8 +24,8 @@ public class ClassAverageBonusProfProfRest {
     }
     @GetMapping("/all/prof/mois/{mois}/annee/{annee}/idprof/{idprof}")
 
-    public BigDecimal findAllClassAverageBonusProfByMoisAndAnneeAndProfId(@PathVariable int mois,@PathVariable int annee,@PathVariable Long idprof) {
-        return classAverageBonusProfService.findAllClassAverageBonusProfByMoisAndAnneeAndProfId(mois, annee, idprof);
+    public BigDecimal findMontantClassAverageBonusProfByMoisAndAnneeAndProfId(@PathVariable int mois,@PathVariable int annee,@PathVariable Long idprof) {
+        return classAverageBonusProfService.findMontantClassAverageBonusProfByMoisAndAnneeAndProfId(mois, annee, idprof);
     }
     @GetMapping("/")
 

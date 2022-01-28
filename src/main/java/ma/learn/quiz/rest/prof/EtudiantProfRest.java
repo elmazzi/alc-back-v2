@@ -14,10 +14,6 @@ import java.util.List;
 public class EtudiantProfRest {
 	@Autowired
 	public EtudiantService  etudiantService;
-	@GetMapping("/sessionCours/id/{id}")
-	public List<SessionCours> findByEtudiantId(@PathVariable Long id) {
-		return etudiantService.findByEtudiantId(id);
-	}
 
 	@GetMapping("/prof/id/{id}")
 	public List<Etudiant> findEtudiantByProfId(@PathVariable Long id) {
