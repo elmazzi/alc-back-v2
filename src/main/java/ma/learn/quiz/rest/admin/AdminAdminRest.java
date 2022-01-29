@@ -71,43 +71,6 @@ public class AdminAdminRest {
         dataBaseMigration.htmlimagetext();
     }
 
-    @GetMapping("/app/saveimage")
-    public void createFile() throws Exception {
-        GoogleClientSecrets secrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(gdSecretKeys.getInputStream()));
-        flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY, secrets, SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(credentialsFolder.getFile())).build();
-
-
-        Credential cred = this.flow.loadCredential(USER_IDENTIFIER_KEY);
-
-        Drive drive = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, cred).setApplicationName(APP_NAME).build();
-        com.google.api.services.drive.model.File file = new com.google.api.services.drive.model.File();
-        com.google.api.services.drive.model.File folder = new com.google.api.services.drive.model.File();
-        com.google.api.services.drive.model.File folder2 = new com.google.api.services.drive.model.File();
-
-// -------------------------------- FOLDER ONE ----------------------------------------
-        folder2.setName("folder1");
-        folder2.setMimeType("application/vnd.google-apps.folder");
-        com.google.api.services.drive.model.File uploadedFolder2 = drive.files().create(folder2).setFields("id").execute();
-        // -------------------------------- FOLDER TWO ----------------------------------------
-
-        folder.setName("folder");
-        folder.setMimeType("application/vnd.google-apps.folder");
-        folder.setParents(Arrays.asList(uploadedFolder2.getId()));
-        com.google.api.services.drive.model.File uploadedFolder = drive.files().create(folder).setFields("id").execute();
-
-
-        file.setName("1.jpg");
-        file.setParents(Arrays.asList(uploadedFolder.getId()));
-        FileContent content = new FileContent("image/jpeg", new java.io.File("C:\\KamImages\\images\\parcours2\\Lesson\\DISCUSSION1\\1.jpg"));
-        com.google.api.services.drive.model.File uploadedFile = drive.files().create(file, content).setFields("id").execute();
-        String fileReference = String.format("{fileID: '%s'}", uploadedFile.getId());
-        System.out.println("=========================================================");
-        System.out.println(fileReference);
-    }
-
-
-
 
     @GetMapping("/googlesignin")
     public void googleSignIn(HttpServletResponse response) throws Exception {
