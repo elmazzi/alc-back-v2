@@ -1,0 +1,9 @@
+package ma.learn.quiz.dao;
+
+import ma.learn.quiz.bean.SessionCours;
+import ma.learn.quiz.bean.StatutSocial;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface StatutSocialDao extends JpaRepository<StatutSocial, Long> {
+
+}

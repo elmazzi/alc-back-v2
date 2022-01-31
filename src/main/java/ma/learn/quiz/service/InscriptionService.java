@@ -21,6 +21,7 @@ public class InscriptionService extends AbstractService {
     public InscriptionDao inscriptionDao;
     @Autowired
     public EtatInscriptionService etatInscriptionService;
+
     @Autowired
     public ParcoursService parcoursService;
     @Autowired
@@ -35,6 +36,15 @@ public class InscriptionService extends AbstractService {
     public GroupeEtudiantService groupeEtudiantService;
     @Autowired
     private GroupeEtudeService groupeEtudeService;
+    @Autowired
+    private FonctionsService fonctionsService;
+    @Autowired
+    private NiveauEtudeService niveauEtudeService;
+    @Autowired
+    private StatutSocialService statutSocialService;
+    @Autowired
+    private InteretEtudiantService interetEtudiantService;
+
     @JsonFormat(pattern = "dd-MM-yyyy")
     Date dateActuelle = new Date();
     @Autowired
@@ -105,6 +115,10 @@ public class InscriptionService extends AbstractService {
             GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(inscription.getGroupeEtude().getId());
             Prof prof = this.profService.findProfById((inscription.getProf().getId()));
             inscription.setParcours(parcours);
+            inscription.setStatutSocial(inscription.getStatutSocial());
+            inscription.setFonction(inscription.getFonction());
+            inscription.setInteretEtudiant(inscription.getInteretEtudiant());
+            inscription.setNiveauEtude(inscription.getNiveauEtude());
             inscription.setProf(prof);
             inscription.setEtatInscription(etatInscription);
             inscription.setEtudiant(etudiant);
@@ -130,7 +144,10 @@ public class InscriptionService extends AbstractService {
             if (inscription.getEtudiant() == null) {
                 inscription.setEtudiant(new Etudiant());
             }
-
+            inscription.setStatutSocial(inscription.getStatutSocial());
+            inscription.setFonction(inscription.getFonction());
+            inscription.setInteretEtudiant(inscription.getInteretEtudiant());
+            inscription.setNiveauEtude(inscription.getNiveauEtude());
             EtatInscription etatInscription = etatInscriptionService.findEtatInscriptionById((long) 1);
             Etudiant etudiant = this.etudiantService.findEtudiantById(inscription.getEtudiant().getId());
             Parcours parcours = parcoursService.findParcoursById(inscription.getParcours().getId());
