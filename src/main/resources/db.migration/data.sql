@@ -24,14 +24,7 @@ SET time_zone = "+00:00";
 --
 
 --
--- Dumping data for table `calendrier_prof`
---
 
-INSERT INTO `calendrier_prof` (`id`, `end_recur`, `end_time`, `ref`, `start_recur`, `start_time`, `etudiant`, `prof`) VALUES
-(4076, '2021-09-09 00:00:00', '16:00:00', 'opkopko', '2021-09-09 00:00:00', '14:00:00', 5, 3),
-(4450, '2021-10-06 23:00:00', '12:00:00', 'IE5377', '2021-10-07 18:12:11', '10:30:00', 5, 4),
-(4451, '2021-10-07 23:00:00', '12:00:00', 'ir45', '2021-10-07 23:00:00', '10:00:00', 5, 3),
-(4452, '2021-10-10 23:00:00', '14:00:00', 'I3436FD', '2021-10-10 23:00:00', '12:00:00', 5, 4);
 
 --
 -- Dumping data for table `categorie_prof`
@@ -135,42 +128,6 @@ INSERT INTO `cours` (`id`, `code`, `description`, `image`, `libelle`, `nombre_li
 --
 -- Dumping data for table `dictionary`
 --
-
-INSERT INTO `dictionary` (`id`, `definition`, `word`, `etudiant`) VALUES
-(3950, 'يوم', 'day', 5),
-(4151, 'بلد', 'country', 5),
-(4437, 'اسم', 'name', 5),
-(4670, 'مفضل', 'favourite ', 38),
-(4672, 'هاتف', 'phone ', 38),
-(4675, 'مفضل', 'favourite ', 21),
-(4676, 'بلد', 'country ', 21),
-(4677, 'سعيد', 'happy', 21),
-(4679, 'اسم العائلة', 'surname', 21),
-(4680, 'سفر', 'travelling', 21),
-(4681, 'تهجى', 'spell ', 21),
-(4683, 'الموسيقى', 'music ', 38),
-(4688, 'هاتف', 'phone ', 39),
-(4691, 'مفضل', 'favourite ', 39),
-(4694, 'من', 'from', 39),
-(4695, 'المدينة', 'city ', 39),
-(4697, 'خليل', 'friend ', 39),
-(4710, 'مرحباً', 'from ', 22),
-(5772, 'عنون', 'address ', 30),
-(5845, 'مفضل', 'favourite ', 28);
-
---
--- Dumping data for table `etat_etudiant`
---
-
-INSERT INTO `etat_etudiant` (`id`, `etat`, `etat_number`, `first_name`, `last_class`, `last_name`, `nationnalité`, `reference`, `schedule1`, `schedule2`, `username`, `nbr_class`) VALUES
-(27, 'active', 1, 'Anouar', 'Feb 3 2021', 'Lamghari', NULL, 'stud-1', 'Sat 12:00', 'Tue 16:00', 'stud021alc', '2'),
-(28, 'onbreak', 3, 'mohssine', 'May 4 2021', 'morchid', NULL, 'stud-2', 'Sun 08:45', 'Fri 10:45', 'stud022alc', '1'),
-(29, 'start', 2, 'oussama', 'May 6 2021', 'bentaouil', NULL, 'stud-3', 'Fri 21:00', 'Tue 21:00', 'stud-023alc', '6'),
-(30, 'active', 1, 'Hajar', 'Feb 17 2021', 'kati', NULL, 'stud-4', 'Sun 08:45', 'Sun 11:00', 'stud024alc', '5'),
-(31, 'start', 2, 'meryam', 'Feb 10 2021', 'louhaidy', NULL, 'stud-5', 'Tue 12:00', 'Sat 16:00', 'stud025alc', '9'),
-(32, 'active', 1, 'nourdine', 'Jun 6 2021', 'lemrabet', NULL, 'stud-6', 'Thu 10:00', 'Wed  10:00', 'stud025alc', '4'),
-(33, 'onbreak', 3, 'adil', 'May 7 2021', 'taarabt', NULL, 'stud-7', 'Wed 12:00', 'Fri 09:00', 'stud027alc', '5'),
-(34, 'onbreak', 3, 'yassine', 'Feb 6 2021', 'Enessayri', NULL, 'stud-8', 'Sun 08:30', 'Sun 11:00', 'stud028', '7');
 
 --
 -- Dumping data for table `etat_etudiant_schedule`

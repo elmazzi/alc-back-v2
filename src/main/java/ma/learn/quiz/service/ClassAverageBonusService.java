@@ -32,6 +32,7 @@ public class ClassAverageBonusService {
             ClassAverageBonus classAverageBonus1 = new ClassAverageBonus();
             classAverageBonus1.setPrix(classAverageBonus.getPrix());
             classAverageBonus1.setNombreSession(classAverageBonus.getNombreSession());
+            classAverageBonus1.setCode("Class Average Bonus "+classAverageBonus.getNombreSession()+" Session");
             classAverageBonusDao.save(classAverageBonus1);
             return 1;
         }

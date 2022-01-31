@@ -35,7 +35,9 @@ public class WorkloadBonusService {
             WorkloadBonus workloadBonus1 = new WorkloadBonus();
             workloadBonus1.setPrix(workloadBonus.getPrix());
             workloadBonus1.setNombreSession(workloadBonus.getNombreSession());
-              workloadBonusDao.save(workloadBonus1);
+            workloadBonus1.setCode("Workload Bonus For "+workloadBonus.getNombreSession()+" Session");
+
+            workloadBonusDao.save(workloadBonus1);
             return 1;
         }
     }
