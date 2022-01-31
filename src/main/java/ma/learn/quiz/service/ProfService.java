@@ -87,7 +87,6 @@ public class ProfService extends AbstractService{
             userService.save(prof);
             return 1;
         }
-
     }
 
     public List<SessionCours> calcStatistique(Salary salaryVo) {

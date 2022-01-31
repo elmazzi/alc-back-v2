@@ -17,6 +17,7 @@ public class TrancheHoraireProfService {
     {
         for (TrancheHoraireProf trancheHoraireProf : trancheHoraireProfList){
             trancheHoraireProf.setProf(prof);
+            trancheHoraireProf.setProfsId(prof.getId());
             trancheHoraireProfDao.save(trancheHoraireProf);
         }
     }
@@ -43,5 +44,9 @@ public class TrancheHoraireProfService {
 
     public List<TrancheHoraireProf> findByProfId(Long id) {
         return trancheHoraireProfDao.findByProfId(id);
+    }
+
+    public List<TrancheHoraireProf> findAll() {
+        return trancheHoraireProfDao.findAll();
     }
 }

@@ -36,6 +36,16 @@ public class PackStudentAdminRest {
         return packStudentService.findbyCriteria(packStudent);
     }
 
+    @GetMapping("/libelle/{libelle}")
+    public PackStudent findPackStudentByLibelle(@PathVariable String libelle) {
+        return packStudentService.findPackStudentByLibelle(libelle);
+    }
+
+    @GetMapping("/totalStudents/{totalStudents}")
+    public List<PackStudent> findByTotalStudents(@PathVariable int totalStudents) {
+        return packStudentService.findByTotalStudents(totalStudents);
+    }
+
     @PostMapping("/")
     public int save(@RequestBody PackStudent packStudent) {
         return packStudentService.save(packStudent);

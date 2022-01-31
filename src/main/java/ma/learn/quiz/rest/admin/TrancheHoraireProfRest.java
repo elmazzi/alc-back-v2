@@ -18,6 +18,11 @@ public class TrancheHoraireProfRest {
         return trancheHoraireProfService.findByProfId(id);
     }
 
+    @GetMapping("/")
+    public List<TrancheHoraireProf> findAll() {
+        return trancheHoraireProfService.findAll();
+    }
+
     @PostMapping("/")
     public TrancheHoraireProf edit(@RequestBody  TrancheHoraireProf trancheHoraireProf) {
         return trancheHoraireProfService.edit(trancheHoraireProf);

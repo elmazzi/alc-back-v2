@@ -39,10 +39,10 @@ public class PaiementService {
             return -2;
         } else {
             Prof prof = profService.findProfById(sessionCours.getProf().getId());
-            Etudiant etudiant = etudiantService.findEtudiantById(sessionCours.getEtudiant().getId());
+            GroupeEtudiant groupeEtudiant = groupeEtudiantService.findGroupeEtudiantById(sessionCours.getGroupeEtudiant().getId());
             Paiement paiement = new Paiement();
             paiement.setDatePaiement(new Date());
-            paiement.setEtudiant(etudiant);
+            paiement.setGroupeEtudiant(groupeEtudiant);
             sessionCours.setPayer(true);
             paiement.setProf(prof);
             paiement.setMontant(prof.getCategorieProf().getLessonRate());
@@ -55,6 +55,7 @@ public class PaiementService {
             if (salary == null) {
                 Salary salary1 = new Salary();
                 salary1.setMois(month);
+                salary1.setCode(UtilString.generateStringUppercaseAndLowercase(6));
                 salary1.setAnnee(annee);
                 salary1.setProf(paiement.getProf());
                 salary1.setMontantMensuel(prof.getCategorieProf().getLessonRate());
@@ -92,9 +93,16 @@ public class PaiementService {
     }
 
     public List<Paiement> findPaiementByMoisAndAnneeAndProfID(String mois, String annee, Long profid) {
-        String query = "SELECT c FROM Paiement c WHERE 1=1 AND c.prof.id" + "=" + profid + " AND c.datePaiement LIKE '%" + annee + "-" + mois + "%'";
+        String query="";
+        if (mois.equals("1") || mois.equals("2") || mois.equals("3") || mois.equals("4") || mois.equals("5") || mois.equals("6") || mois.equals("7") || mois.equals("8") || mois.equals("9")) {
+            query = "SELECT c FROM Paiement c WHERE 1=1 AND c.prof.id" + "=" + profid + " AND c.datePaiement LIKE '%" + annee + "-0" + mois + "%'";
+        } else {
+            query = "SELECT c FROM Paiement c WHERE 1=1 AND c.prof.id" + "=" + profid + " AND c.datePaiement LIKE '%" + annee + "-" + mois + "%'";
+        }
         System.out.println(query);
         return entityManager.createQuery(query).getResultList();
+
+
     }
 
     public BigDecimal findAllPaiementByMoisAndAnneeAndProfID(String mois, String annee, Long profid) {
@@ -126,4 +134,6 @@ public class PaiementService {
     private SalaryService salaryService;
     @Autowired
     private SalaryDao salaryDao;
+    @Autowired
+    private GroupeEtudiantService groupeEtudiantService;
 }

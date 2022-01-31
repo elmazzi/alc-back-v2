@@ -27,9 +27,6 @@ public class EtudiantService extends AbstractService {
     @Autowired
     public SessionCoursService sessionCoursService;
 
-    public List<SessionCours> findByEtudiantId(Long id) {
-        return sessionCoursService.findByEtudiantId(id);
-    }
 
     public List<Etudiant> findByParcoursCode(String code) {
         return etudiantDao.findByParcoursCode(code);
@@ -125,6 +122,9 @@ public class EtudiantService extends AbstractService {
             inscription.setEtudiant(etudiant2);
             if (packStudent != null){
                 inscription.setPackStudent(packStudent);
+                packStudent.setTotalStudents(packStudent.getTotalStudents() + 1);
+                packStudentService.update(packStudent);
+
             }
             inscriptionService.save(inscription);
             return 1;

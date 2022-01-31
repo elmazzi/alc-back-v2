@@ -58,17 +58,14 @@ public class SessionCoursService extends AbstractService {
         if (sessionCours.getProf().getNom() != null) {
             query += " AND  e.prof.nom LIKE '%" + sessionCours.getProf().getNom() + "%'";
         }
-        if (sessionCours.getEtudiant().getNom() != null) {
-            query += "  AND  e.etudiant.nom LIKE '%" + sessionCours.getEtudiant().getNom() + "'";
+        if (sessionCours.getGroupeEtudiant().getLibelle() != null) {
+            query += "  AND  e.groupeEtudiant.libelle LIKE '%" + sessionCours.getGroupeEtudiant().getLibelle() + "'";
         }
 
 
         return entityManager.createQuery(query).getResultList();
     }
 
-    public List<SessionCours> findByEtudiantId(Long id) {
-        return sessionCoursDao.findByEtudiantId(id);
-    }
 
     public List<SessionCours> findAllByCriteria(SessionCoursVO sessionCoursVO) {
         String query = this.init("SessionCours");
@@ -88,11 +85,7 @@ public class SessionCoursService extends AbstractService {
             query += this.addCriteria("prof.nom", sessionCoursVO.getProf().getNom(), "LIKE");
         }
         System.out.println("query = " + query);
-
-
         return entityManager.createQuery(query).getResultList();
-
-
     }
 
 
@@ -110,19 +103,16 @@ public class SessionCoursService extends AbstractService {
         return sb.toString();
     }
 
-    public SessionCours findSessionCoursByCoursIdAndEtudiantIdAndProfId(Long idc, Long ids, Long idp) {
-        return sessionCoursDao.findSessionCoursByCoursIdAndEtudiantIdAndProfId(idc, ids, idp);
-    }
 
-    public int save(Long profid, Long etudiantid, Long coursid) {
+    public int save(Long profid, Long groupEtudiantid, Long coursid) {
         Prof prof1 = profService.findProfById(profid);
-        Etudiant etudiant1 = etudiantService.findEtudiantById(etudiantid);
+        GroupeEtudiant groupeEtudiant = groupeEtudiantService.findGroupeEtudiantById(groupEtudiantid);
         Cours cours = coursService.findCoursById(coursid);
-        if (prof1 == null || etudiant1 == null || cours == null) {
+        if (prof1 == null || groupeEtudiant == null || cours == null) {
             return -1;
         } else {
             SessionCours sessionCours = new SessionCours();
-            sessionCours.setEtudiant(etudiant1);
+            sessionCours.setGroupeEtudiant(groupeEtudiant);
             sessionCours.setDateFin(new Date());
             sessionCours.setReference(generateStringUppercaseAndLowercase(6));
             sessionCours.setPayer(false);
@@ -147,10 +137,10 @@ public class SessionCoursService extends AbstractService {
                         salary1.setMois(month);
                         salary1.setAnnee(annee);
                         salary1.setProf(sessionCours.getProf());
-                        salary1.setNbrSessionMensuel(new BigDecimal(1));
+                        //   salary1.setNbrSessionMensuel(new BigDecimal(1));
                         salaryDao.save(salary1);
                     } else {
-                        salary.setNbrSessionMensuel(salary.getNbrSessionMensuel().add(new BigDecimal(1)));
+                        // salary.setNbrSessionMensuel(salary.getNbrSessionMensuel().add(new BigDecimal(1)));
                         salary.setMontantMensuel(salary.getMontantMensuel().add(workloadBonus.getPrix()));
                         salaryDao.save(salary);
                     }
@@ -163,31 +153,33 @@ public class SessionCoursService extends AbstractService {
                 }
             }
             for (ClassAverageBonus classAverageBonus : classAverageBonusList) {
-                if (classAverageBonus.getNombreSession() <= sessionCoursList1.size() / groupeEtudiants.size()) {
-                    LocalDate localDate1 = sessionCours.getDateFin().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                    int month = localDate1.getMonthValue();
-                    int annee = localDate1.getYear();
-                    Salary salary = salaryService.findSalaryByMoisAndAnneeAndProfId(month, annee, sessionCours.getProf().getId());
-                    if (salary == null) {
-                        Salary salary1 = new Salary();
-                        salary1.setMontantMensuel(classAverageBonus.getPrix());
-                        salary1.setMois(month);
-                        salary1.setAnnee(annee);
-                        salary1.setProf(sessionCours.getProf());
-                        salary1.setNbrSessionMensuel(new BigDecimal(1));
-                        salaryDao.save(salary1);
-                    } else {
-                        salary.setNbrSessionMensuel(salary.getNbrSessionMensuel().add(new BigDecimal(1)));
-                        salary.setMontantMensuel(salary.getMontantMensuel().add(classAverageBonus.getPrix()));
-                        salaryDao.save(salary);
+                    int nbr= sessionCoursList1.size()/groupeEtudiants.size();
+                    if (classAverageBonus.getNombreSession() == nbr) {
+                        LocalDate localDate1 = sessionCours.getDateFin().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        int month = localDate1.getMonthValue();
+                        int annee = localDate1.getYear();
+                        Salary salary = salaryService.findSalaryByMoisAndAnneeAndProfId(month, annee, sessionCours.getProf().getId());
+                        if (salary == null) {
+                            Salary salary1 = new Salary();
+                            salary1.setMontantMensuel(classAverageBonus.getPrix());
+                            salary1.setMois(month);
+                            salary1.setAnnee(annee);
+                            salary1.setProf(sessionCours.getProf());
+                            // salary1.setNbrSessionMensuel(new BigDecimal(1));
+                            salaryDao.save(salary1);
+                        } else {
+                            //   salary.setNbrSessionMensuel(salary.getNbrSessionMensuel().add(new BigDecimal(1)));
+                            salary.setMontantMensuel(salary.getMontantMensuel().add(classAverageBonus.getPrix()));
+                            salaryDao.save(salary);
+                        }
+                        ClassAverageBonusProf classAverageBonusProf = new ClassAverageBonusProf();
+                        classAverageBonusProf.setClassAverageBonus(classAverageBonus);
+                        classAverageBonusProf.setProf(sessionCours.getProf());
+                        classAverageBonusProf.setMois(month);
+                        classAverageBonusProf.setAnnee(annee);
+                        classAverageBonusProfDao.save(classAverageBonusProf);
+
                     }
-                    ClassAverageBonusProf classAverageBonusProf=new ClassAverageBonusProf();
-                    classAverageBonusProf.setClassAverageBonus(classAverageBonus);
-                    classAverageBonusProf.setProf(sessionCours.getProf());
-                    classAverageBonusProf.setMois(month);
-                    classAverageBonusProf.setAnnee(annee);
-                    classAverageBonusProfDao.save(classAverageBonusProf);
-                }
             }
             return 1;
         }
@@ -197,17 +189,20 @@ public class SessionCoursService extends AbstractService {
     public List<SessionCours> findAllSessionCoursByProfIdAndCurrentDate(Long idprof) {
         Date date = new Date();
         LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
         String month = String.valueOf(localDate.getMonthValue());
         String annee = String.valueOf(localDate.getYear());
+        if (month.equals("1") || month.equals("2") || month.equals("3") || month.equals("4") || month.equals("5") || month.equals("6") || month.equals("7") || month.equals("8") || month.equals("9")) {
+            String query = "SELECT c FROM SessionCours c WHERE 1=1 AND c.prof.id" + "=" + idprof + " AND c.dateFin LIKE '%" + annee + "-" + '0' + month + "%'";
+            return entityManager.createQuery(query).getResultList();
 
-        String query = "SELECT c FROM SessionCours c WHERE 1=1 AND c.prof.id" + "=" + idprof + " AND c.dateFin LIKE '%" + annee + "-" + month + "%'";
-        return entityManager.createQuery(query).getResultList();
+        } else {
+            String query = "SELECT c FROM SessionCours c WHERE 1=1 AND c.prof.id" + "=" + idprof + " AND c.dateFin LIKE '%" + annee + "-" + month + "%'";
+            return entityManager.createQuery(query).getResultList();
+
+        }
+
     }
 
-    public List<SessionCours> findByProfIdAndEtudiantId(Long id, Long ids) {
-        return sessionCoursDao.findByProfIdAndEtudiantId(id, ids);
-    }
 
     public int update(Long id) {
         SessionCours session = findSessionCoursById(id);
@@ -248,7 +243,5 @@ public class SessionCoursService extends AbstractService {
         return sessionCoursDao.findSessionCoursByProfNom(nom);
     }
 
-    public List<SessionCours> findSessionCoursByEtudiantId(Long id) {
-        return sessionCoursDao.findSessionCoursByEtudiantId(id);
-    }
+
 }

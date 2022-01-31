@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 17, 2022 at 04:04 PM
+-- Generation Time: Jan 25, 2022 at 05:42 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.4.1
 
@@ -98,7 +98,7 @@ INSERT INTO `categorie_section` (`id`, `code`, `libelle`, `numero_order`, `super
 (1951, 'Study the information', 'Grammar-2', 3, 159),
 (1952, 'Study the information', 'Grammar-3', 4, 159),
 (6, NULL, 'Vocabulary', 8, 159);
-
+ALTER TABLE `section` CHANGE `contenu` `contenu` TEXT CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL;
 -- --------------------------------------------------------
 
 --
@@ -629,14 +629,14 @@ CREATE TABLE `groupe_etudiant` (
 --
 
 INSERT INTO `groupe_etudiant` (`id`, `date_debut`, `date_fin`, `libelle`, `niveau`, `nombre_place`, `nombre_place_non_vide`, `nombre_placevide`, `groupe_etude`, `parcours`, `prof`) VALUES
-(4602, NULL, NULL, 'Group-student-130', NULL, 1, 1, 0, 4598, 5, NULL),
-(4611, '0007-06-13 00:00:00', '0028-12-12 00:00:00', 'Group 5', NULL, 5, 4, 1, 4608, 5, NULL),
-(4614, '0007-06-13 00:00:00', '0006-11-12 00:00:00', 'Group-6', NULL, 5, 2, 3, 4613, 6, NULL),
-(4622, NULL, NULL, 'Group-7', NULL, 6, 2, 4, 4613, 5, NULL),
-(4742, '0007-06-13 00:00:00', '0033-08-14 00:00:00', 'Group-8', NULL, 2, 0, 2, 4599, 5, NULL),
-(5556, NULL, NULL, 'Group-aicha', NULL, NULL, 1, 0, 4598, 5, NULL),
-(5697, NULL, NULL, 'Group-Aicha-Fatima', NULL, NULL, 2, 0, 4599, 5, NULL),
-(5810, '0006-07-15 00:00:00', '0007-11-12 00:00:00', 'Group-Aya', NULL, NULL, 1, 0, 4598, 5, NULL);
+(4602, NULL, NULL, 'Group-student-130', NULL, 1, 1, 0, 4598, 5, 3),
+(4611, '0007-06-13 00:00:00', '0028-12-12 00:00:00', 'Group 5', NULL, 5, 4, 1, 4608, 5, 3),
+(4614, '0007-06-13 00:00:00', '0006-11-12 00:00:00', 'Group-6', NULL, 5, 2, 3, 4613, 6, 3),
+(4742, '0007-06-13 00:00:00', '0033-08-14 00:00:00', 'Group-8', NULL, 2, 0, 2, 4599, 5, 4),
+(5556, NULL, NULL, 'Group-aicha', NULL, NULL, 1, 0, 4598, 5, 41),
+(5697, NULL, NULL, 'Group-Aicha-Fatima', NULL, NULL, 2, 0, 4599, 5, 41),
+(5810, '0006-07-15 00:00:00', '0007-11-12 00:00:00', 'Group-Aya', NULL, NULL, 1, 0, 4598, 5, 4),
+(5918, NULL, NULL, 'G-W-H-F', NULL, NULL, 3, 0, 4600, 5, 4);
 
 -- --------------------------------------------------------
 
@@ -658,15 +658,16 @@ INSERT INTO `groupe_etudiant_detail` (`id`, `etudiant`, `groupe_etudiant`) VALUE
 (4603, 36, 4602),
 (4612, 38, 4611),
 (4615, 26, 4614),
-(4623, 38, 4622),
-(4624, 22, 4622),
 (4764, 40, 4611),
 (4783, 36, 4611),
 (5055, 38, 4614),
 (5557, 22, 5556),
 (5698, 22, 5697),
 (5699, 30, 5697),
-(5811, 28, 5810);
+(5811, 28, 5810),
+(5919, 38, 5918),
+(5920, 20, 5918),
+(5985, 23, 5918);
 
 -- --------------------------------------------------------
 
@@ -683,7 +684,7 @@ CREATE TABLE `hibernate_sequence` (
 --
 
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES
-(5906),
+(5986),
 (1);
 
 -- --------------------------------------------------------
@@ -864,33 +865,34 @@ CREATE TABLE `inscription` (
   `etudiant` bigint(20) DEFAULT NULL,
   `parcours` bigint(20) DEFAULT NULL,
   `prof` bigint(20) DEFAULT NULL,
-  `groupe_etude` bigint(20) DEFAULT NULL
+  `groupe_etude` bigint(20) DEFAULT NULL,
+  `pack_student` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `inscription`
 --
 
-INSERT INTO `inscription` (`id`, `datedebutinscription`, `datefininscription`, `numero_inscription`, `etat_inscription`, `etudiant`, `parcours`, `prof`, `groupe_etude`) VALUES
-(4473, NULL, NULL, 0, 2, 14, 6, 4, NULL),
-(4475, '2021-11-02', '2022-01-04', 0, 2, 19, 6, 3, NULL),
-(4476, '2021-11-02', '2021-11-17', 0, 2, 20, 6, 3, NULL),
-(4477, '2021-11-01', '2021-11-18', 0, 2, 21, 5, 4, NULL),
-(4478, '2021-10-01', '2021-12-01', 0, 2, 22, 601, 3, NULL),
-(4544, '2021-11-01', '2022-02-04', 0, 2, 24, 5, 3, NULL),
-(4551, '2021-11-01', '2022-01-01', 0, 2, 25, 5, 3, NULL),
-(4555, '2021-11-01', '2021-12-18', 0, 2, 26, 6, 3, NULL),
-(4565, '2021-11-01', '2022-05-01', 0, 2, 27, 5, 4, NULL),
-(4569, '2021-11-01', '2022-11-01', 0, 2, 28, 5, 3, NULL),
-(4576, '2021-08-01', '2022-07-01', 0, 2, 30, 5, 3, NULL),
-(4583, '2021-11-01', '2021-11-01', 0, 2, 31, 6, 3, NULL),
-(4587, '2021-11-01', '2022-06-01', 0, 2, 32, 601, 3, NULL),
-(4590, '2021-11-01', '2022-01-01', 0, 2, 33, 601, 3, NULL),
-(4592, NULL, NULL, 0, 1, 34, 7, NULL, NULL),
-(4596, '2021-12-01', '2022-01-01', 0, 2, 35, 5, 3, NULL),
-(4601, '2021-12-01', '2022-05-01', 0, 1, 36, 5, 4, 4598),
-(4610, '2021-12-01', '2022-03-01', 0, 1, 38, 6, 3, 4608),
-(4763, NULL, NULL, 0, 1, 40, 5, NULL, 4598);
+INSERT INTO `inscription` (`id`, `datedebutinscription`, `datefininscription`, `numero_inscription`, `etat_inscription`, `etudiant`, `parcours`, `prof`, `groupe_etude`, `pack_student`) VALUES
+(4473, NULL, NULL, 0, 2, 14, 6, 4, NULL, NULL),
+(4475, '2021-11-02', '2022-01-04', 0, 2, 19, 6, 3, NULL, NULL),
+(4476, '2021-11-02', '2021-11-17', 0, 2, 20, 6, 3, NULL, NULL),
+(4477, '2021-11-01', '2021-11-18', 0, 2, 21, 5, 4, NULL, NULL),
+(4478, '2021-10-01', '2021-12-01', 0, 2, 22, 601, 3, NULL, NULL),
+(4544, '2021-11-01', '2022-02-04', 0, 2, 24, 5, 3, NULL, NULL),
+(4551, '2021-11-01', '2022-01-01', 0, 2, 25, 5, 3, NULL, NULL),
+(4555, '2021-11-01', '2021-12-18', 0, 2, 26, 6, 3, NULL, NULL),
+(4565, '2021-11-01', '2022-05-01', 0, 2, 27, 5, 4, NULL, NULL),
+(4569, '2021-11-01', '2022-11-01', 0, 2, 28, 5, 3, NULL, NULL),
+(4576, '2021-08-01', '2022-07-01', 0, 2, 30, 5, 3, NULL, NULL),
+(4583, '2021-11-01', '2021-11-01', 0, 2, 31, 6, 3, NULL, NULL),
+(4587, '2021-11-01', '2022-06-01', 0, 2, 32, 601, 3, NULL, NULL),
+(4590, '2021-11-01', '2022-01-01', 0, 2, 33, 601, 3, NULL, NULL),
+(4592, NULL, NULL, 0, 1, 34, 7, NULL, NULL, NULL),
+(4596, '2021-12-01', '2022-01-01', 0, 2, 35, 5, 3, NULL, NULL),
+(4601, '2021-12-01', '2022-05-01', 0, 1, 36, 5, 4, 4598, NULL),
+(4610, '2021-12-01', '2022-03-01', 0, 1, 38, 6, 3, 4608, NULL),
+(4763, NULL, NULL, 0, 1, 40, 5, NULL, 4598, NULL);
 
 -- --------------------------------------------------------
 
@@ -933,7 +935,9 @@ CREATE TABLE `pack_student` (
   `code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `for_groupe` bit(1) NOT NULL,
   `nombre_cours` int(11) NOT NULL,
-  `prix` double DEFAULT NULL
+  `prix` double DEFAULT NULL,
+  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total_students` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1090,6 +1094,14 @@ CREATE TABLE `quiz_etudiant` (
   `quiz` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `quiz_etudiant`
+--
+
+INSERT INTO `quiz_etudiant` (`id`, `note`, `question_current`, `ref`, `resultat`, `etudiant`, `quiz`) VALUES
+(5971, 1.5, 5, 'que', '1.5 / 5', 22, 5892),
+(5977, 2.5, 5, 'rTq', '2.5 / 5', 30, 5892);
+
 -- --------------------------------------------------------
 
 --
@@ -1166,6 +1178,22 @@ CREATE TABLE `reponse_etudiant` (
   `quiz_etudiant` bigint(20) DEFAULT NULL,
   `reponse` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `reponse_etudiant`
+--
+
+INSERT INTO `reponse_etudiant` (`id`, `answer`, `note`, `ref`, `question`, `quiz_etudiant`, `reponse`) VALUES
+(5973, 'Are you', 1, 'Hn3', 5899, 5971, 5900),
+(5972, 'true', 0.5, 'uoH', 5901, 5971, 5902),
+(5974, 'i am khalid  and i am from Morocco', 0, 'WgT', 5897, 5971, 5898),
+(5975, 'It\'s the same place.', 0, 'AHG', 5893, 5971, 5896),
+(5976, NULL, 0, 'CDL', 5904, 5971, 5905),
+(5978, 'You', 0, 'WH5', 5899, 5977, 5900),
+(5979, NULL, 0, 'D91', 5904, 5977, 5905),
+(5981, 'true', 0.5, 'aVO', 5901, 5977, 5902),
+(5982, 'My name is khalid and i am from Morocco', 1, 'UzZ', 5897, 5977, 5898),
+(5980, 'Only for half an hour.', 1, 'Csf', 5893, 5977, 5896);
 
 -- --------------------------------------------------------
 
@@ -1288,67 +1316,22 @@ CREATE TABLE `schedule_prof` (
   `prof` bigint(20) DEFAULT NULL,
   `subject` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `grp_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `prof_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `prof_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `profs_id` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `schedule_prof`
 --
 
-INSERT INTO `schedule_prof` (`id`, `end_time`, `ref`, `start_time`, `cours`, `groupe_etudiant`, `prof`, `subject`, `grp_name`, `prof_name`) VALUES
-(4618, '2021-12-06 11:00:00', '12', '2021-12-06 09:00:00', 2, 4611, 3, 'Say Hello!!', 'Group 5', 'teacher'),
-(4719, '2021-12-13 08:00:00', 'ethtr12451', '2021-12-13 06:00:00', 38, 4611, 4, 'Leisure activities', 'Group 5', 'prof'),
-(4626, '2021-12-08 11:00:00', '345', '2021-12-08 09:00:00', 41, 4622, 3, 'More about you', 'Group-7', 'teacher'),
-(4718, '2021-12-10 08:00:00', 'ethtr1245', '2021-12-10 06:00:00', 39, 4611, 4, 'When youâ€™re free', 'Group 5', 'prof'),
-(4717, '2021-12-09 08:00:00', 'ethtr124', '2021-12-09 06:00:00', 40, 4611, 4, 'Personal profile', 'Group 5', 'prof'),
-(4715, '2021-12-06 08:00:00', 'ethtr1', '2021-12-06 06:00:00', 101, 4611, 4, 'Intro lesson', 'Group 5', 'prof'),
-(4716, '2021-12-07 08:00:00', 'ethtr12', '2021-12-07 06:00:00', 41, 4611, 4, 'More about you', 'Group 5', 'prof'),
-(5694, '2022-01-03 12:00:00', 'ertgee', '2022-01-03 08:00:00', 101, 4611, 3, 'Intro lesson', 'Group 5', 'teacher teacher'),
-(4663, '2022-01-16 11:00:00', 'cdhk2589121516', '2022-01-16 09:00:00', 36, 4611, 3, 'koko', 'Group 5', 'teacher'),
-(4664, '2022-01-19 11:00:00', 'cdhk258912151619', '2022-01-19 09:00:00', 34, 4611, 3, 'For the geeks', 'Group 5', 'teacher'),
-(4665, '2022-01-22 11:00:00', 'cdhk25891215161922', '2022-01-22 09:00:00', 33, 4611, 3, 'Technology', 'Group 5', 'teacher'),
-(4666, '2022-01-23 11:00:00', 'cdhk2589121516192223', '2022-01-23 09:00:00', 32, 4611, 3, 'More occasions', 'Group 5', 'teacher'),
-(4667, '2022-01-26 11:00:00', 'cdhk258912151619222326', '2022-01-26 09:00:00', 31, 4611, 3, 'Events', 'Group 5', 'teacher'),
-(4668, '2022-01-29 11:00:00', 'cdhk25891215161922232629', '2022-01-29 09:00:00', 30, 4611, 3, 'Get emotional', 'Group 5', 'teacher'),
-(4704, '2022-01-01 11:00:00', 'ergerg12151819222526291', '2022-01-01 09:00:00', 33, 4622, 3, 'Technology', 'Group-7', 'teacher'),
-(4720, '2021-12-14 08:00:00', 'ethtr124512', '2021-12-14 06:00:00', 37, 4611, 4, 'Just another day', 'Group 5', 'prof'),
-(4721, '2021-12-17 08:00:00', 'ethtr12451245', '2021-12-17 06:00:00', 34, 4611, 4, 'For the geeks', 'Group 5', 'prof'),
-(4728, '2021-12-20 11:00:00', 'ggg1', '2021-12-20 09:00:00', 25, 4611, 3, 'Grab a bite', 'Group 5', 'teacher'),
-(4735, '2021-10-08 12:30:00', 'sssx5', '2021-10-08 10:30:00', 40, 4614, 3, 'Personal profile', 'Group-6', 'teacher'),
-(4706, '2021-12-29 11:00:00', 'ergerg1215181922252629', '2021-12-29 09:00:00', 34, 4622, 3, 'For the geeks', 'Group-7', 'teacher'),
-(4707, '2021-12-26 11:00:00', 'ergerg12151819222526', '2021-12-26 09:00:00', 36, 4622, 3, 'koko', 'Group-7', 'teacher'),
-(4708, '2021-12-25 11:00:00', 'ergerg121518192225', '2021-12-25 09:00:00', 37, 4622, 3, 'Just another day', 'Group-7', 'teacher'),
-(4722, '2021-12-16 08:00:00', 'ethtr1245124', '2021-12-16 06:00:00', 36, 4611, 4, 'koko', 'Group 5', 'prof'),
-(4723, '2021-12-21 08:00:00', 'ethtr1245124512', '2021-12-21 06:00:00', 32, 4611, 4, 'More occasions', 'Group 5', 'prof'),
-(4724, '2021-12-20 08:00:00', 'ethtr124512451', '2021-12-20 06:00:00', 33, 4611, 4, 'Technology', 'Group 5', 'prof'),
-(4725, '2021-12-23 08:00:00', 'ethtr12451245124', '2021-12-23 06:00:00', 31, 4611, 4, 'Events', 'Group 5', 'prof'),
-(4726, '2021-12-24 08:00:00', 'ethtr124512451245', '2021-12-24 06:00:00', 30, 4611, 4, 'Get emotional', 'Group 5', 'prof'),
-(4727, '2021-12-13 11:00:00', 'ggg1', '2021-12-13 09:00:00', 28, 4611, 3, 'A day in a life', 'Group 5', 'teacher'),
-(4731, '2021-12-23 11:00:00', 'ggg4', '2021-12-23 09:00:00', 24, 4611, 3, 'Food you have', 'Group 5', 'teacher'),
-(4732, '2021-12-16 11:00:00', 'ggg4', '2021-12-16 09:00:00', 27, 4611, 3, 'No place like home', 'Group 5', 'teacher'),
-(4737, '2021-10-15 12:30:00', 'sssx5', '2021-10-15 10:30:00', 37, 4614, 3, 'Just another day', 'Group-6', 'teacher'),
-(4738, '2021-10-13 12:30:00', 'sssx3', '2021-10-13 10:30:00', 38, 4614, 3, 'Leisure activities', 'Group-6', 'teacher'),
-(4739, '2021-10-20 12:30:00', 'sssx3', '2021-10-20 10:30:00', 34, 4614, 3, 'For the geeks', 'Group-6', 'teacher'),
-(4741, '2021-10-22 12:30:00', 'sssx5', '2021-10-22 10:30:00', 33, 4614, 3, 'Technology', 'Group-6', 'teacher'),
-(4749, '2021-11-18 11:00:00', 'free4', '2021-11-18 09:00:00', 37, 4742, 3, 'Just another day', 'Group-8', 'teacher'),
-(4746, '2021-11-21 11:00:00', 'free0', '2021-11-21 09:00:00', 36, 4742, 3, 'koko', 'Group-8', 'teacher'),
-(4748, '2021-11-11 11:00:00', 'free4', '2021-11-11 09:00:00', 40, 4742, 3, 'Personal profile', 'Group-8', 'teacher'),
-(4751, '2021-11-14 11:00:00', 'free0', '2021-11-14 09:00:00', 39, 4742, 3, 'When youâ€™re free', 'Group-8', 'teacher'),
-(4753, '2021-11-25 11:00:00', 'free4', '2021-11-25 09:00:00', 33, 4742, 3, 'Technology', 'Group-8', 'teacher'),
-(4754, '2021-12-14 11:00:00', 'ferf', '2021-12-14 09:00:00', 41, 4742, 3, 'More about you', 'Group-8', 'teacher'),
-(4759, '2022-01-12 09:00:00', 'frttt3', '2022-01-12 07:00:00', 40, 4742, 3, 'Personal profile', 'Group-8', 'teacher'),
-(4760, '2022-01-19 09:00:00', 'frttt3', '2022-01-19 07:00:00', 37, 4742, 3, 'Just another day', 'Group-8', 'teacher'),
-(4756, '2022-01-16 09:00:00', 'frttt0', '2022-01-16 07:00:00', 39, 4742, 3, 'When youâ€™re free', 'Group-8', 'teacher'),
-(5307, '2021-12-21 20:00:00', 'wefwef', '2021-12-21 17:00:00', 34, 4742, 3, 'For the geeks', 'Group-8', 'teacher teacher'),
-(5558, '2021-12-30 11:00:00', 'referf', '2021-12-30 08:00:00', 101, 5556, 3, 'Intro lesson', 'Group-aicha', 'teacher teacher'),
-(5700, '2022-01-04 12:00:00', 'reegeg', '2022-01-04 08:00:00', 101, 5697, 3, 'Intro lesson', 'Group-Aicha-Fatima', 'teacher teacher'),
-(5790, '2022-01-07 11:00:00', 'erferf', '2022-01-07 08:00:00', 5, 5697, 3, 'Let\'s get acquainted', 'Group-Aicha-Fatima', 'teacher teacher'),
-(5791, '2022-01-05 16:00:00', 'wrgwrg', '2022-01-05 13:00:00', 5, 5556, 4, 'Let\'s get acquainted', 'Group-aicha', 'prof prof'),
-(5806, '2022-01-07 17:00:00', 'ererg', '2022-01-07 14:00:00', 101, 4602, 4, 'Intro lesson', 'Group-student-130', 'prof prof'),
-(5807, '2022-01-06 11:00:00', 'fververv', '2022-01-06 08:00:00', 101, 5556, 3, 'Intro lesson', 'Group-aicha', 'teacher teacher'),
-(5812, '2022-01-09 11:00:00', 'rtyujn', '2022-01-09 06:00:00', 101, 5810, 3, 'Intro lesson', 'Group-Aya', 'teacher teacher'),
-(5846, '2022-01-10 11:00:00', 'iiuhiuh', '2022-01-10 07:00:00', 39, 4742, 3, 'When youâ€™re free', 'Group-8', 'teacher teacher'),
-(5847, '2022-01-13 11:00:00', 'kj', '2022-01-13 10:00:00', 38, 4611, 3, 'Leisure activities', 'Group 5', 'teacher teacher');
+INSERT INTO `schedule_prof` (`id`, `end_time`, `ref`, `start_time`, `cours`, `groupe_etudiant`, `prof`, `subject`, `grp_name`, `prof_name`, `profs_id`) VALUES
+(5958, '2022-01-21 06:00:00', 'ee', '2022-01-21 02:00:00', 101, 4602, 3, 'Intro lesson', 'Group-student-130', 'teacher teacher', 3),
+(5959, '2022-01-21 11:00:00', 'fef', '2022-01-21 08:00:00', 101, 5556, 41, 'Intro lesson', 'Group-aicha', 'Teacher Ahmed', 41),
+(5965, '2022-01-24 14:00:00', 'sgrg', '2022-01-24 11:00:00', 101, 4602, 3, 'Intro lesson', 'Group-student-130', 'teacher teacher', 3),
+(5966, '2022-01-23 08:00:00', 'erfe', '2022-01-23 06:00:00', 41, 4602, 3, 'More about you', 'Group-student-130', 'teacher teacher', 3),
+(5970, '2022-01-28 12:00:00', 'ege', '2022-01-28 08:00:00', 101, 5697, 41, 'Intro lesson', 'Group-Aicha-Fatima', 'Teacher Ahmed', 41),
+(5969, '2022-01-24 11:00:00', 'eew', '2022-01-24 07:00:00', 101, 5556, 41, 'Intro lesson', 'Group-aicha', 'Teacher Ahmed', 41),
+(5983, '2022-01-28 10:00:00', 'dcsdc', '2022-01-28 06:00:00', 101, 5918, 4, 'Intro lesson', 'G-W-H-F', 'prof prof', 4);
 
 -- --------------------------------------------------------
 
@@ -2448,21 +2431,27 @@ CREATE TABLE `tranche_horaire_prof` (
   `day` int(11) NOT NULL,
   `end_hour` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `group_index` int(11) NOT NULL,
-  `start_hour` varchar(255) CHARACTER SET utf8 DEFAULT NULL
+  `start_hour` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `profs_id` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `tranche_horaire_prof`
 --
 
-INSERT INTO `tranche_horaire_prof` (`id`, `prof`, `day`, `end_hour`, `group_index`, `start_hour`) VALUES
-(5848, 3, 1, '21:30', 0, '10:00'),
-(5849, 3, 4, '23:00', 0, '9:40'),
-(5854, 4, 1, '17:30', 0, '10:00'),
-(5851, 3, 0, '13:33', 0, '7:15'),
-(5852, 3, 2, '23:45', 0, '15:40'),
-(5855, 4, 5, '14:50', 0, '7:00'),
-(5856, 4, 3, '23:00', 0, '14:30');
+INSERT INTO `tranche_horaire_prof` (`id`, `prof`, `day`, `end_hour`, `group_index`, `start_hour`, `profs_id`) VALUES
+(5848, 3, 1, '15:00', 0, '12:00', 1),
+(5849, 3, 4, '23:00', 0, '9:40', 3),
+(5854, 4, 1, '17:30', 0, '10:00', 4),
+(5851, 3, 0, '13:33', 0, '7:15', 3),
+(5852, 3, 2, '23:45', 0, '15:40', 3),
+(5855, 4, 5, '14:50', 0, '7:00', 4),
+(5856, 4, 3, '23:00', 0, '14:30', 4),
+(5906, 3, 0, '23:00', 0, '20:00', 3),
+(5961, 3, 5, '18:00', 0, '12:00', 3),
+(5962, 3, 1, '22:00', 0, '17:00', 3),
+(5963, 41, 1, '20:00', 0, '8:00', 41),
+(5964, 41, 5, '18:30', 0, '9:00', 41);
 
 -- --------------------------------------------------------
 
@@ -2566,7 +2555,8 @@ INSERT INTO `user` (`dtype`, `id`, `account_non_expired`, `account_non_locked`, 
 ('Etudiant', 35, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/student33@gmail.com', 'student33', NULL, '$2a$10$qlgTjJhBpGJA3QrG0QbUnu8O6RtM.asZv.zSHg/xYnFjK61rkEH.W', 'Student33', 'student33@gmail.com', NULL, NULL, NULL, 5, 3, NULL, 'STUDENT', NULL, 'native', NULL, NULL, NULL, NULL, NULL, NULL),
 ('Etudiant', 36, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/student130@gmail.com', '130', NULL, '$2a$10$Nqx7pNPHkB.t6pOesdjUSutvfazJTQGpUmTsp84rU3GMR63TLQBTa', '130', 'student130@gmail.com', NULL, NULL, NULL, 5, 3, NULL, 'STUDENT', NULL, ' ', NULL, NULL, NULL, NULL, NULL, NULL),
 ('Etudiant', 38, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/wissam@gmail.com', 'Wisam', NULL, '$2a$10$MFKsFqY5diPUb8QOmPPuNeajSTLkyOTb19Dt7XGnhsE1jNLbngHs.', 'Wisam', 'wissam@gmail.com', NULL, NULL, NULL, 5, 3, NULL, 'STUDENT', NULL, 'native', 4608, NULL, NULL, NULL, NULL, NULL),
-('Etudiant', 40, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/haytam@gmail.com', 'Haytam', NULL, '$2a$10$Zvw0.jxYwO1MLq0azXKfOeiw4gEflJ5mvNHuyi.1n6oFMyBsc8Duu', 'Haytam', 'haytam@gmail.com', NULL, NULL, NULL, 5, NULL, NULL, 'STUDENT', NULL, 'native', 4598, NULL, NULL, NULL, NULL, NULL);
+('Etudiant', 40, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/haytam@gmail.com', 'Haytam', NULL, '$2a$10$Zvw0.jxYwO1MLq0azXKfOeiw4gEflJ5mvNHuyi.1n6oFMyBsc8Duu', 'Haytam', 'haytam@gmail.com', NULL, NULL, NULL, 5, NULL, NULL, 'STUDENT', NULL, 'native', 4598, NULL, NULL, NULL, NULL, NULL),
+('Prof', 41, b'1', b'1', NULL, 0, b'1', b'1', 'http://localhost:8036/user/image/profile/teacherahmed@gmail.com', 'Teacher', '0605120314', '$2a$10$Njdjp6xPcvfKc3Agfi1NKOtV5BAYIaD44YwXcYpg4SrS7Yk5Lx8oy', 'Ahmed', 'teacherahmed@gmail.com', NULL, NULL, NULL, NULL, NULL, 1, 'TEACHER', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2613,7 +2603,8 @@ INSERT INTO `user_authorities` (`user_id`, `authorities`) VALUES
 (35, 3),
 (36, 3),
 (38, 3),
-(40, 3);
+(40, 3),
+(41, 2);
 
 -- --------------------------------------------------------
 
@@ -2898,7 +2889,8 @@ ALTER TABLE `inscription`
   ADD KEY `FKalko793fl1gm06kwq53w1gynu` (`etudiant`),
   ADD KEY `FK1ha9gsbcjddy1otsy6djjg7iv` (`parcours`),
   ADD KEY `FKgovb2g7e2rj9l65r7wn940ncw` (`prof`),
-  ADD KEY `FK27d0kprttulm0sukspipm7ptk` (`groupe_etude`);
+  ADD KEY `FK27d0kprttulm0sukspipm7ptk` (`groupe_etude`),
+  ADD KEY `FKe9tdu7jc218gjtgffhtovi3te` (`pack_student`);
 
 --
 -- Indexes for table `news`
@@ -3100,8 +3092,8 @@ ALTER TABLE `user`
   ADD KEY `FKimfpxj5uy18qyitn193rnpj3v` (`parcours`),
   ADD KEY `FKko8co8fj33bvbw3ms5364vmn3` (`prof`),
   ADD KEY `FKb1foe1690lcirh75bvap2lg3h` (`categorie_prof`),
-  ADD KEY `FKc8bby2o7jdjj7pacpfpo2bj6r` (`groupe_etude`),
   ADD KEY `FK87lvn3d9xb337koefj58gam98` (`pack_student`),
+  ADD KEY `FKc8bby2o7jdjj7pacpfpo2bj6r` (`groupe_etude`),
   ADD KEY `FK5ipus6t3o9ypd7kampo69elmu` (`level_max`),
   ADD KEY `FKher9dxxtkws9oy0n0uw9swvk9` (`level_min`);
 
@@ -3167,7 +3159,7 @@ ALTER TABLE `section`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

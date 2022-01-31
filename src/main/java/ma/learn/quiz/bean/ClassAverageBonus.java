@@ -8,11 +8,17 @@ public class ClassAverageBonus {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-
+    private String code;
     private int nombreSession;
     private BigDecimal prix;
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public Long getId() {
         return id;

@@ -35,6 +35,10 @@ public class PackStudentService {
         return packStudentDao.findPackStudentByLibelle(libelle);
     }
 
+    public List<PackStudent> findByTotalStudents(int totalStudents) {
+        return packStudentDao.findByTotalStudents(totalStudents);
+    }
+
     public int save(PackStudent packStudent){
         PackStudent packStudent1 = findPackStudentByCode(packStudent.getCode());
         if (packStudent1!= null){
@@ -84,6 +88,9 @@ public class PackStudentService {
                     packStudent1.setLibelle(packStudent.getLibelle());
                 }
             }
+            if (packStudent1.getTotalStudents() != packStudent.getTotalStudents()){
+                packStudent1.setTotalStudents(packStudent.getTotalStudents());
+            }
             packStudentDao.save(packStudent1);
             return 1;
         }else {
@@ -102,6 +109,12 @@ public class PackStudentService {
         }
         if (packStudent.getCode() != null && !(packStudent.getCode().isEmpty())){
             query+= " AND p.code LIKE '" + packStudent.getCode() +"'";
+        }
+        if (packStudent.getTotalStudents() > 0){
+            query+= " AND p.totalStudents = " + packStudent.getTotalStudents();
+        }
+        if (packStudent.getLibelle() != null && !(packStudent.getLibelle().isEmpty())){
+            query+= " AND p.libelle LIKE '"+ packStudent.getLibelle() + "'";
         }
         return entityManager.createQuery(query).getResultList();
     }

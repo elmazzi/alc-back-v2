@@ -18,6 +18,11 @@ public class SessionCoursProfRest {
     public SessionCours findSessionCoursByProfNom(@PathVariable String nom) {
         return sessionCoursService.findSessionCoursByProfNom(nom);
     }
+    @GetMapping("/prof/idprof/{idprof}")
+
+    public List<SessionCours> findAllSessionCoursByProfIdAndCurrentDate(@PathVariable Long idprof) {
+        return sessionCoursService.findAllSessionCoursByProfIdAndCurrentDate(idprof);
+    }
 
     @GetMapping("/id/{id}")
     public SessionCours findSessionCoursById(@PathVariable Long id) {
@@ -27,9 +32,9 @@ public class SessionCoursProfRest {
     public List<SessionCours> findByCriteria(@RequestBody SessionCours sessionCours) {
 		return sessionCoursService.findByCriteria(sessionCours);
 	}
-    @GetMapping("/{profid}/{etudiantid}/{coursid}")
-    public int save(@PathVariable Long profid,@PathVariable Long etudiantid,@PathVariable Long coursid) {
-        return sessionCoursService.save(profid, etudiantid,coursid);
+    @GetMapping("/{profid}/{groupEtudiantid}/{coursid}")
+    public int save(@PathVariable Long profid,@PathVariable Long groupEtudiantid,@PathVariable Long coursid) {
+        return sessionCoursService.save(profid, groupEtudiantid,coursid);
     }
 
 
@@ -56,15 +61,6 @@ public class SessionCoursProfRest {
     @PostMapping("/delete-multiple-by-id")
     public int deleteSessionCoursById(@RequestBody List<SessionCours> sessionCourss) {
         return sessionCoursService.deleteSessionCoursById(sessionCourss);
-    }
-    @GetMapping("/prof/id/{id}/etudiant/id/{ids}")
-    public List<SessionCours> findByProfIdAndEtudiantId(@PathVariable Long id,@PathVariable Long ids) {
-        return sessionCoursService.findByProfIdAndEtudiantId(id, ids);
-    }
-    @GetMapping("/etudiant/id/{id}")
-
-    public List<SessionCours> findSessionCoursByEtudiantId(@PathVariable Long id) {
-        return sessionCoursService.findSessionCoursByEtudiantId(id);
     }
 
     @Autowired

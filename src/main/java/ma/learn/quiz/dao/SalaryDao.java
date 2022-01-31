@@ -17,7 +17,9 @@ public interface SalaryDao extends JpaRepository<Salary, Long> {
     List<Salary> findSalaryByAnneeAndProfId(int annee, Long id);
 
     List<Salary> findSalaryByAnnee(int annee);
+
     List<Salary> findSalaryByProfId(Long idprof);
 
     Salary findSalaryByMoisAndAnnee(int mois, int annee);
+
 }
