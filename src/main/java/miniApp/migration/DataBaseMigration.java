@@ -5,9 +5,6 @@
  */
 package miniApp.migration;
 
-
-import com.gtranslate.Language;
-import com.gtranslate.Translator;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
@@ -23,13 +20,12 @@ import com.google.api.services.drive.model.FileList;
 import com.google.api.services.drive.model.Permission;
 import ma.learn.quiz.bean.*;
 import ma.learn.quiz.dao.*;
-import ma.learn.quiz.service.AdminService;
 import ma.learn.quiz.service.TranslationEnAr;
 import miniApp.migration.constant.Constants;
 import miniApp.migration.util.FileUtil;
 import miniApp.migration.util.DownloaderUtil;
 import miniApp.migration.util.JsoupUtil;
-import org.jsoup.Jsoup;
+
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +34,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Id;
-import javax.persistence.SynchronizationType;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -47,7 +41,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
