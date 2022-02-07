@@ -24,8 +24,17 @@ public class Salary {
     private Prof prof;
     private int annee;
     private int mois;
+    private String  code;
     private BigDecimal nbrSessionMensuel;
     private BigDecimal montantMensuel;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public Prof getProf() {
         return prof;

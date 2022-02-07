@@ -63,16 +63,6 @@ public class SessionCoursAdminRest {
         return sessionCoursService.deleteSessionCoursById(sessionCourss);
     }
 
-    @GetMapping("/prof/id/{id}/etudiant/id/{ids}")
-    public List<SessionCours> findByProfIdAndEtudiantId(@PathVariable Long id, @PathVariable Long ids) {
-        return sessionCoursService.findByProfIdAndEtudiantId(id, ids);
-    }
-
-    @GetMapping("/etudiant/id/{id}")
-
-    public List<SessionCours> findSessionCoursByEtudiantId(@PathVariable Long id) {
-        return sessionCoursService.findSessionCoursByEtudiantId(id);
-    }
 
     @PostMapping("/allByCriteria")
     public List<SessionCours> findAllByCriteria(@RequestBody SessionCoursVO sessionCoursVO) {

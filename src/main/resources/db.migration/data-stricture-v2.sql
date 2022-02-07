@@ -98,7 +98,7 @@ INSERT INTO `categorie_section` (`id`, `code`, `libelle`, `numero_order`, `super
 (1951, 'Study the information', 'Grammar-2', 3, 159),
 (1952, 'Study the information', 'Grammar-3', 4, 159),
 (6, NULL, 'Vocabulary', 8, 159);
-
+ALTER TABLE `section` CHANGE `contenu` `contenu` TEXT CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL;
 -- --------------------------------------------------------
 
 --

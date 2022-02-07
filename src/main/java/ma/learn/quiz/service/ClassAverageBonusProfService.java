@@ -35,7 +35,7 @@ public class ClassAverageBonusProfService {
         return classAverageBonusProfDao.findClassAverageBonusProfByMoisAndAnneeAndProfId(mois, annee, idprof);
     }
 
-    public BigDecimal findAllClassAverageBonusProfByMoisAndAnneeAndProfId(int mois, int annee, Long idprof) {
+    public BigDecimal findMontantClassAverageBonusProfByMoisAndAnneeAndProfId(int mois, int annee, Long idprof) {
         List<ClassAverageBonusProf> classAverageBonusProfList=findClassAverageBonusProfByMoisAndAnneeAndProfId(mois,annee,idprof);
         BigDecimal totalBonus = new BigDecimal(0);
         for (ClassAverageBonusProf classAverageBonusProf:classAverageBonusProfList) {

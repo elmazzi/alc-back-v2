@@ -19,7 +19,7 @@ public class SessionCours implements Serializable {
     @OneToOne
     private Cours cours;
     @ManyToOne
-    private Etudiant etudiant;
+    private GroupeEtudiant groupeEtudiant;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 
@@ -58,12 +58,12 @@ public class SessionCours implements Serializable {
         this.prof = prof;
     }
 
-    public Etudiant getEtudiant() {
-        return etudiant;
+    public GroupeEtudiant getGroupeEtudiant() {
+        return groupeEtudiant;
     }
 
-    public void setEtudiant(Etudiant etudiant) {
-        this.etudiant = etudiant;
+    public void setGroupeEtudiant(GroupeEtudiant groupeEtudiant) {
+        this.groupeEtudiant = groupeEtudiant;
     }
 
     public Date getDateFin() {

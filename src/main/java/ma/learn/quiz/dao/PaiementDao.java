@@ -16,6 +16,4 @@ public interface PaiementDao extends JpaRepository<Paiement, Long> {
     List<Paiement> findPaiementByProfId(Long id);
 
 
-
-
 }
