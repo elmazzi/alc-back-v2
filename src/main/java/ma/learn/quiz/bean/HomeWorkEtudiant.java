@@ -21,6 +21,15 @@ public class HomeWorkEtudiant {
 	@OneToMany(mappedBy = "homeWorkEtudiant")
 	private List<ReponseEtudiantHomeWork> reponseEtudiantHomeWork;
 	private Double note;
+	private String resultat;
+
+	public String getResultat() {
+		return resultat;
+	}
+
+	public void setResultat(String resultat) {
+		this.resultat = resultat;
+	}
 
 	public Long getId() {
 		return id;

@@ -168,5 +168,7 @@
     <orderEntry type="library" name="Maven: io.opencensus:opencensus-contrib-http-util:0.30.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.api-client:google-api-client-jackson2:1.20.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.http-client:google-http-client-jackson2:1.20.0" level="project" />
+    <orderEntry type="library" name="Maven: com.googlecode:google-api-translate-java:0.92" level="project" />
+    <orderEntry type="library" name="gtranslateapi-1.0" level="project" />
   </component>
 </module>

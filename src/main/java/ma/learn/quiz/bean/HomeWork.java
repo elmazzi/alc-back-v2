@@ -20,10 +20,9 @@ public class HomeWork {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "homeWork")
      private List<HomeWorkEtudiant> homeWorkEtudiant;
-    @OneToOne
-    private Section section;
-    @OneToOne
-    private TypeHomeWork typeHomeWork;
+
+    @ManyToOne
+    private Cours cours;
 
     public List<HomeWorkQuestion> getQuestions() {
         return questions;
@@ -74,21 +73,11 @@ public class HomeWork {
     }
 
 
-
-    public Section getSection() {
-        return section;
+    public Cours getCours() {
+        return cours;
     }
 
-    public void setSection(Section section) {
-        this.section = section;
-    }
-
-
-    public TypeHomeWork getTypeHomeWork() {
-        return typeHomeWork;
-    }
-
-    public void setTypeHomeWork(TypeHomeWork typeHomeWork) {
-        this.typeHomeWork = typeHomeWork;
+    public void setCours(Cours cours) {
+        this.cours = cours;
     }
 }
