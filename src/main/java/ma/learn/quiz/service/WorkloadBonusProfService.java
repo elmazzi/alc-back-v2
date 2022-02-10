@@ -57,4 +57,12 @@ public class WorkloadBonusProfService {
             }
         }
     }
+
+    public WorkloadBonusProf findWorkloadBonusProfBySalaryId(Long id) {
+        return workloadBonusProfDao.findWorkloadBonusProfBySalaryId(id);
+    }
+
+    public WorkloadBonusProf findWorkloadBonusProfByProfIdAndSalaryId(Long idprof, Long idsalary) {
+        return workloadBonusProfDao.findWorkloadBonusProfByProfIdAndSalaryId(idprof, idsalary);
+    }
 }

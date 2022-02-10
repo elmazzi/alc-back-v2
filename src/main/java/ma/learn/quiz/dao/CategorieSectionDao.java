@@ -20,6 +20,7 @@ public interface CategorieSectionDao extends JpaRepository<CategorieSection,Long
      CategorieSection findCategorieSectionById(Long id);
     CategorieSection findCategorieSectionByLibelle(String libelle);
 
+
 }
 
 

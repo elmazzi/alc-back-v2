@@ -20,24 +20,18 @@ public class PaiementProfRest {
         return paiementService.findAll();
     }
 
-    @GetMapping("/save/{id}")
-    public int save(@PathVariable Long id) {
-        return paiementService.save(id);
-    }
 
     @GetMapping("/{id}")
 
     public List<Paiement> findPaiementByProfId(@PathVariable Long id) {
         return paiementService.findPaiementByProfId(id);
     }
-    @GetMapping("/{mois}/{annee}/{profid}")
 
-    public BigDecimal findAllPaiementByMoisAndAnneeAndProfID(@PathVariable String mois,@PathVariable String annee,@PathVariable Long profid) {
-        return paiementService.findAllPaiementByMoisAndAnneeAndProfID(mois, annee, profid);
-    }
+
+
     @GetMapping("/paiement/{mois}/{annee}/{profid}")
 
-    public List<Paiement> findPaiementByMoisAndAnneeAndProfID(@PathVariable String mois,@PathVariable String annee,@PathVariable Long profid) {
+    public List<Paiement> findPaiementByMoisAndAnneeAndProfID(@PathVariable String mois, @PathVariable String annee, @PathVariable Long profid) {
         return paiementService.findPaiementByMoisAndAnneeAndProfID(mois, annee, profid);
     }
 

@@ -15,26 +15,34 @@ import java.util.List;
 public class WorkloadBonusAdminProfRest {
     @Autowired
     private WorkloadBonusProfService workloadBonusProfService;
+
     @GetMapping("/{mois}/{annee}/{idprof}")
 
-    public List<WorkloadBonusProf> findWorkloadBonusProfByMoisAndAnneeAndProfId(@PathVariable int mois,@PathVariable int annee,@PathVariable Long idprof)  {
+    public List<WorkloadBonusProf> findWorkloadBonusProfByMoisAndAnneeAndProfId(@PathVariable int mois, @PathVariable int annee, @PathVariable Long idprof) {
         return workloadBonusProfService.findWorkloadBonusProfByMoisAndAnneeAndProfId(mois, annee, idprof);
     }
+
     @GetMapping("/montant/{mois}/{annee}/{idprof}")
 
-    public BigDecimal findAllWorkloadBonusProfByMoisAndAnneeAndProfId(@PathVariable int mois,@PathVariable int annee,@PathVariable Long idprof) {
+    public BigDecimal findAllWorkloadBonusProfByMoisAndAnneeAndProfId(@PathVariable int mois, @PathVariable int annee, @PathVariable Long idprof) {
         return workloadBonusProfService.findAllWorkloadBonusProfByMoisAndAnneeAndProfId(mois, annee, idprof);
     }
+
     @GetMapping("/{id}")
 
     public List<WorkloadBonusProf> findWorkloadBonusProfByProfId(@PathVariable Long id) {
         return workloadBonusProfService.findWorkloadBonusProfByProfId(id);
     }
+
     @GetMapping("/")
 
     public List<WorkloadBonusProf> findAll() {
         return workloadBonusProfService.findAll();
     }
 
+    @GetMapping("/salaryid/{id}")
 
+    public WorkloadBonusProf findWorkloadBonusProfBySalaryId(@PathVariable Long id) {
+        return workloadBonusProfService.findWorkloadBonusProfBySalaryId(id);
+    }
 }

@@ -16,6 +16,16 @@ public class WorkloadBonusProf {
     private WorkloadBonus workloadBonus;
     private int mois;
     private int annee;
+    @ManyToOne
+    private Salary salary;
+
+    public Salary getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Salary salary) {
+        this.salary = salary;
+    }
 
     public int getMois() {
         return mois;

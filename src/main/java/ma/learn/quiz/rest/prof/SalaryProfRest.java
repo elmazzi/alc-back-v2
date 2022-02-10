@@ -42,15 +42,6 @@ public class SalaryProfRest {
         return salaryService.findAll();
     }
 
-    @GetMapping("/id/{annee}/{idprof}")
-
-    public BigDecimal findMontantByAnneeAndProfId(@PathVariable int annee, @PathVariable Long idprof) {
-        return salaryService.findMontantByAnneeAndProfId(annee, idprof);
-    }
-    @GetMapping("/allSalaryProf/idprof/{profId}")
-    public BigDecimal findAllMontantByProfId(@PathVariable Long profId) {
-        return salaryService.findAllMontantByProfId(profId);
-    }
 
     @GetMapping("/{mois}/{annee}")
     public Salary findSalaryByMoisAndAnnee(@PathVariable int mois, @PathVariable int annee) {

@@ -31,40 +31,21 @@ public class PaiementService {
         return paiementDao.findAll();
     }
 
-    public int save(Long idsessioncours) {
-        SessionCours sessionCours = sessionCoursService.findSessionCoursById(idsessioncours);
-        if (sessionCours == null) {
+
+    public int savePaiement(Long idSalary) {
+        Salary salary = salaryDao.findSalaryById(idSalary);
+        if (salary == null) {
             return -1;
-        } else if (sessionCours.isPayer()) {
-            return -2;
         } else {
-            Prof prof = profService.findProfById(sessionCours.getProf().getId());
-            GroupeEtudiant groupeEtudiant = groupeEtudiantService.findGroupeEtudiantById(sessionCours.getGroupeEtudiant().getId());
-            Paiement paiement = new Paiement();
-            paiement.setDatePaiement(new Date());
-            paiement.setGroupeEtudiant(groupeEtudiant);
-            sessionCours.setPayer(true);
-            paiement.setProf(prof);
-            paiement.setMontant(prof.getCategorieProf().getLessonRate());
-            sessionCoursDao.save(sessionCours);
-            paiementDao.save(paiement);
-            LocalDate localDate = paiement.getDatePaiement().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            int month = localDate.getMonthValue();
-            int annee = localDate.getYear();
-            Salary salary = salaryService.findSalaryByMoisAndAnneeAndProfId(month, annee, paiement.getProf().getId());
-            if (salary == null) {
-                Salary salary1 = new Salary();
-                salary1.setMois(month);
-                salary1.setCode(UtilString.generateStringUppercaseAndLowercase(6));
-                salary1.setAnnee(annee);
-                salary1.setProf(paiement.getProf());
-                salary1.setMontantMensuel(prof.getCategorieProf().getLessonRate());
-                salary1.setNbrSessionMensuel(new BigDecimal(1));
-                salaryDao.save(salary1);
-            } else {
-                salary.setMontantMensuel(salary.getMontantMensuel().add(paiement.getMontant()));
-                salary.setNbrSessionMensuel(salary.getNbrSessionMensuel().add(new BigDecimal(1)));
-                salaryDao.save(salary);
+            List<SessionCours> sessionCours = sessionCoursDao.findSessionCoursBySalaryId(salary.getId());
+            for (SessionCours sessionCours1 : sessionCours) {
+                sessionCours1.setPayer(true);
+                sessionCours1.getSalary().setPayer(true);
+                Paiement paiement = new Paiement();
+                paiement.setDatePaiement(new Date());
+                paiement.setProf(sessionCours1.getProf());
+                paiement.setGroupeEtudiant(sessionCours1.getGroupeEtudiant());
+                paiementDao.save(paiement);
             }
             return 1;
         }
@@ -93,7 +74,7 @@ public class PaiementService {
     }
 
     public List<Paiement> findPaiementByMoisAndAnneeAndProfID(String mois, String annee, Long profid) {
-        String query="";
+        String query = "";
         if (mois.equals("1") || mois.equals("2") || mois.equals("3") || mois.equals("4") || mois.equals("5") || mois.equals("6") || mois.equals("7") || mois.equals("8") || mois.equals("9")) {
             query = "SELECT c FROM Paiement c WHERE 1=1 AND c.prof.id" + "=" + profid + " AND c.datePaiement LIKE '%" + annee + "-0" + mois + "%'";
         } else {
@@ -105,16 +86,6 @@ public class PaiementService {
 
     }
 
-    public BigDecimal findAllPaiementByMoisAndAnneeAndProfID(String mois, String annee, Long profid) {
-        List<Paiement> paiements = findPaiementByMoisAndAnneeAndProfID(mois, annee, profid);
-        System.out.println("hana tani");
-        BigDecimal allpaiement = new BigDecimal(0);
-        for (Paiement paiement : paiements) {
-            allpaiement = allpaiement.add(paiement.getMontant());
-            System.out.println("salaaaaaaaaaaaaaaam");
-        }
-        return allpaiement;
-    }
 
     @Autowired
     public EntityManager entityManager;
