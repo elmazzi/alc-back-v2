@@ -12,8 +12,7 @@ public class Etudiant extends User {
     private String ref;
     private String teacherLocality; //  native || non-native
     private String groupOption;
-    @ManyToOne
-    private Prof prof;
+
     @ManyToOne
     private EtatEtudiantSchedule etatEtudiantSchedule;
     @ManyToOne
@@ -32,7 +31,6 @@ public class Etudiant extends User {
                 user.numero, user.addresse,user.dateNaissance,user.country, user.ville, user.age, user.image, user.accountNonExpired,
                 user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role);
         this.ref = ref;
-        this.prof = prof;
         this.etatEtudiantSchedule = etatEtudiantSchedule;
         this.parcours = parcours;
         this.quizEtudiant = quizEtudiant;
@@ -62,14 +60,6 @@ public class Etudiant extends User {
         this.numero = numero;
     }
 
-    public Prof getProf() {
-        return prof;
-    }
-
-    public void setProf(Prof prof) {
-        this.prof = prof;
-    }
-
     public List<GroupeEtudiantDetail> getGroupeEtudiantDetails() {
         return groupeEtudiantDetails;
     }
@@ -86,7 +76,6 @@ public class Etudiant extends User {
         this.username = username;
         this.ville = ville;
         this.password = password;
-        this.prof = prof;
         this.etatEtudiantSchedule = etatEtudiantSchedule;
         this.parcours = parcours;
         this.quizEtudiant = quizEtudiant;

@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import ma.learn.quiz.bean.*;
+import ma.learn.quiz.dao.EtudiantDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,10 @@ public class InscriptionService extends AbstractService {
     Date dateActuelle = new Date();
     @Autowired
     private GroupeEtudiantDetailService groupeEtudiantDetailService;
+    @Autowired
+    private PackStudentService packStudentService;
+    @Autowired
+    private EtudiantDao etudiantDao;
 
     public List<Inscription> findAllByEtatInscriptionLibelle(String libelle) {
         return inscriptionDao.findAllByEtatInscriptionLibelle(libelle);
@@ -99,6 +104,7 @@ public class InscriptionService extends AbstractService {
 
     public int save(Inscription inscription) {
         if (inscription.getId() != null) {
+            PackStudent packStudent = packStudentService.findPackStudentByCode(inscription.getPackStudent().getCode());
             EtatInscription etatInscription = etatInscriptionService.findEtatInscriptionById(inscription.getEtatInscription().getId());
             Etudiant etudiant = this.etudiantService.findEtudiantById(inscription.getEtudiant().getId());
             Parcours parcours = parcoursService.findParcoursById(inscription.getParcours().getId());
@@ -109,7 +115,11 @@ public class InscriptionService extends AbstractService {
             inscription.setEtatInscription(etatInscription);
             inscription.setEtudiant(etudiant);
             inscription.setGroupeEtude(groupeEtude);
+            inscription.setPackStudent(packStudent);
             inscriptionDao.save(inscription);
+            etudiant.setGroupeEtude(groupeEtude);
+            etudiant.setParcours(parcours);
+            etudiantDao.save(etudiant);
             affecter(parcours, groupeEtude, etudiant);
             return 0;
         } else {
@@ -135,23 +145,46 @@ public class InscriptionService extends AbstractService {
             Etudiant etudiant = this.etudiantService.findEtudiantById(inscription.getEtudiant().getId());
             Parcours parcours = parcoursService.findParcoursById(inscription.getParcours().getId());
             GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(inscription.getGroupeEtude().getId());
-            Prof prof = this.profService.findProfById((inscription.getProf().getId()));
-            //   Parcours parcrs = this.parcoursService.findParcoursById(inscription.getParcours().getId());
+
             if (etudiant == null) {
                 System.out.println("etudiant is null");
                 return -1;
             } else {
                 System.out.println("Nv etudiant");
                 inscription.setParcours(parcours);
-                inscription.setProf(prof);
+                //inscription.setProf(prof);
                 //   inscription.setParcours(parcrs);
                 inscription.setEtatInscription(etatInscription);
                 inscription.setEtudiant(etudiant);
                 inscription.setGroupeEtude(groupeEtude);
                 inscriptionDao.save(inscription);
-                affecter(parcours, groupeEtude, etudiant);
+                //affecter(parcours, groupeEtude, etudiant);
                 return 1;
             }
+        }
+    }
+
+    public int  updateByStudent(String packCode, Etudiant etudiant){
+        Inscription inscription = inscriptionDao.findInscriptionByEtudiantId(etudiant.getId());
+        Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
+        GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(etudiant.getGroupeEtude().getId());
+        PackStudent packStudent = packStudentService.findPackStudentByCode(packCode);
+        Etudiant etudiant1 = etudiantService.findEtudiantById(etudiant.getId());
+        if (inscription != null){
+            inscription.setParcours(parcours);
+            inscription.setGroupeEtude(groupeEtude);
+            inscription.getEtudiant().setTeacherLocality(etudiant.getTeacherLocality());
+            inscription.setPackStudent(packStudent);
+            inscriptionDao.save(inscription);
+            etudiant1.setGroupeEtude(inscription.getGroupeEtude());
+            etudiant1.setParcours(inscription.getParcours());
+            etudiant1.setTeacherLocality(etudiant.getTeacherLocality());
+            etudiantDao.save(etudiant1);
+            affecter(parcours, groupeEtude, etudiant);
+            return 1;
+        }
+        else {
+            return -1;
         }
     }
 
@@ -167,7 +200,6 @@ public class InscriptionService extends AbstractService {
         EtatInscription etatInscription = etatInscriptionService.findEtatInscriptionById(inscription.getEtatInscription().getId());
         Etudiant etudiant = etudiantService.findEtudiantById(inscription.getEtudiant().getId());
         etudiant.setParcours(parcrs);
-        etudiant.setProf(prof);
         etudiantService.updateEtudiant(etudiant);
         inscription.setEtatInscription(etatInscription);
         inscription.setProf(prof);
@@ -226,8 +258,8 @@ public class InscriptionService extends AbstractService {
         return inscriptionDao.deleteInscriptionByEtudiantId(id);
     }
 
-    public List<Inscription> findInscriptionsByEtudiantId(Long id) {
-        return inscriptionDao.findInscriptionsByEtudiantId(id);
+    public Inscription findInscriptionByEtudiantId(Long id) {
+        return inscriptionDao.findInscriptionByEtudiantId(id);
     }
 
     public List<Inscription> findAllByOrderByIdDesc() {

@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import ma.learn.quiz.bean.*;
+import ma.learn.quiz.dao.InscriptionDao;
 import ma.learn.quiz.service.facade.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,10 @@ public class EtudiantService extends AbstractService {
     private PackStudentService packStudentService;
     @Autowired
     public SessionCoursService sessionCoursService;
+    @Autowired
+    public InscriptionDao inscriptionDao;
+    @Autowired
+    public EtatInscriptionService etatInscriptionService;
 
 
     public List<Etudiant> findByParcoursCode(String code) {
@@ -39,9 +44,8 @@ public class EtudiantService extends AbstractService {
     public Etudiant update(Etudiant etudiant) {
         Etudiant loadedEtudiant = findEtudiantById(etudiant.getId());
         Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
-        Prof prof = profService.findProfById(etudiant.getProf().getId());
         loadedEtudiant.setParcours(parcours);
-        loadedEtudiant.setProf(prof);
+
         loadedEtudiant.setNom(etudiant.getNom());
         loadedEtudiant.setPrenom(etudiant.getPrenom());
         loadedEtudiant.setUsername(etudiant.getUsername());
@@ -52,9 +56,6 @@ public class EtudiantService extends AbstractService {
         return etudiantDao.findEtudiantById(id);
     }
 
-    public List<Etudiant> findEtudiantByProfId(Long id) {
-        return etudiantDao.findEtudiantByProfId(id);
-    }
 
     public Prof findProfById(Long id) {
         return profService.findProfById(id);
@@ -102,31 +103,32 @@ public class EtudiantService extends AbstractService {
         } else {
             PackStudent packStudent = packStudentService.findPackStudentByCode(pack);
             Inscription inscription = new Inscription();
-            Prof prof = this.profService.findProfById(etudiant.getProf().getId());
             EtatEtudiantSchedule etudiantSchedule = this.etatEtudiantScheduleService.findByRef(etudiant.getEtatEtudiantSchedule().getRef());
             Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
             GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(etudiant.getGroupeEtude().getId());
-            etudiant.setProf(prof);
-            etudiant.setEtatEtudiantSchedule(etudiantSchedule);
+            EtatInscription etatInscription = etatInscriptionService.findEtatInscriptionById((long) 1);
             etudiant.setParcours(parcours);
             etudiant.setGroupeEtude(groupeEtude);
+            inscription.setGroupeEtude(etudiant.getGroupeEtude());
+            inscription.setParcours(etudiant.getParcours());
+            etudiant.setEtatEtudiantSchedule(etudiantSchedule);
             String password = this.userService.generatePassword();
             etudiant.setPassword(password);
             etudiant.setAuthorities(Arrays.asList(new Role(ROLE_STUDENT)));
             etudiant.setRole("STUDENT");
-            inscription.setGroupeEtude(etudiant.getGroupeEtude());
-            inscription.setParcours(etudiant.getParcours());
             User user = userService.save(etudiant);
             System.out.println(user.getId());
             Etudiant etudiant2 = new Etudiant(user);
             inscription.setEtudiant(etudiant2);
+            inscription.setEtatInscription(etatInscription);
+
             if (packStudent != null){
                 inscription.setPackStudent(packStudent);
                 packStudent.setTotalStudents(packStudent.getTotalStudents() + 1);
                 packStudentService.update(packStudent);
 
             }
-            inscriptionService.save(inscription);
+            inscriptionDao.save(inscription);
             return 1;
         }
 
@@ -135,18 +137,15 @@ public class EtudiantService extends AbstractService {
 
     public int save(Etudiant etudiant) {
         Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
-        Prof prof = profService.findProfById(etudiant.getProf().getId());
         Optional<EtatEtudiantSchedule> etat = etatEtudiantScheduleService.findById((long) 1);
         EtatEtudiantSchedule etatLoaded = etat.get();
-        if (parcours == null) {
-            return -3;
-        } else {
+        if (parcours != null) {
             etudiant.setParcours(parcours);
-            etudiant.setProf(prof);
+        }
             etudiant.setEtatEtudiantSchedule(etatLoaded);
             etudiantDao.save(etudiant);
             return 1;
-        }
+
     }
 
     public Etudiant updateEtudiant(Etudiant etudiant) {
@@ -207,10 +206,7 @@ public class EtudiantService extends AbstractService {
             if(etudiant.getPrenom() != null){
                 query += this.addCriteria("prenom", etudiant.getPrenom(), "LIKE");
             }
-            if(etudiant.getProf() != null){
-                query += this.addCriteria("prof.nom", etudiant.getProf().getNom(), "LIKE");
-                query += this.addCriteria("prof.prenom", etudiant.getProf().getPrenom(), "LIKE");
-            }
+
         }
         System.out.println("query = " + query);
         System.out.println(entityManager.createQuery(query).getResultList().size());
