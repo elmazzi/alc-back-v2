@@ -28,15 +28,15 @@ public class ReponseEtudiantHomeWorkService {
 	}
 
 
-	public List<ReponseEtudiant> findByHomeWorkEtudiantId(Long id) {
-		return reponseEtudiantHomeWorkDao.findByHomeWorkEtudiantId(id);
+	public List<ReponseEtudiantHomeWork> findByHomeWorkEtudiantId(Long id) {
+		return reponseEtudiantHomeWorkDao.findReponseEtudiantHomeWorkByHomeWorkEtudiantId(id);
 	}
 
-	public List<ReponseEtudiant> findByHomeWorkEtudiantEtudiantId(Long id) {
+	public List<ReponseEtudiantHomeWork> findByHomeWorkEtudiantEtudiantId(Long id) {
 		return reponseEtudiantHomeWorkDao.findByHomeWorkEtudiantEtudiantId(id);
 	}
 
-	public List<ReponseEtudiant> findByHomeWorkEtudiantHomeWorkId(Long id) {
+	public List<ReponseEtudiantHomeWork> findByHomeWorkEtudiantHomeWorkId(Long id) {
 		return reponseEtudiantHomeWorkDao.findByHomeWorkEtudiantHomeWorkId(id);
 	}
 
@@ -60,15 +60,12 @@ public class ReponseEtudiantHomeWorkService {
 		return reponseEtudiantHomeWorkDao.findAll();
 	}
 
-	public int save(HomeWorkEtudiant homeWorkEtudiant, List<ReponseEtudiantHomeWork> reponseEtudiantHomeWork) {
-
-		for (ReponseEtudiantHomeWork reponseEtudiantHomeWork1: reponseEtudiantHomeWork) {
-			reponseEtudiantHomeWork1.setHomeWorkEtudiant(homeWorkEtudiant);
-			reponseEtudiantHomeWorkDao.save(reponseEtudiantHomeWork1);
-		}
-
-		return 1;
+	public ReponseEtudiantHomeWork save(ReponseEtudiantHomeWork reponseEtudiantHomeWork) {
+			return reponseEtudiantHomeWorkDao.save(reponseEtudiantHomeWork);
 	}
+
+
+
 
 	public int update(HomeWorkEtudiant homeWorkEtudiant, List<ReponseEtudiantHomeWork> reponseEtudiantHomeWork){
 		int result = reponseEtudiantHomeWorkDao.deleteByHomeWorkEtudiantId(homeWorkEtudiant.getId());
@@ -89,7 +86,7 @@ public class ReponseEtudiantHomeWorkService {
     private EntityManager entityManager;
 	
 	public List<ReponseEtudiantHomeWork> findByCriteria(Long idHomeWorkEtudiant, Long numeroQuestion) {
-		String query = "SELECT r FROM ReponseEtudiantHomeWork r WHERE r.homeWorkEtudiant.id= '"+idHomeWorkEtudiant+"' and r.reponse.question.numero='"+numeroQuestion+"'";
+		String query = "SELECT r FROM ReponseEtudiantHomeWork r WHERE r.homeWorkEtudiant.id= '"+idHomeWorkEtudiant+"' and r.reponse.homeWorkQuestion.numero='"+numeroQuestion+"'";
 		return entityManager.createQuery(query).getResultList();
 	}
 

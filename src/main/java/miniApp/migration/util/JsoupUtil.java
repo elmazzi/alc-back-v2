@@ -47,6 +47,11 @@ public class JsoupUtil {
         return first.text();
     }
 
+    public static Elements getElements(File in, String selector) throws Exception {
+        Document document = Jsoup.parse(in, null);
+        return document.select(selector);
+    }
+
     public static String getImageSrc(File in) throws IOException {
         Element image = getImage(in);
         if (image == null) {

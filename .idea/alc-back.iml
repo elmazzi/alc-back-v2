@@ -151,5 +151,24 @@
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-config:5.4.6" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:5.4.6" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-web:5.4.6" level="project" />
+    <orderEntry type="library" name="Maven: com.google.apis:google-api-services-drive:v3-rev20220110-1.32.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.api-client:google-api-client:1.33.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.oauth-client:google-oauth-client:1.33.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.http-client:google-http-client-gson:1.41.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.6" level="project" />
+    <orderEntry type="library" name="Maven: com.google.http-client:google-http-client-apache-v2:1.41.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.14" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.13" level="project" />
+    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.15" level="project" />
+    <orderEntry type="library" name="Maven: com.google.http-client:google-http-client:1.41.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.google.j2objc:j2objc-annotations:1.3" level="project" />
+    <orderEntry type="library" name="Maven: io.opencensus:opencensus-api:0.30.0" level="project" />
+    <orderEntry type="library" name="Maven: io.grpc:grpc-context:1.27.2" level="project" />
+    <orderEntry type="library" name="Maven: io.opencensus:opencensus-contrib-http-util:0.30.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.api-client:google-api-client-jackson2:1.20.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.http-client:google-http-client-jackson2:1.20.0" level="project" />
+    <orderEntry type="library" name="Maven: com.googlecode:google-api-translate-java:0.92" level="project" />
+    <orderEntry type="library" name="gtranslateapi-1.0" level="project" />
   </component>
 </module>

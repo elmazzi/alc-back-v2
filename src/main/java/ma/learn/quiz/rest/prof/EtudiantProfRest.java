@@ -15,10 +15,7 @@ public class EtudiantProfRest {
 	@Autowired
 	public EtudiantService  etudiantService;
 
-	@GetMapping("/prof/id/{id}")
-	public List<Etudiant> findEtudiantByProfId(@PathVariable Long id) {
-		return etudiantService.findEtudiantByProfId(id);
-	}
+
 	@PostMapping("/search")
 	public List<Etudiant> findByCriteria(@RequestBody EtudiantVo etudiantVo) {
 		return etudiantService.findByCriteria(etudiantVo);
