@@ -5,6 +5,7 @@ import ma.learn.quiz.bean.Cours;
 import ma.learn.quiz.bean.HomeWork;
 import ma.learn.quiz.bean.Section;
 import ma.learn.quiz.dao.HomeWorkDao;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,8 @@ public class HomeWorkService {
     @Autowired
     SectionService sectionService;
     @Autowired
+    CoursService coursService;
+    @Autowired
     HomeWorkQuestionService homeWorkQuestionService;
     @Autowired
     QuestionService questionService;
@@ -27,34 +30,34 @@ public class HomeWorkService {
         return homeWorkDao.findById(id);
     }
 
+    public HomeWork findHomeWorkById(Long id) {
+        return homeWorkDao.findHomeWorkById(id);
+    }
+
     @Transactional
     public void deleteById(Long id) {
         homeWorkDao.deleteById(id);
     }
 
-    public HomeWork findBySectionId(Long id) {
-        return homeWorkDao.findBySectionId(id);
+    public List<HomeWork> findByCoursId(Long id) {
+        return homeWorkDao.findByCoursId(id);
     }
 
     public List<HomeWork> findAll() {
         return homeWorkDao.findAll();
     }
 
-    public int save(HomeWork homeWork) {
-       Section section = sectionService.findSectionById(homeWork.getSection().getId());
-       homeWork.setSection(section);
-       homeWork.setLibelle(section.getLibelle());
+    public HomeWork save(HomeWork homeWork) {
+        Cours cours = coursService.findCoursById(homeWork.getCours().getId());
+       homeWork.setCours(cours);
+       homeWork.setLibelle(cours.getLibelle() + RandomStringUtils.randomNumeric(1));
        homeWorkDao.save(homeWork);
        homeWorkQuestionService.saveHomeWorkQuestion(homeWork,homeWork.getQuestions());
        homeWork.setQuestions(homeWork.getQuestions());
-       homeWorkDao.save(homeWork);
-        return 1;
+        return homeWorkDao.save(homeWork);
     }
 
-    public List<HomeWork> findhomeworkbysectioncours(Long id){
-        String query="SELECT h FROM HomeWork h WHERE h.section.cours.id="+ id;
-        return entityManager.createQuery(query).getResultList();
-    }
+
 
     @Autowired
     private EntityManager entityManager;

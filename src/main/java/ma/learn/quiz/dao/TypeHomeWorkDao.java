@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface TypeHomeWorkDao extends JpaRepository<TypeHomeWork, Long> {
     Optional<TypeHomeWork> findById(Long id);
     void deleteById(Long id);
+    TypeHomeWork findByLib(String lib);
 }

@@ -5,6 +5,7 @@ import ma.learn.quiz.bean.HomeWork;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -12,5 +13,8 @@ import java.util.Optional;
 public interface HomeWorkDao extends JpaRepository<HomeWork, Long> {
     Optional<HomeWork> findById(Long id);
     void deleteById(Long id);
-    HomeWork findBySectionId(Long id);
+
+    List<HomeWork> findByCoursId(Long id);
+    HomeWork findByLibelle(String libelle);
+    HomeWork findHomeWorkById(Long id);
 }

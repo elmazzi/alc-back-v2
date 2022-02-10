@@ -53,7 +53,7 @@ public class HomeWorkEtudiantEtudiantRest {
 	}
 
 	@PostMapping("/")
-	public int save(@RequestBody HomeWorkEtudiant homeWorkEtudiant) {
+	public HomeWorkEtudiant save(@RequestBody HomeWorkEtudiant homeWorkEtudiant) {
 		return homeWorkEtudiantService.save(homeWorkEtudiant);
 	}
 

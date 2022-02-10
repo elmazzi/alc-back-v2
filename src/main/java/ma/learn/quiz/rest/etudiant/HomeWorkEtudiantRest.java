@@ -24,9 +24,9 @@ public class HomeWorkEtudiantRest {
 		homeWorkService.deleteById(id);
 	}
 
-	@GetMapping("/section/id/{id}")
-	public HomeWork findBySectionId(@PathVariable Long id) {
-		return homeWorkService.findBySectionId(id);
+	@GetMapping("/cours/id/{id}")
+	public List<HomeWork> findBySectionId(@PathVariable Long id) {
+		return homeWorkService.findByCoursId(id);
 	}
 
 	@GetMapping("/")
@@ -35,14 +35,11 @@ public class HomeWorkEtudiantRest {
 	}
 
 	@PostMapping("/")
-	public int save(@RequestBody HomeWork homeWork) {
+	public HomeWork save(@RequestBody HomeWork homeWork) {
 		return homeWorkService.save(homeWork);
 	}
 
-	@GetMapping("/cours/{id}")
-	public List<HomeWork> findhomeworkbysectioncours(Long id) {
-		return homeWorkService.findhomeworkbysectioncours(id);
-	}
+
 
 	@Autowired
 	private HomeWorkService homeWorkService;

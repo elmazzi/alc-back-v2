@@ -16,89 +16,92 @@ import java.util.Optional;
 @Service
 public class HomeWorkEtudiantService {
 
-	public Optional<HomeWorkEtudiant> findById(Long id) {
-		return homeWorkEtudiantDao.findById(id);
-	}
+    public Optional<HomeWorkEtudiant> findById(Long id) {
+        return homeWorkEtudiantDao.findById(id);
+    }
 
-	@Transactional
-	public void deleteById(Long id) {
-		homeWorkEtudiantDao.deleteById(id);
-	}
+    @Transactional
+    public void deleteById(Long id) {
+        homeWorkEtudiantDao.deleteById(id);
+    }
 
-	public List<HomeWorkEtudiant> findByEtudiantId(Long id) {
-		return homeWorkEtudiantDao.findByEtudiantId(id);
-	}
+    public List<HomeWorkEtudiant> findByEtudiantId(Long id) {
+        return homeWorkEtudiantDao.findByEtudiantId(id);
+    }
 
-	public List<HomeWorkEtudiant> findByHomeWorkId(Long id) {
-		return homeWorkEtudiantDao.findByHomeWorkId(id);
-	}
+    public List<HomeWorkEtudiant> findByHomeWorkId(Long id) {
+        return homeWorkEtudiantDao.findByHomeWorkId(id);
+    }
 
-	@Transactional
-	public int deleteByEtudiantId(Long id) {
-		return homeWorkEtudiantDao.deleteByEtudiantId(id);
-	}
+    @Transactional
+    public int deleteByEtudiantId(Long id) {
+        return homeWorkEtudiantDao.deleteByEtudiantId(id);
+    }
 
-	@Transactional
-	public int deleteByHomeWorkId(Long id) {
-		return homeWorkEtudiantDao.deleteByHomeWorkId(id);
-	}
+    @Transactional
+    public int deleteByHomeWorkId(Long id) {
+        return homeWorkEtudiantDao.deleteByHomeWorkId(id);
+    }
 
-	public List<HomeWorkEtudiant> findAll() {
-		return homeWorkEtudiantDao.findAll();
-	}
+    public List<HomeWorkEtudiant> findAll() {
+        return homeWorkEtudiantDao.findAll();
+    }
 
-	public int save(HomeWorkEtudiant homeWorkEtudiant) {
-		HomeWork homeWork = homeWorkDao.findBySectionId(homeWorkEtudiant.getHomeWork().getSection().getId());
-        if (homeWorkEtudiant.getEtudiant() == null){
-			return -2;
-		} else {
-        	homeWorkEtudiant.setHomeWork(homeWork);
-			homeWorkEtudiantDao.save(homeWorkEtudiant);
-			reponseEtudiantHomeWorkService.save(homeWorkEtudiant,homeWorkEtudiant.getReponseEtudiantHomeWork());
-			return 1;
-		}
-	}
+    public HomeWorkEtudiant save(HomeWorkEtudiant homeWorkEtudiant) {
+        HomeWork homeWork = homeWorkDao.findHomeWorkById(homeWorkEtudiant.getHomeWork().getId());
+        Etudiant etd = this.etudiantService.findEtudiantById(homeWorkEtudiant.getEtudiant().getId());
+        if (homeWorkEtudiant.getEtudiant() == null) {
+            return null;
+        } else if (etd == null) {
+            return null;
+        } else {
+            homeWorkEtudiant.setHomeWork(homeWork);
+            homeWorkEtudiant.setEtudiant(etd);
+            return homeWorkEtudiantDao.save(homeWorkEtudiant);
+        }
+    }
 
-	public int update(HomeWorkEtudiant homeWorkEtudiant){
-		//HomeWorkEtudiant newhomeWorkEtudiant = homeWorkEtudiantDao.findByIdAndEtudiantId(homeWorkEtudiant.getEtudiant().getId(),homeWorkEtudiant.getId());
-		reponseEtudiantHomeWorkService.update(homeWorkEtudiant,homeWorkEtudiant.getReponseEtudiantHomeWork());
-		return 1 ;
-	}
+    public int update(HomeWorkEtudiant homeWorkEtudiant) {
+        //HomeWorkEtudiant newhomeWorkEtudiant = homeWorkEtudiantDao.findByIdAndEtudiantId(homeWorkEtudiant.getEtudiant().getId(),homeWorkEtudiant.getId());
+        reponseEtudiantHomeWorkService.update(homeWorkEtudiant, homeWorkEtudiant.getReponseEtudiantHomeWork());
+        return 1;
+    }
 
-	@Autowired
-		private HomeWorkEtudiantDao homeWorkEtudiantDao;
-	@Autowired
-	    private HomeWorkDao homeWorkDao;
+    @Autowired
+    private HomeWorkEtudiantDao homeWorkEtudiantDao;
+    @Autowired
+    private HomeWorkDao homeWorkDao;
+    @Autowired
+    private EtudiantService etudiantService;
 
-	@Autowired
-	private ReponseEtudiantHomeWorkService reponseEtudiantHomeWorkService;
-	@Autowired
-		private EntityManager entityManager;
+    @Autowired
+    private ReponseEtudiantHomeWorkService reponseEtudiantHomeWorkService;
+    @Autowired
+    private EntityManager entityManager;
 
 
-	public HomeWorkEtudiant findByCritere(Long idEtudiant, Long idHomeWork)
-	{
-		String query = "SELECT h FROM HomeWorkEtudiant h WHERE h.etudiant.id= '"+idEtudiant+"' and h.homeWork.id='"+idHomeWork+"'";
-		return (HomeWorkEtudiant) entityManager.createQuery(query).getSingleResult();
-	}
+    public HomeWorkEtudiant findByCritere(Long idEtudiant, Long idHomeWork) {
+        String query = "SELECT h FROM HomeWorkEtudiant h WHERE h.etudiant.id= '" + idEtudiant + "' and h.homeWork.id='" + idHomeWork + "'";
+        return (HomeWorkEtudiant) entityManager.createQuery(query).getSingleResult();
+    }
 
-	public List<HomeWorkEtudiant> findByProfId(Long id){
-		String query = "SELECT h FROM HomeWorkEtudiant h WHERE h.etudiant.prof.id='" +id+"'";
-		return entityManager.createQuery(query).getResultList();
-	}
+    public List<HomeWorkEtudiant> findByProfId(Long id) {
+        String query = "SELECT h FROM HomeWorkEtudiant h WHERE h.etudiant.prof.id='" + id + "'";
+        return entityManager.createQuery(query).getResultList();
+    }
 
-	public List<HomeWorkEtudiant> findByVo(HomeWorkEtudiant homeWorkEtudiant){
-		String query = "SELECT h FROM HomeWorkEtudiant h WHERE 1=1";
-		if (homeWorkEtudiant.getEtudiant().getNom()!=null){
-			query+= "AND h.etudiant.nom = 'homeWorkEtudiant.getEtudiant().getNom()'";
-		}
-		if (homeWorkEtudiant.getHomeWork().getLibelle()!= null){
-			query+= "AND h.homework.libelle = 'homeWorkEtudiant.getHomeWork().getLibelle()'";
-		}
-		if (homeWorkEtudiant.getNote()!= null){
-			query+= "AND h.note = 'homeWorkEtudiant.getNote()'";
-		}
-		return entityManager.createQuery(query).getResultList();
-	}
+    public List<HomeWorkEtudiant> findByVo(HomeWorkEtudiant homeWorkEtudiant) {
+        String query = "SELECT h FROM HomeWorkEtudiant h WHERE 1=1";
+        if (homeWorkEtudiant.getEtudiant().getNom() != null) {
+            query += "AND h.etudiant.nom = 'homeWorkEtudiant.getEtudiant().getNom()'";
+        }
+        if (homeWorkEtudiant.getHomeWork().getLibelle() != null) {
+            query += "AND h.homework.libelle = 'homeWorkEtudiant.getHomeWork().getLibelle()'";
+        }
+        if (homeWorkEtudiant.getNote() != null) {
+            query += "AND h.note = 'homeWorkEtudiant.getNote()'";
+        }
+        return entityManager.createQuery(query).getResultList();
+    }
 
 }
