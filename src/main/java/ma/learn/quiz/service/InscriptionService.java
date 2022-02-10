@@ -219,7 +219,6 @@ public class InscriptionService extends AbstractService {
         InteretEtudiant interetEtudiant = interetEtudiantDao.findByCode(inscription.getInteretEtudiant().getCode());
         Fonction fonction = fonctionDao.findByCode(inscription.getFonction().getCode());
         etudiant.setParcours(parcrs);
-        etudiant.setProf(prof);
         inscription.setStatutSocial(inscription.getStatutSocial());
         inscription.setFonction(inscription.getFonction());
         inscription.setInteretEtudiant(inscription.getInteretEtudiant());
