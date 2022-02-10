@@ -80,9 +80,9 @@ public class HomeWorkEtudiantService {
     private EntityManager entityManager;
 
 
-    public HomeWorkEtudiant findByCritere(Long idEtudiant, Long idHomeWork) {
+    public List<HomeWorkEtudiant> findByCritere(Long idEtudiant, Long idHomeWork) {
         String query = "SELECT h FROM HomeWorkEtudiant h WHERE h.etudiant.id= '" + idEtudiant + "' and h.homeWork.id='" + idHomeWork + "'";
-        return (HomeWorkEtudiant) entityManager.createQuery(query).getSingleResult();
+         return entityManager.createQuery(query).getResultList();
     }
 
     public List<HomeWorkEtudiant> findByProfId(Long id) {

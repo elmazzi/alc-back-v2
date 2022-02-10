@@ -12,7 +12,7 @@ public class HomeWorkQuestion {
     private Long id;
     private String ref;
     private String libelle;
-    private Long numero;
+    private int numero;
     private double pointReponseJuste;
     private double pointReponsefausse;
     @ManyToOne
@@ -58,11 +58,11 @@ public class HomeWorkQuestion {
         this.typeDeQuestion = typeDeQuestion;
     }
 
-    public Long getNumero() {
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(Long numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
     }
 

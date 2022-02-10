@@ -12,7 +12,7 @@ public class HoweWorkQSTReponse {
     private String ref;
     private String lib;
     private String etatReponse;
-    private Long numero;
+    private int numero;
 
     @ManyToOne
     private HomeWorkQuestion homeWorkQuestion;
@@ -49,11 +49,11 @@ public class HoweWorkQSTReponse {
         this.etatReponse = etatReponse;
     }
 
-    public Long getNumero() {
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(Long numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
     }
 

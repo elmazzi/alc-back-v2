@@ -1,8 +1,10 @@
 package ma.learn.quiz.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +24,16 @@ public class HomeWorkEtudiant {
 	private List<ReponseEtudiantHomeWork> reponseEtudiantHomeWork;
 	private Double note;
 	private String resultat;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private Date date;
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
 	public String getResultat() {
 		return resultat;

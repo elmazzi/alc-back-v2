@@ -67,8 +67,8 @@ public class AdminAdminRest {
 
 
     @GetMapping("/app")
-    public void start() throws Exception {
-        dataBaseMigration.htmlimagetext();
+    public String start() throws Exception {
+        return  dataBaseMigration.htmlimagetext();
     }
 
 

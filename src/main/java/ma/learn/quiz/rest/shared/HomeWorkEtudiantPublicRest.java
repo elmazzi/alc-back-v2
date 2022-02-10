@@ -58,7 +58,7 @@ public class HomeWorkEtudiantPublicRest {
 	}
 
 	@GetMapping("/homeWork/id/{idHomeWork}/etudiant/id/{idEtudiant}")
-	public Object findByCritere(@PathVariable Long idEtudiant, @PathVariable Long idHomeWork) {
+	public List<HomeWorkEtudiant> findByCritere(@PathVariable Long idEtudiant, @PathVariable Long idHomeWork) {
 		return homeWorkEtudiantService.findByCritere(idEtudiant, idHomeWork);
 	}
 

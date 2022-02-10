@@ -15,6 +15,6 @@ public interface HomeWorkDao extends JpaRepository<HomeWork, Long> {
     void deleteById(Long id);
 
     List<HomeWork> findByCoursId(Long id);
-    HomeWork findByLibelle(String libelle);
+    HomeWork findByLibelleAndCoursId(String libelle, Long id);
     HomeWork findHomeWorkById(Long id);
 }
