@@ -17,4 +17,5 @@ public class FonctionsService {
     public List<Fonction> findAll() {
         return fonctionDao.findAll();
     }
+
 }

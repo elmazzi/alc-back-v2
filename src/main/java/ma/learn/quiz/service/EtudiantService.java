@@ -7,13 +7,14 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import io.swagger.models.auth.In;
 import ma.learn.quiz.bean.*;
+import ma.learn.quiz.dao.*;
 import ma.learn.quiz.service.facade.UserService;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ma.learn.quiz.dao.EtudiantDao;
-import ma.learn.quiz.dao.ScheduleProfDao;
 import ma.learn.quiz.service.vo.EtudiantVo;
 
 import static ma.learn.quiz.filter.RoleConstant.ROLE_STUDENT;
@@ -26,6 +27,39 @@ public class EtudiantService extends AbstractService {
     private PackStudentService packStudentService;
     @Autowired
     public SessionCoursService sessionCoursService;
+    @Autowired
+    public NiveauEtudeDao niveauEtudeDao;
+    @Autowired
+    public InteretEtudiantDao interetEtudiantDao;
+    @Autowired
+    public FonctionDao fonctionDao;
+    @Autowired
+    public StatutSocialDao statutSocialDao;
+
+    @Autowired
+    public EtudiantDao etudiantDao;
+    @Autowired
+    public EtatEtudiantScheduleService etatEtudiantScheduleService;
+    @Autowired
+    public CentreService centreService;
+    @Autowired
+    public ParcoursService parcoursService;
+    @Autowired
+    public ProfService profService;
+    @Autowired
+    public ScheduleProfDao scheduleProfDao;
+    @Autowired
+    public EntityManager entityManager;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private InscriptionService inscriptionService;
+    @Autowired
+    private GroupeEtudiantDetailService groupeEtudiantDetailService;
+    @Autowired
+    private DictionaryService dictionaryService;
+    @Autowired
+    private GroupeEtudiantService groupeEtudiantService;
 
 
     public List<Etudiant> findByParcoursCode(String code) {
@@ -45,6 +79,11 @@ public class EtudiantService extends AbstractService {
         loadedEtudiant.setNom(etudiant.getNom());
         loadedEtudiant.setPrenom(etudiant.getPrenom());
         loadedEtudiant.setUsername(etudiant.getUsername());
+        loadedEtudiant.setInteretEtudiant(etudiant.getInteretEtudiant());
+        loadedEtudiant.setNiveauEtude(etudiant.getNiveauEtude());
+        loadedEtudiant.setFonction(etudiant.getFonction());
+        loadedEtudiant.setStatutSocial(etudiant.getStatutSocial());
+        System.out.println("Tfu");
         return etudiantDao.save(loadedEtudiant);
     }
 
@@ -116,6 +155,10 @@ public class EtudiantService extends AbstractService {
             etudiant.setRole("STUDENT");
             inscription.setGroupeEtude(etudiant.getGroupeEtude());
             inscription.setParcours(etudiant.getParcours());
+            etudiant.setNiveauEtude(niveauEtudeDao.findByCode(""));
+            etudiant.setInteretEtudiant(interetEtudiantDao.findByCode(""));
+            etudiant.setFonction(fonctionDao.findByCode(""));
+            etudiant.setStatutSocial(statutSocialDao.findByCode(""));
             User user = userService.save(etudiant);
             System.out.println(user.getId());
             Etudiant etudiant2 = new Etudiant(user);
@@ -131,8 +174,6 @@ public class EtudiantService extends AbstractService {
         }
 
     }
-
-
     public int save(Etudiant etudiant) {
         Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
         Prof prof = profService.findProfById(etudiant.getProf().getId());
@@ -148,8 +189,23 @@ public class EtudiantService extends AbstractService {
             return 1;
         }
     }
-
     public Etudiant updateEtudiant(Etudiant etudiant) {
+       Fonction fonction = fonctionDao.findByCode(etudiant.getFonction().getCode());
+        NiveauEtude niveauEtude = niveauEtudeDao.findByCode(etudiant.getNiveauEtude().getCode());
+        StatutSocial statutSocial = statutSocialDao.findByCode(etudiant.getStatutSocial().getCode());
+        InteretEtudiant interetEtudiant = interetEtudiantDao.findByCode(etudiant.getInteretEtudiant().getCode());
+        /*
+        etudiant.setNiveauEtude(niveauEtude);
+        etudiant.setFonction(fonction);
+        etudiant.setInteretEtudiant(interetEtudiant);
+        etudiant.setStatutSocial(statutSocial);
+        return this.etudiantDao.save(etudiant);
+
+         */
+        etudiant.setNiveauEtude(etudiant.getNiveauEtude());
+        etudiant.setFonction(etudiant.getFonction());
+        etudiant.setInteretEtudiant(etudiant.getInteretEtudiant());
+        etudiant.setStatutSocial(etudiant.getStatutSocial());
         return this.etudiantDao.save(etudiant);
     }
 
@@ -219,28 +275,4 @@ public class EtudiantService extends AbstractService {
 
 
 
-    @Autowired
-    public EtudiantDao etudiantDao;
-    @Autowired
-    public EtatEtudiantScheduleService etatEtudiantScheduleService;
-    @Autowired
-    public CentreService centreService;
-    @Autowired
-    public ParcoursService parcoursService;
-    @Autowired
-    public ProfService profService;
-    @Autowired
-    public ScheduleProfDao scheduleProfDao;
-    @Autowired
-    public EntityManager entityManager;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private InscriptionService inscriptionService;
-    @Autowired
-    private GroupeEtudiantDetailService groupeEtudiantDetailService;
-    @Autowired
-    private DictionaryService dictionaryService;
-    @Autowired
-    private GroupeEtudiantService groupeEtudiantService;
 }

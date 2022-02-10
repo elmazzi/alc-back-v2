@@ -3,6 +3,7 @@ package ma.learn.quiz.service;
 
 import ma.learn.quiz.bean.Etudiant;
 import ma.learn.quiz.bean.User;
+import ma.learn.quiz.dao.EtudiantDao;
 import ma.learn.quiz.dao.UserDao;
 import ma.learn.quiz.exception.NotAnImageFileException;
 import ma.learn.quiz.filter.RoleConstant;
@@ -57,6 +58,8 @@ public class UserServiceImpl implements UserService {
     private AuthenticationManager authenticationManager;
     @Autowired
     private JwtUtil jwtUtil;
+    @Autowired
+    private EtudiantDao etudiantDao;
 
 
     @Override
@@ -182,6 +185,7 @@ public class UserServiceImpl implements UserService {
         localUser.setNumero(user.getNumero());
         localUser.setPrenom(user.getPrenom());
         localUser.setVille(user.getVille());
+
         return userDao.save(localUser);
     }
 
