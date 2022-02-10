@@ -8,8 +8,8 @@ public class ReponseEtudiantHomeWork {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-/*	@ManyToOne
-	private Reponse reponse;*/
+	@ManyToOne
+	private HoweWorkQSTReponse reponse;
 	private String answer;
 	@ManyToOne
 	private HomeWorkEtudiant homeWorkEtudiant;
@@ -33,13 +33,13 @@ public class ReponseEtudiantHomeWork {
 		this.id = id;
 	}
 
-/*	public Reponse getReponse() {
+	public HoweWorkQSTReponse getReponse() {
 		return reponse;
 	}
 
-	public void setReponse(Reponse reponse) {
+	public void setReponse(HoweWorkQSTReponse reponse) {
 		this.reponse = reponse;
-	}*/
+	}
 
 	public String getAnswer() {
 		return answer;

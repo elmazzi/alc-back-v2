@@ -14,9 +14,9 @@ public interface ReponseEtudiantHomeWorkDao extends JpaRepository<ReponseEtudian
 	Optional<ReponseEtudiantHomeWork> findById(Long id);
 	List<ReponseEtudiantHomeWork> findReponseEtudiantHomeWorkByQuestionId(Long id);
 	void deleteById(Long id);
-	List<ReponseEtudiant> findByHomeWorkEtudiantId(Long id);
-	List<ReponseEtudiant> findByHomeWorkEtudiantEtudiantId(Long id);
-	List<ReponseEtudiant> findByHomeWorkEtudiantHomeWorkId(Long id);
+	List<ReponseEtudiantHomeWork> findReponseEtudiantHomeWorkByHomeWorkEtudiantId(Long id);
+	List<ReponseEtudiantHomeWork> findByHomeWorkEtudiantEtudiantId(Long id);
+	List<ReponseEtudiantHomeWork> findByHomeWorkEtudiantHomeWorkId(Long id);
 	int deleteByHomeWorkEtudiantId(Long id);
 	int deleteByHomeWorkEtudiantEtudiantId(Long id);
 	int deleteByHomeWorkEtudiantHomeWorkId(Long id);

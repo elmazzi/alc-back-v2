@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import ma.learn.quiz.bean.*;
 import ma.learn.quiz.dao.EtudiantDao;
+import ma.learn.quiz.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,15 @@ public class InscriptionService extends AbstractService {
     public GroupeEtudiantService groupeEtudiantService;
     @Autowired
     private GroupeEtudeService groupeEtudeService;
+    @Autowired
+    private FonctionsService fonctionsService;
+    @Autowired
+    private NiveauEtudeService niveauEtudeService;
+    @Autowired
+    private StatutSocialService statutSocialService;
+    @Autowired
+    private InteretEtudiantService interetEtudiantService;
+
     @JsonFormat(pattern = "dd-MM-yyyy")
     Date dateActuelle = new Date();
     @Autowired
@@ -45,6 +55,14 @@ public class InscriptionService extends AbstractService {
     @Autowired
     private EtudiantDao etudiantDao;
 
+    @Autowired
+    public NiveauEtudeDao niveauEtudeDao;
+    @Autowired
+    public InteretEtudiantDao interetEtudiantDao;
+    @Autowired
+    public FonctionDao fonctionDao;
+    @Autowired
+    public StatutSocialDao statutSocialDao;
     public List<Inscription> findAllByEtatInscriptionLibelle(String libelle) {
         return inscriptionDao.findAllByEtatInscriptionLibelle(libelle);
     }
@@ -123,8 +141,6 @@ public class InscriptionService extends AbstractService {
             affecter(parcours, groupeEtude, etudiant);
             return 0;
         } else {
-
-
             // inscription.setGroupeEtude(groupeEtudeService.findById(4485L).get());
             // inscription.setParcours(parcoursService.findByCode("Elementary 1"));
             if (inscription.getProf() == null) {
@@ -193,18 +209,36 @@ public class InscriptionService extends AbstractService {
         return inscriptionDao.findInscriptionByEtudiantUsername(login);
     }
 
-
     public int valider(Inscription inscription) {
         Prof prof = this.profService.findProfById(inscription.getProf().getId());
         Parcours parcrs = this.parcoursService.findParcoursById(inscription.getParcours().getId());
         EtatInscription etatInscription = etatInscriptionService.findEtatInscriptionById(inscription.getEtatInscription().getId());
         Etudiant etudiant = etudiantService.findEtudiantById(inscription.getEtudiant().getId());
+        NiveauEtude niveauEtude = niveauEtudeDao.findByCode(inscription.getNiveauEtude().getCode());
+        StatutSocial statutSocial = statutSocialDao.findByCode(inscription.getStatutSocial().getCode());
+        InteretEtudiant interetEtudiant = interetEtudiantDao.findByCode(inscription.getInteretEtudiant().getCode());
+        Fonction fonction = fonctionDao.findByCode(inscription.getFonction().getCode());
         etudiant.setParcours(parcrs);
-        etudiantService.updateEtudiant(etudiant);
-        inscription.setEtatInscription(etatInscription);
+        etudiant.setProf(prof);
+        inscription.setStatutSocial(inscription.getStatutSocial());
+        inscription.setFonction(inscription.getFonction());
+        inscription.setInteretEtudiant(inscription.getInteretEtudiant());
+        inscription.setNiveauEtude(inscription.getNiveauEtude());
+      inscription.setEtatInscription(etatInscription);
+        /*  inscription.setNiveauEtude(niveauEtude);
+        inscription.setFonction(fonction);
+        inscription.setInteretEtudiant(interetEtudiant);
+        inscription.setStatutSocial(statutSocial);
+
+         */
         inscription.setProf(prof);
         inscription.setParcours(parcrs);
         inscriptionDao.save(inscription);
+        etudiant.setStatutSocial(inscription.getStatutSocial());
+        etudiant.setNiveauEtude(inscription.getNiveauEtude());
+        etudiant.setFonction(inscription.getFonction());
+        etudiant.setInteretEtudiant(interetEtudiant);
+        etudiantService.updateEtudiant(etudiant);
         return 0;
     }
 

@@ -7,14 +7,15 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import io.swagger.models.auth.In;
 import ma.learn.quiz.bean.*;
 import ma.learn.quiz.dao.InscriptionDao;
+import ma.learn.quiz.dao.*;
 import ma.learn.quiz.service.facade.UserService;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ma.learn.quiz.dao.EtudiantDao;
-import ma.learn.quiz.dao.ScheduleProfDao;
 import ma.learn.quiz.service.vo.EtudiantVo;
 
 import static ma.learn.quiz.filter.RoleConstant.ROLE_STUDENT;
@@ -31,6 +32,39 @@ public class EtudiantService extends AbstractService {
     public InscriptionDao inscriptionDao;
     @Autowired
     public EtatInscriptionService etatInscriptionService;
+    @Autowired
+    public NiveauEtudeDao niveauEtudeDao;
+    @Autowired
+    public InteretEtudiantDao interetEtudiantDao;
+    @Autowired
+    public FonctionDao fonctionDao;
+    @Autowired
+    public StatutSocialDao statutSocialDao;
+
+    @Autowired
+    public EtudiantDao etudiantDao;
+    @Autowired
+    public EtatEtudiantScheduleService etatEtudiantScheduleService;
+    @Autowired
+    public CentreService centreService;
+    @Autowired
+    public ParcoursService parcoursService;
+    @Autowired
+    public ProfService profService;
+    @Autowired
+    public ScheduleProfDao scheduleProfDao;
+    @Autowired
+    public EntityManager entityManager;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private InscriptionService inscriptionService;
+    @Autowired
+    private GroupeEtudiantDetailService groupeEtudiantDetailService;
+    @Autowired
+    private DictionaryService dictionaryService;
+    @Autowired
+    private GroupeEtudiantService groupeEtudiantService;
 
 
     public List<Etudiant> findByParcoursCode(String code) {
@@ -44,11 +78,17 @@ public class EtudiantService extends AbstractService {
     public Etudiant update(Etudiant etudiant) {
         Etudiant loadedEtudiant = findEtudiantById(etudiant.getId());
         Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
+        Prof prof = profService.findProfById(etudiant.getProf().getId());
         loadedEtudiant.setParcours(parcours);
-
+        loadedEtudiant.setProf(prof);
         loadedEtudiant.setNom(etudiant.getNom());
         loadedEtudiant.setPrenom(etudiant.getPrenom());
         loadedEtudiant.setUsername(etudiant.getUsername());
+        loadedEtudiant.setInteretEtudiant(etudiant.getInteretEtudiant());
+        loadedEtudiant.setNiveauEtude(etudiant.getNiveauEtude());
+        loadedEtudiant.setFonction(etudiant.getFonction());
+        loadedEtudiant.setStatutSocial(etudiant.getStatutSocial());
+        System.out.println("Tfu");
         return etudiantDao.save(loadedEtudiant);
     }
 
@@ -56,6 +96,9 @@ public class EtudiantService extends AbstractService {
         return etudiantDao.findEtudiantById(id);
     }
 
+    public List<Etudiant> findEtudiantByProfId(Long id) {
+        return etudiantDao.findEtudiantByProfId(id);
+    }
 
     public Prof findProfById(Long id) {
         return profService.findProfById(id);
@@ -116,6 +159,12 @@ public class EtudiantService extends AbstractService {
             etudiant.setPassword(password);
             etudiant.setAuthorities(Arrays.asList(new Role(ROLE_STUDENT)));
             etudiant.setRole("STUDENT");
+            inscription.setGroupeEtude(etudiant.getGroupeEtude());
+            inscription.setParcours(etudiant.getParcours());
+            etudiant.setNiveauEtude(niveauEtudeDao.findByCode(""));
+            etudiant.setInteretEtudiant(interetEtudiantDao.findByCode(""));
+            etudiant.setFonction(fonctionDao.findByCode(""));
+            etudiant.setStatutSocial(statutSocialDao.findByCode(""));
             User user = userService.save(etudiant);
             System.out.println(user.getId());
             Etudiant etudiant2 = new Etudiant(user);
@@ -128,7 +177,7 @@ public class EtudiantService extends AbstractService {
                 packStudentService.update(packStudent);
 
             }
-            inscriptionDao.save(inscription);
+            inscriptionService.save(inscription);
             return 1;
         }
 
@@ -137,18 +186,36 @@ public class EtudiantService extends AbstractService {
 
     public int save(Etudiant etudiant) {
         Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
+        Prof prof = profService.findProfById(etudiant.getProf().getId());
         Optional<EtatEtudiantSchedule> etat = etatEtudiantScheduleService.findById((long) 1);
         EtatEtudiantSchedule etatLoaded = etat.get();
-        if (parcours != null) {
+        if (parcours == null) {
+            return -3;
+        } else {
             etudiant.setParcours(parcours);
-        }
+            etudiant.setProf(prof);
             etudiant.setEtatEtudiantSchedule(etatLoaded);
             etudiantDao.save(etudiant);
             return 1;
-
+        }
     }
-
     public Etudiant updateEtudiant(Etudiant etudiant) {
+       Fonction fonction = fonctionDao.findByCode(etudiant.getFonction().getCode());
+        NiveauEtude niveauEtude = niveauEtudeDao.findByCode(etudiant.getNiveauEtude().getCode());
+        StatutSocial statutSocial = statutSocialDao.findByCode(etudiant.getStatutSocial().getCode());
+        InteretEtudiant interetEtudiant = interetEtudiantDao.findByCode(etudiant.getInteretEtudiant().getCode());
+        /*
+        etudiant.setNiveauEtude(niveauEtude);
+        etudiant.setFonction(fonction);
+        etudiant.setInteretEtudiant(interetEtudiant);
+        etudiant.setStatutSocial(statutSocial);
+        return this.etudiantDao.save(etudiant);
+
+         */
+        etudiant.setNiveauEtude(etudiant.getNiveauEtude());
+        etudiant.setFonction(etudiant.getFonction());
+        etudiant.setInteretEtudiant(etudiant.getInteretEtudiant());
+        etudiant.setStatutSocial(etudiant.getStatutSocial());
         return this.etudiantDao.save(etudiant);
     }
 
@@ -206,7 +273,10 @@ public class EtudiantService extends AbstractService {
             if(etudiant.getPrenom() != null){
                 query += this.addCriteria("prenom", etudiant.getPrenom(), "LIKE");
             }
-
+            if(etudiant.getProf() != null){
+                query += this.addCriteria("prof.nom", etudiant.getProf().getNom(), "LIKE");
+                query += this.addCriteria("prof.prenom", etudiant.getProf().getPrenom(), "LIKE");
+            }
         }
         System.out.println("query = " + query);
         System.out.println(entityManager.createQuery(query).getResultList().size());

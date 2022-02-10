@@ -25,6 +25,17 @@ public class Etudiant extends User {
     @OneToMany(mappedBy = "etudiant")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<GroupeEtudiantDetail> groupeEtudiantDetails;
+    @ManyToOne
+    private PackStudent packStudent;
+    @ManyToOne
+    private StatutSocial statutSocial;
+    @ManyToOne
+    private InteretEtudiant interetEtudiant;
+    @ManyToOne
+    private NiveauEtude niveauEtude;
+    @ManyToOne
+    private  Fonction fonction;
+
 
     public Etudiant(User user, String ref, Prof prof, EtatEtudiantSchedule etatEtudiantSchedule, Parcours parcours, List<QuizEtudiant> quizEtudiant) {
         super(user.id, user.username, user.password, user.nom, user.prenom,
@@ -42,6 +53,46 @@ public class Etudiant extends User {
                 user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role);    }
 
     public Etudiant() {
+    }
+
+    public StatutSocial getStatutSocial() {
+        return statutSocial;
+    }
+
+    public void setStatutSocial(StatutSocial statutSocial) {
+        this.statutSocial = statutSocial;
+    }
+
+    public InteretEtudiant getInteretEtudiant() {
+        return interetEtudiant;
+    }
+
+    public void setInteretEtudiant(InteretEtudiant interetEtudiant) {
+        this.interetEtudiant = interetEtudiant;
+    }
+
+    public NiveauEtude getNiveauEtude() {
+        return niveauEtude;
+    }
+
+    public void setNiveauEtude(NiveauEtude niveauEtude) {
+        this.niveauEtude = niveauEtude;
+    }
+
+    public Fonction getFonction() {
+        return fonction;
+    }
+
+    public void setFonction(Fonction fonction) {
+        this.fonction = fonction;
+    }
+
+    public PackStudent getPackStudent() {
+        return packStudent;
+    }
+
+    public void setPackStudent(PackStudent packStudent) {
+        this.packStudent = packStudent;
     }
 
     public GroupeEtude getGroupeEtude() {

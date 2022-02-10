@@ -12,4 +12,5 @@ import java.util.List;
 public interface TypeDeQuestionDao extends JpaRepository<TypeDeQuestion, Long> {
     TypeDeQuestion findByRef(String ref);
     int deleteByRef(String ref);
+    TypeDeQuestion findByLib(String lib);
 }
