@@ -78,9 +78,8 @@ public class EtudiantService extends AbstractService {
     public Etudiant update(Etudiant etudiant) {
         Etudiant loadedEtudiant = findEtudiantById(etudiant.getId());
         Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
-        Prof prof = profService.findProfById(etudiant.getProf().getId());
         loadedEtudiant.setParcours(parcours);
-        loadedEtudiant.setProf(prof);
+
         loadedEtudiant.setNom(etudiant.getNom());
         loadedEtudiant.setPrenom(etudiant.getPrenom());
         loadedEtudiant.setUsername(etudiant.getUsername());
@@ -96,9 +95,6 @@ public class EtudiantService extends AbstractService {
         return etudiantDao.findEtudiantById(id);
     }
 
-    public List<Etudiant> findEtudiantByProfId(Long id) {
-        return etudiantDao.findEtudiantByProfId(id);
-    }
 
     public Prof findProfById(Long id) {
         return profService.findProfById(id);
@@ -186,14 +182,13 @@ public class EtudiantService extends AbstractService {
 
     public int save(Etudiant etudiant) {
         Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
-        Prof prof = profService.findProfById(etudiant.getProf().getId());
         Optional<EtatEtudiantSchedule> etat = etatEtudiantScheduleService.findById((long) 1);
         EtatEtudiantSchedule etatLoaded = etat.get();
         if (parcours == null) {
             return -3;
         } else {
             etudiant.setParcours(parcours);
-            etudiant.setProf(prof);
+
             etudiant.setEtatEtudiantSchedule(etatLoaded);
             etudiantDao.save(etudiant);
             return 1;
@@ -273,10 +268,7 @@ public class EtudiantService extends AbstractService {
             if(etudiant.getPrenom() != null){
                 query += this.addCriteria("prenom", etudiant.getPrenom(), "LIKE");
             }
-            if(etudiant.getProf() != null){
-                query += this.addCriteria("prof.nom", etudiant.getProf().getNom(), "LIKE");
-                query += this.addCriteria("prof.prenom", etudiant.getProf().getPrenom(), "LIKE");
-            }
+
         }
         System.out.println("query = " + query);
         System.out.println(entityManager.createQuery(query).getResultList().size());
@@ -285,28 +277,4 @@ public class EtudiantService extends AbstractService {
 
 
 
-    @Autowired
-    public EtudiantDao etudiantDao;
-    @Autowired
-    public EtatEtudiantScheduleService etatEtudiantScheduleService;
-    @Autowired
-    public CentreService centreService;
-    @Autowired
-    public ParcoursService parcoursService;
-    @Autowired
-    public ProfService profService;
-    @Autowired
-    public ScheduleProfDao scheduleProfDao;
-    @Autowired
-    public EntityManager entityManager;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private InscriptionService inscriptionService;
-    @Autowired
-    private GroupeEtudiantDetailService groupeEtudiantDetailService;
-    @Autowired
-    private DictionaryService dictionaryService;
-    @Autowired
-    private GroupeEtudiantService groupeEtudiantService;
 }
