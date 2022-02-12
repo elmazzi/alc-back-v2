@@ -12,9 +12,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin/paiement")
 public class PaiementAdminRest {
-    @GetMapping("/{id}")
-    public int save(@PathVariable Long id) {
-        return paiementService.save(id);
+    @GetMapping("/{idSalary}")
+
+    public int savePaiement(@PathVariable Long idSalary) {
+        return paiementService.savePaiement(idSalary);
     }
 
     @GetMapping("/")
@@ -26,17 +27,12 @@ public class PaiementAdminRest {
     public List<Paiement> findAllByCriteria(@RequestBody PaiementVo paiementVo) {
         return paiementService.findAllByCriteria(paiementVo);
     }
+
     @GetMapping("/detailspaiementByidProf/{mois}/{annee}/{profid}")
 
-    public List<Paiement> findPaiementByMoisAndAnneeAndProfID(@PathVariable String mois,@PathVariable String annee,@PathVariable Long profid) {
+    public List<Paiement> findPaiementByMoisAndAnneeAndProfID(@PathVariable String mois, @PathVariable String annee, @PathVariable Long profid) {
         return paiementService.findPaiementByMoisAndAnneeAndProfID(mois, annee, profid);
     }
-    @GetMapping("/allMontant/{mois}/{annee}/{profid}")
-    public BigDecimal findAllPaiementByMoisAndAnneeAndProfID(@PathVariable String mois,@PathVariable String annee,@PathVariable Long profid) {
-        return paiementService.findAllPaiementByMoisAndAnneeAndProfID(mois, annee, profid);
-    }
-
-
 
 
 

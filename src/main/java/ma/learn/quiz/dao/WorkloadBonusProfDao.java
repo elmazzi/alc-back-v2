@@ -11,4 +11,6 @@ import java.util.List;
 public interface WorkloadBonusProfDao extends JpaRepository<WorkloadBonusProf, Long> {
     List<WorkloadBonusProf> findWorkloadBonusProfByProfId(Long id);
     List<WorkloadBonusProf> findWorkloadBonusProfByMoisAndAnneeAndProfId(int mois,int annee,Long idprof);
+    WorkloadBonusProf findWorkloadBonusProfBySalaryId(Long id);
+    WorkloadBonusProf findWorkloadBonusProfByProfIdAndSalaryId(Long idprof,Long idsalary);
 }

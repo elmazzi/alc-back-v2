@@ -105,86 +105,115 @@ public class SessionCoursService extends AbstractService {
 
 
     public int save(Long profid, Long groupEtudiantid, Long coursid) {
-        Prof prof1 = profService.findProfById(profid);
-        GroupeEtudiant groupeEtudiant = groupeEtudiantService.findGroupeEtudiantById(groupEtudiantid);
+        Date date = new Date();
+        LocalDate localDate1 = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        int month = localDate1.getMonthValue();
+        int annee = localDate1.getYear();
+        Prof prof = profService.findProfById(profid);
         Cours cours = coursService.findCoursById(coursid);
-        if (prof1 == null || groupeEtudiant == null || cours == null) {
+        GroupeEtudiant groupeEtudiant = groupeEtudiantService.findGroupeEtudiantById(groupEtudiantid);
+        if (prof == null || groupeEtudiant == null || cours == null) {
             return -1;
         } else {
-            SessionCours sessionCours = new SessionCours();
-            sessionCours.setGroupeEtudiant(groupeEtudiant);
-            sessionCours.setDateFin(new Date());
-            sessionCours.setReference(generateStringUppercaseAndLowercase(6));
-            sessionCours.setPayer(false);
-            sessionCours.setProf(prof1);
-            sessionCours.setCours(cours);
-            sessionCoursDao.save(sessionCours);
-            paiementService.save(sessionCours.getId());
-            List<SessionCours> sessionCoursList = findByProfId(profid);
-            List<WorkloadBonus> workloadBonusList = workloadBonusService.findAll();
-            List<ClassAverageBonus> classAverageBonusList = classAverageBonusService.findAll();
-            List<SessionCours> sessionCoursList1 = findAllSessionCoursByProfIdAndCurrentDate(profid);
-            List<GroupeEtudiant> groupeEtudiants = groupeEtudiantDao.findGroupeEtudiantByProfId(profid);
-            for (WorkloadBonus workloadBonus : workloadBonusList) {
-                if (workloadBonus.getNombreSession() == sessionCoursList.size()) {
-                    LocalDate localDate = sessionCours.getDateFin().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                    int month = localDate.getMonthValue();
-                    int annee = localDate.getYear();
-                    Salary salary = salaryService.findSalaryByMoisAndAnneeAndProfId(month, annee, sessionCours.getProf().getId());
-                    if (salary == null) {
-                        Salary salary1 = new Salary();
-                        salary1.setMontantMensuel(workloadBonus.getPrix());
-                        salary1.setMois(month);
-                        salary1.setAnnee(annee);
-                        salary1.setProf(sessionCours.getProf());
-                        //   salary1.setNbrSessionMensuel(new BigDecimal(1));
-                        salaryDao.save(salary1);
-                    } else {
-                        // salary.setNbrSessionMensuel(salary.getNbrSessionMensuel().add(new BigDecimal(1)));
-                        salary.setMontantMensuel(salary.getMontantMensuel().add(workloadBonus.getPrix()));
-                        salaryDao.save(salary);
-                    }
-                    WorkloadBonusProf workloadBonusProf = new WorkloadBonusProf();
-                    workloadBonusProf.setWorkloadBonus(workloadBonus);
-                    workloadBonusProf.setProf(sessionCours.getProf());
-                    workloadBonusProf.setMois(month);
-                    workloadBonusProf.setAnnee(annee);
-                    workloadBonusProfDao.save(workloadBonusProf);
-                }
+            Salary salary = salaryDao.findSalaryByMoisAndAnneeAndProfId(month, annee, prof.getId());
+            if (salary == null) {
+                salary = new Salary();
+                salary.setProf(prof);
+                salary.setAnnee(annee);
+                salary.setMois(month);
+                salary.setCode(UtilString.generateStringUppercaseAndLowercase(6));
+                salary.setNbrSessionMensuel(new BigDecimal(0));
+                salary.setTotalPayment(new BigDecimal(0));
+                salary.setTotalBonusClassAverage(new BigDecimal(0));
+                salary.setTotalBonusWorkload(new BigDecimal(0));
+                salary.setPayer(false);
+                salaryDao.save(salary);
+                this.addSessionCours(prof.getId(), cours.getId(), groupeEtudiant.getId(), salary.getId(), date);
+                this.calculBonus(date, salary.getId());
+                return 1;
+            } else {
+                this.addSessionCours(prof.getId(), cours.getId(), groupeEtudiant.getId(), salary.getId(), date);
+                this.calculBonus(date, salary.getId());
+                return 2;
             }
-            for (ClassAverageBonus classAverageBonus : classAverageBonusList) {
-                    int nbr= sessionCoursList1.size()/groupeEtudiants.size();
-                    if (classAverageBonus.getNombreSession() == nbr) {
-                        LocalDate localDate1 = sessionCours.getDateFin().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                        int month = localDate1.getMonthValue();
-                        int annee = localDate1.getYear();
-                        Salary salary = salaryService.findSalaryByMoisAndAnneeAndProfId(month, annee, sessionCours.getProf().getId());
-                        if (salary == null) {
-                            Salary salary1 = new Salary();
-                            salary1.setMontantMensuel(classAverageBonus.getPrix());
-                            salary1.setMois(month);
-                            salary1.setAnnee(annee);
-                            salary1.setProf(sessionCours.getProf());
-                            // salary1.setNbrSessionMensuel(new BigDecimal(1));
-                            salaryDao.save(salary1);
-                        } else {
-                            //   salary.setNbrSessionMensuel(salary.getNbrSessionMensuel().add(new BigDecimal(1)));
-                            salary.setMontantMensuel(salary.getMontantMensuel().add(classAverageBonus.getPrix()));
-                            salaryDao.save(salary);
-                        }
-                        ClassAverageBonusProf classAverageBonusProf = new ClassAverageBonusProf();
-                        classAverageBonusProf.setClassAverageBonus(classAverageBonus);
-                        classAverageBonusProf.setProf(sessionCours.getProf());
-                        classAverageBonusProf.setMois(month);
-                        classAverageBonusProf.setAnnee(annee);
-                        classAverageBonusProfDao.save(classAverageBonusProf);
 
-                    }
-            }
-            return 1;
         }
     }
 
+    public void calculBonus(Date date, Long idSalary) {
+        Salary salary = salaryDao.findSalaryById(idSalary);
+        if (salary != null) {
+            LocalDate localDate1 = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            int month = localDate1.getMonthValue();
+            int annee = localDate1.getYear();
+            List<WorkloadBonus> workloadBonusList = workloadBonusService.findAll();
+            List<ClassAverageBonus> classAverageBonusList = classAverageBonusService.findAll();
+            List<SessionCours> sessionCoursList = findAllSessionCoursByProfIdAndCurrentDate(salary.getProf().getId());
+            List<GroupeEtudiant> groupeEtudiants = groupeEtudiantDao.findGroupeEtudiantByProfId(salary.getProf().getId());
+            for (WorkloadBonus workloadBonus : workloadBonusList) {
+                if (workloadBonus.getNombreSession() == sessionCoursList.size()) {
+                    WorkloadBonusProf workloadBonusProf = workloadBonusProfDao.findWorkloadBonusProfBySalaryId(salary.getId());
+                    salary.setTotalBonusWorkload(workloadBonus.getPrix());
+                    salaryDao.save(salary);
+                    if (workloadBonusProf == null) {
+                        workloadBonusProf = new WorkloadBonusProf();
+                        workloadBonusProf.setWorkloadBonus(workloadBonus);
+                        workloadBonusProf.setProf(salary.getProf());
+                        workloadBonusProf.setMois(month);
+                        workloadBonusProf.setAnnee(annee);
+                        workloadBonusProf.setSalary(salary);
+                        workloadBonusProfDao.save(workloadBonusProf);
+                    } else {
+                        workloadBonusProf.setWorkloadBonus(workloadBonus);
+                        workloadBonusProfDao.save(workloadBonusProf);
+                    }
+
+                }
+            }
+            for (ClassAverageBonus classAverageBonus : classAverageBonusList) {
+                int nbr = sessionCoursList.size() / groupeEtudiants.size();
+                if (classAverageBonus.getNombreSession() == nbr) {
+                    ClassAverageBonusProf classAverageBonusProf = classAverageBonusProfDao.findClassAverageBonusProfBySalaryId(salary.getId());
+                    salary.setTotalBonusClassAverage(classAverageBonus.getPrix());
+                    salaryDao.save(salary);
+                    if (classAverageBonusProf == null) {
+                        classAverageBonusProf = new ClassAverageBonusProf();
+                        classAverageBonusProf.setClassAverageBonus(classAverageBonus);
+                        classAverageBonusProf.setProf(salary.getProf());
+                        classAverageBonusProf.setMois(month);
+                        classAverageBonusProf.setAnnee(annee);
+                        classAverageBonusProf.setSalary(salary);
+                        classAverageBonusProfDao.save(classAverageBonusProf);
+                    } else {
+                        classAverageBonusProf.setClassAverageBonus(classAverageBonus);
+                        classAverageBonusProfDao.save(classAverageBonusProf);
+                    }
+                }
+            }
+        }
+    }
+
+    public void addSessionCours(Long profid, Long coursid, Long groupeEtudiantid, Long salaryid, Date date) {
+
+        Salary salary = salaryDao.findSalaryById(salaryid);
+        if (salary != null) {
+            Prof prof = profService.findProfById(profid);
+            Cours cours = coursService.findCoursById(coursid);
+            GroupeEtudiant groupeEtudiant = groupeEtudiantDao.findGroupeEtudiantById(groupeEtudiantid);
+            SessionCours sessionCours = new SessionCours();
+            sessionCours.setCours(cours);
+            sessionCours.setProf(prof);
+            sessionCours.setPayer(false);
+            sessionCours.setSalary(salary);
+            sessionCours.setReference(UtilString.generateStringUppercaseAndLowercase(6));
+            sessionCours.setDateFin(date);
+            sessionCours.setGroupeEtudiant(groupeEtudiant);
+            sessionCoursDao.save(sessionCours);
+            salary.setTotalPayment(salary.getTotalPayment().add(sessionCours.getProf().getCategorieProf().getLessonRate()));
+            salary.setNbrSessionMensuel(salary.getNbrSessionMensuel().add(new BigDecimal(1)));
+            salaryDao.save(salary);
+        }
+    }
 
     public List<SessionCours> findAllSessionCoursByProfIdAndCurrentDate(Long idprof) {
         Date date = new Date();
@@ -243,5 +272,11 @@ public class SessionCoursService extends AbstractService {
         return sessionCoursDao.findSessionCoursByProfNom(nom);
     }
 
+    public List<SessionCours> findSessionCoursBySalaryId(Long id) {
+        return sessionCoursDao.findSessionCoursBySalaryId(id);
+    }
 
+    public List<SessionCours> findSessionCoursByProfIdAndSalaryId(Long idprof, Long idsalary) {
+        return sessionCoursDao.findSessionCoursByProfIdAndSalaryId(idprof, idsalary);
+    }
 }

@@ -26,7 +26,54 @@ public class Salary {
     private int mois;
     private String  code;
     private BigDecimal nbrSessionMensuel;
-    private BigDecimal montantMensuel;
+    private boolean payer;
+    private BigDecimal totalPayment;
+    private BigDecimal totalBonusClassAverage;
+    private BigDecimal totalBonusWorkload;
+
+    public BigDecimal getTotalPayment() {
+        return totalPayment;
+    }
+
+    public void setTotalPayment(BigDecimal totalPayment) {
+        this.totalPayment = totalPayment;
+    }
+
+    public BigDecimal getTotalBonusClassAverage() {
+        return totalBonusClassAverage;
+    }
+
+    public void setTotalBonusClassAverage(BigDecimal totalBonusClassAverage) {
+        this.totalBonusClassAverage = totalBonusClassAverage;
+    }
+
+    public BigDecimal getTotalBonusWorkload() {
+        return totalBonusWorkload;
+    }
+
+    public void setTotalBonusWorkload(BigDecimal totalBonusWorkload) {
+        this.totalBonusWorkload = totalBonusWorkload;
+    }
+
+    public Salary(Prof prof, int annee, int mois, String code, BigDecimal nbrSessionMensuel, boolean payer) {
+        this.prof = prof;
+        this.annee = annee;
+        this.mois = mois;
+        this.code = code;
+        this.nbrSessionMensuel = nbrSessionMensuel;
+        this.payer = payer;
+    }
+
+    public Salary() {
+    }
+
+    public boolean isPayer() {
+        return payer;
+    }
+
+    public void setPayer(boolean payer) {
+        this.payer = payer;
+    }
 
     public String getCode() {
         return code;
@@ -60,16 +107,6 @@ public class Salary {
     public void setNbrSessionMensuel(BigDecimal nbrSessionMensuel) {
         this.nbrSessionMensuel = nbrSessionMensuel;
     }
-
-
-    public BigDecimal getMontantMensuel() {
-        return montantMensuel;
-    }
-
-    public void setMontantMensuel(BigDecimal montantMensuel) {
-        this.montantMensuel = montantMensuel;
-    }
-
 
     public int getAnnee() {
         return annee;

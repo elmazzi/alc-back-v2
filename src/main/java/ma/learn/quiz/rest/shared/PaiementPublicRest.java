@@ -16,11 +16,6 @@ public class PaiementPublicRest {
 	    public List<Paiement> findAll() {
 	        return paiementService.findAll();
 	    }
-	@PostMapping("/")
-	public int save(Long id) {
-		return paiementService.save(id);
-	}
-
 
 
 	    @Autowired

@@ -36,13 +36,14 @@ public class ClassAverageBonusProfService {
     }
 
     public BigDecimal findMontantClassAverageBonusProfByMoisAndAnneeAndProfId(int mois, int annee, Long idprof) {
-        List<ClassAverageBonusProf> classAverageBonusProfList=findClassAverageBonusProfByMoisAndAnneeAndProfId(mois,annee,idprof);
+        List<ClassAverageBonusProf> classAverageBonusProfList = findClassAverageBonusProfByMoisAndAnneeAndProfId(mois, annee, idprof);
         BigDecimal totalBonus = new BigDecimal(0);
-        for (ClassAverageBonusProf classAverageBonusProf:classAverageBonusProfList) {
-            totalBonus=totalBonus.add(classAverageBonusProf.getClassAverageBonus().getPrix());
+        for (ClassAverageBonusProf classAverageBonusProf : classAverageBonusProfList) {
+            totalBonus = totalBonus.add(classAverageBonusProf.getClassAverageBonus().getPrix());
         }
         return totalBonus;
     }
+
     public List<ClassAverageBonusProf> findAll() {
         return classAverageBonusProfDao.findAll();
     }
@@ -65,4 +66,11 @@ public class ClassAverageBonusProfService {
         }
     }
 
+    public ClassAverageBonusProf findClassAverageBonusProfBySalaryId(Long id) {
+        return classAverageBonusProfDao.findClassAverageBonusProfBySalaryId(id);
+    }
+
+    public ClassAverageBonusProf findClassAverageBonusProfByProfIdAndSalaryId(Long idprof, Long idsalary) {
+        return classAverageBonusProfDao.findClassAverageBonusProfByProfIdAndSalaryId(idprof, idsalary);
+    }
 }

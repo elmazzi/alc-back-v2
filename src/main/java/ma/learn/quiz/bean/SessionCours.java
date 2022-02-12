@@ -21,10 +21,33 @@ public class SessionCours implements Serializable {
     @ManyToOne
     private GroupeEtudiant groupeEtudiant;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 
     private Date dateFin;
     private boolean payer;
+    @ManyToOne
+    private Salary salary;
+
+    public SessionCours() {
+    }
+
+    public SessionCours(String reference, Prof prof, Cours cours, GroupeEtudiant groupeEtudiant, Date dateFin, boolean payer, Salary salary) {
+        this.reference = reference;
+        this.prof = prof;
+        this.cours = cours;
+        this.groupeEtudiant = groupeEtudiant;
+        this.dateFin = dateFin;
+        this.payer = payer;
+        this.salary = salary;
+    }
+
+    public Salary getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Salary salary) {
+        this.salary = salary;
+    }
 
     public Cours getCours() {
         return cours;

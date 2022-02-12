@@ -62,6 +62,11 @@ public class SessionCoursProfRest {
     public int deleteSessionCoursById(@RequestBody List<SessionCours> sessionCourss) {
         return sessionCoursService.deleteSessionCoursById(sessionCourss);
     }
+    @GetMapping("/salryprof/{idprof}/{idsalary}")
+
+    public List<SessionCours> findSessionCoursByProfIdAndSalaryId(@PathVariable Long idprof,@PathVariable Long idsalary) {
+        return sessionCoursService.findSessionCoursByProfIdAndSalaryId(idprof, idsalary);
+    }
 
     @Autowired
     private SessionCoursService sessionCoursService;

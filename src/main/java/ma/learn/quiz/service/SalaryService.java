@@ -20,7 +20,7 @@ import ma.learn.quiz.dao.SalaryDao;
 import javax.persistence.EntityManager;
 
 @Service
-public class SalaryService extends AbstractService{
+public class SalaryService extends AbstractService {
     @Autowired
     private SalaryDao salaryDao;
 
@@ -45,41 +45,12 @@ public class SalaryService extends AbstractService{
         return salaryDao.findAll();
     }
 
-    public BigDecimal findAllMontantByProfId(Long profId) {
-        Prof prof = profService.findProfById(profId);
-        if (prof != null) {
-            List<Salary> salaryList = findSalaryByProfId(profId);
-            BigDecimal montantglobal = new BigDecimal(0);
-            for (Salary salary : salaryList) {
-                montantglobal = montantglobal.add(salary.getMontantMensuel());
-            }
-            return montantglobal;
-        } else {
-            return null;
-        }
-    }
 
     public List<Salary> findSalaryByAnnee(int annee) {
         return salaryDao.findSalaryByAnnee(annee);
     }
 
-    public BigDecimal findMontantByAnneeAndProfId(int annee, Long idprof) {
-        Prof prof = profService.findProfById(idprof);
-        if (prof != null) {
-            List<Salary> salaryList1 = findSalaryByAnneeAndProfId(annee, idprof);
-            BigDecimal montantAnnee = new BigDecimal(0);
-            if (salaryList1 != null) {
-                for (Salary salary : salaryList1) {
-                    montantAnnee = montantAnnee.add(salary.getMontantMensuel());
-                }
-                return montantAnnee;
-            } else {
-                return null;
-            }
-        } else {
-            return null;
-        }
-    }
+
 
     public Salary findSalaryByMoisAndAnnee(int mois, int annee) {
         return salaryDao.findSalaryByMoisAndAnnee(mois, annee);
@@ -97,14 +68,18 @@ public class SalaryService extends AbstractService{
         if (salaryVo.getMois() != null) {
             query += this.addCriteria("mois", salaryVo.getMois(), "LIKE");
         }
-
+        if (salaryVo.getCode() != null) {
+            query += this.addCriteria("code", salaryVo.getCode(), "LIKE");
+        }
+        if (salaryVo.getPayer() != null) {
+            query += this.addCriteria("payer", salaryVo.getPayer());
+        }
 
         System.out.println("query = " + query);
-
-
         return entityManager.createQuery(query).getResultList();
-
-
     }
 
+    public List<Salary> findSalaryByPayer(boolean payer) {
+        return salaryDao.findSalaryByPayer(payer);
+    }
 }

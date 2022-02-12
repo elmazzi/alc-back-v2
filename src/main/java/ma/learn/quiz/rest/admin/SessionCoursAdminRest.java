@@ -14,6 +14,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin/session")
 public class SessionCoursAdminRest {
+    @GetMapping("/allSessionCours/id/{id}")
+
+    public List<SessionCours> findSessionCoursBySalaryId(@PathVariable Long id) {
+        return sessionCoursService.findSessionCoursBySalaryId(id);
+    }
 
     @PostMapping("/{profid}/{etudiantid}/{coursid}")
     public int save(@PathVariable Long profid, @PathVariable Long etudiantid, @PathVariable Long coursid) {

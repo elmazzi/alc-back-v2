@@ -41,6 +41,9 @@ public class WorkloadBonusProfProfRest {
     public List<WorkloadBonusProf> findAll() {
         return workloadBonusProfService.findAll();
     }
+    @GetMapping("/prof/{idprof}/{idsalary}")
 
-
+    public WorkloadBonusProf findWorkloadBonusProfByProfIdAndSalaryId(@PathVariable Long idprof,@PathVariable Long idsalary) {
+        return workloadBonusProfService.findWorkloadBonusProfByProfIdAndSalaryId(idprof, idsalary);
+    }
 }
