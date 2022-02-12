@@ -78,6 +78,7 @@ public class EtudiantService extends AbstractService {
     public Etudiant update(Etudiant etudiant) {
         Etudiant loadedEtudiant = findEtudiantById(etudiant.getId());
         Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
+
         loadedEtudiant.setParcours(parcours);
 
         loadedEtudiant.setNom(etudiant.getNom());
@@ -94,6 +95,7 @@ public class EtudiantService extends AbstractService {
     public Etudiant findEtudiantById(Long id) {
         return etudiantDao.findEtudiantById(id);
     }
+
 
 
     public Prof findProfById(Long id) {
@@ -182,6 +184,7 @@ public class EtudiantService extends AbstractService {
 
     public int save(Etudiant etudiant) {
         Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
+
         Optional<EtatEtudiantSchedule> etat = etatEtudiantScheduleService.findById((long) 1);
         EtatEtudiantSchedule etatLoaded = etat.get();
         if (parcours == null) {
@@ -274,6 +277,7 @@ public class EtudiantService extends AbstractService {
         System.out.println(entityManager.createQuery(query).getResultList().size());
         return entityManager.createQuery(query).getResultList();
     }
+
 
 
 
