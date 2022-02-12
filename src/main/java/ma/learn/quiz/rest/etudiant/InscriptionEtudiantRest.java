@@ -1,5 +1,6 @@
 package ma.learn.quiz.rest.etudiant;
 
+import ma.learn.quiz.bean.Etudiant;
 import ma.learn.quiz.bean.Inscription;
 import ma.learn.quiz.service.InscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,11 @@ public class InscriptionEtudiantRest {
 	}
 
 
-	
-	
+	@GetMapping("/id/{id}")
+	public Inscription findInscriptionByEtudiantId(@PathVariable Long id) {
+		return inscriptionService.findInscriptionByEtudiantId(id);
+	}
+
 	@PostMapping("/search")
 	public List<Inscription> findByCriteria(@RequestBody Inscription inscrit) {
 		return inscriptionService.findByCriteria(inscrit);
@@ -36,10 +40,12 @@ public class InscriptionEtudiantRest {
 		return inscriptionService.findByNumeroInscription(numeroInscription);
 	}
 
-	
+	@PostMapping("/update/pack/{packCode}")
+	public int updateByStudent(@PathVariable String packCode,@RequestBody Etudiant etudiant) {
+		return inscriptionService.updateByStudent(packCode, etudiant);
+	}
 
-	
-	 @PostMapping("/delete-multiple-by-id")
+	@PostMapping("/delete-multiple-by-id")
     public int deleteInscriptionById(@RequestBody List<Inscription> inscription) {
 		return inscriptionService.deleteInscriptionById(inscription);
 	}

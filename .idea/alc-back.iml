@@ -37,6 +37,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jsoup-1.14.3" level="project" />
+    <orderEntry type="library" name="gtranslateapi-1.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.1" level="project" />
     <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.14.3" level="project" />
     <orderEntry type="library" name="Maven: io.springfox:springfox-swagger-ui:2.9.2" level="project" />
@@ -169,6 +170,5 @@
     <orderEntry type="library" name="Maven: com.google.api-client:google-api-client-jackson2:1.20.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.http-client:google-http-client-jackson2:1.20.0" level="project" />
     <orderEntry type="library" name="Maven: com.googlecode:google-api-translate-java:0.92" level="project" />
-    <orderEntry type="library" name="gtranslateapi-1.0" level="project" />
   </component>
 </module>

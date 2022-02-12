@@ -12,5 +12,7 @@ public interface ClassAverageBonusProfDao extends JpaRepository<ClassAverageBonu
     List<ClassAverageBonusProf> findClassAverageBonusProfByProfId(Long id);
     List<ClassAverageBonusProf> findClassAverageBonusProfByProfIdAndClassAverageBonusId(Long id,Long idClassAverageBonus);
     List<ClassAverageBonusProf> findClassAverageBonusProfByMoisAndAnneeAndProfId(int mois,int annee,Long idprof);
+    ClassAverageBonusProf findClassAverageBonusProfBySalaryId(Long id);
+    ClassAverageBonusProf findClassAverageBonusProfByProfIdAndSalaryId(Long idprof,Long idsalary);
 
 }

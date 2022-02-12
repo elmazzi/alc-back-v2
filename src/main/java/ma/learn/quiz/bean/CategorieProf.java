@@ -51,7 +51,4 @@ public class CategorieProf {
 	public void setProfs(List<Prof> profs) {
 		this.profs = profs;
 	}
-    
-    
-    
 }

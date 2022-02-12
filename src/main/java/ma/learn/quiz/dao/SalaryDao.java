@@ -22,4 +22,7 @@ public interface SalaryDao extends JpaRepository<Salary, Long> {
 
     Salary findSalaryByMoisAndAnnee(int mois, int annee);
 
+    Salary findSalaryById(Long id);
+    List<Salary> findSalaryByPayer(boolean payer);
+
 }

@@ -26,10 +26,6 @@ public class EtudiantEtudiantRest {
         return etudiantService.create(pack,etudiant);
     }
 
-    @GetMapping("/prof/id/{id}")
-    public List<Etudiant> findEtudiantByProfId(@PathVariable Long id) {
-        return etudiantService.findEtudiantByProfId(id);
-    }
 
     @PostMapping("/search")
     public List<Etudiant> findByCriteria(@RequestBody EtudiantVo etudiantVo) {

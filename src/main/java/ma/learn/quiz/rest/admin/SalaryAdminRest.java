@@ -33,4 +33,9 @@ public class SalaryAdminRest {
     public List<Salary> findAllByCriteria(@RequestBody SalaryVo salaryVo) {
         return salaryService.findAllByCriteria(salaryVo);
     }
+    @GetMapping("/etatPayer/{payer}")
+
+    public List<Salary> findSalaryByPayer(@PathVariable boolean payer) {
+        return salaryService.findSalaryByPayer(payer);
+    }
 }

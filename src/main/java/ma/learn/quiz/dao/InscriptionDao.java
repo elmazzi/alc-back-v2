@@ -8,7 +8,7 @@ import ma.learn.quiz.bean.Inscription;
 
 public interface InscriptionDao extends JpaRepository<Inscription,Long>  {
 	Inscription findByNumeroInscription(int numeroInscription);
-	
+	Inscription findInscriptionByEtudiantId(Long id);
 	int deleteByNumeroInscription(int numeroInscription);
 	int deleteByEtatInscriptionRef(String ref);
 	int deleteByEtudiantRef(String ref);

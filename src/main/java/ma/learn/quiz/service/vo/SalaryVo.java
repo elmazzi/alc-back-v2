@@ -10,6 +10,24 @@ public class SalaryVo {
     private String mois;
     private BigDecimal nbrSessionMensuel;
     private BigDecimal montantMensuel;
+    private String  code;
+    private String payer;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getPayer() {
+        return payer;
+    }
+
+    public void setPayer(String payer) {
+        this.payer = payer;
+    }
 
     public Prof getProf() {
         return prof;

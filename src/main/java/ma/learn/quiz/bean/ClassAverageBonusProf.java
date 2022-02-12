@@ -16,16 +16,15 @@ public class ClassAverageBonusProf {
     private ClassAverageBonus classAverageBonus;
     private int mois;
     private int annee;
+    @ManyToOne
+    private Salary salary;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date dateGetBonus;
-
-    public Date getDateGetBonus() {
-        return dateGetBonus;
+    public Salary getSalary() {
+        return salary;
     }
 
-    public void setDateGetBonus(Date dateGetBonus) {
-        this.dateGetBonus = dateGetBonus;
+    public void setSalary(Salary salary) {
+        this.salary = salary;
     }
 
     public Long getId() {

@@ -10,19 +10,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/etudiant/paiement")
 public class PaiementEtudiantRest {
-    
-
-	    @GetMapping("/")
-	    public List<Paiement> findAll() {
-	        return paiementService.findAll();
-	    }
 
 
-	@GetMapping("/{id}")
-	public int save(@PathVariable Long id) {
-		return paiementService.save(id);
-	}
+    @GetMapping("/")
+    public List<Paiement> findAll() {
+        return paiementService.findAll();
+    }
 
-	@Autowired
-	    private PaiementService paiementService;
+
+    @Autowired
+    private PaiementService paiementService;
 }

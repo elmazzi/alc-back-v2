@@ -35,6 +35,9 @@ public class ClassAverageBonusProfAdminRest {
     public List<ClassAverageBonusProf> findAll() {
         return classAverageBonusProfService.findAll();
     }
+    @GetMapping("/salaryid/{id}")
 
-
+    public ClassAverageBonusProf findClassAverageBonusProfBySalaryId(@PathVariable Long id) {
+        return classAverageBonusProfService.findClassAverageBonusProfBySalaryId(id);
+    }
 }
