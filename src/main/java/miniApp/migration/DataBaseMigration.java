@@ -112,7 +112,7 @@ public class DataBaseMigration {
                         System.out.println("pathSection ==> " + pathSection);
                         System.out.println("pathImage ==>" + pathSectionImage);
                         System.out.println("++++++++++++++++++++++++++++++");
-//                        extractHtmlImageAndContent(parcour[i], section[j], pathSection, pathSectionImage);
+                        extractHtmlImageAndContent(parcour[i], section[j], pathSection, pathSectionImage);
                     }
                 }
 
