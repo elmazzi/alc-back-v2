@@ -1,9 +1,6 @@
 package ma.learn.quiz.service;
 
-import ma.learn.quiz.bean.HomeWork;
-import ma.learn.quiz.bean.HomeWorkQuestion;
-import ma.learn.quiz.bean.Question;
-import ma.learn.quiz.bean.TypeDeQuestion;
+import ma.learn.quiz.bean.*;
 import ma.learn.quiz.dao.HomeWorkQuestionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,19 +43,30 @@ public class HomeWorkQuestionService {
         return homeWorkQuestionDao.deleteByHomeWork(homeWork);
     }
 
-    public void saveHomeWorkQuestion(HomeWork homeWork, List<HomeWorkQuestion> questions){
-
-        for (HomeWorkQuestion question: questions){
+    public void saveHomeWorkQuestion(HomeWork homeWork, List<HomeWorkQuestion> questions) {
+        for (HomeWorkQuestion question : questions) {
+            List<HoweWorkQSTReponse> reponses = question.getReponses();
             question.setHomeWork(homeWork);
             TypeDeQuestion typeDeQuestion = typeDeQuestionService.findByRef(question.getTypeDeQuestion().getRef());
             question.setTypeDeQuestion(typeDeQuestion);
             typeDeQuestionService.update(typeDeQuestion);
-            homeWorkQuestionDao.save(question);
-            homeWorkQSTReponseService.save(question, question.getReponses());
-            question.setReponses(question.getReponses());
-            homeWorkQuestionDao.save(question);
-
+            question.setTypeDeQuestion(typeDeQuestion);
+            System.out.println("==============================");
+            System.out.println(question.getId());
+            System.out.println(question.getLibelle());
+            if (question.getId() != null) {
+                HomeWorkQuestion quest = this.findHomeWorkQuestionById(question.getId());
+                quest.setLibelle(question.getLibelle());
+                quest.setPointReponseJuste(question.getPointReponseJuste());
+                quest.setPointReponsefausse(question.getPointReponsefausse());
+                quest.setNumero(question.getNumero());
+                quest.setHomeWork(question.getHomeWork());
+                quest.setTypeDeQuestion(typeDeQuestion);
+                question = homeWorkQuestionDao.save(quest);
+            } else {
+                question = homeWorkQuestionDao.save(question);
+            }
+            homeWorkQSTReponseService.save(question, reponses);
         }
-
     }
 }

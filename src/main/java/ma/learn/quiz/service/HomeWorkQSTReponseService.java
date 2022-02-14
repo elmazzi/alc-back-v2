@@ -12,8 +12,8 @@ import java.util.List;
 @Service
 public class HomeWorkQSTReponseService {
 
-      @Autowired
-      private HomeWorkQSTReponseDao homeWorkQSTReponseDao;
+    @Autowired
+    private HomeWorkQSTReponseDao homeWorkQSTReponseDao;
 
     public List<HoweWorkQSTReponse> findByHomeWorkQuestionId(Long id) {
         return homeWorkQSTReponseDao.findByHomeWorkQuestionId(id);
@@ -23,14 +23,29 @@ public class HomeWorkQSTReponseService {
         return homeWorkQSTReponseDao.findByEtatReponse(etatreponse);
     }
 
-    public  int save(HomeWorkQuestion homeWorkQuestion , List<HoweWorkQSTReponse> reponses ){
+    public HoweWorkQSTReponse findHoweWorkQSTReponseById(Long id) {
+        return homeWorkQSTReponseDao.findHoweWorkQSTReponseById(id);
+    }
+
+    public int save(HomeWorkQuestion homeWorkQuestion, List<HoweWorkQSTReponse> reponses) {
         int i = 0;
-        for ( HoweWorkQSTReponse reponse :reponses){
-            reponse.setHomeWorkQuestion(homeWorkQuestion);
-            homeWorkQSTReponseDao.save(reponse);
+        for (HoweWorkQSTReponse reponse : reponses) {
+            System.out.println("------------------------------");
+            System.out.println(reponse.getId());
+            System.out.println(reponse.getLib());
+            if (reponse.getId() != null) {
+                HoweWorkQSTReponse rps = this.findHoweWorkQSTReponseById(reponse.getId());
+                rps.setLib(reponse.getLib());
+                rps.setNumero(reponse.getNumero());
+                rps.setEtatReponse(reponse.getEtatReponse());
+                rps.setHomeWorkQuestion(homeWorkQuestion);
+                homeWorkQSTReponseDao.save(rps);
+            } else {
+                reponse.setHomeWorkQuestion(homeWorkQuestion);
+                homeWorkQSTReponseDao.save(reponse);
+            }
             i++;
         }
         return i;
     }
-
 }

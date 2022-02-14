@@ -3,6 +3,7 @@ package ma.learn.quiz.service;
 
 import ma.learn.quiz.bean.Cours;
 import ma.learn.quiz.bean.HomeWork;
+import ma.learn.quiz.bean.HomeWorkQuestion;
 import ma.learn.quiz.bean.Section;
 import ma.learn.quiz.dao.HomeWorkDao;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -26,6 +27,7 @@ public class HomeWorkService {
     HomeWorkQuestionService homeWorkQuestionService;
     @Autowired
     QuestionService questionService;
+
     public Optional<HomeWork> findById(Long id) {
         return homeWorkDao.findById(id);
     }
@@ -48,15 +50,17 @@ public class HomeWorkService {
     }
 
     public HomeWork save(HomeWork homeWork) {
+        List<HomeWorkQuestion> questions = homeWork.getQuestions();
         Cours cours = coursService.findCoursById(homeWork.getCours().getId());
-       homeWork.setCours(cours);
-       homeWork.setLibelle(cours.getLibelle() + RandomStringUtils.randomNumeric(1));
-       homeWorkDao.save(homeWork);
-       homeWorkQuestionService.saveHomeWorkQuestion(homeWork,homeWork.getQuestions());
-       homeWork.setQuestions(homeWork.getQuestions());
+        homeWork.setCours(cours);
+        if (homeWork.getLibelle() == null) {
+            homeWork.setLibelle(cours.getLibelle() + RandomStringUtils.randomNumeric(1));
+        }
+        homeWorkDao.save(homeWork);
+        homeWorkQuestionService.saveHomeWorkQuestion(homeWork, questions);
+        homeWork.setQuestions(homeWork.getQuestions());
         return homeWorkDao.save(homeWork);
     }
-
 
 
     @Autowired
