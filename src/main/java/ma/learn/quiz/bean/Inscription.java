@@ -43,6 +43,8 @@ public class Inscription {
     private Date datefininscription;
     @ManyToOne
     private PackStudent packStudent;
+    @ManyToOne
+    private Skill skill;
 
     public StatutSocial getStatutSocial() {
         return statutSocial;
@@ -100,6 +102,13 @@ public class Inscription {
         this.id = id;
     }
 
+    public Skill getSkill() {
+        return skill;
+    }
+
+    public void setSkill(Skill skill) {
+        this.skill = skill;
+    }
 
     public int getNumeroInscription() {
         return numeroInscription;

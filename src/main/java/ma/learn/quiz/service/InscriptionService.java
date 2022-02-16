@@ -224,6 +224,7 @@ public class InscriptionService extends AbstractService {
         inscription.setInteretEtudiant(inscription.getInteretEtudiant());
         inscription.setNiveauEtude(inscription.getNiveauEtude());
       inscription.setEtatInscription(etatInscription);
+      inscription.setSkill(inscription.getSkill());
         /*  inscription.setNiveauEtude(niveauEtude);
         inscription.setFonction(fonction);
         inscription.setInteretEtudiant(interetEtudiant);
@@ -237,6 +238,7 @@ public class InscriptionService extends AbstractService {
         etudiant.setNiveauEtude(inscription.getNiveauEtude());
         etudiant.setFonction(inscription.getFonction());
         etudiant.setInteretEtudiant(interetEtudiant);
+        etudiant.setSkill(inscription.getSkill());
         etudiantService.updateEtudiant(etudiant);
         return 0;
     }
