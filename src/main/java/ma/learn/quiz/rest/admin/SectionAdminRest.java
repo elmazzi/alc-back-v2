@@ -79,6 +79,10 @@ public class SectionAdminRest {
 		return sectionservice.findByCoursIdAndNumeroOrder(id, numeroOrder);
 	}
 
+	@PostMapping("/search/")
+	public List<Section> search(@RequestBody  Section section) {
+		return sectionservice.search(section);
+	}
 
 	@GetMapping("/idsection/{id}")
 	public List<SectionItem> findSectionItemsBySection(@PathVariable Long id) {

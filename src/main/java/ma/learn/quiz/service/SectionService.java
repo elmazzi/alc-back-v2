@@ -1,7 +1,6 @@
 package ma.learn.quiz.service;
 
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,7 +22,7 @@ import ma.learn.quiz.dao.SectionDao;
 import ma.learn.quiz.dao.VocabularyDao;
 
 @Service
-public class SectionService {
+public class SectionService extends AbstractService {
 
     @Autowired
     public ParcoursService parcoursService;
@@ -94,6 +93,26 @@ public class SectionService {
 
     public List<Section> findByCriteria(Long id) {
         String query = "SELECT e FROM Section e WHERE e.cours.id='" + id + "'ORDER BY e.numeroOrder ASC";
+        return entityManager.createQuery(query).getResultList();
+    }
+
+
+    public List<Section> search(Section section) {
+        String query = this.init("Section");
+        if (section.getCours().getParcours() != null) {
+            query += this.addCriteria("cours.parcours.id", section.getCours().getParcours().getId(), "LIKE");
+        }
+        if (section.getCours() != null) {
+            query += this.addCriteria("cours.id", section.getCours().getId(), "LIKE");
+        }
+
+        if (section.getCategorieSection() != null) {
+            query += this.addCriteria("categorieSection.libelle", section.getCategorieSection().getLibelle(), "LIKE");
+        }
+        if (section.getLibelle() != null) {
+            query += this.addCriteria("libelle", section.getLibelle(), "LIKE");
+        }
+        System.out.println("query = " + query.length());
         return entityManager.createQuery(query).getResultList();
     }
 
@@ -247,24 +266,24 @@ public class SectionService {
         return sectionDao.findSectionByCoursAndCategorieSection(cours, categorieSection);
     }
 
-	public int setSectionItems(Long idSection, List<SectionItem> sectionItems) {
-		Section section = findSectionById(idSection);
+    public int setSectionItems(Long idSection, List<SectionItem> sectionItems) {
+        Section section = findSectionById(idSection);
 
-		if (section == null) {
-			return -1;
-		} else {
-			if (sectionItems == null || sectionItems.isEmpty()) {
-				return -2;
-			} else {
+        if (section == null) {
+            return -1;
+        } else {
+            if (sectionItems == null || sectionItems.isEmpty()) {
+                return -2;
+            } else {
                 for (SectionItem item : sectionItems) {
                     item.setSection(section);
                 }
-				section.setSectionItems(sectionItems);
+                section.setSectionItems(sectionItems);
                 sectionDao.save(section);
-				return 1;
-			}
-		}
-	}
+                return 1;
+            }
+        }
+    }
 
 
 }

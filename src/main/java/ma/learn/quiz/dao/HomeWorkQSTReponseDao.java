@@ -14,4 +14,5 @@ public interface HomeWorkQSTReponseDao extends JpaRepository<HoweWorkQSTReponse,
 
     List<HoweWorkQSTReponse> findByHomeWorkQuestionId(Long id);
     List<HoweWorkQSTReponse> findByEtatReponse(String etatreponse);
+    HoweWorkQSTReponse findHoweWorkQSTReponseById(Long id);
 }
