@@ -66,7 +66,9 @@ public class HomeWorkQuestionService {
             } else {
                 question = homeWorkQuestionDao.save(question);
             }
-            homeWorkQSTReponseService.save(question, reponses);
+            if (reponses != null) {
+                homeWorkQSTReponseService.save(question, reponses);
+            }
         }
     }
 }

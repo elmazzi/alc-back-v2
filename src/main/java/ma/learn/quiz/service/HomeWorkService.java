@@ -50,16 +50,27 @@ public class HomeWorkService {
     }
 
     public HomeWork save(HomeWork homeWork) {
+        System.out.println(homeWork.getLibelle());
         List<HomeWorkQuestion> questions = homeWork.getQuestions();
-        Cours cours = coursService.findCoursById(homeWork.getCours().getId());
-        homeWork.setCours(cours);
-        if (homeWork.getLibelle() == null) {
-            homeWork.setLibelle(cours.getLibelle() + RandomStringUtils.randomNumeric(1));
+        Optional<HomeWork> loadedHomeWork = this.findById(homeWork.getId());
+        if (loadedHomeWork.isPresent()) {
+            HomeWork homeWork1 = loadedHomeWork.get();
+            homeWork1.setUrlImage(homeWork.getUrlImage());
+            homeWork1.setLibelle(homeWork.getLibelle());
+            homeWork1.setUrlVideo(homeWork.getUrlVideo());
+            homeWork = homeWorkDao.save(homeWork1);
+        } else {
+            Cours cours = coursService.findCoursById(homeWork.getCours().getId());
+            homeWork.setCours(cours);
+            if (homeWork.getLibelle() == null) {
+                homeWork.setLibelle(cours.getLibelle() + RandomStringUtils.randomNumeric(1));
+            }
+            homeWork = homeWorkDao.save(homeWork);
         }
-        homeWorkDao.save(homeWork);
+
+
         homeWorkQuestionService.saveHomeWorkQuestion(homeWork, questions);
-        homeWork.setQuestions(homeWork.getQuestions());
-        return homeWorkDao.save(homeWork);
+        return homeWork;
     }
 
 
