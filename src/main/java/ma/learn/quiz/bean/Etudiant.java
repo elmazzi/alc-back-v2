@@ -34,6 +34,8 @@ public class Etudiant extends User {
     @ManyToOne
     private NiveauEtude niveauEtude;
     @ManyToOne
+    private Skill skill;
+    @ManyToOne
     private  Fonction fonction;
 
 
@@ -53,6 +55,14 @@ public class Etudiant extends User {
                 user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role);    }
 
     public Etudiant() {
+    }
+
+    public Skill getSkill() {
+        return skill;
+    }
+
+    public void setSkill(Skill skill) {
+        this.skill = skill;
     }
 
     public StatutSocial getStatutSocial() {

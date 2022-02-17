@@ -33,6 +33,9 @@ public class HomeWorkQSTReponseService {
             System.out.println("------------------------------");
             System.out.println(reponse.getId());
             System.out.println(reponse.getLib());
+
+
+
             if (reponse.getId() != null) {
                 HoweWorkQSTReponse rps = this.findHoweWorkQSTReponseById(reponse.getId());
                 rps.setLib(reponse.getLib());
