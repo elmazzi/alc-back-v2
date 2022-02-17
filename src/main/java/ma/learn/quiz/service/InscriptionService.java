@@ -181,7 +181,6 @@ public class InscriptionService extends AbstractService {
 
     public int  updateByStudent(String packCode, Etudiant etudiant){
         Inscription inscription = inscriptionDao.findInscriptionByEtudiantId(etudiant.getId());
-        System.out.println("parcours id: " +etudiant.getParcours().getId());
         Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
         GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(etudiant.getGroupeEtude().getId());
         PackStudent packStudent = packStudentService.findPackStudentByCode(packCode);
