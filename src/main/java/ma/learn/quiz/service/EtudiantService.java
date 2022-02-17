@@ -149,14 +149,18 @@ public class EtudiantService extends AbstractService {
             etudiant.setParcours(parcours);
             etudiant.setGroupeEtude(groupeEtude);
             inscription.setGroupeEtude(etudiant.getGroupeEtude());
-            inscription.setParcours(etudiant.getParcours());
+            if ( parcours!=null){
+                inscription.setParcours(etudiant.getParcours());
+            }
             etudiant.setEtatEtudiantSchedule(etudiantSchedule);
             String password = this.userService.generatePassword();
             etudiant.setPassword(password);
             etudiant.setAuthorities(Arrays.asList(new Role(ROLE_STUDENT)));
             etudiant.setRole("STUDENT");
             inscription.setGroupeEtude(etudiant.getGroupeEtude());
+/*
             inscription.setParcours(etudiant.getParcours());
+*/
             etudiant.setNiveauEtude(niveauEtudeDao.findByCode(""));
             etudiant.setInteretEtudiant(interetEtudiantDao.findByCode(""));
             etudiant.setFonction(fonctionDao.findByCode(""));

@@ -143,7 +143,7 @@ public class InscriptionService extends AbstractService {
         } else {
             // inscription.setGroupeEtude(groupeEtudeService.findById(4485L).get());
             // inscription.setParcours(parcoursService.findByCode("Elementary 1"));
-            if (inscription.getProf() == null) {
+/*            if (inscription.getProf() == null) {
                 inscription.setProf(new Prof());
             }
 
@@ -155,24 +155,23 @@ public class InscriptionService extends AbstractService {
             }
             if (inscription.getEtudiant() == null) {
                 inscription.setEtudiant(new Etudiant());
-            }
+            }*/
 
             EtatInscription etatInscription = etatInscriptionService.findEtatInscriptionById((long) 1);
             Etudiant etudiant = this.etudiantService.findEtudiantById(inscription.getEtudiant().getId());
-            Parcours parcours = parcoursService.findParcoursById(inscription.getParcours().getId());
-            GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(inscription.getGroupeEtude().getId());
+           // Parcours parcours = parcoursService.findParcoursById(inscription.getParcours().getId());
+            //GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(inscription.getGroupeEtude().getId());
 
             if (etudiant == null) {
                 System.out.println("etudiant is null");
                 return -1;
             } else {
                 System.out.println("Nv etudiant");
-                inscription.setParcours(parcours);
+                /*inscription.setParcours(parcours);*/
                 //inscription.setProf(prof);
                 //   inscription.setParcours(parcrs);
                 inscription.setEtatInscription(etatInscription);
                 inscription.setEtudiant(etudiant);
-                inscription.setGroupeEtude(groupeEtude);
                 inscriptionDao.save(inscription);
                 //affecter(parcours, groupeEtude, etudiant);
                 return 1;
@@ -182,6 +181,7 @@ public class InscriptionService extends AbstractService {
 
     public int  updateByStudent(String packCode, Etudiant etudiant){
         Inscription inscription = inscriptionDao.findInscriptionByEtudiantId(etudiant.getId());
+        System.out.println("parcours id: " +etudiant.getParcours().getId());
         Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
         GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(etudiant.getGroupeEtude().getId());
         PackStudent packStudent = packStudentService.findPackStudentByCode(packCode);
