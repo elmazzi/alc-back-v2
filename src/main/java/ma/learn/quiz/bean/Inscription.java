@@ -37,6 +37,7 @@ public class Inscription {
     @ManyToOne
     private  Fonction fonction;
 
+    private String dateRegistration;
     @Temporal(TemporalType.DATE)
     private Date datedebutinscription;
     @Temporal(TemporalType.DATE)
@@ -45,6 +46,15 @@ public class Inscription {
     private PackStudent packStudent;
     @ManyToOne
     private Skill skill;
+
+
+    public String getDateRegistration() {
+        return dateRegistration;
+    }
+
+    public void setDateRegistration(String dateRegistration) {
+        this.dateRegistration = dateRegistration;
+    }
 
     public StatutSocial getStatutSocial() {
         return statutSocial;

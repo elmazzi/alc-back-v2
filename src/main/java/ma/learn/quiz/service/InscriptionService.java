@@ -1,5 +1,7 @@
 package ma.learn.quiz.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -171,6 +173,9 @@ public class InscriptionService extends AbstractService {
                 //inscription.setProf(prof);
                 //   inscription.setParcours(parcrs);
                 inscription.setEtatInscription(etatInscription);
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                LocalDateTime now = LocalDateTime.now();
+                inscription.setDateRegistration(dtf.format(now));
                 inscription.setEtudiant(etudiant);
                 inscriptionDao.save(inscription);
                 //affecter(parcours, groupeEtude, etudiant);
