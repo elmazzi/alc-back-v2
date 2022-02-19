@@ -14,6 +14,7 @@ import ma.learn.quiz.dao.*;
 import ma.learn.quiz.service.facade.UserService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ma.learn.quiz.service.vo.EtudiantVo;
@@ -66,6 +67,13 @@ public class EtudiantService extends AbstractService {
     private DictionaryService dictionaryService;
     @Autowired
     private GroupeEtudiantService groupeEtudiantService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserServiceImpl userServiceImpl;
+    @Autowired
+    private UserDao userDao;
+
 
 
     public List<Etudiant> findByParcoursCode(String code) {
@@ -152,14 +160,18 @@ public class EtudiantService extends AbstractService {
             etudiant.setParcours(parcours);
             etudiant.setGroupeEtude(groupeEtude);
             inscription.setGroupeEtude(etudiant.getGroupeEtude());
-            inscription.setParcours(etudiant.getParcours());
+            if ( parcours!=null){
+                inscription.setParcours(etudiant.getParcours());
+            }
             etudiant.setEtatEtudiantSchedule(etudiantSchedule);
             String password = this.userService.generatePassword();
             etudiant.setPassword(password);
             etudiant.setAuthorities(Arrays.asList(new Role(ROLE_STUDENT)));
             etudiant.setRole("STUDENT");
             inscription.setGroupeEtude(etudiant.getGroupeEtude());
+/*
             inscription.setParcours(etudiant.getParcours());
+*/
             etudiant.setNiveauEtude(niveauEtudeDao.findByCode(""));
             etudiant.setInteretEtudiant(interetEtudiantDao.findByCode(""));
             etudiant.setFonction(fonctionDao.findByCode(""));
@@ -219,6 +231,14 @@ public class EtudiantService extends AbstractService {
         etudiant.setSkill(etudiant.getSkill());
         return this.etudiantDao.save(etudiant);
     }
+
+    public int updatePassword(String username, String newPassword){
+        User user = userServiceImpl.loadUserByUsername(username);
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userDao.save(user);
+        return 1;
+    }
+
 
     public List<Etudiant> findAll() {
         return etudiantDao.findAll();
