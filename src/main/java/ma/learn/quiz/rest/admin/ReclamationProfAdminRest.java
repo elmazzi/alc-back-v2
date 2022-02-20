@@ -2,7 +2,6 @@ package ma.learn.quiz.rest.admin;
 
 import ma.learn.quiz.bean.ReclamationEtudiant;
 import ma.learn.quiz.bean.ReclamationProf;
-import ma.learn.quiz.service.ReclamationEtudiantService;
 import ma.learn.quiz.service.ReclamationProfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +18,7 @@ public class ReclamationProfAdminRest {
 
     @Autowired
     private ReclamationProfService reclamationProfService;
+
     @GetMapping("/")
 
     public List<ReclamationProf> findAll() {
@@ -29,5 +29,11 @@ public class ReclamationProfAdminRest {
     @GetMapping("/{idreclamationProf}/{commentaireTraiteur}")
     public int reponseReclamationProf(@PathVariable Long idreclamationProf, @PathVariable String commentaireTraiteur) {
         return reclamationProfService.reponseReclamationProf(idreclamationProf, commentaireTraiteur);
+    }
+
+    @GetMapping("/{id}")
+
+    public ReclamationProf findReclamationProfById(@PathVariable Long id) {
+        return reclamationProfService.findReclamationProfById(id);
     }
 }

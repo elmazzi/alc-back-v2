@@ -19,12 +19,21 @@ public class ReclamationProf {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date dateTraitement;
     private String commentaireTraiteur;
+    private String objetReclamationProf;
 
     @ManyToOne
     private Prof prof;
 
     @ManyToOne
     private TypeReclamationProf typeReclamationProf;
+
+    public String getObjetReclamationProf() {
+        return objetReclamationProf;
+    }
+
+    public void setObjetReclamationProf(String objetReclamationProf) {
+        this.objetReclamationProf = objetReclamationProf;
+    }
 
     public Long getId() {
         return id;

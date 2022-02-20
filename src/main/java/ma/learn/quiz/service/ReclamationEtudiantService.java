@@ -25,6 +25,11 @@ public class ReclamationEtudiantService {
     private EtudiantService etudiantService;
     @Autowired
     private TypeReclamationEtudiantService typeReclamationEtudiantService;
+
+    public ReclamationEtudiant findReclamationEtudiantById(Long id) {
+        return reclamationEtudiantDao.findReclamationEtudiantById(id);
+    }
+
     public int saveReclamationEtudiant(ReclamationEtudiant reclamationEtudiant) {
         Etudiant etudiant = etudiantService.findEtudiantById(reclamationEtudiant.getEtudiant().getId());
         TypeReclamationEtudiant typeReclamationEtudiant = typeReclamationEtudiantService.findTypeReclamationEtudiantByCode(reclamationEtudiant.getTypeReclamationEtudiant().getCode());
@@ -36,6 +41,7 @@ public class ReclamationEtudiantService {
             reclamationEtudiant1.setEtudiant(etudiant);
             reclamationEtudiant1.setTypeReclamationEtudiant(typeReclamationEtudiant);
             reclamationEtudiant1.setTraite(false);
+            reclamationEtudiant1.setObjetReclamationEtudiant(reclamationEtudiant.getObjetReclamationEtudiant());
             reclamationEtudiant1.setMessage(reclamationEtudiant.getMessage());
             reclamationEtudiant1.setCommentaireTraiteur(null);
             reclamationEtudiant1.setReference(UtilString.generateStringUppercaseAndLowercase(6));

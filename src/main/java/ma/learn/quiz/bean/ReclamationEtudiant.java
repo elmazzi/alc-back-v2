@@ -18,12 +18,20 @@ public class ReclamationEtudiant {
     private Boolean traite;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date dateTraitement;
+    private String objetReclamationEtudiant;
     private String commentaireTraiteur;
-    private Long noteEtudiant;
     @ManyToOne
     private Etudiant etudiant;
     @ManyToOne
     private TypeReclamationEtudiant typeReclamationEtudiant;
+
+    public String getObjetReclamationEtudiant() {
+        return objetReclamationEtudiant;
+    }
+
+    public void setObjetReclamationEtudiant(String objetReclamationEtudiant) {
+        this.objetReclamationEtudiant = objetReclamationEtudiant;
+    }
 
     public Long getId() {
         return id;
@@ -81,13 +89,6 @@ public class ReclamationEtudiant {
         this.commentaireTraiteur = commentaireTraiteur;
     }
 
-    public Long getNoteEtudiant() {
-        return noteEtudiant;
-    }
-
-    public void setNoteEtudiant(Long noteEtudiant) {
-        this.noteEtudiant = noteEtudiant;
-    }
 
     public Etudiant getEtudiant() {
         return etudiant;

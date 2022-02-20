@@ -23,6 +23,10 @@ public class ReclamationProfService {
         return reclamationProfDao.findAll();
     }
 
+    public ReclamationProf findReclamationProfById(Long id) {
+        return reclamationProfDao.findReclamationProfById(id);
+    }
+
     public int saveReclamationProf(ReclamationProf reclamationProf) {
         Prof prof = profService.findProfById(reclamationProf.getProf().getId());
         TypeReclamationProf typeReclamationProf1 = typeReclamationProfService.findTypeReclamationProfByCode(reclamationProf.getTypeReclamationProf().getCode());
@@ -34,6 +38,7 @@ public class ReclamationProfService {
             reclamationProf1.setProf(prof);
             reclamationProf1.setTypeReclamationProf(typeReclamationProf1);
             reclamationProf1.setTraite(false);
+            reclamationProf1.setObjetReclamationProf(reclamationProf.getObjetReclamationProf());
             reclamationProf1.setMessage(reclamationProf.getMessage());
             reclamationProf1.setCommentaireTraiteur(null);
             reclamationProf1.setReference(UtilString.generateStringUppercaseAndLowercase(6));
