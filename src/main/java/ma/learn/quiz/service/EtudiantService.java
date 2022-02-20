@@ -14,6 +14,7 @@ import ma.learn.quiz.dao.*;
 import ma.learn.quiz.service.facade.UserService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ma.learn.quiz.service.vo.EtudiantVo;
@@ -40,7 +41,8 @@ public class EtudiantService extends AbstractService {
     public FonctionDao fonctionDao;
     @Autowired
     public StatutSocialDao statutSocialDao;
-
+   @Autowired
+   public SkillDao skillDao;
     @Autowired
     public EtudiantDao etudiantDao;
     @Autowired
@@ -65,6 +67,13 @@ public class EtudiantService extends AbstractService {
     private DictionaryService dictionaryService;
     @Autowired
     private GroupeEtudiantService groupeEtudiantService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserServiceImpl userServiceImpl;
+    @Autowired
+    private UserDao userDao;
+
 
 
     public List<Etudiant> findByParcoursCode(String code) {
@@ -79,7 +88,6 @@ public class EtudiantService extends AbstractService {
         Etudiant loadedEtudiant = findEtudiantById(etudiant.getId());
         Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
         loadedEtudiant.setParcours(parcours);
-
         loadedEtudiant.setNom(etudiant.getNom());
         loadedEtudiant.setPrenom(etudiant.getPrenom());
         loadedEtudiant.setUsername(etudiant.getUsername());
@@ -87,6 +95,7 @@ public class EtudiantService extends AbstractService {
         loadedEtudiant.setNiveauEtude(etudiant.getNiveauEtude());
         loadedEtudiant.setFonction(etudiant.getFonction());
         loadedEtudiant.setStatutSocial(etudiant.getStatutSocial());
+        loadedEtudiant.setSkill(etudiant.getSkill());
         System.out.println("Tfu");
         return etudiantDao.save(loadedEtudiant);
     }
@@ -94,6 +103,7 @@ public class EtudiantService extends AbstractService {
     public Etudiant findEtudiantById(Long id) {
         return etudiantDao.findEtudiantById(id);
     }
+
 
 
     public Prof findProfById(Long id) {
@@ -145,22 +155,28 @@ public class EtudiantService extends AbstractService {
             EtatEtudiantSchedule etudiantSchedule = this.etatEtudiantScheduleService.findByRef(etudiant.getEtatEtudiantSchedule().getRef());
             Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
             GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(etudiant.getGroupeEtude().getId());
+
             EtatInscription etatInscription = etatInscriptionService.findEtatInscriptionById((long) 1);
             etudiant.setParcours(parcours);
             etudiant.setGroupeEtude(groupeEtude);
             inscription.setGroupeEtude(etudiant.getGroupeEtude());
-            inscription.setParcours(etudiant.getParcours());
+            if ( parcours!=null){
+                inscription.setParcours(etudiant.getParcours());
+            }
             etudiant.setEtatEtudiantSchedule(etudiantSchedule);
             String password = this.userService.generatePassword();
             etudiant.setPassword(password);
             etudiant.setAuthorities(Arrays.asList(new Role(ROLE_STUDENT)));
             etudiant.setRole("STUDENT");
             inscription.setGroupeEtude(etudiant.getGroupeEtude());
+/*
             inscription.setParcours(etudiant.getParcours());
+*/
             etudiant.setNiveauEtude(niveauEtudeDao.findByCode(""));
             etudiant.setInteretEtudiant(interetEtudiantDao.findByCode(""));
             etudiant.setFonction(fonctionDao.findByCode(""));
             etudiant.setStatutSocial(statutSocialDao.findByCode(""));
+            etudiant.setSkill(skillDao.findByCode(""));
             User user = userService.save(etudiant);
             System.out.println(user.getId());
             Etudiant etudiant2 = new Etudiant(user);
@@ -182,6 +198,7 @@ public class EtudiantService extends AbstractService {
 
     public int save(Etudiant etudiant) {
         Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
+
         Optional<EtatEtudiantSchedule> etat = etatEtudiantScheduleService.findById((long) 1);
         EtatEtudiantSchedule etatLoaded = etat.get();
         if (parcours == null) {
@@ -211,8 +228,17 @@ public class EtudiantService extends AbstractService {
         etudiant.setFonction(etudiant.getFonction());
         etudiant.setInteretEtudiant(etudiant.getInteretEtudiant());
         etudiant.setStatutSocial(etudiant.getStatutSocial());
+        etudiant.setSkill(etudiant.getSkill());
         return this.etudiantDao.save(etudiant);
     }
+
+    public int updatePassword(String username, String newPassword){
+        User user = userServiceImpl.loadUserByUsername(username);
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userDao.save(user);
+        return 1;
+    }
+
 
     public List<Etudiant> findAll() {
         return etudiantDao.findAll();
@@ -274,6 +300,7 @@ public class EtudiantService extends AbstractService {
         System.out.println(entityManager.createQuery(query).getResultList().size());
         return entityManager.createQuery(query).getResultList();
     }
+
 
 
 
