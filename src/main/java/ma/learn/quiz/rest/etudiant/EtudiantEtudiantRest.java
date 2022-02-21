@@ -37,6 +37,11 @@ public class EtudiantEtudiantRest {
         return etudiantService.findByParcoursCode(code);
     }
 
+    @GetMapping("/username/{username}/newpass/{newPassword}")
+    public int updatePassword(@PathVariable String username,@PathVariable String newPassword) {
+        return etudiantService.updatePassword(username, newPassword);
+    }
+
     @PostMapping("/")
     public int save(@RequestBody Etudiant etudiant) {
         return etudiantService.save(etudiant);

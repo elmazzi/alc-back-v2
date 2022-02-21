@@ -34,6 +34,8 @@ public class Etudiant extends User {
     @ManyToOne
     private NiveauEtude niveauEtude;
     @ManyToOne
+    private Skill skill;
+    @ManyToOne
     private  Fonction fonction;
 
     private String langue;
@@ -65,6 +67,14 @@ public class Etudiant extends User {
 
     public void setLangue(String langue) {
         this.langue = langue;
+    }
+
+    public Skill getSkill() {
+        return skill;
+    }
+
+    public void setSkill(Skill skill) {
+        this.skill = skill;
     }
 
     public StatutSocial getStatutSocial() {

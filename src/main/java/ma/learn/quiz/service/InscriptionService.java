@@ -1,5 +1,7 @@
 package ma.learn.quiz.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -143,7 +145,7 @@ public class InscriptionService extends AbstractService {
         } else {
             // inscription.setGroupeEtude(groupeEtudeService.findById(4485L).get());
             // inscription.setParcours(parcoursService.findByCode("Elementary 1"));
-            if (inscription.getProf() == null) {
+/*            if (inscription.getProf() == null) {
                 inscription.setProf(new Prof());
             }
 
@@ -155,24 +157,26 @@ public class InscriptionService extends AbstractService {
             }
             if (inscription.getEtudiant() == null) {
                 inscription.setEtudiant(new Etudiant());
-            }
+            }*/
 
             EtatInscription etatInscription = etatInscriptionService.findEtatInscriptionById((long) 1);
             Etudiant etudiant = this.etudiantService.findEtudiantById(inscription.getEtudiant().getId());
-            Parcours parcours = parcoursService.findParcoursById(inscription.getParcours().getId());
-            GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(inscription.getGroupeEtude().getId());
+           // Parcours parcours = parcoursService.findParcoursById(inscription.getParcours().getId());
+            //GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(inscription.getGroupeEtude().getId());
 
             if (etudiant == null) {
                 System.out.println("etudiant is null");
                 return -1;
             } else {
                 System.out.println("Nv etudiant");
-                inscription.setParcours(parcours);
+                /*inscription.setParcours(parcours);*/
                 //inscription.setProf(prof);
                 //   inscription.setParcours(parcrs);
                 inscription.setEtatInscription(etatInscription);
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                LocalDateTime now = LocalDateTime.now();
+                inscription.setDateRegistration(dtf.format(now));
                 inscription.setEtudiant(etudiant);
-                inscription.setGroupeEtude(groupeEtude);
                 inscriptionDao.save(inscription);
                 //affecter(parcours, groupeEtude, etudiant);
                 return 1;
@@ -224,6 +228,7 @@ public class InscriptionService extends AbstractService {
         inscription.setInteretEtudiant(inscription.getInteretEtudiant());
         inscription.setNiveauEtude(inscription.getNiveauEtude());
       inscription.setEtatInscription(etatInscription);
+      inscription.setSkill(inscription.getSkill());
         /*  inscription.setNiveauEtude(niveauEtude);
         inscription.setFonction(fonction);
         inscription.setInteretEtudiant(interetEtudiant);
@@ -237,6 +242,7 @@ public class InscriptionService extends AbstractService {
         etudiant.setNiveauEtude(inscription.getNiveauEtude());
         etudiant.setFonction(inscription.getFonction());
         etudiant.setInteretEtudiant(interetEtudiant);
+        etudiant.setSkill(inscription.getSkill());
         etudiantService.updateEtudiant(etudiant);
         return 0;
     }
