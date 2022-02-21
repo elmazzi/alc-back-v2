@@ -2,12 +2,11 @@ package ma.learn.quiz.rest.admin;
 
 import ma.learn.quiz.bean.ReclamationEtudiant;
 import ma.learn.quiz.service.ReclamationEtudiantService;
+import ma.learn.quiz.service.vo.ReclamationEtudiantVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -16,10 +15,10 @@ public class ReclamationEtudiantAminRest {
     @Autowired
     private ReclamationEtudiantService reclamationEtudiantService;
 
-    @GetMapping("/{idreclamationEtudiant}/{commentaireTraiteur}")
+    @PutMapping("/update/{dateTraitementforEtudiant}")
 
-    public int reponseReclamationEtudiant(@PathVariable Long idreclamationEtudiant, @PathVariable String commentaireTraiteur) {
-        return reclamationEtudiantService.reponseReclamationEtudiant(idreclamationEtudiant, commentaireTraiteur);
+    public int reponseReclamationEtudiant(@RequestBody ReclamationEtudiant reclamationEtudiant, @PathVariable Date dateTraitementforEtudiant) {
+        return reclamationEtudiantService.reponseReclamationEtudiant(reclamationEtudiant,dateTraitementforEtudiant);
     }
 
     @GetMapping("/")
@@ -32,5 +31,15 @@ public class ReclamationEtudiantAminRest {
 
     public ReclamationEtudiant findReclamationEtudiantById(@PathVariable Long id) {
         return reclamationEtudiantService.findReclamationEtudiantById(id);
+    }
+
+    @GetMapping("/{id}/{idetudiant}")
+    public ReclamationEtudiant findReclamationEtudiantByIdAndEtudiantId(@PathVariable Long id, @PathVariable Long idetudiant) {
+        return reclamationEtudiantService.findReclamationEtudiantByIdAndEtudiantId(id, idetudiant);
+    }
+
+    @PostMapping("/byCriteria")
+    public List<ReclamationEtudiant> findAllByCriteria(@RequestBody ReclamationEtudiantVo reclamationEtudiantVo) {
+        return reclamationEtudiantService.findAllByCriteria(reclamationEtudiantVo);
     }
 }
