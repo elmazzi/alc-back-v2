@@ -11,7 +11,7 @@ import java.util.List;
 public interface HomeWorkQuestionDao extends JpaRepository<HomeWorkQuestion, Long> {
 
      List<HomeWorkQuestion> findHomeWorkQuestionByHomeWorkId(Long id);
-     HomeWorkQuestion findHomeWorkQuestionByLibelle(String libelle);
+     HomeWorkQuestion findHomeWorkQuestionByLibelleAndHomeWorkId(String libelle,Long id);
      HomeWorkQuestion findHomeWorkQuestionById(Long id);
 
      int deleteByRef(String ref);

@@ -23,9 +23,7 @@ public class HomeWorkQuestionService {
         return homeWorkQuestionDao.findHomeWorkQuestionByHomeWorkId(id);
     }
 
-    public HomeWorkQuestion findHomeWorkQuestionByLibelle(String libelle) {
-        return homeWorkQuestionDao.findHomeWorkQuestionByLibelle(libelle);
-    }
+
 
     public HomeWorkQuestion findHomeWorkQuestionById(Long id) {
         return homeWorkQuestionDao.findHomeWorkQuestionById(id);
@@ -60,6 +58,7 @@ public class HomeWorkQuestionService {
                 quest.setPointReponseJuste(question.getPointReponseJuste());
                 quest.setPointReponsefausse(question.getPointReponsefausse());
                 quest.setNumero(question.getNumero());
+                quest.setRef(question.getRef());
                 quest.setHomeWork(question.getHomeWork());
                 quest.setTypeDeQuestion(typeDeQuestion);
                 question = homeWorkQuestionDao.save(quest);
