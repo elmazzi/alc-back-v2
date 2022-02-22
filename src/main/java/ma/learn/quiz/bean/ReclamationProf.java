@@ -12,19 +12,38 @@ public class ReclamationProf {
     private Long id;
 
     private String reference;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+
     private Date dateReclamation;
     private String message;
     private Boolean traite;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private Date dateTraitement;
     private String commentaireTraiteur;
-
+    private String objetReclamationProf;
+    @ManyToOne
+    private Admin admin;
     @ManyToOne
     private Prof prof;
 
     @ManyToOne
     private TypeReclamationProf typeReclamationProf;
+
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
+    public String getObjetReclamationProf() {
+        return objetReclamationProf;
+    }
+
+    public void setObjetReclamationProf(String objetReclamationProf) {
+        this.objetReclamationProf = objetReclamationProf;
+    }
 
     public Long getId() {
         return id;

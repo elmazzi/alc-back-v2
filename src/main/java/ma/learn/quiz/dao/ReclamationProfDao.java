@@ -11,6 +11,10 @@ import ma.learn.quiz.bean.ReclamationProf;
 @Repository
 public interface ReclamationProfDao extends JpaRepository<ReclamationProf, Long> {
 
-ReclamationProf findReclamationProfById(Long id);
+    ReclamationProf findReclamationProfById(Long id);
+
+    List<ReclamationProf> findReclamationProfByProfId(Long id);
+
+    ReclamationProf findReclamationProfByIdAndProfId(Long id, Long idprof);
 
 }

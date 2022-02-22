@@ -1,26 +1,35 @@
 package ma.learn.quiz.service;
 
-import ma.learn.quiz.bean.Prof;
-import ma.learn.quiz.bean.ReclamationProf;
-import ma.learn.quiz.bean.TypeReclamationProf;
+import ma.learn.quiz.bean.*;
 import ma.learn.quiz.dao.ReclamationProfDao;
 import ma.learn.quiz.service.Util.UtilString;
+import ma.learn.quiz.service.vo.ReclamationEtudiantVo;
+import ma.learn.quiz.service.vo.ReclamationProfVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.util.Date;
 import java.util.List;
+
 @Service
-public class ReclamationProfService {
+public class ReclamationProfService extends AbstractService{
     @Autowired
     private ReclamationProfDao reclamationProfDao;
     @Autowired
     private ProfService profService;
     @Autowired
     private TypeReclamationProfService typeReclamationProfService;
-
+    @Autowired
+    private AdminService adminService;
+    @Autowired
+    public EntityManager entityManager;
     public List<ReclamationProf> findAll() {
         return reclamationProfDao.findAll();
+    }
+
+    public ReclamationProf findReclamationProfById(Long id) {
+        return reclamationProfDao.findReclamationProfById(id);
     }
 
     public int saveReclamationProf(ReclamationProf reclamationProf) {
@@ -34,24 +43,51 @@ public class ReclamationProfService {
             reclamationProf1.setProf(prof);
             reclamationProf1.setTypeReclamationProf(typeReclamationProf1);
             reclamationProf1.setTraite(false);
+            reclamationProf1.setObjetReclamationProf(reclamationProf.getObjetReclamationProf());
             reclamationProf1.setMessage(reclamationProf.getMessage());
             reclamationProf1.setCommentaireTraiteur(null);
-            reclamationProf1.setReference(UtilString.generateStringUppercaseAndLowercase(6));
+            reclamationProf1.setReference(UtilString.generateStringNumber(6));
             reclamationProfDao.save(reclamationProf1);
             return 1;
         }
     }
 
-    public int reponseReclamationProf(Long idreclamationProf,String commentaireTraiteur) {
-        ReclamationProf reclamationProf = reclamationProfDao.findReclamationProfById(idreclamationProf);
-        if (reclamationProf == null) {
+    public int reponseReclamationProf(ReclamationProf reclamationProf1,Date dateTraitement) {
+        ReclamationProf reclamationProf = reclamationProfDao.findReclamationProfById(reclamationProf1.getId());
+
+        if (reclamationProf == null ) {
             return -1;
         } else {
-            reclamationProf.setTraite(true);
-            reclamationProf.setDateTraitement(new Date());
-            reclamationProf.setCommentaireTraiteur(commentaireTraiteur);
+            reclamationProf.setTraite(reclamationProf1.getTraite());
+            reclamationProf.setDateTraitement(dateTraitement);
+            reclamationProf.setAdmin(reclamationProf1.getAdmin());
+            reclamationProf.setCommentaireTraiteur(reclamationProf1.getCommentaireTraiteur());
             reclamationProfDao.save(reclamationProf);
             return 1;
         }
     }
+
+    public List<ReclamationProf> findReclamationProfByProfId(Long id) {
+        return reclamationProfDao.findReclamationProfByProfId(id);
+    }
+
+    public ReclamationProf findReclamationProfByIdAndProfId(Long id, Long idprof) {
+        return reclamationProfDao.findReclamationProfByIdAndProfId(id, idprof);
+    }
+    public List<ReclamationProf> findAllByCriteria(ReclamationProfVo reclamationProfVo) {
+        String query = this.init("ReclamationProf");
+        if (reclamationProfVo.getProf() != null) {
+            query += this.addCriteria("prof.nom", reclamationProfVo.getProf().getNom(), "LIKE");
+        }
+        if (reclamationProfVo.getReference() != null) {
+            query += this.addCriteria("reference", reclamationProfVo.getReference(), "LIKE");
+        }
+        if (reclamationProfVo.getTraite() != null) {
+            query += this.addCriteria("traite", reclamationProfVo.getTraite());
+        }
+
+        System.out.println("query = " + query);
+        return entityManager.createQuery(query).getResultList();
+    }
+
 }

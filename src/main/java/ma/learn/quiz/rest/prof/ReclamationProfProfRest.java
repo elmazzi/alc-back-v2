@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 
-@RequestMapping("/prof/reclamationProfAdmin")
+@RequestMapping("/prof/reclamationProfProf")
 public class ReclamationProfProfRest {
     @Autowired
     private ReclamationProfService reclamationProfService;
@@ -23,5 +23,15 @@ public class ReclamationProfProfRest {
     @PostMapping("/")
     public int saveReclamationProf(@RequestBody ReclamationProf reclamationProf) {
         return reclamationProfService.saveReclamationProf(reclamationProf);
+    }
+    @GetMapping("/{id}")
+
+    public List<ReclamationProf> findReclamationProfByProfId(Long id) {
+        return reclamationProfService.findReclamationProfByProfId(id);
+    }
+    @GetMapping("/{id}/{idprof}")
+
+    public ReclamationProf findReclamationProfByIdAndProfId(@PathVariable  Long id,@PathVariable  Long idprof) {
+        return reclamationProfService.findReclamationProfByIdAndProfId(id, idprof);
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 
-@RequestMapping("/etudiant/reclamationEtudiantAdmin")
+@RequestMapping("/etudiant/reclamationEtudiantEtudiant")
 public class ReclamationEtudiantEtudiantRest {
 
     @Autowired
@@ -27,4 +27,15 @@ public class ReclamationEtudiantEtudiantRest {
     public int saveReclamationEtudiant(@RequestBody ReclamationEtudiant reclamationEtudiant) {
         return reclamationEtudiantService.saveReclamationEtudiant(reclamationEtudiant);
     }
+    @GetMapping("/{id}")
+
+    public List<ReclamationEtudiant> findReclamationEtudiantByEtudiantId(@PathVariable Long id) {
+        return reclamationEtudiantService.findReclamationEtudiantByEtudiantId(id);
+    }
+    @GetMapping("/{id}/{idetudiant}")
+
+    public ReclamationEtudiant findReclamationEtudiantByIdAndEtudiantId(@PathVariable Long id,@PathVariable Long idetudiant) {
+        return reclamationEtudiantService.findReclamationEtudiantByIdAndEtudiantId(id, idetudiant);
+    }
 }
+

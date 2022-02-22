@@ -38,6 +38,10 @@ public class Etudiant extends User {
     @ManyToOne
     private  Fonction fonction;
 
+    private String langue;
+
+
+
 
     public Etudiant(User user, String ref, Prof prof, EtatEtudiantSchedule etatEtudiantSchedule, Parcours parcours, List<QuizEtudiant> quizEtudiant) {
         super(user.id, user.username, user.password, user.nom, user.prenom,
@@ -55,6 +59,14 @@ public class Etudiant extends User {
                 user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role);    }
 
     public Etudiant() {
+    }
+
+    public String getLangue() {
+        return langue;
+    }
+
+    public void setLangue(String langue) {
+        this.langue = langue;
     }
 
     public Skill getSkill() {

@@ -23,9 +23,7 @@ public class HomeWorkQSTREST {
         return homeWorkQuestionService.findHomeWorkQuestionByHomeWorkId(id);
     }
 
-    public HomeWorkQuestion findHomeWorkQuestionByLibelle(String libelle) {
-        return homeWorkQuestionService.findHomeWorkQuestionByLibelle(libelle);
-    }
+
 
     public HomeWorkQuestion findHomeWorkQuestionById(Long id) {
         return homeWorkQuestionService.findHomeWorkQuestionById(id);
