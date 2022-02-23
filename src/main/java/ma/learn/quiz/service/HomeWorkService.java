@@ -1,10 +1,7 @@
 package ma.learn.quiz.service;
 
 
-import ma.learn.quiz.bean.Cours;
-import ma.learn.quiz.bean.HomeWork;
-import ma.learn.quiz.bean.HomeWorkQuestion;
-import ma.learn.quiz.bean.Section;
+import ma.learn.quiz.bean.*;
 import ma.learn.quiz.dao.HomeWorkDao;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,19 +49,22 @@ public class HomeWorkService {
     public HomeWork save(HomeWork homeWork) {
         System.out.println(homeWork.getLibelle());
         List<HomeWorkQuestion> questions = homeWork.getQuestions();
-        Optional<HomeWork> loadedHomeWork = this.findById(homeWork.getId());
-        if (loadedHomeWork.isPresent()) {
-            HomeWork homeWork1 = loadedHomeWork.get();
-            homeWork1.setUrlImage(homeWork.getUrlImage());
-            homeWork1.setLibelle(homeWork.getLibelle());
-            homeWork1.setUrlVideo(homeWork.getUrlVideo());
-            homeWork = homeWorkDao.save(homeWork1);
+        if (homeWork.getId() != null) {
+            Optional<HomeWork> loadedHomeWork = this.findById(homeWork.getId());
+            if (loadedHomeWork.isPresent()) {
+                HomeWork homeWork1 = loadedHomeWork.get();
+                homeWork1.setUrlImage(homeWork.getUrlImage());
+                homeWork1.setLibelle(homeWork.getLibelle());
+                homeWork1.setUrlVideo(homeWork.getUrlVideo());
+                homeWork = homeWorkDao.save(homeWork1);
+            }
         } else {
             Cours cours = coursService.findCoursById(homeWork.getCours().getId());
-            homeWork.setCours(cours);
-            if (homeWork.getLibelle() == null) {
-                homeWork.setLibelle(cours.getLibelle() + RandomStringUtils.randomNumeric(1));
+            Optional<TypeHomeWork> typeHomeWork = this.typeHomeWorkService.findById(homeWork.getTypeHomeWork().getId());
+            if (typeHomeWork.isPresent()) {
+                homeWork.setTypeHomeWork(typeHomeWork.get());
             }
+            homeWork.setCours(cours);
             homeWork = homeWorkDao.save(homeWork);
         }
 
@@ -79,5 +79,7 @@ public class HomeWorkService {
 
     @Autowired
     private HomeWorkDao homeWorkDao;
+    @Autowired
+    private TypeHomeWorkService typeHomeWorkService;
 
 }

@@ -19,6 +19,12 @@ public class TranslationEnAr {
         return result;
     }
 
+    public String TranslationResultEnFr(String texttotranslate) throws IOException {
+        Document doc = Jsoup.connect("https://translate.google.com/m?sl=en&tl=fr&hl=en&q=" +texttotranslate).get();
+        String result = doc.select("div.result-container").text();
+        return result;
+    }
+
 
     public List<String> synonyme(String word)  throws IOException{
         Document doc = Jsoup.connect("https://www.multitran.com/m.exe?s="+word+"&l1=1&l2=10").get();

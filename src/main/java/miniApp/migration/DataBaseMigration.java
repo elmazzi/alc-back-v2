@@ -5,19 +5,6 @@
  */
 package miniApp.migration;
 
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.http.FileContent;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.drive.Drive;
-import com.google.api.services.drive.DriveScopes;
-import com.google.api.services.drive.model.FileList;
-import com.google.api.services.drive.model.Permission;
 import ma.learn.quiz.bean.*;
 import ma.learn.quiz.dao.*;
 import ma.learn.quiz.service.TranslationEnAr;
@@ -29,26 +16,26 @@ import miniApp.migration.util.JsoupUtil;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Id;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Service
 public class DataBaseMigration {
+    private String ref;
+    private Cours cour;
+
     public DataBaseMigration() {
     }
+
+
 
     @Autowired
     private ParcoursDao parcoursDao;
@@ -73,6 +60,8 @@ public class DataBaseMigration {
     private HomeWorkQSTReponseDao homeWorkQSTReponseDao;
     @Autowired
     private TranslationEnAr translationEnAr;
+    @Autowired
+    private DriveApiService driveApiService;
 
 
     public String htmlimagetext() throws Exception {
@@ -123,11 +112,19 @@ public class DataBaseMigration {
                     if (new File(pathHomWork).exists()) {
                         FileUtil.mkdire(pathHomeWorkImage, pathHomWorkImage, true);
                         System.out.println("++++++++++++++++++++++++++++++");
-                        System.out.println("pathSection ==> " + pathHomWork);
-                        System.out.println("pathImage ==>" + pathHomWorkImage);
-                        extractHtmlImageAndContentForHomeWork(parcours.getId(), parcours.getLibelle(), typeHomewrok[j], pathHomWork, pathHomWorkImage);
-                    }
+                        System.out.println("pathHomeWork ==> " + pathHomWork);
 
+                        System.out.println("pathImage ==>" + pathHomWorkImage);
+                        File homeWorkFile = new File(pathHomWork);
+                        System.out.println(homeWorkFile.getName());
+                        if (homeWorkFile.getName().equals("WATCH IT.txt")) {
+                            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                            System.out.println(homeWorkFile.getName());
+                            this.getWatchItData(homeWorkFile, parcours);
+                        } else {
+                            extractHtmlImageAndContentForHomeWork(parcours.getId(), parcours.getLibelle(), typeHomewrok[j], pathHomWork, pathHomWorkImage);
+                        }
+                    }
                 }
             }
         }
@@ -137,6 +134,48 @@ public class DataBaseMigration {
         return "process finish thanks for waiting";
     }
 
+    private void getWatchItData(File file, Parcours parcours) {
+        int index = 0;
+        System.out.println(parcours.getId());
+        List<Cours> coursList = this.coursDao.findByParcoursId(parcours.getId());
+        try {
+            System.out.println(Arrays.toString(file.list()));
+            Scanner myReader = new Scanner(file);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                if (data.contains("https://www.youtube")) {
+                    TypeDeQuestion typeDeQuestion = typeDeQuestionDao.findByLib("Watch and add new words");
+                    if (typeDeQuestion == null) {
+                        typeDeQuestion = this.saveTypeQstHomeWork("Watch and add new words");
+                    }
+                    for (Cours cour : coursList
+                    ) {
+                        if (cour.getNumeroOrder() == index) {
+                            this.cour = cour;
+                        }
+                    }
+                    HomeWork homeWork = homeWorkDao.findByLibelleAndCoursId("Watch it", this.cour.getId());
+                    if (homeWork == null) {
+                        homeWork = new HomeWork();
+                        homeWork.setLibelle("Watch it");
+                        homeWork.setCours(this.cour);
+                        int firstindex = data.indexOf(" https");
+                        String urlVideo = data.substring(firstindex);
+                        homeWork.setUrlVideo(urlVideo);
+                        System.out.println(urlVideo);
+                        homeWork = homeWorkDao.save(homeWork);
+                    }
+
+                    index++;
+                }
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
 
     public void extractHtmlImageAndContentForHomeWork(Long parcourId, String parcours, String typeHomewrok, String pathHomWork, String pathHomWorkImage) {
         List<File> htmlFiles = FileUtil.findHtmlFiles(pathHomWork);
@@ -144,6 +183,8 @@ public class DataBaseMigration {
                 .sorted((f1, f2) -> FileUtil.compare(f1, f2))
                 .forEach(f -> {
                     try {
+
+
                         String imageSrc = JsoupUtil.getImageSrc(f);
                         String fileExtention = FileUtil.getExtension(imageSrc);
                         String imageNameDestination = gatImagePath(pathHomWork, pathHomWorkImage, f, imageSrc, fileExtention);
@@ -169,37 +210,46 @@ public class DataBaseMigration {
                         if (lib.length() != 0) {
                             typeDeQuestion = typeDeQuestionDao.findByLib(lib);
                             if (typeDeQuestion == null) {
-                                typeDeQuestion = this.isTypeQstExist(lib);
+                                typeDeQuestion = this.saveTypeQstHomeWork(lib);
                             }
+
+                            if (imageNameDestination.length() > 0) {
+                                String imgName = parcours + cours.getLibelle() + typeHomewrok + FileUtil.fileNameWithOutExt(f.getName()) + "." + fileExtention;
+                                String drivePath = this.addImgToGoogleDrive(parcours, cours.getLibelle(), typeHomewrok, imageNameDestination, imgName);
+                                homeWork.setUrlImage(drivePath);
+                                homeWork = homeWorkDao.save(homeWork);
+                            }
+                            System.out.println("====================File PATH =======================");
+                            System.out.println(f.getName());
+
+
+                            System.out.println("++++++++++++++++++++++ HOME WORK QUESTION  ++++++++++++++++++++++");
+                            String homeWorkQstLibelle;
                             if (Objects.equals(typeDeQuestion.getLib(), "Write it up")) {
-                                if (imageNameDestination.length() > 0) {
-                                    String imgName = parcours + cours.getLibelle() + FileUtil.fileNameWithOutExt(f.getName()) + "." + fileExtention;
-                                    String drivePath = this.createFile(parcours, cours.getLibelle(), typeHomewrok, imageNameDestination, imgName);
-                                    homeWork.setUrlImage(drivePath);
-                                    homeWork = homeWorkDao.save(homeWork);
-                                }
-                                System.out.println("====================IMAGE PATH =======================");
-                                System.out.println(imageNameDestination);
-                                String homeWorkQstLibelle = JsoupUtil.getElementContent(f, "p.text-task-write-it-up");
-
-                                System.out.println("++++++++++++++++++++++ HOME WORK QUESTION  ++++++++++++++++++++++");
-                                System.out.println(homeWorkQstLibelle);
-
-                                if (homeWorkQstLibelle.length() <= 0) {
-                                    return;
-                                }
-                                HomeWorkQuestion homeWorkQuestion = homeWorkQuestionDao.findHomeWorkQuestionByLibelle(homeWorkQstLibelle);
-                                if (homeWorkQuestion == null) {
-                                    homeWorkQuestion = saveHomeWorkQuestion(homeWork, typeDeQuestion, 1, homeWorkQstLibelle);
-                                }
-
+                                homeWorkQstLibelle = JsoupUtil.getElementContent(f, "p.text-task-write-it-up");
+                            } else {
+                                homeWorkQstLibelle = JsoupUtil.getElementContent(f, "div.wrapper-information > p");
+                                this.ref = JsoupUtil.getElementContent(f, "p.title-information > strong");
                             }
+
+                            System.out.println(homeWorkQstLibelle);
+                            System.out.println(this.ref);
+
+                            if (homeWorkQstLibelle.length() <= 0) {
+                                return;
+                            }
+                            HomeWorkQuestion homeWorkQuestion = homeWorkQuestionDao.findHomeWorkQuestionByLibelleAndHomeWorkId(homeWorkQstLibelle, homeWork.getId());
+                            if (homeWorkQuestion == null) {
+                                homeWorkQuestion = saveHomeWorkQuestion(homeWork, typeDeQuestion, 1, homeWorkQstLibelle);
+                            }
+
+
                         } else if (lib1.length() != 0) {
                             if (lib1.equals("Study the following phrases"))
                                 lib1 = "Translate the phrase";
                             typeDeQuestion = typeDeQuestionDao.findByLib(lib1);
                             if (typeDeQuestion == null) {
-                                typeDeQuestion = this.isTypeQstExist(lib1);
+                                typeDeQuestion = this.saveTypeQstHomeWork(lib1);
                             }
                             Elements elements = JsoupUtil.getElements(f, "div.word-list.is-open");
                             int index = 1;
@@ -212,7 +262,7 @@ public class DataBaseMigration {
                                     if (homeWorkQstLibelle.length() <= 0) {
                                         return;
                                     }
-                                    HomeWorkQuestion homeWorkQuestion = homeWorkQuestionDao.findHomeWorkQuestionByLibelle(homeWorkQstLibelle);
+                                    HomeWorkQuestion homeWorkQuestion = homeWorkQuestionDao.findHomeWorkQuestionByLibelleAndHomeWorkId(homeWorkQstLibelle, homeWork.getId());
                                     if (homeWorkQuestion == null) {
                                         homeWorkQuestion = saveHomeWorkQuestion(homeWork, typeDeQuestion, index, homeWorkQstLibelle);
                                     }
@@ -230,6 +280,10 @@ public class DataBaseMigration {
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         System.out.println("Finish Tnx For waiting");
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    }
+
+    private String addImgToGoogleDrive(String parcours, String libelle, String typeHomewrok, String imageNameDestination, String imgName) throws Exception {
+        return this.driveApiService.createFile(parcours, libelle, typeHomewrok, imageNameDestination, imgName);
     }
 
     private String gatImagePath(String pathHomWork, String pathHomWorkImage, File f, String imageSrc, String fileExtention) throws IOException {
@@ -261,12 +315,17 @@ public class DataBaseMigration {
 
     private HomeWorkQuestion saveHomeWorkQuestion(HomeWork homeWork, TypeDeQuestion typeDeQuestion, int index, String homeWorkQstLibelle) {
         HomeWorkQuestion homeWorkQuestion = new HomeWorkQuestion();
+        if (Objects.equals(typeDeQuestion.getLib(), "Read and add new words")) {
+            homeWorkQuestion.setRef(this.ref);
+        }
         homeWorkQuestion.setTypeDeQuestion(typeDeQuestion);
         homeWorkQuestion.setLibelle(homeWorkQstLibelle);
         homeWorkQuestion.setPointReponseJuste(1);
         homeWorkQuestion.setPointReponsefausse(0);
         homeWorkQuestion.setHomeWork(homeWork);
         homeWorkQuestion.setNumero(index);
+        System.out.println("**************************************");
+        System.out.println(homeWorkQuestion.getLibelle());
         homeWorkQuestion = homeWorkQuestionDao.save(homeWorkQuestion);
         return homeWorkQuestion;
     }
@@ -278,7 +337,7 @@ public class DataBaseMigration {
         return homeWork;
     }
 
-    public TypeDeQuestion isTypeQstExist(String lib) {
+    public TypeDeQuestion saveTypeQstHomeWork(String lib) {
         TypeDeQuestion t1 = new TypeDeQuestion();
         t1.setLib(lib);
         List<TypeDeQuestion> questionList = typeDeQuestionDao.findAll();
@@ -306,15 +365,6 @@ public class DataBaseMigration {
                         if (parcours != null) {
                             String imageSrc = JsoupUtil.getImageSrc(f);
                             String fileExtention = FileUtil.getExtension(imageSrc);
-                          /*  System.out.println("file = " + f.getName() + " ==> ");
-                            System.out.println("content ==> " + JsoupUtil.getElementContentByClass(f, "div.wrapper-information"));
-                            System.out.println("Lesson >Title  ==> " + JsoupUtil.getElementContent(f, "div.link-dropdown_link-dropdown"));
-                            System.out.println("Lesson > Section title  ==> " + JsoupUtil.getElementContent(f, "p.title-progress"));
-                            System.out.println("Lesson > Section  content  ==> " + JsoupUtil.getElementContentLesson(f, "div.wrapper-information"));
-                            System.out.println("Home work  ==> " + JsoupUtil.getElementContent(f, "p.text-task-write-it-up"));
-                            System.out.println("img ==> " + directoryName + "\\" + imageSrc);*/
-
-
                             SuperCategorieSection superCategorieSection = superCategorieSectionDao.findSuperCategorieSectionByLibelle(JsoupUtil.getElementContent(f, "p.lessons-list_title-additional-list"));
                             CategorieSection categorieSection1 = categorieSectionDoa.findCategorieSectionByLibelle(categorieSection);
                             if (superCategorieSection == null) {
@@ -375,9 +425,9 @@ public class DataBaseMigration {
                             System.out.println("Lesson");
                             System.out.println(section.getCategorieSection().getLibelle());
                             FileUtil.copyFile(imageNameSource, imageNameDestination);
-                            String imgName = parcours.getLibelle() + section.getCategorieSection().getLibelle() + FileUtil.fileNameWithOutExt(f.getName()) + "." + fileExtention;
+                            String imgName = parcours.getLibelle() + cours.getLibelle() + section.getCategorieSection().getLibelle() + FileUtil.fileNameWithOutExt(f.getName()) + "." + fileExtention;
 
-                            String drivePath = this.createFile(parcours.getLibelle(), cours.getLibelle(), section.getCategorieSection().getLibelle(), imageNameDestination, imgName);
+                            String drivePath = this.addImgToGoogleDrive(parcours.getLibelle(), cours.getLibelle(), section.getCategorieSection().getLibelle(), imageNameDestination, imgName);
                             System.out.println("_______________________________________________________________________");
                             System.out.println(drivePath);
                             section.setUrlImage(drivePath);
@@ -410,119 +460,5 @@ public class DataBaseMigration {
         return id;
     }
 
-    public String createFile(String parcours, String cours, String section, String imgPath, String imgName) throws Exception {
-        boolean isParcourFolderExist = false;
-        boolean isSectionFolderExist = false;
-        boolean isCoursFolderExist = false;
-        boolean isImgExist = false;
-        GoogleClientSecrets secrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(gdSecretKeys.getInputStream()));
-        flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY, secrets, SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(credentialsFolder.getFile())).build();
 
-
-        Credential cred = this.flow.loadCredential(USER_IDENTIFIER_KEY);
-        Permission permission = new Permission();
-        permission.setType("anyone");
-        permission.setRole("writer");
-
-        Drive drive = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, cred).setApplicationName(APP_NAME).build();
-        com.google.api.services.drive.model.File file = new com.google.api.services.drive.model.File();
-        com.google.api.services.drive.model.File folder = new com.google.api.services.drive.model.File();
-        com.google.api.services.drive.model.File folder2 = new com.google.api.services.drive.model.File();
-        com.google.api.services.drive.model.File folder3 = new com.google.api.services.drive.model.File();
-
-
-        com.google.api.services.drive.model.File uploadedFolder3 = new com.google.api.services.drive.model.File();
-        com.google.api.services.drive.model.File uploadedFolder2 = new com.google.api.services.drive.model.File();
-        com.google.api.services.drive.model.File uploadedFolder = new com.google.api.services.drive.model.File();
-        com.google.api.services.drive.model.File uploadedFile = new com.google.api.services.drive.model.File();
-// -------------------------------- FOLDER PARCOURS ----------------------------------------
-        FileList sheckFile = drive.files().list().setFields("*").execute();
-
-        for (com.google.api.services.drive.model.File f : sheckFile.getFiles()
-        ) {
-            System.out.println(f.getName());
-            if (Objects.equals(parcours.replaceAll("\\s", "").toUpperCase(), f.getName().replaceAll("\\s", "").toUpperCase())) {
-                isParcourFolderExist = true;
-                uploadedFolder2 = f;
-            }
-
-            if (Objects.equals(section.replaceAll("\\s", "").toUpperCase(), f.getName().replaceAll("\\s", "").toUpperCase())) {
-                isSectionFolderExist = true;
-                uploadedFolder = f;
-            }
-
-            if (Objects.equals(cours.replaceAll("\\s", "").toUpperCase(), f.getName().replaceAll("\\s", "").toUpperCase())) {
-                isCoursFolderExist = true;
-                uploadedFolder3 = f;
-            }
-
-            if (Objects.equals(imgName.replaceAll("\\s", "").toUpperCase(), f.getName().replaceAll("\\s", "").toUpperCase())) {
-                isImgExist = true;
-                uploadedFile = f;
-            }
-        }
-        System.out.println("=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=");
-        System.out.println(parcours);
-        System.out.println(section);
-        System.out.println(cours);
-        System.out.println(imgName);
-        System.out.println("#########################################################################");
-        System.out.println(isParcourFolderExist);
-        System.out.println(isSectionFolderExist);
-        System.out.println(isImgExist);
-        if (!isParcourFolderExist) {
-            folder2.setName(parcours);
-            folder2.setMimeType("application/vnd.google-apps.folder");
-            uploadedFolder2 = drive.files().create(folder2).setFields("id").execute();
-            drive.permissions().create(uploadedFolder2.getId(), permission).execute();
-
-        }
-        if (!isCoursFolderExist) {
-            folder3.setName(cours);
-            folder3.setMimeType("application/vnd.google-apps.folder");
-            folder3.setParents(Arrays.asList(uploadedFolder2.getId()));
-            uploadedFolder3 = drive.files().create(folder3).setFields("id").execute();
-            drive.permissions().create(uploadedFolder3.getId(), permission).execute();
-
-        }
-
-        if (!isSectionFolderExist) {
-            folder.setName(section);
-            folder.setMimeType("application/vnd.google-apps.folder");
-            folder.setParents(Arrays.asList(uploadedFolder3.getId()));
-            uploadedFolder = drive.files().create(folder).setFields("id").execute();
-            drive.permissions().create(uploadedFolder.getId(), permission).execute();
-        }
-
-        if (!isImgExist) {
-            file.setName(imgName);
-            file.setParents(Arrays.asList(uploadedFolder.getId()));
-            FileContent content = new FileContent("image/jpeg", new java.io.File(imgPath));
-            uploadedFile = drive.files().create(file, content).setFields("id,thumbnailLink,webContentLink").execute();
-            drive.permissions().create(uploadedFile.getId(), permission).execute();
-        }
-
-        System.out.println("==============================ID THUMBNAILLINK==============================================");
-        System.out.println(uploadedFile.getId());
-        System.out.println(uploadedFile.getWebContentLink());
-        System.out.println("============================================================================");
-        return uploadedFile.getWebContentLink();
-    }
-
-
-    private static final String APP_NAME = "alc-project-drive-img";
-    private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
-    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-    private static final List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE);
-    private static final String USER_IDENTIFIER_KEY = "526671645204-pefjgst2s07uo5k8v0srh75pc7i28e8p.apps.googleusercontent.com";
-    private GoogleAuthorizationCodeFlow flow;
-
-    @Value("${google.oauth.callback.uri}")
-    private String CALLBACK_URL;
-
-    @Value("${google.secret.key.path}")
-    private org.springframework.core.io.Resource gdSecretKeys;
-    @Value("${google.credentials.folder.path}")
-    private Resource credentialsFolder;
 }
