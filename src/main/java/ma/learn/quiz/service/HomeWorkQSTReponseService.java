@@ -35,7 +35,6 @@ public class HomeWorkQSTReponseService {
             System.out.println(reponse.getLib());
 
 
-
             if (reponse.getId() != null) {
                 HoweWorkQSTReponse rps = this.findHoweWorkQSTReponseById(reponse.getId());
                 rps.setLib(reponse.getLib());
@@ -50,5 +49,9 @@ public class HomeWorkQSTReponseService {
             i++;
         }
         return i;
+    }
+
+    public HoweWorkQSTReponse update(HoweWorkQSTReponse reponse) {
+        return this.homeWorkQSTReponseDao.save(reponse);
     }
 }

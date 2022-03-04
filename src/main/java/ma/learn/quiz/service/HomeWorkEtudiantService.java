@@ -62,7 +62,12 @@ public class HomeWorkEtudiantService {
     }
 
     public int update(HomeWorkEtudiant homeWorkEtudiant) {
-        //HomeWorkEtudiant newhomeWorkEtudiant = homeWorkEtudiantDao.findByIdAndEtudiantId(homeWorkEtudiant.getEtudiant().getId(),homeWorkEtudiant.getId());
+        Optional<HomeWorkEtudiant> aploadedHomeWorkEtudiant = this.homeWorkEtudiantDao.findById(homeWorkEtudiant.getId());
+        if (aploadedHomeWorkEtudiant.isPresent()) {
+            aploadedHomeWorkEtudiant.get().setNote(homeWorkEtudiant.getNote());
+            aploadedHomeWorkEtudiant.get().setResultat(homeWorkEtudiant.getResultat());
+            this.homeWorkEtudiantDao.save(aploadedHomeWorkEtudiant.get());
+        }
         reponseEtudiantHomeWorkService.update(homeWorkEtudiant, homeWorkEtudiant.getReponseEtudiantHomeWork());
         return 1;
     }
@@ -82,7 +87,7 @@ public class HomeWorkEtudiantService {
 
     public List<HomeWorkEtudiant> findByCritere(Long idEtudiant, Long idHomeWork) {
         String query = "SELECT h FROM HomeWorkEtudiant h WHERE h.etudiant.id= '" + idEtudiant + "' and h.homeWork.id='" + idHomeWork + "'";
-         return entityManager.createQuery(query).getResultList();
+        return entityManager.createQuery(query).getResultList();
     }
 
     public List<HomeWorkEtudiant> findByProfId(Long id) {
