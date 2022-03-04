@@ -46,8 +46,7 @@ public class Inscription {
     private PackStudent packStudent;
     @ManyToOne
     private Skill skill;
-
-
+    private String skype;
     public String getDateRegistration() {
         return dateRegistration;
     }
