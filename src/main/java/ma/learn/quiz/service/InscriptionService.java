@@ -122,7 +122,7 @@ public class InscriptionService extends AbstractService {
         }
     }
 
-    public int save(Inscription inscription) {
+    public Etudiant save(Inscription inscription) {
         if (inscription.getId() != null) {
             PackStudent packStudent = packStudentService.findPackStudentByCode(inscription.getPackStudent().getCode());
             EtatInscription etatInscription = etatInscriptionService.findEtatInscriptionById(inscription.getEtatInscription().getId());
@@ -141,7 +141,7 @@ public class InscriptionService extends AbstractService {
             etudiant.setParcours(parcours);
             etudiantDao.save(etudiant);
             affecter(parcours, groupeEtude, etudiant);
-            return 0;
+            return etudiant;
         } else {
             // inscription.setGroupeEtude(groupeEtudeService.findById(4485L).get());
             // inscription.setParcours(parcoursService.findByCode("Elementary 1"));
@@ -166,7 +166,7 @@ public class InscriptionService extends AbstractService {
 
             if (etudiant == null) {
                 System.out.println("etudiant is null");
-                return -1;
+                return null;
             } else {
                 System.out.println("Nv etudiant");
                 /*inscription.setParcours(parcours);*/
@@ -179,20 +179,30 @@ public class InscriptionService extends AbstractService {
                 inscription.setEtudiant(etudiant);
                 inscriptionDao.save(inscription);
                 //affecter(parcours, groupeEtude, etudiant);
-                return 1;
+                return inscription.getEtudiant();
             }
         }
     }
 
     public int  updateByStudent(String packCode, Etudiant etudiant){
         Inscription inscription = inscriptionDao.findInscriptionByEtudiantId(etudiant.getId());
-        Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
-        GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(etudiant.getGroupeEtude().getId());
+        Parcours parcours = new Parcours();
+        GroupeEtude groupeEtude = new GroupeEtude();
+        if (etudiant.getParcours() != null){
+           parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
+        }
+        if (etudiant.getGroupeEtude() != null){
+            groupeEtude = groupeEtudeService.findGroupeEtudeById(etudiant.getGroupeEtude().getId());
+        }
         PackStudent packStudent = packStudentService.findPackStudentByCode(packCode);
         Etudiant etudiant1 = etudiantService.findEtudiantById(etudiant.getId());
         if (inscription != null){
-            inscription.setParcours(parcours);
-            inscription.setGroupeEtude(groupeEtude);
+            if (parcours.getId() != null){
+                inscription.setParcours(parcours);
+            }
+            if (groupeEtude.getId() != null ){
+                inscription.setGroupeEtude(groupeEtude);
+            }
             inscription.getEtudiant().setTeacherLocality(etudiant.getTeacherLocality());
             inscription.setPackStudent(packStudent);
             inscriptionDao.save(inscription);
@@ -200,7 +210,9 @@ public class InscriptionService extends AbstractService {
             etudiant1.setParcours(inscription.getParcours());
             etudiant1.setTeacherLocality(etudiant.getTeacherLocality());
             etudiantDao.save(etudiant1);
-            affecter(parcours, groupeEtude, etudiant);
+            if (parcours.getId() != null && groupeEtude.getId() != null){
+                affecter(parcours, groupeEtude, etudiant);
+            }
             return 1;
         }
         else {

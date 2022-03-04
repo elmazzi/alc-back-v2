@@ -145,10 +145,10 @@ public class EtudiantService extends AbstractService {
 //        scheduleProfDao.save(scheduleProf);
 //    }
 
-    public int create(String pack,Etudiant etudiant) {
+    public User create(String pack,Etudiant etudiant) {
         Etudiant etudiant1 = this.findByLogin(etudiant.getUsername());
         if (etudiant1 != null) {
-            return -1;
+            return null;
         } else {
             PackStudent packStudent = packStudentService.findPackStudentByCode(pack);
             Inscription inscription = new Inscription();
@@ -190,7 +190,7 @@ public class EtudiantService extends AbstractService {
 
             }
             inscriptionService.save(inscription);
-            return 1;
+            return user;
         }
 
     }
