@@ -8,6 +8,15 @@ public class ReclamationEtudiantVo {
     private String traite;
 
     private Etudiant etudiant;
+    private String dateReclamation;
+
+    public String getDateReclamation() {
+        return dateReclamation;
+    }
+
+    public void setDateReclamation(String dateReclamation) {
+        this.dateReclamation = dateReclamation;
+    }
 
     public String getReference() {
         return reference;

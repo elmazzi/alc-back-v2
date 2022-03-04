@@ -1,6 +1,7 @@
 package ma.learn.quiz.rest.etudiant;
 
 import ma.learn.quiz.bean.Etudiant;
+import ma.learn.quiz.bean.User;
 import ma.learn.quiz.service.EtudiantService;
 import ma.learn.quiz.service.vo.EtudiantVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class EtudiantEtudiantRest {
 
 
     @PostMapping("/save/pack/{pack}")
-    public int create(@PathVariable String pack,@RequestBody Etudiant etudiant) {
+    public User create(@PathVariable String pack, @RequestBody Etudiant etudiant) {
         return etudiantService.create(pack,etudiant);
     }
 

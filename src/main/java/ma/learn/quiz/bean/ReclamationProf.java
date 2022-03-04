@@ -15,10 +15,14 @@ public class ReclamationProf {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 
     private Date dateReclamation;
+
     private String message;
     private Boolean traite;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private Date dateTraitement;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    private Date dateReponse;
+    private boolean postView;
     private String commentaireTraiteur;
     private String objetReclamationProf;
     @ManyToOne
@@ -28,6 +32,22 @@ public class ReclamationProf {
 
     @ManyToOne
     private TypeReclamationProf typeReclamationProf;
+
+    public Date getDateReponse() {
+        return dateReponse;
+    }
+
+    public void setDateReponse(Date dateReponse) {
+        this.dateReponse = dateReponse;
+    }
+
+    public boolean isPostView() {
+        return postView;
+    }
+
+    public void setPostView(boolean postView) {
+        this.postView = postView;
+    }
 
     public Admin getAdmin() {
         return admin;
