@@ -24,6 +24,17 @@ public class HomeWork {
     @ManyToOne
     private Cours cours;
 
+    @ManyToOne
+    private TypeHomeWork typeHomeWork;
+
+    public TypeHomeWork getTypeHomeWork() {
+        return typeHomeWork;
+    }
+
+    public void setTypeHomeWork(TypeHomeWork typeHomeWork) {
+        this.typeHomeWork = typeHomeWork;
+    }
+
     public List<HomeWorkQuestion> getQuestions() {
         return questions;
     }

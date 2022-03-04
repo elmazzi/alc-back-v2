@@ -18,6 +18,9 @@ public class ReclamationEtudiant {
     private Boolean traite;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private Date dateTraitement;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    private Date dateReponse;
+    private boolean postView;
     @ManyToOne
     private Admin admin;
     private String objetReclamationEtudiant;
@@ -26,6 +29,22 @@ public class ReclamationEtudiant {
     private Etudiant etudiant;
     @ManyToOne
     private TypeReclamationEtudiant typeReclamationEtudiant;
+
+    public boolean isPostView() {
+        return postView;
+    }
+
+    public void setPostView(boolean postView) {
+        this.postView = postView;
+    }
+
+    public Date getDateReponse() {
+        return dateReponse;
+    }
+
+    public void setDateReponse(Date dateReponse) {
+        this.dateReponse = dateReponse;
+    }
 
     public Admin getAdmin() {
         return admin;

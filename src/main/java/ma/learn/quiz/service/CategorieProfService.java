@@ -24,6 +24,5 @@ public class CategorieProfService {
 	public List<CategorieProf> findAll() {
 		return categorieProfDao.findAll();
 	}
-	
 
 }
