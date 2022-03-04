@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class ReclamationProfService extends AbstractService{
+public class ReclamationProfService extends AbstractService {
     @Autowired
     private ReclamationProfDao reclamationProfDao;
     @Autowired
@@ -24,6 +24,7 @@ public class ReclamationProfService extends AbstractService{
     private AdminService adminService;
     @Autowired
     public EntityManager entityManager;
+
     public List<ReclamationProf> findAll() {
         return reclamationProfDao.findAll();
     }
@@ -47,21 +48,35 @@ public class ReclamationProfService extends AbstractService{
             reclamationProf1.setMessage(reclamationProf.getMessage());
             reclamationProf1.setCommentaireTraiteur(null);
             reclamationProf1.setReference(UtilString.generateStringNumber(6));
+            reclamationProf.setPostView(false);
             reclamationProfDao.save(reclamationProf1);
             return 1;
         }
     }
 
-    public int reponseReclamationProf(ReclamationProf reclamationProf1,Date dateTraitement) {
+    public int reponseReclamationProf(ReclamationProf reclamationProf1, Date dateTraitement) {
         ReclamationProf reclamationProf = reclamationProfDao.findReclamationProfById(reclamationProf1.getId());
 
-        if (reclamationProf == null ) {
+        if (reclamationProf == null) {
             return -1;
         } else {
             reclamationProf.setTraite(reclamationProf1.getTraite());
             reclamationProf.setDateTraitement(dateTraitement);
             reclamationProf.setAdmin(reclamationProf1.getAdmin());
             reclamationProf.setCommentaireTraiteur(reclamationProf1.getCommentaireTraiteur());
+            reclamationProf.setDateReponse(new Date());
+            reclamationProfDao.save(reclamationProf);
+            return 1;
+        }
+    }
+
+    public int viewReclamationProf(Long idReclamationProf1) {
+        ReclamationProf reclamationProf = reclamationProfDao.findReclamationProfById(idReclamationProf1);
+
+        if (reclamationProf == null) {
+            return -1;
+        } else {
+            reclamationProf.setPostView(true);
             reclamationProfDao.save(reclamationProf);
             return 1;
         }
@@ -74,6 +89,7 @@ public class ReclamationProfService extends AbstractService{
     public ReclamationProf findReclamationProfByIdAndProfId(Long id, Long idprof) {
         return reclamationProfDao.findReclamationProfByIdAndProfId(id, idprof);
     }
+
     public List<ReclamationProf> findAllByCriteria(ReclamationProfVo reclamationProfVo) {
         String query = this.init("ReclamationProf");
         if (reclamationProfVo.getProf() != null) {
@@ -84,6 +100,9 @@ public class ReclamationProfService extends AbstractService{
         }
         if (reclamationProfVo.getTraite() != null) {
             query += this.addCriteria("traite", reclamationProfVo.getTraite());
+        }
+        if (reclamationProfVo.getDateReclamation() != null) {
+            query += this.addCriteria("dateReclamation", reclamationProfVo.getDateReclamation(), "LIKE");
         }
 
         System.out.println("query = " + query);

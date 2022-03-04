@@ -6,6 +6,15 @@ public class ReclamationProfVo {
     private String reference;
     private String traite;
     private Prof prof;
+    private String dateReclamation;
+
+    public String getDateReclamation() {
+        return dateReclamation;
+    }
+
+    public void setDateReclamation(String dateReclamation) {
+        this.dateReclamation = dateReclamation;
+    }
 
     public String getReference() {
         return reference;
