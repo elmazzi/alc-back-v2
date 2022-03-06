@@ -15,7 +15,7 @@ public class InscriptionEtudiantRest {
 	@Autowired
 	public  InscriptionService  inscriptionService;
 	@PostMapping("/")
-	public int save(@RequestBody Inscription inscriptionetudiant) {
+	public Etudiant save(@RequestBody Inscription inscriptionetudiant) {
 		return inscriptionService.save(inscriptionetudiant);
 	}
 	

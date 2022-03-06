@@ -1,5 +1,6 @@
 package ma.learn.quiz.rest.shared;
 
+import ma.learn.quiz.bean.Etudiant;
 import ma.learn.quiz.bean.Inscription;
 import ma.learn.quiz.service.InscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ public class InscriptionPublicRest {
 	@Autowired
 	public  InscriptionService  inscriptionService;
 	@PostMapping("/")
-	public int save(@RequestBody Inscription inscriptionetudiant) {
+	public Etudiant save(@RequestBody Inscription inscriptionetudiant) {
 		return inscriptionService.save(inscriptionetudiant);
 	}
 	

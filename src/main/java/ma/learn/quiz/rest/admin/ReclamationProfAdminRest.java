@@ -46,4 +46,9 @@ public class ReclamationProfAdminRest {
     public List<ReclamationProf> findAllByCriteria(@RequestBody ReclamationProfVo reclamationProfVo) {
         return reclamationProfService.findAllByCriteria(reclamationProfVo);
     }
+    @GetMapping("/idReclamationProf1/{idReclamationProf1}")
+
+    public int viewReclamationProf(@PathVariable Long idReclamationProf1) {
+        return reclamationProfService.viewReclamationProf(idReclamationProf1);
+    }
 }

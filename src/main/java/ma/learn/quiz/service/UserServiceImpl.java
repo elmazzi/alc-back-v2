@@ -185,7 +185,7 @@ public class UserServiceImpl implements UserService {
         localUser.setNumero(user.getNumero());
         localUser.setPrenom(user.getPrenom());
         localUser.setVille(user.getVille());
-
+        localUser.setSkype(user.getSkype());
         return userDao.save(localUser);
     }
 

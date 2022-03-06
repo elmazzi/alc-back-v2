@@ -25,6 +25,7 @@ public class User implements UserDetails {
     protected int age;
     protected Date dateNaissance;
     protected String image;
+    protected String skype;
     protected boolean accountNonExpired=true;
     protected boolean credentialsNonExpired=true;
     protected boolean accountNonLocked=true;
@@ -38,7 +39,7 @@ public class User implements UserDetails {
     }
 
     public User(Long id, String username, String password, String nom, String prenom, String numero,
-                String addresse, Date dateNaissance,String country, String ville, int age, String image, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, boolean enabled, Collection<Role> authorities, String role) {
+                String addresse, Date dateNaissance,String country, String ville, int age, String image, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, boolean enabled, Collection<Role> authorities, String role , String skype) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -57,6 +58,7 @@ public class User implements UserDetails {
         this.role = role;
         this.dateNaissance = dateNaissance;
         this.country = country;
+        this.skype =skype;
     }
 
     public User(String username, String password) {
@@ -206,5 +208,13 @@ public class User implements UserDetails {
 
     public void setDateNaissance(Date dateNaissance) {
         this.dateNaissance = dateNaissance;
+    }
+
+    public String getSkype() {
+        return skype;
+    }
+
+    public void setSkype(String skype) {
+        this.skype = skype;
     }
 }

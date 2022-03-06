@@ -18,7 +18,7 @@ public class ReclamationEtudiantAminRest {
     @PutMapping("/update/{dateTraitementforEtudiant}")
 
     public int reponseReclamationEtudiant(@RequestBody ReclamationEtudiant reclamationEtudiant, @PathVariable Date dateTraitementforEtudiant) {
-        return reclamationEtudiantService.reponseReclamationEtudiant(reclamationEtudiant,dateTraitementforEtudiant);
+        return reclamationEtudiantService.reponseReclamationEtudiant(reclamationEtudiant, dateTraitementforEtudiant);
     }
 
     @GetMapping("/")
@@ -41,5 +41,10 @@ public class ReclamationEtudiantAminRest {
     @PostMapping("/byCriteria")
     public List<ReclamationEtudiant> findAllByCriteria(@RequestBody ReclamationEtudiantVo reclamationEtudiantVo) {
         return reclamationEtudiantService.findAllByCriteria(reclamationEtudiantVo);
+    }
+
+    @GetMapping("/idReclamationEtudiant1/{idReclamationEtudiant1}")
+    public int viewReclamationEtudiant(@PathVariable Long idReclamationEtudiant1) {
+        return reclamationEtudiantService.viewReclamationEtudiant(idReclamationEtudiant1);
     }
 }

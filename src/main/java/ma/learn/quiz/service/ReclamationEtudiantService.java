@@ -16,7 +16,7 @@ import java.util.List;
 
 @Service
 
-public class ReclamationEtudiantService extends AbstractService{
+public class ReclamationEtudiantService extends AbstractService {
     @Autowired
     private ReclamationEtudiantDao reclamationEtudiantDao;
     @Autowired
@@ -32,6 +32,7 @@ public class ReclamationEtudiantService extends AbstractService{
     private TypeReclamationEtudiantService typeReclamationEtudiantService;
     @Autowired
     public EntityManager entityManager;
+
     public ReclamationEtudiant findReclamationEtudiantById(Long id) {
         return reclamationEtudiantDao.findReclamationEtudiantById(id);
     }
@@ -50,26 +51,40 @@ public class ReclamationEtudiantService extends AbstractService{
             reclamationEtudiant1.setObjetReclamationEtudiant(reclamationEtudiant.getObjetReclamationEtudiant());
             reclamationEtudiant1.setMessage(reclamationEtudiant.getMessage());
             reclamationEtudiant1.setCommentaireTraiteur(null);
-
+            reclamationEtudiant1.setPostView(false);
             reclamationEtudiant1.setReference(UtilString.generateStringNumber(6));
             reclamationEtudiantDao.save(reclamationEtudiant1);
             return 1;
         }
     }
 
-    public int reponseReclamationEtudiant(ReclamationEtudiant reclamationEtudiant1,Date dateTraitementforEtudiant) {
+    public int reponseReclamationEtudiant(ReclamationEtudiant reclamationEtudiant1, Date dateTraitementforEtudiant) {
         ReclamationEtudiant reclamationEtudiant = reclamationEtudiantDao.findReclamationEtudiantById(reclamationEtudiant1.getId());
-         if (reclamationEtudiant == null  ) {
+        if (reclamationEtudiant == null) {
             return -1;
         } else {
             reclamationEtudiant.setTraite(reclamationEtudiant1.getTraite());
             reclamationEtudiant.setDateTraitement(dateTraitementforEtudiant);
             reclamationEtudiant.setCommentaireTraiteur(reclamationEtudiant1.getCommentaireTraiteur());
             reclamationEtudiant.setAdmin(reclamationEtudiant1.getAdmin());
+            reclamationEtudiant.setDateReponse(new Date());
+
             reclamationEtudiantDao.save(reclamationEtudiant);
 
             return 1;
         }
+    }
+
+    public int viewReclamationEtudiant(Long idReclamationEtudiant1) {
+        ReclamationEtudiant reclamationEtudiant = reclamationEtudiantDao.findReclamationEtudiantById(idReclamationEtudiant1);
+
+        if (reclamationEtudiant == null) {
+            return -1;
+        } else {
+            reclamationEtudiant.setPostView(true);
+            reclamationEtudiantDao.save(reclamationEtudiant);
+            return 1;
+         }
     }
 
     public List<ReclamationEtudiant> findReclamationEtudiantByEtudiantId(Long id) {
@@ -83,6 +98,7 @@ public class ReclamationEtudiantService extends AbstractService{
     public ReclamationEtudiant findReclamationEtudiantByIdAndEtudiantId(Long id, Long idetudiant) {
         return reclamationEtudiantDao.findReclamationEtudiantByIdAndEtudiantId(id, idetudiant);
     }
+
     public List<ReclamationEtudiant> findAllByCriteria(ReclamationEtudiantVo reclamationEtudiantVo) {
         String query = this.init("ReclamationEtudiant");
         if (reclamationEtudiantVo.getEtudiant() != null) {
@@ -90,6 +106,9 @@ public class ReclamationEtudiantService extends AbstractService{
         }
         if (reclamationEtudiantVo.getReference() != null) {
             query += this.addCriteria("reference", reclamationEtudiantVo.getReference(), "LIKE");
+        }
+        if (reclamationEtudiantVo.getDateReclamation() != null) {
+            query += this.addCriteria("dateReclamation", reclamationEtudiantVo.getDateReclamation(), "LIKE");
         }
         if (reclamationEtudiantVo.getTraite() != null) {
             query += this.addCriteria("traite", reclamationEtudiantVo.getTraite());
