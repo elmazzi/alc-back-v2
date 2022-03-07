@@ -20,8 +20,10 @@ public interface GroupeEtudiantDao extends JpaRepository<GroupeEtudiant, Long> {
 
     List<GroupeEtudiant> findByParcoursIdAndNombrePlacevideGreaterThan(Long id, Long nombrePlacevide);
 
-    List<GroupeEtudiant> findGroupeEtudiantByProfId(Long idprof);
+    List<GroupeEtudiant> findGroupeEtudiantByProfId(Long id);
 
     GroupeEtudiant findGroupeEtudiantByLibelleAndProfId(String libelle, Long idprof);
+
+
 
 }

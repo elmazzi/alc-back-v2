@@ -17,6 +17,10 @@ public class GroupeEtudiantRest {
     private GroupeEtudiantService groupeEtudiantService ;
     @Autowired
     private GroupeEtudiantDetailService groupeEtudiantDetailService;
+    @GetMapping("/groupeProf/{id}")
+    public List<GroupeEtudiant> findGroupeEtudiantByProfId(@PathVariable Long id) {
+        return groupeEtudiantService.findGroupeEtudiantByProfId(id);
+    }
     @PostMapping("/")
     public int save(@RequestBody  GroupeEtudiant groupeEtudiant) {
         return groupeEtudiantService.save(groupeEtudiant);
@@ -51,4 +55,5 @@ public class GroupeEtudiantRest {
     public List<GroupeEtudiant> findByCriteria(@RequestBody GroupeEtudiant groupeEtudiant) {
         return groupeEtudiantService.findByCriteria(groupeEtudiant);
     }
+
 }
