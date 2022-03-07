@@ -46,7 +46,7 @@ public class Etudiant extends User {
     public Etudiant(User user, String ref, Prof prof, EtatEtudiantSchedule etatEtudiantSchedule, Parcours parcours, List<QuizEtudiant> quizEtudiant) {
         super(user.id, user.username, user.password, user.nom, user.prenom,
                 user.numero, user.addresse,user.dateNaissance,user.country, user.ville, user.age, user.image, user.accountNonExpired,
-                user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role);
+                user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role, user.skype);
         this.ref = ref;
         this.etatEtudiantSchedule = etatEtudiantSchedule;
         this.parcours = parcours;
@@ -56,7 +56,7 @@ public class Etudiant extends User {
     public Etudiant(User user) {
         super(user.id, user.username, user.password, user.nom, user.prenom,
                 user.numero, user.addresse,user.dateNaissance, user.country, user.ville, user.age, user.image, user.accountNonExpired,
-                user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role);    }
+                user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role, user.skype);    }
 
     public Etudiant() {
     }

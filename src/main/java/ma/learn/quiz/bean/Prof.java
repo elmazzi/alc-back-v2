@@ -33,7 +33,8 @@ public class Prof extends User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "prof")
     private List<RecommendTeacher> recommendTeacher;
-
+@ManyToOne
+private TypeTeacher typeTeacher;
 
     public Prof() {
         super();
@@ -43,7 +44,7 @@ public class Prof extends User {
     public Prof(User user , String ref, CategorieProf categorieProf, List<ClassRoom> classRooms, List<RecommendTeacher> recommendTeacher, List<Etudiant> etudiantList) {
         super(user.id, user.username, user.password, user.nom, user.prenom,
                 user.numero, user.addresse,user.dateNaissance, user.country, user.ville, user.age, user.image, user.accountNonExpired,
-                user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role);
+                user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role, user.skype);
         this.ref = ref;
         this.categorieProf = categorieProf;
         this.classRooms = classRooms;
@@ -53,7 +54,7 @@ public class Prof extends User {
     public Prof(User user) {
         super(user.id, user.username, user.password, user.nom, user.prenom,
                 user.numero, user.addresse,user.dateNaissance, user.country, user.ville, user.age, user.image, user.accountNonExpired,
-                user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role);
+                user.credentialsNonExpired, user.accountNonLocked, user.enabled, user.authorities, user.role, user.skype);
     }
 
     public Prof(String username, String password) {
@@ -176,5 +177,13 @@ public class Prof extends User {
 
     public void setTrancheHoraireProfList(List<TrancheHoraireProf> trancheHoraireProfList) {
         this.trancheHoraireProfList = trancheHoraireProfList;
+    }
+
+    public TypeTeacher getTypeTeacher() {
+        return typeTeacher;
+    }
+
+    public void setTypeTeacher(TypeTeacher typeTeacher) {
+        this.typeTeacher = typeTeacher;
     }
 }

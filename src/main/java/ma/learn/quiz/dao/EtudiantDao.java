@@ -32,4 +32,5 @@ public interface EtudiantDao extends JpaRepository<Etudiant, Long> {
 
     List <Etudiant> findByParcoursLibelle(String libelle);
 List <Etudiant> findEtudiantByGroupeEtudiantDetailsGroupeEtudiantParcours(String libelle);
+
 }

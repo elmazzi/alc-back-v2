@@ -55,11 +55,7 @@ public class QuestionEtudiantRest {
 		return questionService.findByNumero(numero);
 	}
 
-	@Transactional
-	@DeleteMapping("/id/{id}")
-	public void deleteById(@PathVariable Long id) {
-		questionService.deleteById(id);
-	}
+
 
 	@GetMapping("/id/{id}")
 	public Optional<Question> findById(@PathVariable Long id) {

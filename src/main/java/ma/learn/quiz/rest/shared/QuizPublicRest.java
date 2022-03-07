@@ -17,7 +17,7 @@ public class QuizPublicRest {
 
 
 	@PostMapping("/update/")
-	public int updateAll(@RequestBody Quiz quiz) {
+	public Quiz updateAll(@RequestBody Quiz quiz) {
 		return quizService.updateAll(quiz);
 	}
 

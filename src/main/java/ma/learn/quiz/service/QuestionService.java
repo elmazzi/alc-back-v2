@@ -8,6 +8,7 @@ import ma.learn.quiz.dao.QuestionDao;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,9 +28,10 @@ public class QuestionService {
     }
 
     @Transactional
-    public void deleteById(Long id) {
-        int reponse = reponseService.deleteByQuestionId(id);
-        questionDao.deleteById(id);
+    public int deleteById(Question qst) {
+        reponseService.deleteAllByQuestionId(qst.getId());
+        questionDao.deleteById(qst.getId());
+        return 1;
     }
 
     public Optional<Question> findById(Long id) {
@@ -92,18 +94,23 @@ public class QuestionService {
     public Question findQuestionById(Long Id) {
         return questionDao.findQuestionById(Id);
     }
+    List<Question> questionList = new ArrayList<>();
 
-    public void saveAll(Quiz quiz, List<Question> questions) {
+    public List<Question> saveAll(Quiz quiz, List<Question> questions) {
+        List<Question> questionList = new ArrayList<>();
         for (Question question : questions) {
+            Question question2 ;
             question.setQuiz(quiz);
             TypeDeQuestion typeDeQuestion = typeDeQuestionService.findByRef(question.getTypeDeQuestion().getRef());
             question.setTypeDeQuestion(typeDeQuestion);
             typeDeQuestionService.update(typeDeQuestion);
             System.out.println(question.getLibelle());
-            questionDao.save(question);
-            reponseService.save(question, question.getReponses());
+            question2 = questionDao.save(question);
+            List<Reponse> reponseList = reponseService.save(question, question.getReponses());
+            question2.setReponses(reponseList);
+            questionList.add(question2);
         }
-
+        return questionList;
     }
 
 
@@ -119,5 +126,10 @@ public class QuestionService {
     @Transactional
     public int deleteByQuizRef(String ref) {
         return questionDao.deleteByQuizRef(ref);
+    }
+
+    @Transactional
+    public void deleteAllByQuizId(Long id) {
+        this.questionDao.deleteAllByQuizId(id);
     }
 }

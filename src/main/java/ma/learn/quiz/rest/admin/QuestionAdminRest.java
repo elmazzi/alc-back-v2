@@ -55,10 +55,10 @@ public class QuestionAdminRest {
 		return questionService.findByNumero(numero);
 	}
 
-	@Transactional
-	@DeleteMapping("/id/{id}")
-	public void deleteById(@PathVariable Long id) {
-		questionService.deleteById(id);
+
+	@PostMapping("/deleteQst/")
+	public void deleteById(@RequestBody Question qst) {
+		questionService.deleteById(qst);
 	}
 
 	@GetMapping("/id/{id}")
