@@ -31,8 +31,8 @@ public class GroupeEtudiantService extends AbstractService  {
         return groupeEtudiantDao.findGroupeEtudiantByLibelleAndProfId(libelle, idprof);
     }
 
-    public List<GroupeEtudiant> findGroupeEtudiantByProfId(Long idprof) {
-        return groupeEtudiantDao.findGroupeEtudiantByProfId(idprof);
+    public List<GroupeEtudiant> findGroupeEtudiantByProfId(Long id) {
+        return groupeEtudiantDao.findGroupeEtudiantByProfId(id);
     }
 
     public int save(GroupeEtudiant groupeEtudiant) {
