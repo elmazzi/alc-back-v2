@@ -5,6 +5,7 @@ import ma.learn.quiz.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -17,7 +18,7 @@ public class QuizAdminRest {
 
 
 	@PostMapping("/update/")
-	public int updateAll(@RequestBody Quiz quiz) {
+	public Quiz updateAll(@RequestBody Quiz quiz) {
 		return quizService.updateAll(quiz);
 	}
 
@@ -37,6 +38,11 @@ public class QuizAdminRest {
 	@DeleteMapping("/ref/{ref}")
 	public int deleteByRef(@PathVariable String ref) {
 		return quizService.deleteByRef(ref);
+	}
+
+	@PostMapping("/deleteAll/")
+	public void deleteById(@RequestBody  Quiz quiz) {
+		quizService.deleteById(quiz);
 	}
 
 	@GetMapping("/")

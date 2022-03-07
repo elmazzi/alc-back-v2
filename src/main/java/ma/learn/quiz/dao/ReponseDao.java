@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import ma.learn.quiz.bean.Reponse;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,12 +26,14 @@ public interface ReponseDao extends JpaRepository<Reponse, Long> {
 
     int deleteByQuestionId(Long id);
 
+    @Transactional
     int deleteByQuestionQuizRef(String ref);
 
     int deleteByRef(String ref);
-
+    @Transactional
     void deleteById(Long id);
 
     Optional<Reponse> findById(Long id);
-    
+
+    void deleteAllByQuestionId(Long id);
 }

@@ -1,7 +1,7 @@
 package ma.learn.quiz.service;
 
 
-
+import ma.learn.quiz.bean.Question;
 import ma.learn.quiz.bean.Quiz;
 import ma.learn.quiz.bean.Section;
 
@@ -22,14 +22,10 @@ public class QuizService {
     private SectionService sectionService;
     @Autowired
     private ReponseService reponseService;
-    public Quiz findBySectionId(Long id) {
-		return quizDao.findBySectionId(id);
-	}
+    @Autowired
+    private QuestionService questionService;
 
-	@Autowired
-    private QuestionService questionService ;
-
-    public void update(Quiz quiz){
+    public void update(Quiz quiz) {
         quizDao.save(quiz);
     }
 
@@ -37,13 +33,26 @@ public class QuizService {
         return quizDao.findByRef(ref);
     }
 
+    public Quiz findBySectionId(Long id) {
+        return quizDao.findBySectionId(id);
+    }
+
+    @Transactional
+    public void deleteById(Quiz quiz) {
+        for (Question q : quiz.getQuestions()
+        ) {
+            this.reponseService.deleteAllByQuestionId(q.getId());
+        }
+        this.questionService.deleteAllByQuizId(quiz.getId());
+        quizDao.deleteById(quiz.getId());
+    }
 
     @Transactional
     public int deleteByRef(String ref) {
-       int a= reponseService.deleteByQuestionQuizRef(ref);
-       int b= questionService.deleteByQuizRef(ref);
-        int c =quizDao.deleteByRef(ref);
-        return a+b+c;
+        int a = reponseService.deleteByQuestionQuizRef(ref);
+        int b = questionService.deleteByQuizRef(ref);
+        int c = quizDao.deleteByRef(ref);
+        return a + b + c;
     }
 
     public Quiz findQuizById(Long id) {
@@ -62,29 +71,27 @@ public class QuizService {
             return 1;
         }
     }
+
     public int saveAll(Quiz quiz) {
-    	Section section = sectionService.findSectionById(quiz.getSection().getId());	
+        Section section = sectionService.findSectionById(quiz.getSection().getId());
         if (findByRef(quiz.getRef()) != null) {
             return -1;
         } else {
-        	quiz.setLib(section.getCategorieSection().getLibelle());
-        	quiz.setSection(section);
+            quiz.setLib(section.getCategorieSection().getLibelle());
+            quiz.setSection(section);
             quizDao.save(quiz);
             questionService.saveAll(quiz, quiz.getQuestions());
             return 1;
         }
     }
 
-    public int updateAll(Quiz quiz) {
-        Section section = sectionService.findSectionById(quiz.getSection().getId());
-        int a= reponseService.deleteByQuestionQuizRef(quiz.getRef());
-        int b= questionService.deleteByQuizRef(quiz.getRef());
-        int c =quizDao.deleteByRef(quiz.getRef());
-        quiz.setLib(section.getCategorieSection().getLibelle());
-        quiz.setSection(section);
-        quizDao.save(quiz);
-        questionService.saveAll(quiz, quiz.getQuestions());
-        return 1;
+    public Quiz updateAll(Quiz quiz) {
+        Quiz quiz1;
+        quiz1 = quizDao.save(quiz);
+        List<Question> questionList = questionService.saveAll(quiz, quiz.getQuestions());
+        System.out.println(questionList.size());
+        quiz1.setQuestions(questionList);
+        return quiz1;
     }
 
 
