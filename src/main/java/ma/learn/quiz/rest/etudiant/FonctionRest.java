@@ -1,12 +1,12 @@
 package ma.learn.quiz.rest.etudiant;
 
 import ma.learn.quiz.bean.Fonction;
+import ma.learn.quiz.bean.NiveauEtude;
 import ma.learn.quiz.service.FonctionsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 
@@ -18,5 +18,18 @@ public class FonctionRest {
     @GetMapping("/")
     public List<Fonction> findAll() {
         return fonctionsService.findAll();
+    }
+    @PostMapping("/")
+    public int save( @RequestBody  Fonction fonction) {
+        return fonctionsService.save(fonction);
+    }
+    @PutMapping("/")
+    public int update( @RequestBody  Fonction fonction) {
+        return fonctionsService.update(fonction);
+    }
+
+    @DeleteMapping("/libelle/{libelle}")
+    public int deleteByLibelle  (@PathVariable String libelle) {
+        return fonctionsService.deleteByLibelle(libelle);
     }
 }
