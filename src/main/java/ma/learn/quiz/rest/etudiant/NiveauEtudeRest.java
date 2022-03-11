@@ -1,11 +1,10 @@
 package ma.learn.quiz.rest.etudiant;
 
 import ma.learn.quiz.bean.NiveauEtude;
+import ma.learn.quiz.bean.StatutSocial;
 import ma.learn.quiz.service.NiveauEtudeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,5 +16,17 @@ public class NiveauEtudeRest {
     @GetMapping("/")
     public List<NiveauEtude> findAll() {
         return niveauEtudeService.findAll();
+    }
+    @PostMapping("/")
+    public int save( @RequestBody NiveauEtude niveauEtude) {
+        return niveauEtudeService.save(niveauEtude);
+    }
+    @PutMapping("/")
+    public int update(@RequestBody NiveauEtude niveauEtude) {
+        return niveauEtudeService.update(niveauEtude);
+    }
+    @DeleteMapping("/libelle/{libelle}")
+    public int deleteByLibelle  (@PathVariable String libelle) {
+        return niveauEtudeService.deleteByLibelle(libelle);
     }
 }

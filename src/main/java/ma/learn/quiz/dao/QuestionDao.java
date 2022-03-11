@@ -18,4 +18,6 @@ public interface QuestionDao extends JpaRepository<Question, Long> {
     int deleteByNumero(Long numero);
     void deleteById(Long id);
     Question findQuestionById(Long Id);
+
+    void deleteAllByQuizId(Long id);
 }

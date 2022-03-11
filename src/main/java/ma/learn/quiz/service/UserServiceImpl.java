@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
         if (loadedUser != null)
             return null;
         else {
-            prepareMessage(user);
+            //prepareMessage(user);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setImage(getTemporaryProfileImageUrl(user.getUsername()));
             roleService.save(user.getAuthorities());
@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService {
     public void prepareMessage(User user) {
         System.out.println("prepare email ");
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("elearningMarrakech@gmail.com");
+        message.setFrom("tachrimantsaad@gmail.com");
         message.setTo(user.getUsername());
         message.setSubject("accepted on the platform e-learning");
         message.setText("Your online registration on the site: http://localhost:4200/#/ is validated. \n" + "You can log into your account now.\n" +
@@ -185,7 +185,7 @@ public class UserServiceImpl implements UserService {
         localUser.setNumero(user.getNumero());
         localUser.setPrenom(user.getPrenom());
         localUser.setVille(user.getVille());
-
+        localUser.setSkype(user.getSkype());
         return userDao.save(localUser);
     }
 

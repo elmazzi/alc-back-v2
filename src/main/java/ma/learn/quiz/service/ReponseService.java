@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ma.learn.quiz.dao.ReponseDao;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -103,11 +105,14 @@ public class ReponseService {
     }
 
 
-	public void save(Question question, List<Reponse> reponses) {
+	public List<Reponse> save(Question question, List<Reponse> reponses) {
+        List<Reponse> reponseList = new ArrayList<>();
         for (Reponse reponse : reponses) {
             reponse.setQuestion(question);
-            reponseDao.save(reponse);
+            reponse = reponseDao.save(reponse);
+            reponseList.add(reponse);
         }
+        return reponseList;
 	}
 
     @Transactional
@@ -115,4 +120,8 @@ public class ReponseService {
         return reponseDao.deleteByQuestionQuizRef(ref);
     }
 
+    @Transactional
+    public void deleteAllByQuestionId(Long id) {
+         reponseDao.deleteAllByQuestionId(id);
+    }
 }
