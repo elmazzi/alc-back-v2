@@ -403,6 +403,7 @@ public class DataBaseMigration {
                                 section.setLibelle(JsoupUtil.getElementContent(f, "p.title-progress"));
                                 section.setCategorieSection(categorieSection1);
                                 section.setCode(JsoupUtil.getElementContent(f, "p.title-progress"));
+                                section.setNumeroOrder(categorieSection1.getNumeroOrder());
                                 section.setContenu(JsoupUtil.getElementContentLesson(f, "div.wrapper-information"));
                                 section.setCours(cours);
                                 sectionDao.save(section);

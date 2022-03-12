@@ -51,6 +51,9 @@ public class SectionService extends AbstractService {
         return sectionDao.findByCoursIdAndNumeroOrder(id, numeroOrder);
     }
 
+    public List<Section> findByCoursIdOrderByNumeroOrder(Long id) {
+        return sectionDao.findByCoursIdOrderByNumeroOrder(id);
+    }
 
     public List<Section> findByCours(Cours cours) {
         return sectionDao.findByCours(cours);
@@ -88,7 +91,7 @@ public class SectionService extends AbstractService {
 
 
     public List<Section> findByCoursId(Long id) {
-        return sectionDao.findByCoursId(id);
+        return sectionDao.findByCoursIdOrderByNumeroOrder(id);
     }
 
     public List<Section> findByCriteria(Long id) {

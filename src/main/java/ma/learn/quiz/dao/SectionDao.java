@@ -33,6 +33,7 @@ public interface SectionDao extends JpaRepository<Section,Long>{
      int deleteSectionById(Long id);
      Section findSectionByLibelleAndCoursId(String sectionLibelle, Long idcours);
 
+     List<Section> findByCoursIdOrderByNumeroOrder(Long id);
 }
  
 
