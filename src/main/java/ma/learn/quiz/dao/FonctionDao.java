@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FonctionDao extends JpaRepository<Fonction, Long> {
         Fonction findByCode(String code);
+        public int deleteByLibelle(String libelle);
 }

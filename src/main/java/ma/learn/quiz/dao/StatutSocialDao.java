@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StatutSocialDao extends JpaRepository<StatutSocial, Long> {
     StatutSocial findByCode(String code);
+    public int deleteByLibelle(String libelle);
 
 }

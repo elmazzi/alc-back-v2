@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SkillDao extends JpaRepository<Skill, Long> {
     Skill findByCode(String code);
-
+    public int deleteByLibelle(String libelle);
 }
