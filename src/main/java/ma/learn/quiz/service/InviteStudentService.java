@@ -10,6 +10,8 @@ import ma.learn.quiz.service.facade.UserService;
 import ma.learn.quiz.service.vo.InviteStudentVo;
 import ma.learn.quiz.service.vo.ReclamationProfVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -20,6 +22,8 @@ import static ma.learn.quiz.service.Util.UtilString.generateStringNumber;
 
 @Service
 public class InviteStudentService extends AbstractService {
+    @Autowired
+    public JavaMailSender mailSender;
     @Autowired
     private InviteStudentdDao inviteStudentdDao;
     @Autowired
@@ -73,14 +77,15 @@ public class InviteStudentService extends AbstractService {
 
     public int saveInvitation(Long idStudent, String emailInvited) {
         Etudiant etudiant = etudiantService.findEtudiantById(idStudent);
+        InviteStudent inviteStudent2 = findInviteStudentByEmailInvited(emailInvited);
         User userInvited = userDao.findByUsername(emailInvited);
-        if (etudiant == null) {
+        if (etudiant == null || inviteStudent2 != null) {
             return -1;
         } else {
             if (userInvited != null) {
                 return -2;
             } else {
-                InviteStudent inviteStudent=new InviteStudent();
+                InviteStudent inviteStudent = new InviteStudent();
                 inviteStudent.setDateSentInvitation(new Date());
                 inviteStudent.setAccepted(false);
                 inviteStudent.setCode(generateStringNumber(8));
@@ -88,9 +93,36 @@ public class InviteStudentService extends AbstractService {
                 inviteStudent.setEmailInvited(emailInvited);
                 inviteStudent.setEtudiant(etudiant);
                 inviteStudentdDao.save(inviteStudent);
+                this.sentMessageToInvited(etudiant.getUsername(), emailInvited, inviteStudent.getCode());
+                this.sentMessageToUser(etudiant.getUsername());
                 return 1;
             }
         }
     }
 
+    public void sentMessageToInvited(String email, String emailInvited, String code) {
+        System.out.println("prepare email ");
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("elearningmarrakech@gmail.com");
+        message.setTo(emailInvited);
+        message.setSubject("Invited to the platform e-learning");
+        message.setText("Hey there welcome to our platform e-learning,you are invited by " + email + " .\n" +
+                "Click here : http://localhost:4200/#/public/connectAsInvited" + "\n" +
+                "Your invitation code is:" + code + "\n" +
+                "You will get 3 free courses for your first purchase."
+        );
+        mailSender.send(message);
+        System.out.println("email send");
+    }
+
+    public void sentMessageToUser(String email) {
+        System.out.println("prepare email ");
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("elearningmarrakech@gmail.com");
+        message.setTo(email);
+        message.setSubject("Invitation sent successfully");
+        message.setText("Hey there thank you for invating this new student, you will get promotion for the next pay pack.");
+        mailSender.send(message);
+        System.out.println("email send");
+    }
 }

@@ -18,6 +18,26 @@ public class InviteStudent {
     private String emailInvited;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private Date dateSentInvitation;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    private Date dateAcceptInvitation;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    private Date datePayPack;
+
+    public Date getDateAcceptInvitation() {
+        return dateAcceptInvitation;
+    }
+
+    public void setDateAcceptInvitation(Date dateAcceptInvitation) {
+        this.dateAcceptInvitation = dateAcceptInvitation;
+    }
+
+    public Date getDatePayPack() {
+        return datePayPack;
+    }
+
+    public void setDatePayPack(Date datePayPack) {
+        this.datePayPack = datePayPack;
+    }
 
     public String getCode() {
         return code;
