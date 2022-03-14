@@ -1,11 +1,13 @@
 package ma.learn.quiz.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class SessionCours implements Serializable {
@@ -27,6 +29,19 @@ public class SessionCours implements Serializable {
     private boolean payer;
     @ManyToOne
     private Salary salary;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "sessionCours", cascade = CascadeType.REMOVE)
+    private List<Section> sections;
+
+
+    public List<Section> getSections() {
+        return sections;
+    }
+
+    public void setSections(List<Section> sections) {
+        this.sections = sections;
+    }
 
     public SessionCours() {
     }
