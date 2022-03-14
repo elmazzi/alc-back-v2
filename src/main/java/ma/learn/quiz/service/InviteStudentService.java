@@ -43,6 +43,10 @@ public class InviteStudentService extends AbstractService {
         return inviteStudentdDao.findInviteStudentByEmailInvited(emailInvited);
     }
 
+    public InviteStudent findInviteStudentByEmailInvitedAndCode(String emailInvited, String code) {
+        return inviteStudentdDao.findInviteStudentByEmailInvitedAndCode(emailInvited, code);
+    }
+
     public List<InviteStudent> findAll() {
         return inviteStudentdDao.findAll();
     }

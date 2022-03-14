@@ -17,7 +17,6 @@ public class InvitedStudentEtudiantRest {
     private InviteStudentService inviteStudentService;
 
     @GetMapping("/{id}")
-
     public List<InviteStudent> findInviteStudentByEtudiantId(@PathVariable Long id) {
         return inviteStudentService.findInviteStudentByEtudiantId(id);
     }
@@ -26,6 +25,11 @@ public class InvitedStudentEtudiantRest {
 
     public InviteStudent findInviteStudentByEmailInvited(@PathVariable String emailInvited) {
         return inviteStudentService.findInviteStudentByEmailInvited(emailInvited);
+    }
+
+    @GetMapping("/email/{emailInvited}/code/{code}")
+    public InviteStudent findInviteStudentByEmailInvitedAndCode(@PathVariable String emailInvited,@PathVariable String code) {
+        return inviteStudentService.findInviteStudentByEmailInvitedAndCode(emailInvited, code);
     }
 
     @PostMapping("/")
