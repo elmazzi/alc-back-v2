@@ -31,6 +31,7 @@ public class Section implements Serializable {
     private CategorieSection categorieSection;
     @ManyToOne
     private Cours cours;
+
     private int url;
     private int content;
 
@@ -38,6 +39,8 @@ public class Section implements Serializable {
     @OneToMany(mappedBy = "section",cascade = CascadeType.REMOVE)
     private List<SectionItem> sectionItems;
 
+    @ManyToOne
+    private SessionCours sessionCours;
 
     public Section(String code, String libelle, String urlImage, String urlImage2, String urlImage3,
                    String urlVideo, String contenu, String questions, String indicationProf, Integer numeroOrder,
@@ -57,6 +60,14 @@ public class Section implements Serializable {
         this.cours = cours;
         this.url = url;
         this.content = content;
+    }
+
+    public SessionCours getSessionCours() {
+        return sessionCours;
+    }
+
+    public void setSessionCours(SessionCours sessionCours) {
+        this.sessionCours = sessionCours;
     }
 
     public int getUrl() {
