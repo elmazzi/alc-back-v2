@@ -3,9 +3,7 @@ package ma.learn.quiz.rest.etudiant;
 import ma.learn.quiz.bean.InteretEtudiant;
 import ma.learn.quiz.service.InteretEtudiantService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,5 +15,17 @@ public class InteretEtudiantRest {
     @GetMapping("/")
     public List<InteretEtudiant> findAll() {
         return interetEtudiantService.findAll();
+    }
+    @PostMapping("/")
+    public int save( @RequestBody InteretEtudiant interetEtudiant) {
+        return interetEtudiantService.save(interetEtudiant);
+    }
+    @PutMapping("/")
+    public int update(@RequestBody InteretEtudiant interetEtudiant) {
+        return interetEtudiantService.update(interetEtudiant);
+    }
+    @DeleteMapping("/libelle/{libelle}")
+    public int deleteByLibelle  (@PathVariable String libelle) {
+        return interetEtudiantService.deleteByLibelle(libelle);
     }
 }
