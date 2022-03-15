@@ -65,6 +65,13 @@ public class InscriptionService extends AbstractService {
     public FonctionDao fonctionDao;
     @Autowired
     public StatutSocialDao statutSocialDao;
+    @Autowired
+    public InviteStudentService inviteStudentService;
+    @Autowired
+    public InviteStudentdDao inviteStudentdDao;
+
+
+
     public List<Inscription> findAllByEtatInscriptionLibelle(String libelle) {
         return inscriptionDao.findAllByEtatInscriptionLibelle(libelle);
     }
@@ -210,6 +217,15 @@ public class InscriptionService extends AbstractService {
             etudiant1.setParcours(inscription.getParcours());
             etudiant1.setTeacherLocality(etudiant.getTeacherLocality());
             etudiantDao.save(etudiant1);
+            InviteStudent inviteStudent = inviteStudentService.findInviteStudentByEmailInvited(etudiant1.getUsername());
+            if (inviteStudent != null){
+                inviteStudent.setAccepted(true);
+                inviteStudent.setPaidPack(true);
+                inviteStudent.setDateAcceptInvitation(new Date());
+                inviteStudent.setDatePayPack(new Date());
+                this.inviteStudentdDao.save(inviteStudent);
+
+            }
             if (parcours.getId() != null && groupeEtude.getId() != null){
                 affecter(parcours, groupeEtude, etudiant);
             }

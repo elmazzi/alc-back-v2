@@ -11,5 +11,6 @@ public interface InviteStudentdDao extends JpaRepository<InviteStudent, Long> {
     List<InviteStudent> findInviteStudentByEtudiantId(Long id);
 
     InviteStudent findInviteStudentByEmailInvited(String emailInvited);
+    InviteStudent findInviteStudentByEmailInvitedAndCode(String emailInvited, String code);
 
 }
