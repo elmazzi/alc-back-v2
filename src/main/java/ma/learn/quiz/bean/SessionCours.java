@@ -22,10 +22,12 @@ public class SessionCours implements Serializable {
     private Cours cours;
     @ManyToOne
     private GroupeEtudiant groupeEtudiant;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-
+    private double duree;
+    private double totalheure;
+    private double mois;
+    private double annee;
     private Date dateFin;
+    private Date dateDebut;
     private boolean payer;
     @ManyToOne
     private Salary salary;
@@ -34,6 +36,37 @@ public class SessionCours implements Serializable {
     @OneToMany(mappedBy = "sessionCours", cascade = CascadeType.REMOVE)
     private List<Section> sections;
 
+    public double getDuree() {
+        return duree;
+    }
+
+    public void setDuree(double duree) {
+        this.duree = duree;
+    }
+
+    public double getTotalheure() {
+        return totalheure;
+    }
+
+    public void setTotalheure(double totalheure) {
+        this.totalheure = totalheure;
+    }
+
+    public double getMois() {
+        return mois;
+    }
+
+    public void setMois(double mois) {
+        this.mois = mois;
+    }
+
+    public double getAnnee() {
+        return annee;
+    }
+
+    public void setAnnee(double annee) {
+        this.annee = annee;
+    }
 
     public List<Section> getSections() {
         return sections;
@@ -44,6 +77,14 @@ public class SessionCours implements Serializable {
     }
 
     public SessionCours() {
+    }
+
+    public Date getDateDebut() {
+        return dateDebut;
+    }
+
+    public void setDateDebut(Date dateDebut) {
+        this.dateDebut = dateDebut;
     }
 
     public SessionCours(String reference, Prof prof, Cours cours, GroupeEtudiant groupeEtudiant, Date dateFin, boolean payer, Salary salary) {

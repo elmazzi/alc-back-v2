@@ -36,7 +36,7 @@ public class CoursService {
     }
 
     public List<Cours> findByParcoursId(Long id) {
-        return coursDao.findByParcoursId(id);
+        return coursDao.findByParcoursIdOrderByNumeroOrder(id);
     }
 
     public List<Cours> findByCriteria(Long id) {

@@ -137,7 +137,7 @@ public class DataBaseMigration {
     private void getWatchItData(File file, Parcours parcours) {
         int index = 0;
         System.out.println(parcours.getId());
-        List<Cours> coursList = this.coursDao.findByParcoursId(parcours.getId());
+        List<Cours> coursList = this.coursDao.findByParcoursIdOrderByNumeroOrder(parcours.getId());
         try {
             System.out.println(Arrays.toString(file.list()));
             Scanner myReader = new Scanner(file);

@@ -27,45 +27,44 @@ public class ScheduleProfEtudiantRest {
 		return scheduleProfService.findByScheduleId(id);
 	}*/
 
-	@PostMapping("/save/")
-	public int saveAll(ScheduleProf scheduleProf) {
-		return scheduleProfService.saveAll(scheduleProf);
-	}
+    @PostMapping("/save/")
+    public int saveAll(ScheduleProf scheduleProf) {
+        return scheduleProfService.saveAll(scheduleProf);
+    }
 
-	@GetMapping("/vo/")
-	public List<SchdeduleVo> findSchedule() {
-		return scheduleProfService.findSchedule();
-	}
-
-
-	@GetMapping("/ref/{ref}")
-	public ScheduleProf findByRef(@PathVariable String ref) {
-		return scheduleProfService.findByRef(ref);
-	}
-
-	@DeleteMapping("/ref/{ref}")
-	public int deleteByRef(@PathVariable String ref) {
-		return scheduleProfService.deleteByRef(ref);
-	}
-
-	@PostMapping("/")
-	public ScheduleProf save(@RequestBody ScheduleProf scheduleProf) {
-		return scheduleProfService.save(scheduleProf);
-	}
-
-	@GetMapping("/")
-	public List<ScheduleProf> findAll() {
-		return scheduleProfService.findAll();
-	}
+    @GetMapping("/vo/")
+    public List<SchdeduleVo> findSchedule() {
+        return scheduleProfService.findSchedule();
+    }
 
 
+    @GetMapping("/ref/{ref}")
+    public ScheduleProf findByRef(@PathVariable String ref) {
+        return scheduleProfService.findByRef(ref);
+    }
 
-	@GetMapping("/groupe/etudiant/id/{id}")
-	public List<ScheduleProf> findByEtudiantId(@PathVariable Long id) {
-		return scheduleProfService.findByGroupeEtudiantId(id);
-	}
+    @DeleteMapping("/ref/{ref}")
+    public int deleteByRef(@PathVariable String ref) {
+        return scheduleProfService.deleteByRef(ref);
+    }
 
-	@Autowired
-	private ScheduleProfService scheduleProfService;
+    @PostMapping("/")
+    public ScheduleProf save(@RequestBody ScheduleProf scheduleProf) {
+        return scheduleProfService.save(scheduleProf);
+    }
+
+    @GetMapping("/")
+    public List<ScheduleProf> findAll() {
+        return scheduleProfService.findAll();
+    }
+
+
+    @GetMapping("/groupe/etudiant/id/{id}")
+    public List<ScheduleProf> findByEtudiantId(@PathVariable Long id) {
+        return scheduleProfService.findByGroupeEtudiantId(id);
+    }
+
+    @Autowired
+    private ScheduleProfService scheduleProfService;
 
 }

@@ -52,6 +52,8 @@ public class SessionCoursService extends AbstractService {
     private GroupeEtudiantService groupeEtudiantService;
     @Autowired
     private GroupeEtudiantDao groupeEtudiantDao;
+    @Autowired
+    private SectionService sectionService;
 
     public List<SessionCours> findByCriteria(SessionCours sessionCours) {
         String query = "SELECT e FROM SessionCours e WHERE 1=1";
@@ -101,6 +103,17 @@ public class SessionCoursService extends AbstractService {
         for (int i = 0; i < len; i++)
             sb.append(chars.charAt(rnd.nextInt(chars.length())));
         return sb.toString();
+    }
+
+
+    public int saveSessionByProf(SessionCours sessionCours) {
+        SessionCours session = this.sessionCoursDao.save(sessionCours);
+        for (Section s : sessionCours.getSections()
+        ) {
+            s.setSessionCours(session);
+            this.sectionService.create(s);
+        }
+        return 1;
     }
 
 
