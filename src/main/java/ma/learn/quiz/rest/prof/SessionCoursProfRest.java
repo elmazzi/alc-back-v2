@@ -45,6 +45,11 @@ public class SessionCoursProfRest {
         return sessionCoursService.saveSessionByProf(sessionCours);
     }
 
+    @GetMapping("/groupeEtudiant/id/{id}")
+    public List<SessionCours> findByGroupeEtudiantId(@PathVariable Long id) {
+        return sessionCoursService.findByGroupeEtudiantId(id);
+    }
+
     @GetMapping("/update/{id}")
     public int update(@PathVariable Long id) {
         return sessionCoursService.update(id);

@@ -22,6 +22,8 @@ public interface SessionCoursDao extends JpaRepository<SessionCours, Long> {
 
     List<SessionCours> findByProfId(Long id);
 
+    List<SessionCours> findByGroupeEtudiantId(Long id);
+
 
     List<SessionCours> findSessionCoursByDateFin(Date dateFin);
 

@@ -105,6 +105,9 @@ public class SessionCoursService extends AbstractService {
         return sb.toString();
     }
 
+    public List<SessionCours> findByGroupeEtudiantId(Long id) {
+        return sessionCoursDao.findByGroupeEtudiantId(id);
+    }
 
     public int saveSessionByProf(SessionCours sessionCours) {
         SessionCours session = this.sessionCoursDao.save(sessionCours);
