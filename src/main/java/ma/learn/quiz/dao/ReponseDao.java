@@ -13,15 +13,16 @@ import java.util.Optional;
 @Repository
 public interface ReponseDao extends JpaRepository<Reponse, Long> {
     Reponse findByRef(String ref);
+
     Reponse findReponseById(Long id);
 
     List<Reponse> findByQuestionId(Long id);
-    
+
     List<Reponse> findByQuestionNumero(Long numero);
 
     List<Reponse> findByEtatReponse(String etatReponse);
-    
-    
+
+
     int deleteByQuestionRef(String ref);
 
     int deleteByQuestionId(Long id);
@@ -30,10 +31,12 @@ public interface ReponseDao extends JpaRepository<Reponse, Long> {
     int deleteByQuestionQuizRef(String ref);
 
     int deleteByRef(String ref);
+
     @Transactional
     void deleteById(Long id);
 
     Optional<Reponse> findById(Long id);
 
+    @Transactional
     void deleteAllByQuestionId(Long id);
 }

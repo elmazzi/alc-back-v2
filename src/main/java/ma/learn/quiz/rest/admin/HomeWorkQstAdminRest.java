@@ -1,4 +1,4 @@
-package ma.learn.quiz.rest.etudiant;
+package ma.learn.quiz.rest.admin;
 
 import ma.learn.quiz.bean.HomeWork;
 import ma.learn.quiz.bean.HomeWorkQuestion;
@@ -9,9 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("etudiant/homeWorkQST")
-public class HomeWorkQSTREST {
-
+@RequestMapping("admin/homeWorkQST")
+public class HomeWorkQstAdminRest {
     @Autowired
     private HomeWorkQuestionService homeWorkQuestionService;
 
