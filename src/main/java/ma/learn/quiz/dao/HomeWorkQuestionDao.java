@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface HomeWorkQuestionDao extends JpaRepository<HomeWorkQuestion, Long> {
 
-     List<HomeWorkQuestion> findHomeWorkQuestionByHomeWorkId(Long id);
+     List<HomeWorkQuestion> findHomeWorkQuestionByHomeWorkIdOrderByNumero(Long id);
      HomeWorkQuestion findHomeWorkQuestionByLibelleAndHomeWorkId(String libelle,Long id);
      HomeWorkQuestion findHomeWorkQuestionById(Long id);
 

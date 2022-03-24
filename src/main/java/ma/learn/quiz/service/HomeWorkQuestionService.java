@@ -21,7 +21,7 @@ public class HomeWorkQuestionService {
     private HomeWorkQSTReponseService homeWorkQSTReponseService;
 
     public List<HomeWorkQuestion> findHomeWorkQuestionByHomeWorkId(Long id) {
-        return homeWorkQuestionDao.findHomeWorkQuestionByHomeWorkId(id);
+        return homeWorkQuestionDao.findHomeWorkQuestionByHomeWorkIdOrderByNumero(id);
     }
 
 

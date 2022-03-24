@@ -13,13 +13,15 @@ public class Question {
     private Long id;
     private String ref;
     private String libelle;
+    private String urlImg;
+    private String urlVideo;
     private Long numero;
     private double pointReponseJuste;
     private double pointReponsefausse;
-    
+
     @ManyToOne
     private TypeDeQuestion typeDeQuestion;
-    
+
     @ManyToOne
     private Quiz quiz;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -45,14 +47,14 @@ public class Question {
     }
 
     public String getLibelle() {
-		return libelle;
-	}
+        return libelle;
+    }
 
-	public void setLibelle(String libelle) {
-		this.libelle = libelle;
-	}
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
 
-	public TypeDeQuestion getTypeDeQuestion() {
+    public TypeDeQuestion getTypeDeQuestion() {
         return typeDeQuestion;
     }
 
@@ -84,8 +86,21 @@ public class Question {
         this.pointReponsefausse = pointReponsefausse;
     }
 
+    public String getUrlImg() {
+        return urlImg;
+    }
 
+    public void setUrlImg(String urlImg) {
+        this.urlImg = urlImg;
+    }
 
+    public String getUrlVideo() {
+        return urlVideo;
+    }
+
+    public void setUrlVideo(String urlVideo) {
+        this.urlVideo = urlVideo;
+    }
 
     public Quiz getQuiz() {
         return quiz;
@@ -94,7 +109,7 @@ public class Question {
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
     }
-   
+
 
     public Long getId() {
         return id;
