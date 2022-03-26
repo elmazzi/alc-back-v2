@@ -8,5 +8,4 @@ RUN mvn -f pom.xml clean package -Dmaven.test.skip
 FROM openjdk:8-alpine
 COPY --from=build /workspace/target/*.jar app.jar
 EXPOSE 8036
-ENTRYPOINT ["java","-Dspring.profiles.active=prod","-jar","app.jar"]
-# java -Dspring.profiles.active=production -jar app.jar 
+ENTRYPOINT ["java","-jar","app.jar"]
