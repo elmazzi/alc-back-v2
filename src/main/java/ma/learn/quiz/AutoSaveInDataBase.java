@@ -12,9 +12,9 @@ public class AutoSaveInDataBase {
     @PostConstruct
     void save() {
         TypeDeQuestion typeDeQuestion = new TypeDeQuestion();
-        typeDeQuestion.setRef("t12");
-        typeDeQuestion.setLib("Word By Word");
-        if (this.typeDeQuestionDao.findByLib("Word By Word") == null) {
+        typeDeQuestion.setRef("t13");
+        typeDeQuestion.setLib("Drag and Drop");
+        if (this.typeDeQuestionDao.findByLib("Drag and Drop") == null) {
             this.typeDeQuestionDao.save(typeDeQuestion);
         }
     }

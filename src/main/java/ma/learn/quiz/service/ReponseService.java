@@ -89,8 +89,8 @@ public class ReponseService {
         }
     }
 
-    public void saveAnswer(Reponse reponse) {
-        reponseDao.save(reponse);
+    public Reponse saveAnswer(Reponse reponse) {
+       return reponseDao.save(reponse);
     }
 
     public List<Reponse> findByCriterial(Long id)

@@ -18,6 +18,7 @@ public class SessionCoursProfRest {
     public SessionCours findSessionCoursByProfNom(@PathVariable String nom) {
         return sessionCoursService.findSessionCoursByProfNom(nom);
     }
+
     @GetMapping("/prof/idprof/{idprof}")
 
     public List<SessionCours> findAllSessionCoursByProfIdAndCurrentDate(@PathVariable Long idprof) {
@@ -28,21 +29,32 @@ public class SessionCoursProfRest {
     public SessionCours findSessionCoursById(@PathVariable Long id) {
         return sessionCoursService.findSessionCoursById(id);
     }
+
     @PostMapping("/search")
     public List<SessionCours> findByCriteria(@RequestBody SessionCours sessionCours) {
-		return sessionCoursService.findByCriteria(sessionCours);
-	}
-    @GetMapping("/{profid}/{groupEtudiantid}/{coursid}")
-    public int save(@PathVariable Long profid,@PathVariable Long groupEtudiantid,@PathVariable Long coursid) {
-        return sessionCoursService.save(profid, groupEtudiantid,coursid);
+        return sessionCoursService.findByCriteria(sessionCours);
     }
 
+    @GetMapping("/{profid}/{groupEtudiantid}/{coursid}")
+    public int save(@PathVariable Long profid, @PathVariable Long groupEtudiantid, @PathVariable Long coursid) {
+        return sessionCoursService.save(profid, groupEtudiantid, coursid);
+    }
 
+    @PostMapping("/")
+    public int saveSessionByProf(@RequestBody SessionCours sessionCours) {
+        return sessionCoursService.saveSessionByProf(sessionCours);
+    }
+
+    @GetMapping("/groupeEtudiant/id/{id}")
+    public List<SessionCours> findByGroupeEtudiantId(@PathVariable Long id) {
+        return sessionCoursService.findByGroupeEtudiantId(id);
+    }
 
     @GetMapping("/update/{id}")
     public int update(@PathVariable Long id) {
         return sessionCoursService.update(id);
     }
+
     @GetMapping("/prof/id/{id}")
     public List<SessionCours> findByProfId(@PathVariable Long id) {
         return sessionCoursService.findByProfId(id);
@@ -62,9 +74,10 @@ public class SessionCoursProfRest {
     public int deleteSessionCoursById(@RequestBody List<SessionCours> sessionCourss) {
         return sessionCoursService.deleteSessionCoursById(sessionCourss);
     }
+
     @GetMapping("/salryprof/{idprof}/{idsalary}")
 
-    public List<SessionCours> findSessionCoursByProfIdAndSalaryId(@PathVariable Long idprof,@PathVariable Long idsalary) {
+    public List<SessionCours> findSessionCoursByProfIdAndSalaryId(@PathVariable Long idprof, @PathVariable Long idsalary) {
         return sessionCoursService.findSessionCoursByProfIdAndSalaryId(idprof, idsalary);
     }
 

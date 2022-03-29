@@ -34,4 +34,8 @@ public class TypeHomeWorkService {
 
     @Autowired
     private TypeHomeWorkDao typeHomeWorkDao;
+
+    public TypeHomeWork findByLibelle(String typeHomewrok) {
+        return this.typeHomeWorkDao.findByLib(typeHomewrok);
+    }
 }

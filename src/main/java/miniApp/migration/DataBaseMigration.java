@@ -8,6 +8,7 @@ package miniApp.migration;
 import ma.learn.quiz.bean.*;
 import ma.learn.quiz.dao.*;
 import ma.learn.quiz.service.TranslationEnAr;
+import ma.learn.quiz.service.TypeHomeWorkService;
 import miniApp.migration.constant.Constants;
 import miniApp.migration.util.FileUtil;
 import miniApp.migration.util.DownloaderUtil;
@@ -36,7 +37,6 @@ public class DataBaseMigration {
     }
 
 
-
     @Autowired
     private ParcoursDao parcoursDao;
     @Autowired
@@ -62,6 +62,8 @@ public class DataBaseMigration {
     private TranslationEnAr translationEnAr;
     @Autowired
     private DriveApiService driveApiService;
+    @Autowired
+    private TypeHomeWorkService typeHomeWorkService;
 
 
     public String htmlimagetext() throws Exception {
@@ -137,7 +139,7 @@ public class DataBaseMigration {
     private void getWatchItData(File file, Parcours parcours) {
         int index = 0;
         System.out.println(parcours.getId());
-        List<Cours> coursList = this.coursDao.findByParcoursId(parcours.getId());
+        List<Cours> coursList = this.coursDao.findByParcoursIdOrderByNumeroOrder(parcours.getId());
         try {
             System.out.println(Arrays.toString(file.list()));
             Scanner myReader = new Scanner(file);
@@ -333,6 +335,8 @@ public class DataBaseMigration {
     private HomeWork saveHomeWork(HomeWork homeWork, String typeHomewrok, Cours cours) {
         homeWork.setLibelle(typeHomewrok);
         homeWork.setCours(cours);
+        TypeHomeWork t = this.typeHomeWorkService.findByLibelle(typeHomewrok);
+        homeWork.setTypeHomeWork(t);
         homeWork = homeWorkDao.save(homeWork);
         return homeWork;
     }

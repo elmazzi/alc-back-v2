@@ -5,6 +5,7 @@ import ma.learn.quiz.dao.HomeWorkQuestionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -20,9 +21,8 @@ public class HomeWorkQuestionService {
     private HomeWorkQSTReponseService homeWorkQSTReponseService;
 
     public List<HomeWorkQuestion> findHomeWorkQuestionByHomeWorkId(Long id) {
-        return homeWorkQuestionDao.findHomeWorkQuestionByHomeWorkId(id);
+        return homeWorkQuestionDao.findHomeWorkQuestionByHomeWorkIdOrderByNumero(id);
     }
-
 
 
     public HomeWorkQuestion findHomeWorkQuestionById(Long id) {
@@ -33,7 +33,9 @@ public class HomeWorkQuestionService {
         return homeWorkQuestionDao.deleteByRef(ref);
     }
 
+    @Transactional
     public int deleteHomeWorkQuestionById(Long id) {
+        this.reponseService.deleteAllByQuestionId(id);
         return homeWorkQuestionDao.deleteHomeWorkQuestionById(id);
     }
 
