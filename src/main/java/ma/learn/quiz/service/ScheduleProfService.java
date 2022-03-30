@@ -91,7 +91,7 @@ public class ScheduleProfService extends AbstractService {
 
 
     public List<ScheduleProf> findByProfId(Long id) {
-        return scheduleProfDao.findByProfId(id);
+        return scheduleProfDao.findByProfIdOrderByCoursNumeroOrder(id);
     }
 
     public List<ScheduleProf> findByGroupeEtudiantId(Long id) {

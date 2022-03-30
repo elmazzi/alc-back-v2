@@ -10,7 +10,7 @@ import ma.learn.quiz.bean.ScheduleProf;
 public interface ScheduleProfDao extends JpaRepository<ScheduleProf, Long> {
     ScheduleProf findByRef(String ref);
 
-    List<ScheduleProf> findByProfId(Long id);
+    List<ScheduleProf> findByProfIdOrderByCoursNumeroOrder(Long id);
 
     List<ScheduleProf> findByGroupeEtudiantIdOrderByCoursNumeroOrder(Long id);
 
