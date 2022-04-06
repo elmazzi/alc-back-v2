@@ -1,7 +1,7 @@
 package ma.learn.quiz.service;
 
 
-import java.util.List;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +15,8 @@ import ma.learn.quiz.dao.ParcoursDao;
 
 @Service
 public class ParcoursService {
-	@Autowired
-    private EtudiantService etudiantService; 
+    @Autowired
+    private EtudiantService etudiantService;
     @Autowired
     private ParcoursDao parcoursDao;
     @Autowired
@@ -25,125 +25,178 @@ public class ParcoursService {
     private SectionService sectionService;
     @Autowired
     private CentreService centreService;
-    
-
-	public Parcours findParcoursById(Long id) {
-		return parcoursDao.findParcoursById(id);
-	}
 
 
-	public Parcours findByCode(String code) {
-		return parcoursDao.findByCode(code);
-	}
-	
+    public Parcours findParcoursById(Long id) {
+        return parcoursDao.findParcoursById(id);
+    }
 
 
-	@Transactional
-	public int deleteParcoursById(List<Parcours> parcourss) {
-		int res=0;
+    public Parcours findByCode(String code) {
+        return parcoursDao.findByCode(code);
+    }
+
+
+    @Transactional
+    public int deleteParcoursById(List<Parcours> parcourss) {
+        int res = 0;
         for (int i = 0; i < parcourss.size(); i++) {
-            res+=deleteParcoursById(parcourss.get(i).getId());
+            res += deleteParcoursById(parcourss.get(i).getId());
         }
         return res;
-	}
-	
+    }
 
-	@Transactional
-	public int deleteParcoursById(Long id) {
-		int deleteByEtudiantID= etudiantService.deleteByParcoursId(id);
-		List<Cours> cours = coursService.findByParcoursId(id);
-        for (Cours c:cours) {
+
+    @Transactional
+    public int deleteParcoursById(Long id) {
+        int deleteByEtudiantID = etudiantService.deleteByParcoursId(id);
+        List<Cours> cours = coursService.findByParcoursId(id);
+        for (Cours c : cours) {
             List<Section> sections = sectionService.findByCours(c);
-            int sectionDeleted=0;
-            for (Section section: sections) {
+            int sectionDeleted = 0;
+            for (Section section : sections) {
 
-                sectionDeleted+= sectionService.deleteByCours(c);
-            }}
-		int deleteByCoursID=coursService.deleteByParcoursId(id);
-		int deleteByID=parcoursDao.deleteParcoursById(id);
-		return deleteByEtudiantID+deleteByCoursID+deleteByID;
-	}
-
-	
-	public Parcours findParcoursByLibelle(String libelle) {
-		return parcoursDao.findParcoursByLibelle(libelle);
-	}
-
-
-	public int save(Parcours parcours) {
-		Centre centre=centreService.findByRef(parcours.getCentre().getRef());
-
-		if(centre == null) {
-			return -1;
-		} else {
-			int totalCoursesCreated = 0;
-			parcours.setCentre(centre);
-			parcoursDao.save(parcours);
-			for(int i=0;i<parcours.getNombreCours();i++) {
-				Cours cours= new Cours();
-				cours.setNumeroOrder(i);
-				cours.setLibelle("course-"+ (i+1));
-				cours.setParcours(parcours);
-				totalCoursesCreated += coursService.save(cours);
-			}
-			if (totalCoursesCreated == parcours.getNombreCours()){
-				return 1;
-			}
-           else return -2;
-
-		}
-
-	}
-
-	 public int create(Parcours  parcours ) {
-		 Centre centre=centreService.findByRef(parcours.getCentre().getRef());
-
-			if(centre == null) {
-				return -1;
-			} else {
-				parcours.setCentre(centre);
-		        parcoursDao.save(parcours);
-				return 1;
-			}
-
-	 }
-
-	public List<Parcours> findByCentreRef(String ref) {
-		return parcoursDao.findByCentreRef(ref);
-	}
-
-	public int deleteByCentreRef(String Ref) {
-		return parcoursDao.deleteByCentreRef(Ref);
-	}
-
-	public List<Parcours> findAll() {
-		return parcoursDao.findAll();
-	}
-
-	public void delete(Parcours entity) {
-		parcoursDao.delete(entity);
-	}
-	
-	 
-	public Parcours update(Parcours parcours) {
-		List<Cours> cours = coursService.findByParcoursId(parcours.getId());
-		int nbCours = 0;
-        for (Cours c:cours) {
-        	if(c.getId() !=null) {
-        	nbCours++;}
-           
+                sectionDeleted += sectionService.deleteByCours(c);
+            }
         }
-        	parcours.setNombreCours(nbCours);
-		 Centre centre=centreService.findByRef(parcours.getCentre().getRef());
-		parcours.setCentre(centre);
-		parcours.setLibelle(parcours.getLibelle());
-		parcours.setDateCreation(parcours.getDateCreation());
-		parcours.setDescription(parcours.getDescription());
-		parcours.setDatePublication(parcours.getDatePublication());
-		parcours.setCourses(parcours.getCourses());
-		return parcoursDao.save(parcours);
-		
-	}
-	
-   
+        int deleteByCoursID = coursService.deleteByParcoursId(id);
+        int deleteByID = parcoursDao.deleteParcoursById(id);
+        return deleteByEtudiantID + deleteByCoursID + deleteByID;
+    }
+
+
+    public Parcours findParcoursByLibelle(String libelle) {
+        return parcoursDao.findParcoursByLibelle(libelle);
+    }
+
+
+    public int save(Parcours parcours) {
+        Centre centre = centreService.findByRef(parcours.getCentre().getRef());
+
+        if (centre == null) {
+            return -1;
+        } else {
+            int totalCoursesCreated = 0;
+            parcours.setCentre(centre);
+            Parcours p = parcoursDao.save(parcours);
+            for (int i = 0; i < parcours.getNombreCours(); i++) {
+                Cours cours = new Cours();
+                cours.setNumeroOrder(i);
+                cours.setLibelle(this.courseList.get(i));
+                cours.setParcours(p);
+                totalCoursesCreated += 1;
+                coursService.save(cours);
+            }
+            if (totalCoursesCreated == parcours.getNombreCours()) {
+                return 1;
+            } else return -2;
+        }
+    }
+
+    public int create(Parcours parcours) {
+        Centre centre = centreService.findByRef(parcours.getCentre().getRef());
+
+        if (centre == null) {
+            return -1;
+        } else {
+            parcours.setCentre(centre);
+            parcoursDao.save(parcours);
+            return 1;
+        }
+
+    }
+
+    public List<Parcours> findByCentreRef(String ref) {
+        return parcoursDao.findByCentreRef(ref);
+    }
+
+    public int deleteByCentreRef(String Ref) {
+        return parcoursDao.deleteByCentreRef(Ref);
+    }
+
+    public List<Parcours> findAll() {
+        return parcoursDao.findAll();
+    }
+
+    public void delete(Parcours entity) {
+        parcoursDao.delete(entity);
+    }
+
+
+    public Parcours update(Parcours parcours) {
+        List<Cours> cours = coursService.findByParcoursId(parcours.getId());
+        int nbCours = 0;
+        for (Cours c : cours) {
+            if (c.getId() != null) {
+                nbCours++;
+            }
+
+        }
+        parcours.setNombreCours(nbCours);
+        Centre centre = centreService.findByRef(parcours.getCentre().getRef());
+        parcours.setCentre(centre);
+        parcours.setLibelle(parcours.getLibelle());
+        parcours.setDateCreation(parcours.getDateCreation());
+        parcours.setDescription(parcours.getDescription());
+        parcours.setDatePublication(parcours.getDatePublication());
+        parcours.setCourses(parcours.getCourses());
+        return parcoursDao.save(parcours);
+
+    }
+
+    List<String> courseList = new ArrayList<>() {{
+        add("Intro lesson");
+        add("1 Saying Hello!");
+        add("2 Hey! What's up?");
+        add("3 Las get acquainted");
+        add("4 Let me introduce myself");
+        add("5 Meeting people");
+        add("6 More people to know");
+        add("7 Family and friends");
+        add("8 Et More relatives?");
+        add("9 Same or different");
+        add("10 More in common");
+        add("11 Food you have");
+        add("12 Grab a bite");
+        add("13 Home sweet home");
+        add("14 No place like home");
+        add("15 A day in a life");
+        add("16 Just another day");
+        add("17 Leisure activities");
+        add("18 When you're free");
+        add("19 Personal profile");
+        add("20 More about you");
+        add("21 Feel good");
+        add("22 Get emotional");
+        add("23 Events");
+        add("24 More occasions");
+        add("25 Technology");
+        add("26 For the geeks");
+        add("27 Health Care");
+        add("28 Feeling well");
+        add("29 Celebration");
+        add("30 More to celebrate");
+        add("31 History");
+        add("32 Past");
+        add("33 Inventions");
+        add("34 Innovations");
+        add("35 Weather");
+        add("36 More about weather");
+        add("37 Dreams");
+        add("38 Dreams and ambitions");
+        add("39 Education and careers");
+        add("40 Looming and working");
+        add("41 Transport");
+        add("42 Traffic");
+        add("43 Adventures");
+        add("44 Quests");
+        add("45 Character");
+        add("46 Personality");
+        add("47 Follow the fashion");
+        add("48 Fashion trends");
+        add("49 Culture");
+        add("50 Traditions and customs");
+    }};
+
+
 }

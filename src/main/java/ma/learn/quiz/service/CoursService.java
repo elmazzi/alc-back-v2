@@ -76,7 +76,7 @@ public class CoursService {
                 section.setCategorieSection(categorieSection);
                 section.setLibelle(categorieSection.getCode());
                 section.setCours(cours);
-                section.setNumeroOrder(i);
+                section.setNumeroOrder(categorieSection.getNumeroOrder());
                 sectionService.create(section);
                 System.out.println("saved");
             }
@@ -99,13 +99,22 @@ public class CoursService {
 
     }
 
-    public int save(Cours cours) {
+    public Cours save(Cours cours) {
         Parcours parcours = parcoursService.findParcoursByLibelle(cours.getParcours().getLibelle());
         if (parcours == null)
-            return -1;
+            throw new RuntimeException("Level with name " + cours.getParcours().getLibelle() + " not found");
         cours.setParcours(parcours);
-        coursDao.save(cours);
-        return 1;
+        Cours c = coursDao.save(cours);
+        List<CategorieSection> categorieSectionList = this.categorieSectionService.findAll();
+        for (CategorieSection categorieSection : categorieSectionList) {
+            Section section = new Section();
+            section.setCours(c);
+            section.setCategorieSection(categorieSection);
+            section.setLibelle(categorieSection.getCode());
+            section.setNumeroOrder(categorieSection.getNumeroOrder());
+            sectionService.save(section);
+        }
+        return c;
     }
 
     public void create(Cours cours) {

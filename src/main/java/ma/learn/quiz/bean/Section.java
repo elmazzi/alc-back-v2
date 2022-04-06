@@ -95,8 +95,7 @@ public class Section implements Serializable {
     }
 
     public Section() {
-        super();
-        // TODO Auto-generated constructor stub
+
     }
 
     public Long getId() {

@@ -10,19 +10,22 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
+
 @RestController
 @RequestMapping("/admin/groupeEtudiant")
 public class GroupeEtudiantRest {
     @Autowired
-    private GroupeEtudiantService groupeEtudiantService ;
+    private GroupeEtudiantService groupeEtudiantService;
     @Autowired
     private GroupeEtudiantDetailService groupeEtudiantDetailService;
+
     @GetMapping("/groupeProf/{id}")
     public List<GroupeEtudiant> findGroupeEtudiantByProfId(@PathVariable Long id) {
         return groupeEtudiantService.findGroupeEtudiantByProfId(id);
     }
+
     @PostMapping("/")
-    public int save(@RequestBody  GroupeEtudiant groupeEtudiant) {
+    public int save(@RequestBody GroupeEtudiant groupeEtudiant) {
         return groupeEtudiantService.save(groupeEtudiant);
     }
 
@@ -30,22 +33,27 @@ public class GroupeEtudiantRest {
     public List<GroupeEtudiant> findAll() {
         return groupeEtudiantService.findAll();
     }
+
     @GetMapping("/id/{id}")
     public List<GroupeEtudiantDetail> findByGroupeEtudiantId(@PathVariable Long id) {
         return groupeEtudiantDetailService.findByGroupeEtudiantId(id);
     }
+
     @DeleteMapping("/id/{id}")
     public int deleteGroupeEtudiantById(@PathVariable Long id) {
         return groupeEtudiantService.deleteGroupeEtudiantById(id);
     }
+
     @PostMapping("/delete-multiple-by-id")
-    public int deleteGroupeEtudeById( @RequestBody List<GroupeEtudiant> groupeEtudiant) {
+    public int deleteGroupeEtudeById(@RequestBody List<GroupeEtudiant> groupeEtudiant) {
         return groupeEtudiantService.deleteGroupeEtudiantById(groupeEtudiant);
     }
+
     @PutMapping("/")
-    public int update(@RequestBody  GroupeEtudiant groupeEtudiant) {
+    public int update(@RequestBody GroupeEtudiant groupeEtudiant) {
         return groupeEtudiantService.update(groupeEtudiant);
     }
+
     @GetMapping("/libelle/{libelle}/nombrePlacevide/{nombrePlacevide}")
     public List<GroupeEtudiant> findByParcoursIdAndNombrePlacevideGreaterThan(Long id, Long nombrePlacevide) {
         return groupeEtudiantService.findByParcoursIdAndNombrePlacevideGreaterThan(id, nombrePlacevide);
