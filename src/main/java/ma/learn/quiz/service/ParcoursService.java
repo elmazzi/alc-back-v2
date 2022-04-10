@@ -32,7 +32,7 @@ public class ParcoursService {
     }
 
 
-    public Parcours findByCode(String code) {
+    public List<Parcours> findByCode(String code) {
         return parcoursDao.findByCode(code);
     }
 
@@ -72,12 +72,29 @@ public class ParcoursService {
 
     public int save(Parcours parcours) {
         Centre centre = centreService.findByRef(parcours.getCentre().getRef());
-
         if (centre == null) {
             return -1;
         } else {
+            if (parcours.getCode().equals("true")) {
+                Parcours parcoursTrialLesson = new Parcours();
+                parcoursTrialLesson.setLibelle("Free " + parcours.getLibelle());
+                parcoursTrialLesson.setCentre(parcours.getCentre());
+                parcoursTrialLesson.setNombreCours(3);
+                parcoursTrialLesson.setCode("FREE");
+                parcoursTrialLesson.setDescription(parcours.getDescription());
+                parcoursTrialLesson.setDateCreation(parcours.getDateCreation());
+                Parcours p1 = parcoursDao.save(parcoursTrialLesson);
+                for (int i = 0; i < parcoursTrialLesson.getNombreCours(); i++) {
+                    Cours cours = new Cours();
+                    cours.setNumeroOrder(i);
+                    cours.setLibelle(this.courseList.get(i));
+                    cours.setParcours(p1);
+                    coursService.save(cours);
+                }
+            }
             int totalCoursesCreated = 0;
             parcours.setCentre(centre);
+            parcours.setCode("PREMIUM");
             Parcours p = parcoursDao.save(parcours);
             for (int i = 0; i < parcours.getNombreCours(); i++) {
                 Cours cours = new Cours();
