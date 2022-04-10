@@ -64,7 +64,7 @@ public class TranslationEnAr {
     public String explanation(String texttoexplain) throws IOException {
         String textwithoutspace = texttoexplain.replace(" ","-");
         Document doc = Jsoup.connect("https://www.collinsdictionary.com/dictionary/english/" +textwithoutspace).get();
-        return doc.select("div.def").first().text();
+        return doc.select("div.sense.def").first().text();
     }
 
     public SectionItem translationFeatures(String textTaped) throws IOException {
@@ -78,7 +78,7 @@ public class TranslationEnAr {
 
     public List<String> synonymeInEnglish(String word)  throws IOException{
         Document doc = Jsoup.connect("https://www.collinsdictionary.com/dictionary/english-thesaurus/"+word).get();
-        Elements elements = doc.select("span.orth");
+        Elements elements = doc.select("div.sense.def");
         List<String> listesynonymes = new ArrayList<>();
         int i = 0;
         for (Element e:elements) {

@@ -23,7 +23,7 @@ public class ParcoursEtudiantRest {
 
 
     @GetMapping("/code/{code}")
-    public Parcours findByCode(@PathVariable String code) {
+    public List<Parcours> findByCode(@PathVariable String code) {
 		return parcoursService.findByCode(code);
 	}
 

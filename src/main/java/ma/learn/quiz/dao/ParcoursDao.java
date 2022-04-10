@@ -12,7 +12,7 @@ import ma.learn.quiz.bean.Parcours;
 public interface ParcoursDao extends JpaRepository<Parcours,Long> {
  
 	Parcours findParcoursById(Long id);
-    Parcours findByCode(String code);
+    List<Parcours> findByCode(String code);
     int deleteParcoursById(Long id);
     
     Parcours findParcoursByLibelle(String libelle);
