@@ -44,7 +44,7 @@ import static org.springframework.http.MediaType.*;
 @Service
 public class UserServiceImpl implements UserService {
 
-    public Map<Long , User> connectedStudent = new HashMap<>();
+    public Map<Long, User> connectedStudent = new HashMap<>();
     private Logger LOGGER = LoggerFactory.getLogger(getClass());
     @Autowired
     public JavaMailSender mailSender;
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
         User loadUserByUsername = loadUserByUsername(user.getUsername());
         HttpHeaders jwtHeader = getJwtHeader(user);
 
-        if (loadUserByUsername.getRole().equals("STUDENT")){
+        if (loadUserByUsername.getRole().equals("STUDENT")) {
             this.connectedStudent.put(loadUserByUsername.getId(), loadUserByUsername);
         }
         return new ResponseEntity<>(loadUserByUsername, jwtHeader, OK);
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
         if (loadedUser != null)
             return null;
         else {
-            //prepareMessage(user);
+            prepareMessage(user);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setImage(getTemporaryProfileImageUrl(user.getUsername()));
             roleService.save(user.getAuthorities());
@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService {
     public void prepareMessage(User user) {
         System.out.println("prepare email ");
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("tachrimantsaad@gmail.com");
+        message.setFrom("elearningMarrakech@gmail.com");
         message.setTo(user.getUsername());
         message.setSubject("accepted on the platform e-learning");
         message.setText("Your online registration on the site: http://localhost:4200/#/ is validated. \n" + "You can log into your account now.\n" +
