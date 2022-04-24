@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
         if (loadedUser != null)
             return null;
         else {
-            prepareMessage(user);
+//            prepareMessage(user);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setImage(getTemporaryProfileImageUrl(user.getUsername()));
             roleService.save(user.getAuthorities());
@@ -196,19 +196,18 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public int resetPassword(String username) {
+    public String resetPassword(String username) {
         User user = this.loadUserByUsername(username);
         if (user == null) {
-            return -1;
+            return "User not found !";
         } else {
             String password = this.generatePassword();
             user.setPassword(password);
             System.out.println(user.getPassword());
             System.out.println(user.getUsername());
-            prepareMessage(user);
             user.setPassword(passwordEncoder.encode(password));
             userDao.save(user);
-            return 0;
+            return user.getPassword();
         }
     }
 

@@ -116,7 +116,7 @@ public class user {
     }
 
     @GetMapping("/resetpassword/username/{username}")
-    public int resetPassword(@PathVariable String username) {
+    public String resetPassword(@PathVariable String username) {
         return userService.resetPassword(username);
     }
 
