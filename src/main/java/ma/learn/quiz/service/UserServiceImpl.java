@@ -207,7 +207,7 @@ public class UserServiceImpl implements UserService {
             System.out.println(user.getUsername());
             user.setPassword(passwordEncoder.encode(password));
             userDao.save(user);
-            return user.getPassword();
+            return password;
         }
     }
 
