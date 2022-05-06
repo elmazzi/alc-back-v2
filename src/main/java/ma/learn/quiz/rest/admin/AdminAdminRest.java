@@ -102,7 +102,7 @@ public class AdminAdminRest {
     private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE);
-    private static final String USER_IDENTIFIER_KEY = "526671645204-04011jbcqh56r3h6sp95pg1p9fl2dafp.apps.googleusercontent.com";
+    private static final String USER_IDENTIFIER_KEY = "526671645204-pefjgst2s07uo5k8v0srh75pc7i28e8p.apps.googleusercontent.com";
     private GoogleAuthorizationCodeFlow flow;
 
     @Autowired
