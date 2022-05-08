@@ -120,10 +120,6 @@ public class user {
         return userService.resetPassword(username);
     }
 
-//    @GetMapping("/resetpassword/{email}")
-//    public int resetPassword(@PathVariable("email") String email) {
-//        return userService.resetPassword(email);
-//    }
 
     @Autowired
     private UserServiceImpl userService;
