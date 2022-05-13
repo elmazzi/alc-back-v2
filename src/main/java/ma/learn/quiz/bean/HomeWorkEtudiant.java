@@ -17,10 +17,10 @@ public class HomeWorkEtudiant {
 	private Long id;
 	@ManyToOne
 	private Etudiant etudiant;
-	@ManyToOne
+	@ManyToOne()
 	private HomeWork homeWork;
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@OneToMany(mappedBy = "homeWorkEtudiant")
+	@OneToMany(mappedBy = "homeWorkEtudiant", cascade = CascadeType.REMOVE)
 	private List<ReponseEtudiantHomeWork> reponseEtudiantHomeWork;
 	private Double note;
 	private String resultat;

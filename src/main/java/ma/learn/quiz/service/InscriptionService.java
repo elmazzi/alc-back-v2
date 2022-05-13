@@ -136,9 +136,7 @@ public class InscriptionService extends AbstractService {
             Etudiant etudiant = this.etudiantService.findEtudiantById(inscription.getEtudiant().getId());
             Parcours parcours = parcoursService.findParcoursById(inscription.getParcours().getId());
             GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(inscription.getGroupeEtude().getId());
-            Prof prof = this.profService.findProfById((inscription.getProf().getId()));
             inscription.setParcours(parcours);
-            inscription.setProf(prof);
             inscription.setEtatInscription(etatInscription);
             inscription.setEtudiant(etudiant);
             inscription.setGroupeEtude(groupeEtude);
@@ -242,7 +240,6 @@ public class InscriptionService extends AbstractService {
     }
 
     public int valider(Inscription inscription) {
-        Prof prof = this.profService.findProfById(inscription.getProf().getId());
         Parcours parcrs = this.parcoursService.findParcoursById(inscription.getParcours().getId());
         EtatInscription etatInscription = etatInscriptionService.findEtatInscriptionById(inscription.getEtatInscription().getId());
         Etudiant etudiant = etudiantService.findEtudiantById(inscription.getEtudiant().getId());
@@ -263,7 +260,6 @@ public class InscriptionService extends AbstractService {
         inscription.setStatutSocial(statutSocial);
 
          */
-        inscription.setProf(prof);
         inscription.setParcours(parcrs);
         inscriptionDao.save(inscription);
         etudiant.setStatutSocial(inscription.getStatutSocial());

@@ -23,8 +23,6 @@ public class Inscription {
     @ManyToOne
     private EtatInscription etatInscription;
     @ManyToOne
-    private Prof prof;
-    @ManyToOne
     private Parcours parcours;
     @ManyToOne
     private GroupeEtude groupeEtude;
@@ -95,13 +93,7 @@ public class Inscription {
         this.groupeEtude = groupeEtude;
     }
 
-    public Prof getProf() {
-        return prof;
-    }
 
-    public void setProf(Prof prof) {
-        this.prof = prof;
-    }
 
     public Long getId() {
         return id;

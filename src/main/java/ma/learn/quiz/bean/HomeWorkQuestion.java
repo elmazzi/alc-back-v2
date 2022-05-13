@@ -11,6 +11,7 @@ public class HomeWorkQuestion {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String ref;
+    @Column(columnDefinition = "TEXT")
     private String libelle;
     private int numero;
     private double pointReponseJuste;
@@ -19,7 +20,7 @@ public class HomeWorkQuestion {
     private TypeDeQuestion typeDeQuestion;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "homeWorkQuestion")
+    @OneToMany(mappedBy = "homeWorkQuestion", cascade = CascadeType.REMOVE)
     private List<HoweWorkQSTReponse> reponses;
 
     @ManyToOne

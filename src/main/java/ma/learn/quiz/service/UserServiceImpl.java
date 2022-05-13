@@ -15,6 +15,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
@@ -95,7 +97,7 @@ public class UserServiceImpl implements UserService {
         if (loadedUser != null)
             return null;
         else {
-//            prepareMessage(user);
+            prepareMessage(user);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setImage(getTemporaryProfileImageUrl(user.getUsername()));
             roleService.save(user.getAuthorities());
@@ -106,10 +108,10 @@ public class UserServiceImpl implements UserService {
     public void prepareMessage(User user) {
         System.out.println("prepare email ");
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("elearningMarrakech@gmail.com");
+        message.setFrom(this.ENG_FLEXY_EMAIL);
         message.setTo(user.getUsername());
         message.setSubject("accepted on the platform e-learning");
-        message.setText("Your online registration on the site: http://localhost:4200/#/ is validated. \n" + "You can log into your account now.\n" +
+        message.setText("Your online registration on the site: https://engflexy.com is validated. \n" + "You can log into your account now.\n" +
                 "Your account settings are :" + "\n" +
                 "username : " + user.getUsername() + "\n" +
                 "password : " + user.getPassword());
@@ -205,10 +207,15 @@ public class UserServiceImpl implements UserService {
             user.setPassword(password);
             System.out.println(user.getPassword());
             System.out.println(user.getUsername());
+            this.prepareMessage(user);
             user.setPassword(passwordEncoder.encode(password));
             userDao.save(user);
             return password;
         }
     }
+
+
+    @Value("${spring.mail.username}")
+    private String ENG_FLEXY_EMAIL;
 
 }

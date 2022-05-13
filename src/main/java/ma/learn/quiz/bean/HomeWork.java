@@ -14,12 +14,12 @@ public class HomeWork {
     private String libelle;
     private String urlImage;
     private String urlVideo;
-    @OneToMany(mappedBy = "homeWork")
+    @OneToMany(mappedBy = "homeWork", cascade = CascadeType.REMOVE)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<HomeWorkQuestion> questions;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "homeWork")
-     private List<HomeWorkEtudiant> homeWorkEtudiant;
+    @OneToMany(mappedBy = "homeWork", cascade = CascadeType.REMOVE)
+    private List<HomeWorkEtudiant> homeWorkEtudiant;
 
     @ManyToOne
     private Cours cours;
