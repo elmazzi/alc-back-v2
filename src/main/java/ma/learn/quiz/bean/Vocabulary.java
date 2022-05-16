@@ -1,11 +1,6 @@
 package ma.learn.quiz.bean;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class Vocabulary {
@@ -17,10 +12,18 @@ public class Vocabulary {
 	private Long id;
 	private Long numero;
 	private String word;
+	@Lob
+	@Column(length=512)
 	private String libelle;
 	private String result;
+	@Lob
+	@Column(length=512)
 	private String explication;
+	@Lob
+	@Column(length=512)
 	private String exemple;
+	@Lob
+	@Column(length=512)
 	private String image;
 	private String ref;
 	@OneToOne

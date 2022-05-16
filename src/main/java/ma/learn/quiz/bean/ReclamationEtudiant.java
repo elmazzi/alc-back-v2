@@ -14,6 +14,8 @@ public class ReclamationEtudiant {
     private String reference;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private Date dateReclamation;
+    @Lob
+	@Column(length=512)
     private String message;
     private Boolean traite;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")

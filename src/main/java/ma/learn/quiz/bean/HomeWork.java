@@ -11,8 +11,14 @@ public class HomeWork {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Lob
+	@Column(length=512)
     private String libelle;
+    @Lob
+	@Column(length=512)
     private String urlImage;
+    @Lob
+	@Column(length=512)
     private String urlVideo;
     @OneToMany(mappedBy = "homeWork", cascade = CascadeType.REMOVE)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

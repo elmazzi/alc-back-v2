@@ -13,6 +13,8 @@ public class GroupeEtude implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id ;
     private String libelle;
+    @Lob
+	@Column(length=512)
     private String description;
     private Long nombreEtudiant;
     public Long getNombreEtudiant() {

@@ -18,13 +18,29 @@ public class Section implements Serializable {
     private Long id;
 
     private String code;
+    @Lob
+	@Column(length=512)
     private String libelle;
+    @Lob
+	@Column(length=512)
     private String urlImage;
+    @Lob
+	@Column(length=512)
     private String urlImage2;
+    @Lob
+	@Column(length=512)
     private String urlImage3;
+    @Lob
+	@Column(length=512)
     private String urlVideo;
+    @Lob
+	@Column(length=512)
     private String contenu;
+    @Lob
+	@Column(length=512)
     private String questions;
+    @Lob
+	@Column(length=512)
     private String indicationProf;
     private Integer numeroOrder;
     @ManyToOne

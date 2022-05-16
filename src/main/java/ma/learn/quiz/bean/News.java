@@ -2,10 +2,7 @@ package ma.learn.quiz.bean;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -17,9 +14,13 @@ public class News {
 	 
 	 private Long id;
 	 private String ref;
-	 private String libelle;
+	@Lob
+	@Column(length=512)
+	private String libelle;
 	 private String image;
-	 private String description;
+	@Lob
+	@Column(length=512)
+	private String description;
 	 @JsonFormat(pattern = "dd/MM/yyyy")
 	 private Date date;
 	 @JsonFormat(pattern = "dd/MM/yyyy")

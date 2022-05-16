@@ -15,6 +15,8 @@ public class ProfReview {
     @ManyToOne
     private Cours cours;
     private int review;
+    @Lob
+	@Column(length=512)
     private String comment;
     private Date dateReview;
 

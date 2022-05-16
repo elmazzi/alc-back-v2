@@ -1,10 +1,6 @@
 package ma.learn.quiz.bean;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class FaqEtudiant {
@@ -12,7 +8,11 @@ public class FaqEtudiant {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+	@Lob
+	@Column(length=512)
 	private String libelle;
+	@Lob
+	@Column(length=512)
 	private String description;
 	@ManyToOne
 	private Etudiant etudiant;

@@ -10,7 +10,8 @@ public class HoweWorkQSTReponse {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String ref;
-    @Column(columnDefinition = "TEXT")
+    @Lob
+	@Column(length=512)
     private String lib;
     private String etatReponse;
     private int numero;

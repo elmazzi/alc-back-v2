@@ -12,7 +12,8 @@ public class ReponseEtudiantHomeWork {
     private Long id;
     @ManyToOne
     private HoweWorkQSTReponse reponse;
-    @Column(columnDefinition = "NVARCHAR(MAX)")
+    @Lob
+	@Column(length=512)
     private String answer;
     @ManyToOne
     private HomeWorkEtudiant homeWorkEtudiant;

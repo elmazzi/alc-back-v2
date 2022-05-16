@@ -10,6 +10,8 @@ public class ReponseEtudiant {
 	private Long id;
 	@ManyToOne
 	private Reponse reponse;
+	@Lob
+	@Column(length=512)
 	private String answer;
 	private String ref; 
 	@ManyToOne

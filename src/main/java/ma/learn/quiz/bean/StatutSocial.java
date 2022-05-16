@@ -8,7 +8,6 @@ import javax.persistence.Id;
 public class StatutSocial {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private Long id;
     private String code;
     private String libelle;

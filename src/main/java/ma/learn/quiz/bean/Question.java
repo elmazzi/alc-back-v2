@@ -12,8 +12,14 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String ref;
+    @Lob
+	@Column(length=512)
     private String libelle;
+    @Lob
+	@Column(length=512)
     private String urlImg;
+    @Lob
+	@Column(length=512)
     private String urlVideo;
     private Long numero;
     private double pointReponseJuste;

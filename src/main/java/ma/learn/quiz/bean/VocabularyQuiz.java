@@ -3,12 +3,7 @@ package ma.learn.quiz.bean;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -18,6 +13,8 @@ public class VocabularyQuiz {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	@Lob
+	@Column(length=512)
 	private String libelle;
 	private Date dateDebut;
 	private Date dateFin;

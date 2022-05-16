@@ -10,6 +10,8 @@ public class Reponse {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String ref;
+    @Lob
+	@Column(length=512)
     private String lib;
     private String etatReponse;
     private Long numero;

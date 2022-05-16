@@ -4,11 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 
 @Entity
@@ -20,8 +16,12 @@ public class Dictionary {
 	 @Id
 	    @GeneratedValue(strategy = GenerationType.AUTO)
 	    private Long id;
-	 private String word;
-	 private String definition;
+	@Lob
+	@Column(length=512)
+	private String word;
+	@Lob
+	@Column(length=512)
+	private String definition;
 	 @ManyToOne
 	 private Etudiant etudiant;
 

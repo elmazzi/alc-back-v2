@@ -13,6 +13,8 @@ public class Quiz {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String ref;
+    @Lob
+	@Column(length=512)
     private String lib;
    // @JsonFormat(pattern = "MM/dd/yyyy hh:mm:ss")
     private Date dateDebut;
