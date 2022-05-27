@@ -2,6 +2,7 @@ package ma.learn.quiz.filter;
 
 public class JwtConstant {
     public static final String USER_IMAGE_PATH = "/user/image/";
+    public static final String RECLAMATION_IMAGE_PATH = "/reclamation/image/";
     public static final String AUTORIZATION="Authorization";
     public static final String BEARER="Bearer ";
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
@@ -13,6 +14,7 @@ public class JwtConstant {
     public static final String TEMP_PROFILE_IMAGE_BASE_URL = "https://robohash.org/";
     public static final String NOT_AN_IMAGE_FILE = " is not an image file. Please upload an image file";
     public static final String USER_FOLDER = System.getProperty("user.home") + "/supportportal/user/";
+    public static final String RECLAMATION_FOLDER = System.getProperty("user.home") + "/engFlexyRecl/reclamation/";
     public static final String DIRECTORY_CREATED = "Created directory for: ";
     public static final String FILE_SAVED_IN_FILE_SYSTEM = "Saved file in file system by name: ";
 

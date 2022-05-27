@@ -1,11 +1,14 @@
 package ma.learn.quiz.rest.admin;
 
 import ma.learn.quiz.bean.ReclamationEtudiant;
+import ma.learn.quiz.exception.NotAnImageFileException;
 import ma.learn.quiz.service.ReclamationEtudiantService;
 import ma.learn.quiz.service.vo.ReclamationEtudiantVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +23,18 @@ public class ReclamationEtudiantAminRest {
     public int reponseReclamationEtudiant(@RequestBody ReclamationEtudiant reclamationEtudiant, @PathVariable Date dateTraitementforEtudiant) {
         return reclamationEtudiantService.reponseReclamationEtudiant(reclamationEtudiant, dateTraitementforEtudiant);
     }
+
+
+    @PutMapping("/update/all")
+    public List<ReclamationEtudiant> updateAll(@RequestBody List<ReclamationEtudiant> reclamationEtudiants) {
+        return reclamationEtudiantService.updateAll(reclamationEtudiants);
+    }
+    @PostMapping("/updateImg")
+    public ReclamationEtudiant updateImg(@RequestParam("id") Long id, @RequestParam(value = "img") MultipartFile img) throws IOException, NotAnImageFileException {
+        ReclamationEtudiant reclamationEtudiant = this.reclamationEtudiantService.findReclamationEtudiantById(id);
+        return this.reclamationEtudiantService.saveReclamationImage(reclamationEtudiant, img);
+    }
+
 
     @GetMapping("/")
 

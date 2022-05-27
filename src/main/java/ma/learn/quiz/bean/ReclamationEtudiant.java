@@ -1,6 +1,7 @@
 package ma.learn.quiz.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -17,19 +18,21 @@ public class ReclamationEtudiant {
     @Lob
 	@Column(length=512)
     private String message;
+    private String setFrom;
+    private String img;
     private Boolean traite;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private Date dateTraitement;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private Date dateReponse;
     private boolean postView;
-    @ManyToOne
-    private Admin admin;
     private String objetReclamationEtudiant;
     private String commentaireTraiteur;
     @ManyToOne
     private Etudiant etudiant;
     @ManyToOne
+    @JoinColumn(nullable = true)
+    @Nullable
     private TypeReclamationEtudiant typeReclamationEtudiant;
 
     public boolean isPostView() {
@@ -48,12 +51,12 @@ public class ReclamationEtudiant {
         this.dateReponse = dateReponse;
     }
 
-    public Admin getAdmin() {
-        return admin;
+    public String getImg() {
+        return img;
     }
 
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public String getObjetReclamationEtudiant() {
@@ -110,6 +113,14 @@ public class ReclamationEtudiant {
 
     public void setDateTraitement(Date dateTraitement) {
         this.dateTraitement = dateTraitement;
+    }
+
+    public String getSetFrom() {
+        return setFrom;
+    }
+
+    public void setSetFrom(String setFrom) {
+        this.setFrom = setFrom;
     }
 
     public String getCommentaireTraiteur() {

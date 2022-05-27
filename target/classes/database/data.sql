@@ -1,4 +1,3 @@
-
 INSERT
 IGNORE INTO `statut_social` (`id`, `code`, `libelle`)
 VALUES (1, '1', 'Student'),
@@ -196,4 +195,11 @@ IGNORE INTO `user` (`dtype`, `id`, `account_non_expired`, `account_non_locked`, 
 ('Prof', 41, true, true, NULL, 0, true, true, 'http://localhost:8036/user/image/profile/teacherahmed@gmail.com', 'Teacher', '0605120314', '$2a$10$Njdjp6xPcvfKc3Agfi1NKOtV5BAYIaD44YwXcYpg4SrS7Yk5Lx8oy', 'Ahmed', 'teacherahmed@gmail.com', NULL, NULL, NULL, NULL, 1, 'TEACHER', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 
+INSERT
+IGNORE INTO `user_authorities` (`user_id`, `authorities`)
+VALUES (1, 1),
+       (3, 2),
+       (4, 2),
+       (7, 1),
+       (41, 2);
 
