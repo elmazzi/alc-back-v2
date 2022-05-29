@@ -143,7 +143,7 @@ public class SessionCoursService extends AbstractService {
                 salary.setTotalBonusClassAverage(new BigDecimal(0));
                 salary.setTotalBonusWorkload(new BigDecimal(0));
                 salary.setPayer(false);
-                salaryDao.save(salary);
+                salary = salaryDao.save(salary);
                 this.addSessionCours(prof.getId(), cours.getId(), groupeEtudiant.getId(), salary.getId(), date);
                 this.calculBonus(date, salary.getId());
                 return 1;
