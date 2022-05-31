@@ -167,6 +167,8 @@ public class SessionCoursService extends AbstractService {
             List<SessionCours> sessionCoursList = findAllSessionCoursByProfIdAndCurrentDate(salary.getProf().getId());
             List<GroupeEtudiant> groupeEtudiants = groupeEtudiantDao.findGroupeEtudiantByProfId(salary.getProf().getId());
             for (WorkloadBonus workloadBonus : workloadBonusList) {
+                System.out.println(workloadBonus.getNombreSession());
+                System.out.println(sessionCoursList.size());
                 if (workloadBonus.getNombreSession() == sessionCoursList.size()) {
                     WorkloadBonusProf workloadBonusProf = workloadBonusProfDao.findWorkloadBonusProfBySalaryId(salary.getId());
                     salary.setTotalBonusWorkload(workloadBonus.getPrix());
@@ -219,7 +221,7 @@ public class SessionCoursService extends AbstractService {
             SessionCours sessionCours = new SessionCours();
             sessionCours.setCours(cours);
             sessionCours.setProf(prof);
-            sessionCours.setPayer(false);
+            sessionCours.setPayer(true);
             sessionCours.setSalary(salary);
             sessionCours.setReference(UtilString.generateStringUppercaseAndLowercase(6));
             sessionCours.setDateFin(date);

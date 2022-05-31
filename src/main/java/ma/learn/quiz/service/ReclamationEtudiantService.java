@@ -2,12 +2,10 @@ package ma.learn.quiz.service;
 
 import ma.learn.quiz.bean.*;
 import ma.learn.quiz.dao.ReclamationEtudiantDao;
-import ma.learn.quiz.dao.ReclamationProfDao;
 import ma.learn.quiz.dao.TypeReclamationEtudiantDao;
 import ma.learn.quiz.exception.NotAnImageFileException;
 import ma.learn.quiz.service.Util.UtilString;
 import ma.learn.quiz.service.vo.ReclamationEtudiantVo;
-import ma.learn.quiz.service.vo.SessionCoursVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +18,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static ma.learn.quiz.filter.JwtConstant.*;
@@ -43,7 +41,7 @@ public class ReclamationEtudiantService extends AbstractService {
     @Autowired
     private ProfService profService;
     @Autowired
-    private EtudiantService etudiantService;
+    private UserServiceImpl userService;
     @Autowired
     private TypeReclamationEtudiantService typeReclamationEtudiantService;
     @Autowired
@@ -54,15 +52,15 @@ public class ReclamationEtudiantService extends AbstractService {
     }
 
     public ReclamationEtudiant saveReclamationEtudiant(ReclamationEtudiant reclamationEtudiant) throws Exception {
-        Etudiant etudiant = etudiantService.findEtudiantById(reclamationEtudiant.getEtudiant().getId());
-        if (etudiant == null) {
-            throw new Exception("Student not found !");
-        } else {
+        Optional<User> user = userService.findById(reclamationEtudiant.getUser().getId());
+        if (user.isPresent()) {
             reclamationEtudiant.setDateReclamation(new Date());
-            reclamationEtudiant.setEtudiant(etudiant);
+            reclamationEtudiant.setUser(user.get());
             reclamationEtudiant.setPostView(false);
             reclamationEtudiant.setReference(UtilString.generateStringNumber(6));
             return reclamationEtudiantDao.save(reclamationEtudiant);
+        } else {
+            throw new Exception("User not found !");
         }
 
     }
@@ -95,7 +93,7 @@ public class ReclamationEtudiantService extends AbstractService {
     }
 
     public List<ReclamationEtudiant> findReclamationEtudiantByEtudiantId(Long id) {
-        return reclamationEtudiantDao.findReclamationEtudiantByEtudiantId(id);
+        return reclamationEtudiantDao.findReclamationEtudiantByUserId(id);
     }
 
     public List<ReclamationEtudiant> findAll() {
@@ -103,7 +101,7 @@ public class ReclamationEtudiantService extends AbstractService {
     }
 
     public ReclamationEtudiant findReclamationEtudiantByIdAndEtudiantId(Long id, Long idetudiant) {
-        return reclamationEtudiantDao.findReclamationEtudiantByIdAndEtudiantId(id, idetudiant);
+        return reclamationEtudiantDao.findReclamationEtudiantByIdAndUserId(id, idetudiant);
     }
 
     public List<ReclamationEtudiant> findAllByCriteria(ReclamationEtudiantVo reclamationEtudiantVo) {

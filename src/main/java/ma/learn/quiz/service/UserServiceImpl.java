@@ -1,22 +1,18 @@
 package ma.learn.quiz.service;
 
 
-import ma.learn.quiz.bean.Etudiant;
 import ma.learn.quiz.bean.User;
 import ma.learn.quiz.dao.EtudiantDao;
 import ma.learn.quiz.dao.UserDao;
 import ma.learn.quiz.exception.NotAnImageFileException;
-import ma.learn.quiz.filter.RoleConstant;
 import ma.learn.quiz.service.facade.RoleService;
 import ma.learn.quiz.service.facade.UserService;
 import ma.learn.quiz.util.JwtUtil;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
@@ -30,7 +26,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -212,6 +207,10 @@ public class UserServiceImpl implements UserService {
             userDao.save(user);
             return password;
         }
+    }
+
+    public Optional<User> findById(Long id){
+        return this.userDao.findById(id);
     }
 
 

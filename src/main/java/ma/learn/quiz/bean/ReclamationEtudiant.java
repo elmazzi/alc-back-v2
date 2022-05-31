@@ -29,11 +29,19 @@ public class ReclamationEtudiant {
     private String objetReclamationEtudiant;
     private String commentaireTraiteur;
     @ManyToOne
-    private Etudiant etudiant;
+    private User user;
     @ManyToOne
     @JoinColumn(nullable = true)
     @Nullable
     private TypeReclamationEtudiant typeReclamationEtudiant;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public boolean isPostView() {
         return postView;
@@ -132,13 +140,6 @@ public class ReclamationEtudiant {
     }
 
 
-    public Etudiant getEtudiant() {
-        return etudiant;
-    }
-
-    public void setEtudiant(Etudiant etudiant) {
-        this.etudiant = etudiant;
-    }
 
     public TypeReclamationEtudiant getTypeReclamationEtudiant() {
         return typeReclamationEtudiant;
