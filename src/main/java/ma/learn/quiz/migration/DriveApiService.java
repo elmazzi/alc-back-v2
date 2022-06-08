@@ -1,4 +1,4 @@
-package miniApp.migration;
+package ma.learn.quiz.migration;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
@@ -41,6 +41,8 @@ public class DriveApiService {
 
     @Value("${google.secret.key.path}")
     private org.springframework.core.io.Resource gdSecretKeys;
+
+
     @Value("${google.credentials.folder.path}")
     private Resource credentialsFolder;
 

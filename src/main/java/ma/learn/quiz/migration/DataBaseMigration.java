@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package miniApp.migration;
+package ma.learn.quiz.migration;
 
 import ma.learn.quiz.bean.*;
 import ma.learn.quiz.dao.*;
 import ma.learn.quiz.service.TranslationEnAr;
 import ma.learn.quiz.service.TypeHomeWorkService;
-import miniApp.migration.constant.Constants;
-import miniApp.migration.util.FileUtil;
-import miniApp.migration.util.DownloaderUtil;
-import miniApp.migration.util.JsoupUtil;
+import ma.learn.quiz.migration.constant.Constants;
+import ma.learn.quiz.migration.util.FileUtil;
+import ma.learn.quiz.migration.util.DownloaderUtil;
+import ma.learn.quiz.migration.util.JsoupUtil;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;

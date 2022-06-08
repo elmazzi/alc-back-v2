@@ -3,9 +3,7 @@ package ma.learn.quiz.rest.admin;
 import ma.learn.quiz.bean.CategorieProf;
 import ma.learn.quiz.service.CategorieProfService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,4 +19,13 @@ public class CategorieProfAdminRest {
 		return categorieProfservice.findAll();
 	}
 
+	@DeleteMapping("/{id}")
+	public int deleteCategorieProfById(@PathVariable Long id) {
+		return categorieProfservice.deleteCategorieProfById(id);
+	}
+
+	@PostMapping("/")
+	public CategorieProf save(@RequestBody CategorieProf entity) {
+		return categorieProfservice.save(entity);
+	}
 }

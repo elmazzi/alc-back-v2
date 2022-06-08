@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import ma.learn.quiz.bean.CategorieProf;
 import ma.learn.quiz.dao.CategorieProfDao;
 
+import javax.transaction.Transactional;
+
 @Service
 public class CategorieProfService {
 	@Autowired
@@ -17,6 +19,7 @@ public class CategorieProfService {
 		return categorieProfDao.findCategorieProfById(id);
 	}
 
+	@Transactional
 	public int deleteCategorieProfById(Long id) {
 		return categorieProfDao.deleteCategorieProfById(id);
 	}
@@ -25,4 +28,8 @@ public class CategorieProfService {
 		return categorieProfDao.findAll();
 	}
 
+
+	public CategorieProf save(CategorieProf entity) {
+		return categorieProfDao.save(entity);
+	}
 }

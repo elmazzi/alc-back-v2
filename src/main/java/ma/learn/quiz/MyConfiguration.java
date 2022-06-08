@@ -1,7 +1,7 @@
 package ma.learn.quiz;
 
-import miniApp.migration.DataBaseMigration;
-import miniApp.migration.DriveApiService;
+import ma.learn.quiz.migration.DataBaseMigration;
+import ma.learn.quiz.migration.DriveApiService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

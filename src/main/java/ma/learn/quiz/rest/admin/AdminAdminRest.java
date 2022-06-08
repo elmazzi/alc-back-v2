@@ -1,21 +1,18 @@
 package ma.learn.quiz.rest.admin;
 
-import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeRequestUrl;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
-import com.google.api.client.http.FileContent;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import ma.learn.quiz.bean.Admin;
 import ma.learn.quiz.service.AdminService;
-import miniApp.migration.DataBaseMigration;
+import ma.learn.quiz.migration.DataBaseMigration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -78,11 +75,14 @@ public class AdminAdminRest {
         response.sendRedirect(redirectUrl);
     }
 
-    @GetMapping("/oauth")
-    public void saveAuthorizationCode(HttpServletRequest request) throws Exception {
-        String code = request.getParameter("code");
+
+    @PostMapping("/oauth")
+    public void saveAuthorizationCode(@RequestParam("code") String code) throws Exception {
+        System.out.println(code);
         if (code != null) {
             saveToken(code);
+        } else {
+            throw new Exception("Code is null, try again");
         }
     }
 

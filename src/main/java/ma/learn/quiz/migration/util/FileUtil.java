@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package miniApp.migration.util;
+package ma.learn.quiz.migration.util;
 
 //import data.base.migration.DataBaseMigration;
 
 
-import miniApp.migration.DataBaseMigration;
+import ma.learn.quiz.migration.DataBaseMigration;
 
 import java.io.File;
 import java.io.IOException;

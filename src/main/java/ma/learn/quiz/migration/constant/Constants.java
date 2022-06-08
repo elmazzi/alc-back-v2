@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package miniApp.migration.constant;
+package ma.learn.quiz.migration.constant;
 
 import java.util.Arrays;
 import java.util.List;
