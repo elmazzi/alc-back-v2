@@ -94,18 +94,18 @@ public class DataBaseMigration {
                 String[] typeHomewrok = directoryPathHomework.list();
 
 
-                for (int j = 0; j < section.length; j++) {
-                    System.out.println("  sectionName ::::: " + "Lesson" + " " + parcour[i] + " " + section[j]);
-                    String pathSection = pathLessonOrHomeWork + "\\" + section[j];
-                    String pathSectionImage = pathLessonOrHomeWorkImage + "\\" + section[j];
-                    if (new File(pathSection).exists()) {
-                        FileUtil.mkdire(pathSectionImage, pathLessonOrHomeWorkImage, true);
-                        System.out.println("pathSection ==> " + pathSection);
-                        System.out.println("pathImage ==>" + pathSectionImage);
-                        System.out.println("++++++++++++++++++++++++++++++");
-                        extractHtmlImageAndContent(parcour[i], section[j], pathSection, pathSectionImage);
-                    }
-                }
+//                for (int j = 0; j < section.length; j++) {
+//                    System.out.println("  sectionName ::::: " + "Lesson" + " " + parcour[i] + " " + section[j]);
+//                    String pathSection = pathLessonOrHomeWork + "\\" + section[j];
+//                    String pathSectionImage = pathLessonOrHomeWorkImage + "\\" + section[j];
+//                    if (new File(pathSection).exists()) {
+//                        FileUtil.mkdire(pathSectionImage, pathLessonOrHomeWorkImage, true);
+//                        System.out.println("pathSection ==> " + pathSection);
+//                        System.out.println("pathImage ==>" + pathSectionImage);
+//                        System.out.println("++++++++++++++++++++++++++++++");
+//                        extractHtmlImageAndContent(parcour[i], section[j], pathSection, pathSectionImage);
+//                    }
+//                }
 
 
                 for (int j = 0; j < typeHomewrok.length; j++) {
@@ -147,6 +147,7 @@ public class DataBaseMigration {
                 String data = myReader.nextLine();
                 if (data.contains("https://www.youtube")) {
                     TypeDeQuestion typeDeQuestion = typeDeQuestionDao.findByLib("Watch and add new words");
+                    TypeHomeWork typeHomeWork = typeHomeWorkService.findByLibelle("Watch it");
                     if (typeDeQuestion == null) {
                         typeDeQuestion = this.saveTypeQstHomeWork("Watch and add new words");
                     }
@@ -159,14 +160,16 @@ public class DataBaseMigration {
                     HomeWork homeWork = homeWorkDao.findByLibelleAndCoursId("Watch it", this.cour.getId());
                     if (homeWork == null) {
                         homeWork = new HomeWork();
-                        homeWork.setLibelle("Watch it");
-                        homeWork.setCours(this.cour);
-                        int firstindex = data.indexOf(" https");
-                        String urlVideo = data.substring(firstindex);
-                        homeWork.setUrlVideo(urlVideo);
-                        System.out.println(urlVideo);
-                        homeWork = homeWorkDao.save(homeWork);
                     }
+                    homeWork.setLibelle("Watch it");
+                    homeWork.setTypeHomeWork(typeHomeWork);
+                    homeWork.setCours(this.cour);
+                    int firstindex = data.indexOf("https");
+                    String urlVideo = data.substring(firstindex);
+                    homeWork.setUrlVideo(urlVideo);
+                    System.out.println(urlVideo);
+                    homeWork = homeWorkDao.save(homeWork);
+
 
                     index++;
                 }

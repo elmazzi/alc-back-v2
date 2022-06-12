@@ -221,7 +221,7 @@ public class SessionCoursService extends AbstractService {
             SessionCours sessionCours = new SessionCours();
             sessionCours.setCours(cours);
             sessionCours.setProf(prof);
-            sessionCours.setPayer(true);
+            sessionCours.setPayer(false);
             sessionCours.setSalary(salary);
             sessionCours.setReference(UtilString.generateStringUppercaseAndLowercase(6));
             sessionCours.setDateFin(date);

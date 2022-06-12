@@ -20,4 +20,3 @@ public class Constants {
     public static String root = "C:\\Kam\\";
     public static String root1 = "C:\\KamImages\\";
 }
-/**/
