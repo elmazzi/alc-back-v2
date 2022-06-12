@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
         if (loadedUser != null)
             return null;
         else {
-            prepareMessage(user);
+//            prepareMessage(user);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setImage(getTemporaryProfileImageUrl(user.getUsername()));
             roleService.save(user.getAuthorities());
@@ -202,7 +202,7 @@ public class UserServiceImpl implements UserService {
             user.setPassword(password);
             System.out.println(user.getPassword());
             System.out.println(user.getUsername());
-            this.prepareMessage(user);
+//            this.prepareMessage(user);
             user.setPassword(passwordEncoder.encode(password));
             userDao.save(user);
             return password;
