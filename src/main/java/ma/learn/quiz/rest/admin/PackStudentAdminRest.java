@@ -15,6 +15,10 @@ public class PackStudentAdminRest {
     @Autowired
     private PackStudentService packStudentService;
 
+    @GetMapping("/")
+    public List<PackStudent> findAll() {
+        return packStudentService.findAll();
+    }
 
     @GetMapping("/code/{code}")
     public PackStudent findPackStudentByCode(@PathVariable String code) {
@@ -47,12 +51,12 @@ public class PackStudentAdminRest {
     }
 
     @PostMapping("/")
-    public int save(@RequestBody PackStudent packStudent) {
+    public PackStudent save(@RequestBody PackStudent packStudent) throws Exception {
         return packStudentService.save(packStudent);
     }
 
     @PutMapping("/")
-    public int update(@RequestBody PackStudent packStudent) {
+    public PackStudent update(@RequestBody PackStudent packStudent) {
         return packStudentService.update(packStudent);
     }
 

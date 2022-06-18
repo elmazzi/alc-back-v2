@@ -18,6 +18,10 @@ public class InscriptionEtudiantRest {
 	public Etudiant save(@RequestBody Inscription inscriptionetudiant) {
 		return inscriptionService.save(inscriptionetudiant);
 	}
+	@PutMapping("/update")
+	public Inscription updateInsc(@RequestBody Inscription inscriptionetudiant) {
+		return inscriptionService.updateInsc(inscriptionetudiant);
+	}
 	
 	@GetMapping("/")
 	public List<Inscription> findAll() {

@@ -12,11 +12,26 @@ public class PackStudent {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private int nombreCours;
     private boolean forGroupe;
     private String code;
     private String libelle;
+    @Lob
+    @Column(length=512)
+    private String description;
+    @Lob
+    @Column(length=512)
+    private String preRequisites;
+    @Lob
+    @Column(length=512)
+    private String whyTakeThisCourse;
+    @Lob
+    @Column(length=512)
+    private String expectations;
+    @ManyToOne
+    private Parcours level;
+
+    private String imgUrl;
     private Double prix;
     private int totalStudents;
 
@@ -76,4 +91,51 @@ public class PackStudent {
         this.prix = prix;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public String getPreRequisites() {
+        return preRequisites;
+    }
+
+    public void setPreRequisites(String preRequisites) {
+        this.preRequisites = preRequisites;
+    }
+
+    public String getWhyTakeThisCourse() {
+        return whyTakeThisCourse;
+    }
+
+    public void setWhyTakeThisCourse(String whyTakeThisCourse) {
+        this.whyTakeThisCourse = whyTakeThisCourse;
+    }
+
+    public String getExpectations() {
+        return expectations;
+    }
+
+    public void setExpectations(String expectations) {
+        this.expectations = expectations;
+    }
+
+    public Parcours getLevel() {
+        return level;
+    }
+
+    public void setLevel(Parcours level) {
+        this.level = level;
+    }
 }

@@ -71,7 +71,6 @@ public class InscriptionService extends AbstractService {
     public InviteStudentdDao inviteStudentdDao;
 
 
-
     public List<Inscription> findAllByEtatInscriptionLibelle(String libelle) {
         return inscriptionDao.findAllByEtatInscriptionLibelle(libelle);
     }
@@ -129,6 +128,10 @@ public class InscriptionService extends AbstractService {
         }
     }
 
+    public Inscription updateInsc(Inscription inscription) {
+        return this.inscriptionDao.save(inscription);
+    }
+
     public Etudiant save(Inscription inscription) {
         if (inscription.getId() != null) {
             PackStudent packStudent = packStudentService.findPackStudentByCode(inscription.getPackStudent().getCode());
@@ -166,7 +169,7 @@ public class InscriptionService extends AbstractService {
 
             EtatInscription etatInscription = etatInscriptionService.findEtatInscriptionById((long) 1);
             Etudiant etudiant = this.etudiantService.findEtudiantById(inscription.getEtudiant().getId());
-           // Parcours parcours = parcoursService.findParcoursById(inscription.getParcours().getId());
+            // Parcours parcours = parcoursService.findParcoursById(inscription.getParcours().getId());
             //GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(inscription.getGroupeEtude().getId());
 
             if (etudiant == null) {
@@ -189,23 +192,23 @@ public class InscriptionService extends AbstractService {
         }
     }
 
-    public int  updateByStudent(String packCode, Etudiant etudiant){
+    public int updateByStudent(String packCode, Etudiant etudiant) {
         Inscription inscription = inscriptionDao.findInscriptionByEtudiantId(etudiant.getId());
         Parcours parcours = new Parcours();
         GroupeEtude groupeEtude = new GroupeEtude();
-        if (etudiant.getParcours() != null){
-           parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
+        if (etudiant.getParcours() != null) {
+            parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
         }
-        if (etudiant.getGroupeEtude() != null){
+        if (etudiant.getGroupeEtude() != null) {
             groupeEtude = groupeEtudeService.findGroupeEtudeById(etudiant.getGroupeEtude().getId());
         }
         PackStudent packStudent = packStudentService.findPackStudentByCode(packCode);
         Etudiant etudiant1 = etudiantService.findEtudiantById(etudiant.getId());
-        if (inscription != null){
-            if (parcours.getId() != null){
+        if (inscription != null) {
+            if (parcours.getId() != null) {
                 inscription.setParcours(parcours);
             }
-            if (groupeEtude.getId() != null ){
+            if (groupeEtude.getId() != null) {
                 inscription.setGroupeEtude(groupeEtude);
             }
             inscription.getEtudiant().setTeacherLocality(etudiant.getTeacherLocality());
@@ -216,7 +219,7 @@ public class InscriptionService extends AbstractService {
             etudiant1.setTeacherLocality(etudiant.getTeacherLocality());
             etudiantDao.save(etudiant1);
             InviteStudent inviteStudent = inviteStudentService.findInviteStudentByEmailInvited(etudiant1.getUsername());
-            if (inviteStudent != null){
+            if (inviteStudent != null) {
                 inviteStudent.setAccepted(true);
                 inviteStudent.setPaidPack(true);
                 inviteStudent.setDateAcceptInvitation(new Date());
@@ -224,12 +227,11 @@ public class InscriptionService extends AbstractService {
                 this.inviteStudentdDao.save(inviteStudent);
 
             }
-            if (parcours.getId() != null && groupeEtude.getId() != null){
+            if (parcours.getId() != null && groupeEtude.getId() != null) {
                 affecter(parcours, groupeEtude, etudiant);
             }
             return 1;
-        }
-        else {
+        } else {
             return -1;
         }
     }
@@ -252,8 +254,8 @@ public class InscriptionService extends AbstractService {
         inscription.setFonction(inscription.getFonction());
         inscription.setInteretEtudiant(inscription.getInteretEtudiant());
         inscription.setNiveauEtude(inscription.getNiveauEtude());
-      inscription.setEtatInscription(etatInscription);
-      inscription.setSkill(inscription.getSkill());
+        inscription.setEtatInscription(etatInscription);
+        inscription.setSkill(inscription.getSkill());
         /*  inscription.setNiveauEtude(niveauEtude);
         inscription.setFonction(fonction);
         inscription.setInteretEtudiant(interetEtudiant);
