@@ -70,7 +70,7 @@ public class ParcoursService {
     }
 
 
-    public int save(Parcours parcours) {
+    public int save(Parcours parcours) throws Exception {
         Centre centre = centreService.findByRef(parcours.getCentre().getRef());
         if (centre == null) {
             return -1;

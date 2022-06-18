@@ -19,16 +19,16 @@ VALUES (1, 'c1', '230.00', 'Junior'),
 
 INSERT
 IGNORE INTO `categorie_section` (`id`, `code`, `libelle`, `numero_order`, `super_categorie_section`)
-VALUES (1, 'Additional', 'Warm up', 1, 160),
-       (2, 'Additional', 'Get to know', 4, 160),
-       (3, 'Additional', 'Discussion', 6, 160),
-       (4, 'Additional', 'Life Story', 8, 160),
-       (5, 'Additional', 'Games', 9, 160),
+VALUES (1, 'Warm up', 'Warm up', 1, 159),
+       (2, 'Get to know', 'Get to know', 4, 159),
+       (3, 'Discussion', 'Discussion', 6, 159),
+       (4, 'Life Story', 'Life Story', 8, 160),
+       (5, 'Games', 'Games', 10, 160),
        (6, 'Study the information', "Let's practice", 5, 159),
        (7, 'Study the information', "Let's sum up", 7, 159),
-       (8, 'Additional', 'Vocabulary', 3, 160),
+       (8, 'Additional', 'Vocabulary', 3, 159),
        (9, 'Home Work Review', 'Home Work Review', 2, 159),
-       (10, 'Additional', 'Role Play', 10, 160);
+       (10, 'Additional', 'Role Play', 9, 160);
 
 --
 -- Dumping data for table `centre`
@@ -97,15 +97,7 @@ VALUES (1, '1', 'Secondary'),
        (3, '3', 'College'),
        (4, '4', 'Other');
 
---
--- Dumping data for table `pack_student`
---
 
-INSERT
-IGNORE INTO `pack_student` (`id`, `code`, `for_groupe`, `nombre_cours`, `prix`, `libelle`, `total_students`)
-VALUES (25910, 'P2', b'0', 30, 400, 'Pack 2', 0),
-       (25909, 'P1', b'0', 20, 300, 'Pack 1', 0),
-       (25911, 'P3', b'0', 50, 450, 'Pack 3', 0);
 
 
 

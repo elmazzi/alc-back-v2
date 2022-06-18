@@ -19,16 +19,16 @@ VALUES (1, 'c1', '230.00', 'Junior'),
 
 INSERT
 IGNORE INTO `categorie_section` (`id`, `code`, `libelle`, `numero_order`, `super_categorie_section`)
-VALUES (1, 'Additional', 'Warm up', 1, 160),
-       (2, 'Additional', 'Get to know', 4, 160),
-       (3, 'Additional', 'Discussion', 6, 160),
-       (4, 'Additional', 'Life Story', 8, 160),
-       (5, 'Additional', 'Games', 9, 160),
+VALUES (1, 'Warm up', 'Warm up', 1, 159),
+       (2, 'Get to know', 'Get to know', 4, 159),
+       (3, 'Discussion', 'Discussion', 6, 159),
+       (4, 'Life Story', 'Life Story', 8, 160),
+       (5, 'Games', 'Games', 10, 160),
        (6, 'Study the information', "Let's practice", 5, 159),
        (7, 'Study the information', "Let's sum up", 7, 159),
-       (8, 'Additional', 'Vocabulary', 3, 160),
+       (8, 'Additional', 'Vocabulary', 3, 159),
        (9, 'Home Work Review', 'Home Work Review', 2, 159),
-       (10, 'Additional', 'Role Play', 10, 160);
+       (10, 'Additional', 'Role Play', 9, 160);
 
 --
 -- Dumping data for table `centre`
@@ -97,15 +97,7 @@ VALUES (1, '1', 'Secondary'),
        (3, '3', 'College'),
        (4, '4', 'Other');
 
---
--- Dumping data for table `pack_student`
---
 
-INSERT
-IGNORE INTO `pack_student` (`id`, `code`, `for_groupe`, `nombre_cours`, `prix`, `libelle`, `total_students`)
-VALUES (25910, 'P2', b'0', 30, 400, 'Pack 2', 0),
-       (25909, 'P1', b'0', 20, 300, 'Pack 1', 0),
-       (25911, 'P3', b'0', 50, 450, 'Pack 3', 0);
 
 
 
@@ -188,18 +180,14 @@ VALUES (5, 'Watch it'),
 
 INSERT
 IGNORE INTO `user` (`dtype`, `id`, `account_non_expired`, `account_non_locked`, `addresse`, `age`, `credentials_non_expired`, `enabled`, `image`, `nom`, `numero`, `password`, `prenom`, `username`, `ville`, `ref`, `etat_etudiant_schedule`, `parcours`, `categorie_prof`, `role`, `group_option`, `teacher_locality`, `groupe_etude`, `country`, `date_naissance`, `level_max`, `level_min`, `pack_student`, `fonction`, `interet_etudiant`, `niveau_etude`, `statut_social`, `langue`, `skill`, `skype`, `type_teacher`) VALUES
-('Admin', 1, true, true, 'marrakech', 23, true, true, 'http://localhost:8036/user/image/admin@gmail.com/admin@gmail.com.jpg', 'Elmoudene', '0605120314', '$2a$10$VW1CnG0HpYa5eiGikTlzQOWjAjwjA/ZptHA09uD.LlBE/HWc3YiqC', 'Youssef', 'admin@gmail.com', 'AIT OURIR', NULL, NULL, NULL, NULL, 'ADMIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('Prof', 3, true, true, NULL, 0, true, true, 'http://localhost:8036/user/image/teacher@gmail.com/teacher@gmail.com.jpg', 'teacher', '0605120314', '$2a$10$xpy0yulabuTwf8ikJM8j5eM337f81aETiLSRSHsvPaHhDqyUh6bDm', 'teacher', 'teacher@gmail.com', NULL, NULL, NULL, NULL, 1, 'TEACHER', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('Prof', 4, true, true, 'Marrakech', 30, true, true, 'http://localhost:8036/user/image/prof@gmail.com/prof@gmail.com.jpg', 'prof', '0613203310', '$2a$10$I7o4zmXgcErHbiX91EPcW.rc2WPlecYuryGmfarBpHL/ZNyQDBRza', 'prof', 'prof@gmail.com', NULL, NULL, NULL, NULL, 1, 'TEACHER', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('Admin', 7, true, true, 'Marrakech', 22, true, true, 'http://localhost:8036/user/image/zouani@gmail.com/zouani@gmail.com.jpg', 'Zouani', '0760102030', '$2a$10$G6z1mCKHaDMLUZv9RiK1/OwjvXfK4tnNm/DMA.Wsm7KEadi4GL/Ua', 'Younes', 'zouani@gmail.com', 'Marrakech', NULL, NULL, NULL, NULL, 'ADMIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('Prof', 41, true, true, NULL, 0, true, true, 'http://localhost:8036/user/image/profile/teacherahmed@gmail.com', 'Teacher', '0605120314', '$2a$10$Njdjp6xPcvfKc3Agfi1NKOtV5BAYIaD44YwXcYpg4SrS7Yk5Lx8oy', 'Ahmed', 'teacherahmed@gmail.com', NULL, NULL, NULL, NULL, 1, 'TEACHER', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+('Admin', 1, true, true, 'marrakech', 23, true, true, 'http://localhost:8036/user/image/admin@gmail.com/admin@gmail.com.jpg', 'Elmoudene', '0605120314', '$2a$10$VW1CnG0HpYa5eiGikTlzQOWjAjwjA/ZptHA09uD.LlBE/HWc3YiqC', 'Youssef', 'youssefelmoudene09@gmail.com', 'AIT OURIR', NULL, NULL, NULL, NULL, 'ADMIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Prof', 2, true, true, NULL, 0, true, true, 'http://localhost:8036/user/image/teacher@gmail.com/teacher@gmail.com.jpg', 'teacher', '0605120314', '$2a$10$xpy0yulabuTwf8ikJM8j5eM337f81aETiLSRSHsvPaHhDqyUh6bDm', 'teacher', 'engflexy.contact@gmail.com', NULL, NULL, NULL, NULL, 1, 'TEACHER', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Admin', 3, true, true, 'Marrakech', 22, true, true, 'http://localhost:8036/user/image/zouani@gmail.com/zouani@gmail.com.jpg', 'Zouani', '0760102030', '$2a$10$G6z1mCKHaDMLUZv9RiK1/OwjvXfK4tnNm/DMA.Wsm7KEadi4GL/Ua', 'Younes', 'alc.image.driver@gmail.com', 'Marrakech', NULL, NULL, NULL, NULL, 'ADMIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
-
-INSERT
-IGNORE INTO `user_authorities` (`user_id`, `authorities`)
-VALUES (1, 1),
-       (3, 2),
-       (4, 2),
-       (7, 1),
-       (41, 2);
+--
+-- INSERT
+-- IGNORE INTO `user_authorities` (`user_id`, `authorities`)
+-- VALUES (1, 1),
+--        (2, 2),
+--        (3, 1);
 

@@ -68,7 +68,7 @@ public class CoursPublicPublicRest {
 	}
 	
 	@PostMapping("/")
-	public Cours save(@RequestBody Cours cours) {
+	public Cours save(@RequestBody Cours cours) throws Exception {
 		return coursService.save(cours);
 	}
 	 @PostMapping("/delete-multiple-by-id")

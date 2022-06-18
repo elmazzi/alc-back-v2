@@ -140,17 +140,19 @@ public class SectionService extends AbstractService {
     }
 
 
-    public int save(Section section) {
+    public Section save(Section section) throws Exception {
         Cours cours = coursService.findCoursById(section.getCours().getId());
-        if (cours == null) return -1;
-        CategorieSection categorieSection = categorieSectionService.findCategorieSectionById(section.getCategorieSection().getId());
-        if (categorieSection == null) return -2;
-        else {
-            section.setCategorieSection(categorieSection);
-            section.setCours(cours);
-            sectionDao.save(section);
-            return 1;
+        if (cours == null) {
+            throw new Exception("Course is required");
         }
+        CategorieSection categorieSection = categorieSectionService.findCategorieSectionById(section.getCategorieSection().getId());
+        if (categorieSection == null) {
+            throw new Exception("Category is required");
+        }
+        section.setCategorieSection(categorieSection);
+        section.setCours(cours);
+        section.setSessionCours(null);
+        return sectionDao.save(section);
     }
 
 

@@ -99,7 +99,7 @@ public class CoursService {
 
     }
 
-    public Cours save(Cours cours) {
+    public Cours save(Cours cours) throws Exception {
         Parcours parcours = parcoursService.findParcoursByLibelle(cours.getParcours().getLibelle());
         if (parcours == null)
             throw new RuntimeException("Level with name " + cours.getParcours().getLibelle() + " not found");

@@ -37,7 +37,7 @@ public class ParcoursProfRest {
 	}
 
 @PostMapping("/")
-public int  save(@RequestBody Parcours parcours) {
+public int  save(@RequestBody Parcours parcours) throws Exception {
 	return	parcoursService.save(parcours);
 	}
 
