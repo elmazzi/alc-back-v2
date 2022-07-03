@@ -15,32 +15,33 @@ import java.util.Objects;
 public class Section implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+//    @SequenceGenerator(name = "produit_seq", sequenceName = "produit_seq",
+//            allocationSize = 1, initialValue = 10000)
     private Long id;
-
     private String code;
     @Lob
-	@Column(length=512)
+    @Column(length = 512)
     private String libelle;
     @Lob
-	@Column(length=512)
+    @Column(length = 512)
     private String urlImage;
     @Lob
-	@Column(length=512)
+    @Column(length = 512)
     private String urlImage2;
     @Lob
-	@Column(length=512)
+    @Column(length = 512)
     private String urlImage3;
     @Lob
-	@Column(length=512)
+    @Column(length = 512)
     private String urlVideo;
     @Lob
-	@Column(length=512)
+    @Column(length = 512)
     private String contenu;
     @Lob
-	@Column(length=512)
+    @Column(length = 512)
     private String questions;
     @Lob
-	@Column(length=512)
+    @Column(length = 512)
     private String indicationProf;
     private Integer numeroOrder;
     @ManyToOne
@@ -52,7 +53,7 @@ public class Section implements Serializable {
     private int content;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "section",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "section", cascade = CascadeType.REMOVE)
     private List<SectionItem> sectionItems;
 
     @ManyToOne

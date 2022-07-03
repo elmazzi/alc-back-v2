@@ -4,19 +4,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.Entity;
-
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class Prof extends User {
     private String ref;
+    @Column(length = 512)
+    private String about;
 
 /*    -----------------tache hiba  ----------------*/
+
     @OneToOne
     Parcours levelMin = new Parcours();
     @OneToOne
@@ -80,6 +79,14 @@ private TypeTeacher typeTeacher;
 
     public void setRecommendTeacher(List<RecommendTeacher> recommendTeacher) {
         this.recommendTeacher = recommendTeacher;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
     }
 
     public String getRef() {

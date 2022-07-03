@@ -34,6 +34,24 @@ public class PackStudent {
     private String imgUrl;
     private Double prix;
     private int totalStudents;
+    private String rating;
+    private String oldPrice;
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public String getOldPrice() {
+        return oldPrice;
+    }
+
+    public void setOldPrice(String oldPrice) {
+        this.oldPrice = oldPrice;
+    }
 
     public int getTotalStudents() {
         return totalStudents;
