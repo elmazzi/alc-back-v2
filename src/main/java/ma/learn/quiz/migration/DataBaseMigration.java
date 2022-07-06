@@ -94,19 +94,18 @@ public class DataBaseMigration {
                 String[] typeHomewrok = directoryPathHomework.list();
 
 
-//                for (int j = 0; j < section.length; j++) {
-//                    System.out.println("  sectionName ::::: " + "Lesson" + " " + parcour[i] + " " + section[j]);
-//                    String pathSection = pathLessonOrHomeWork + "\\" + section[j];
-//                    String pathSectionImage = pathLessonOrHomeWorkImage + "\\" + section[j];
-//                    if (new File(pathSection).exists()) {
-//                        FileUtil.mkdire(pathSectionImage, pathLessonOrHomeWorkImage, true);
-//                        System.out.println("pathSection ==> " + pathSection);
-//                        System.out.println("pathImage ==>" + pathSectionImage);
-//                        System.out.println("++++++++++++++++++++++++++++++");
-//                        extractHtmlImageAndContent(parcour[i], section[j], pathSection, pathSectionImage);
-//                    }
-//                }
-
+                for (int j = 0; j < section.length; j++) {
+                    System.out.println("  sectionName ::::: " + "Lesson" + " " + parcour[i] + " " + section[j]);
+                    String pathSection = pathLessonOrHomeWork + "\\" + section[j];
+                    String pathSectionImage = pathLessonOrHomeWorkImage + "\\" + section[j];
+                    if (new File(pathSection).exists()) {
+                        FileUtil.mkdire(pathSectionImage, pathLessonOrHomeWorkImage, true);
+                        System.out.println("pathSection ==> " + pathSection);
+                        System.out.println("pathImage ==>" + pathSectionImage);
+                        System.out.println("++++++++++++++++++++++++++++++");
+                        extractHtmlImageAndContent(parcour[i], section[j], pathSection, pathSectionImage);
+                    }
+                }
 
                 for (int j = 0; j < typeHomewrok.length; j++) {
                     String pathHomWork = pathHomwork + "\\" + typeHomewrok[j];
@@ -115,7 +114,6 @@ public class DataBaseMigration {
                         FileUtil.mkdire(pathHomeWorkImage, pathHomWorkImage, true);
                         System.out.println("++++++++++++++++++++++++++++++");
                         System.out.println("pathHomeWork ==> " + pathHomWork);
-
                         System.out.println("pathImage ==>" + pathHomWorkImage);
                         File homeWorkFile = new File(pathHomWork);
                         System.out.println(homeWorkFile.getName());

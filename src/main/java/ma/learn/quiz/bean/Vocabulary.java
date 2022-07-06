@@ -5,10 +5,12 @@ import javax.persistence.*;
 @Entity
 public class Vocabulary {
 
-	
-	
+
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerator(name = "voc_seq", sequenceName = "voc_seq",
+			allocationSize = 1, initialValue = 200000)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "voc_seq")
 	private Long id;
 	private Long numero;
 	private String word;

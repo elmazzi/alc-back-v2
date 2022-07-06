@@ -14,7 +14,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Parcours implements Serializable {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerator(name = "level_seq", sequenceName = "level_seq",
+			allocationSize = 1, initialValue = 200)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "level_seq")
     private Long id;
     @Temporal(TemporalType.DATE)
     private Date datePublication ;

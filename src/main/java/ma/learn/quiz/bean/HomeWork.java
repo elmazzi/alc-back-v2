@@ -9,7 +9,9 @@ import java.util.List;
 @Entity
 public class HomeWork {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "homework_seq", sequenceName = "homework_seq",
+            allocationSize = 1, initialValue = 100000)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "homework_seq")
     private Long id;
     @Lob
 	@Column(length=512)

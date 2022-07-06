@@ -8,7 +8,9 @@ import java.util.List;
 @Entity
 public class HomeWorkQuestion {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "homeworkqst_seq", sequenceName = "homeworkqst_seq",
+            allocationSize = 1, initialValue = 1000000)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "homeworkqst_seq")
     private Long id;
     private String ref;
     @Lob

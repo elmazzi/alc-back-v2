@@ -7,7 +7,9 @@ public class HoweWorkQSTReponse {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "homeworkqstrps_seq", sequenceName = "homeworkqstrps_seq",
+            allocationSize = 1, initialValue = 1000000)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "homeworkqstrps_seq")
     private Long id;
     private String ref;
     @Lob
