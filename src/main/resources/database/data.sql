@@ -103,9 +103,10 @@ VALUES (1, '1', 'Secondary'),
 
 INSERT
 IGNORE INTO `role` (`id`, `authority`)
-VALUES (1, 'ROLE_ADMIN'),
-       (2, 'ROLE_PROF'),
-       (3, 'ROLE_STUDENT');
+VALUES (1, 'ADMIN'),
+       (2, 'TEACHER'),
+       (3, 'STUDENT'),
+       (4, 'SUPER_ADMIN');
 
 
 -- Dumping data for table `section`

@@ -1,11 +1,9 @@
 package ma.learn.quiz.rest.etudiant;
 
-import ma.learn.quiz.bean.EtudiantCours;
-import ma.learn.quiz.bean.Prof;
-import ma.learn.quiz.bean.SessionCours;
+import ma.learn.quiz.bean.*;
 import ma.learn.quiz.service.ProfService;
-import ma.learn.quiz.bean.Salary;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,7 +37,7 @@ public class ProfEtudiantRest {
         return profService.findAll();
     }
     @PostMapping("/")
-    public int save(@RequestBody Prof prof) {
+    public Prof save(@RequestBody Prof prof) throws Exception {
         return profService.save(prof);
     }
     @PostMapping("/salary/{salaryVo}")

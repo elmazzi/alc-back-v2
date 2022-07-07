@@ -7,14 +7,25 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import ma.learn.quiz.bean.*;
+import ma.learn.quiz.filter.RoleConstant;
+import ma.learn.quiz.service.facade.RoleService;
 import ma.learn.quiz.service.facade.UserService;
+import ma.learn.quiz.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ma.learn.quiz.dao.ProfDao;
 import ma.learn.quiz.bean.Salary;
 
+import static ma.learn.quiz.filter.JwtConstant.JWT_TOKEN_HEADER;
 import static ma.learn.quiz.filter.RoleConstant.ROLE_PROF;
+import static org.springframework.http.HttpStatus.OK;
 
 @Service
 public class ProfService extends AbstractService{
@@ -74,19 +85,23 @@ public class ProfService extends AbstractService{
         return profDao.save(profLoaded);
     }
 
-    public int save(Prof prof) {
+    public Prof save(Prof prof) throws Exception {
         if (findProfById(prof.getId()) != null) {
-            return -1;
+            throw new Exception("User already exist");
         }
         if (findByLogin(prof.getUsername()) != null) {
-            return -2;
+            throw new Exception("Email already exist");
         } else {
             String password = this.userService.generatePassword();
-            prof.setPassword(password);
-            prof.setAuthorities(Arrays.asList(new Role(ROLE_PROF)));
-            prof.setRole("TEACHER");
-            userService.save(prof);
-            return 1;
+            prof.setPassword(this.passwordEncoder.encode(password));
+            Role role = this.roleService.findByAuthority(ROLE_PROF);
+            prof.setAuthorities(Arrays.asList(role));
+            prof.setRole(RoleConstant.ROLE_PROF);
+            prof.setImage(this.userServiceImpl.getTemporaryProfileImageUrl(prof.getUsername()));
+           Prof loadUser =  profDao.save(prof);
+            String token = jwtUtil.generateToken(loadUser);
+            loadUser.setToken(token);
+            return loadUser;
         }
     }
 
@@ -170,6 +185,16 @@ public class ProfService extends AbstractService{
     private int j;
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserServiceImpl userServiceImpl;
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private JwtUtil jwtUtil;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private EtudiantService etudiantService;
     @Autowired

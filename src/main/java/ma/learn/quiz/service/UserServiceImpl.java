@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
         return new ResponseEntity<>(loadUserByUsername, jwtHeader, OK);
     }
 
-    private HttpHeaders getJwtHeader(User user) {
+     HttpHeaders getJwtHeader(User user) {
         HttpHeaders headers = new HttpHeaders();
         headers.add(JWT_TOKEN_HEADER, jwtUtil.generateToken(user));
         return headers;
@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    private String getTemporaryProfileImageUrl(String username) {
+     String getTemporaryProfileImageUrl(String username) {
         return ServletUriComponentsBuilder.fromCurrentContextPath().path(DEFAULT_USER_IMAGE_PATH + username)
                 .toUriString();
     }

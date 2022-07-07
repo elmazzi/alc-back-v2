@@ -167,7 +167,7 @@ public class EtudiantService extends AbstractService {
             String password = this.userService.generatePassword();
             etudiant.setPassword(password);
             etudiant.setAuthorities(Arrays.asList(new Role(ROLE_STUDENT)));
-            etudiant.setRole("STUDENT");
+            etudiant.setRole(ROLE_STUDENT);
             inscription.setGroupeEtude(etudiant.getGroupeEtude());
 /*
             inscription.setParcours(etudiant.getParcours());

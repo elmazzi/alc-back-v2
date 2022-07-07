@@ -49,7 +49,7 @@ public class AdminService {
             String password = this.userService.generatePassword();
             admin.setPassword(password);
             admin.setAuthorities(Arrays.asList(new Role(ROLE_ADMIN)));
-            admin.setRole("ADMIN");
+            admin.setRole(ROLE_ADMIN);
             userService.save(admin);
 //			adminDao.save(admin);
             return 1;

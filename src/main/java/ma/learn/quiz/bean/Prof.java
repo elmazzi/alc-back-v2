@@ -7,19 +7,24 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.lang.Nullable;
 
 @Entity
 public class Prof extends User {
     private String ref;
     @Column(length = 512)
     private String about;
+    @Column(length = 512)
+    private String token;
 
 /*    -----------------tache hiba  ----------------*/
 
     @OneToOne
-    Parcours levelMin = new Parcours();
+    @Nullable
+    Parcours levelMin;
     @OneToOne
-    Parcours levelMax = new Parcours();
+    @Nullable
+    Parcours levelMax;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "prof")
     List<TrancheHoraireProf> trancheHoraireProfList = new ArrayList<>();
@@ -61,7 +66,13 @@ private TypeTeacher typeTeacher;
     }
 
 
+    public String getToken() {
+        return token;
+    }
 
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getAddresse() {
         return addresse;

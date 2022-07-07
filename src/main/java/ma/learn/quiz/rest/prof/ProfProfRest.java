@@ -5,6 +5,7 @@ import ma.learn.quiz.service.ProfService;
 import ma.learn.quiz.service.UserServiceImpl;
 import ma.learn.quiz.bean.Salary;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class ProfProfRest {
         return profService.findAll();
     }
     @PostMapping("/")
-    public int save(@RequestBody Prof prof) {
+    public Prof save(@RequestBody Prof prof) throws Exception {
         return profService.save(prof);
     }
     @PostMapping("/salary/{salaryVo}")
