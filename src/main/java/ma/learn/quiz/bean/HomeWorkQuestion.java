@@ -9,7 +9,7 @@ import java.util.List;
 public class HomeWorkQuestion {
     @Id
     @SequenceGenerator(name = "homeworkqst_seq", sequenceName = "homeworkqst_seq",
-            allocationSize = 1, initialValue = 100000000)
+            allocationSize = 1, initialValue = 114045000)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "homeworkqst_seq")
     private Long id;
     private String ref;
