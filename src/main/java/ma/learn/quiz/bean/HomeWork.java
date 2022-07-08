@@ -10,7 +10,7 @@ import java.util.List;
 public class HomeWork {
     @Id
     @SequenceGenerator(name = "homework_seq", sequenceName = "homework_seq",
-            allocationSize = 1, initialValue = 100000)
+            allocationSize = 1, initialValue = 10000000)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "homework_seq")
     private Long id;
     @Lob

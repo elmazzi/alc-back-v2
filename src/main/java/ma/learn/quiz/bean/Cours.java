@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Cours implements Serializable {
     @Id
     @SequenceGenerator(name = "cour_seq", sequenceName = "cour_seq",
-            allocationSize = 1, initialValue = 10000)
+            allocationSize = 1, initialValue = 1000000)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cour_seq")
     private Long id;
     @Lob

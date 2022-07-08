@@ -8,7 +8,7 @@ public class HoweWorkQSTReponse {
 
     @Id
     @SequenceGenerator(name = "homeworkqstrps_seq", sequenceName = "homeworkqstrps_seq",
-            allocationSize = 1, initialValue = 1000000)
+            allocationSize = 1, initialValue = 1000000000)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "homeworkqstrps_seq")
     private Long id;
     private String ref;
