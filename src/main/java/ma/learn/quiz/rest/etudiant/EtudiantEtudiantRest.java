@@ -7,6 +7,8 @@ import ma.learn.quiz.service.vo.EtudiantVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -23,7 +25,7 @@ public class EtudiantEtudiantRest {
 
 
     @PostMapping("/save/pack/{pack}")
-    public User create(@PathVariable String pack, @RequestBody Etudiant etudiant) {
+    public User create(@PathVariable String pack, @RequestBody Etudiant etudiant) throws MessagingException, IOException {
         return etudiantService.create(pack,etudiant);
     }
 

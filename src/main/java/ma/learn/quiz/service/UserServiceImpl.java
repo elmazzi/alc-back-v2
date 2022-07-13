@@ -5,6 +5,7 @@ import ma.learn.quiz.bean.User;
 import ma.learn.quiz.dao.EtudiantDao;
 import ma.learn.quiz.dao.UserDao;
 import ma.learn.quiz.exception.NotAnImageFileException;
+import ma.learn.quiz.service.Util.GmailService;
 import ma.learn.quiz.service.facade.RoleService;
 import ma.learn.quiz.service.facade.UserService;
 import ma.learn.quiz.util.JwtUtil;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -56,7 +58,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private JwtUtil jwtUtil;
     @Autowired
-    private EtudiantDao etudiantDao;
+    private GmailService gmailService;
 
 
     @Override
@@ -84,7 +86,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(User user) {
+    public User save(User user) throws MessagingException, IOException {
         System.out.println(user.getUsername());
         System.out.println(user.getPassword());
         System.out.println(user.getAuthorities());
@@ -92,7 +94,11 @@ public class UserServiceImpl implements UserService {
         if (loadedUser != null)
             return null;
         else {
-//            prepareMessage(user);
+            String bodyMessage = "Your online registration on the site: https://engflexy.com is validated. \n" + "You can log into your account now.\n" +
+                    "Your account settings are :" + "\n" +
+                    "username : " + user.getUsername() + "\n" +
+                    "password : " + user.getPassword();
+            this.gmailService.sendEmail(bodyMessage,"accepted on the platform engFlexy",user.getUsername());
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setImage(getTemporaryProfileImageUrl(user.getUsername()));
             roleService.save(user.getAuthorities());
@@ -193,16 +199,18 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public String resetPassword(String username) {
+    public String resetPassword(String username) throws MessagingException, IOException {
         User user = this.loadUserByUsername(username);
         if (user == null) {
-            return "User not found !";
+            throw new MessagingException("User not found !");
         } else {
             String password = this.generatePassword();
             user.setPassword(password);
             System.out.println(user.getPassword());
             System.out.println(user.getUsername());
-//            this.prepareMessage(user);
+            String bodyMessage = "Hi " + user.getNom() + " \n" + "Your new password to log into your account.\n" +
+                    "New password : " + password;
+            this.gmailService.sendEmail(bodyMessage,"Reset password",user.getUsername());
             user.setPassword(passwordEncoder.encode(password));
             userDao.save(user);
             return password;

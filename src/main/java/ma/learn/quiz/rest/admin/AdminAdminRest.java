@@ -18,8 +18,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.List;
@@ -46,7 +48,7 @@ public class AdminAdminRest {
 
 
     @PostMapping("/")
-    public int save(@RequestBody Admin admin) {
+    public int save(@RequestBody Admin admin) throws MessagingException, IOException {
         System.out.println(admin.getNom());
         System.out.println(admin.getUsername());
         return adminService.save(admin);

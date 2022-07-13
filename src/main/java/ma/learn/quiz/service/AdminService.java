@@ -10,9 +10,11 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 
 import static ma.learn.quiz.filter.RoleConstant.ROLE_ADMIN;
@@ -39,7 +41,7 @@ public class AdminService {
         return adminDao.findAdminById(id);
     }
 
-    public int save(Admin admin) {
+    public int save(Admin admin) throws MessagingException, IOException {
         if (findAdminById(admin.getId()) != null) {
             return -1;
         }

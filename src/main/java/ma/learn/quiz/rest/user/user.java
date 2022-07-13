@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.MessagingException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,7 +54,7 @@ public class user {
     }
 
     @PostMapping("/")
-    public User save(@RequestBody User user) {
+    public User save(@RequestBody User user) throws MessagingException, IOException {
         return userService.save(user);
     }
 
@@ -116,7 +117,7 @@ public class user {
     }
 
     @GetMapping("/resetpassword/username/{username}")
-    public String resetPassword(@PathVariable String username) {
+    public String resetPassword(@PathVariable String username) throws MessagingException, IOException {
         return userService.resetPassword(username);
     }
 

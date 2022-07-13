@@ -1,9 +1,11 @@
 package ma.learn.quiz.service;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
@@ -145,7 +147,7 @@ public class EtudiantService extends AbstractService {
 //        scheduleProfDao.save(scheduleProf);
 //    }
 
-    public User create(String pack,Etudiant etudiant) {
+    public User create(String pack,Etudiant etudiant) throws MessagingException, IOException {
         Etudiant etudiant1 = this.findByLogin(etudiant.getUsername());
         if (etudiant1 != null) {
             return null;
