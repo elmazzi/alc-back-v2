@@ -84,7 +84,7 @@ public class GmailService {
             throws MessagingException, IOException {
         GoogleClientSecrets secrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(gdSecretKeys.getInputStream()));
         flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY, secrets, new ArrayList<>(
-                Arrays.asList(GmailScopes.GMAIL_SEND
+                Arrays.asList(GmailScopes.GMAIL_SEND, GmailScopes.GMAIL_COMPOSE
                 )))
                 .setDataStoreFactory(new FileDataStoreFactory(credentialsFolder.getFile())).build();
         Credential cred = this.flow.loadCredential(USER_IDENTIFIER_KEY);

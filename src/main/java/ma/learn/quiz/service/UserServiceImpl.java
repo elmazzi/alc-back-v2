@@ -2,7 +2,6 @@ package ma.learn.quiz.service;
 
 
 import ma.learn.quiz.bean.User;
-import ma.learn.quiz.dao.EtudiantDao;
 import ma.learn.quiz.dao.UserDao;
 import ma.learn.quiz.exception.NotAnImageFileException;
 import ma.learn.quiz.service.Util.GmailService;
