@@ -8,10 +8,10 @@ import java.util.List;
 @Entity
 public class HomeWorkQuestion {
     @Id
-//    @SequenceGenerator(name = "homeworkqst_seq", sequenceName = "homeworkqst_seq",
-//            allocationSize = 1, initialValue = 114045000)
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "homeworkqst_seq")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "homeworkqst_seq", sequenceName = "homeworkqst_seq",
+            allocationSize = 1, initialValue = 1000078)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "homeworkqst_seq")
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String ref;
     @Lob

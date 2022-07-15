@@ -8,9 +8,9 @@ public class Vocabulary {
 
 
 	@Id
-	@SequenceGenerator(name = "voc_seq", sequenceName = "voc_seq",
-			allocationSize = 1, initialValue = 200000)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "voc_seq")
+//	@SequenceGenerator(name = "voc_seq", sequenceName = "voc_seq",
+//			allocationSize = 1, initialValue = 200000)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private Long numero;
 	private String word;
