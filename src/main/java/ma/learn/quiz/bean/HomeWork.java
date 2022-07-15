@@ -12,7 +12,7 @@ public class HomeWork {
 //    @SequenceGenerator(name = "homework_seq", sequenceName = "homework_seq",
 //            allocationSize = 1, initialValue = 10000000)
 //    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "homework_seq")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Lob
 	@Column(length=512)
