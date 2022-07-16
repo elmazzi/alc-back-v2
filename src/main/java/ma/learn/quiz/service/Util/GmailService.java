@@ -9,6 +9,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
+import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.model.ListMessagesResponse;
@@ -33,9 +34,8 @@ public class GmailService {
 
     private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-    private static final List<String> SCOPES = new ArrayList<>(
-            Arrays.asList(GmailScopes.GMAIL_READONLY
-            ));
+    private static final List<String>  SCOPES = Collections.singletonList(GmailScopes.GMAIL_SEND);
+
 
     private static final String USER_IDENTIFIER_KEY = "526671645204-pefjgst2s07uo5k8v0srh75pc7i28e8p.apps.googleusercontent.com";
     private GoogleAuthorizationCodeFlow flow;
@@ -83,9 +83,7 @@ public class GmailService {
                                     String toEmailAddress)
             throws MessagingException, IOException {
         GoogleClientSecrets secrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(gdSecretKeys.getInputStream()));
-        flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY, secrets, new ArrayList<>(
-                Arrays.asList(GmailScopes.GMAIL_SEND, GmailScopes.GMAIL_COMPOSE
-                )))
+        flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY, secrets, SCOPES)
                 .setDataStoreFactory(new FileDataStoreFactory(credentialsFolder.getFile())).build();
         Credential cred = this.flow.loadCredential(USER_IDENTIFIER_KEY);
         Gmail service = new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, cred)
