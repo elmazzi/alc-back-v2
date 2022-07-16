@@ -14,9 +14,9 @@ import java.util.Objects;
 @Entity
 public class Section implements Serializable {
     @Id
-    @SequenceGenerator(name = "section_seq", sequenceName = "section_seq",
-            allocationSize = 1, initialValue = 200105)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "section_seq")
+    @SequenceGenerator(name = "section_sequence", sequenceName = "section_sequence",
+            allocationSize = 1, initialValue = 200109)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "section_sequence")
     private Long id;
     private String code;
     @Lob
