@@ -30,50 +30,22 @@ import java.util.*;
 
 @Service
 public class GmailService {
-    private static final String APPLICATION_NAME = "alc-project-drive-img";
+    private static final String APPLICATION_NAME = "gmailService";
 
     private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final List<String>  SCOPES = Collections.singletonList(GmailScopes.GMAIL_SEND);
 
 
-    private static final String USER_IDENTIFIER_KEY = "526671645204-pefjgst2s07uo5k8v0srh75pc7i28e8p.apps.googleusercontent.com";
+    private static final String USER_IDENTIFIER_KEY = "16221812503-ldub53c0ogp8ce313fgtehule5sfo9jo.apps.googleusercontent.com";
     private GoogleAuthorizationCodeFlow flow;
 
 
 
-    @Value("${google.secret.key.path}")
+    @Value("${gmail-google.secret.key.path}")
     private Resource gdSecretKeys;
-    @Value("${google.credentials.folder.path}")
+    @Value("${gmail-google.credentials.folder.path}")
     private  Resource credentialsFolder;
-
-
-
-    public List<Message> getMessages() throws IOException {
-        System.out.println(this.credentialsFolder.getFile().getName());
-        GoogleClientSecrets secrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(gdSecretKeys.getInputStream()));
-        this.flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY, secrets, SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(credentialsFolder.getFile()))
-                .setAccessType("offline")
-                .build();
-        System.out.println(this.flow.getAccessType());
-        System.out.println(this.flow.getClientId());
-        Credential cred = this.flow.loadCredential(USER_IDENTIFIER_KEY);
-        System.out.println(cred.getAccessToken());
-        System.out.println(cred.getRefreshToken());
-        Gmail service = new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, cred)
-                .setApplicationName(APPLICATION_NAME)
-                .build();
-        Gmail.Users.GetProfile user =  service.users().getProfile(USER_IDENTIFIER_KEY);
-        System.out.println("user ip: " + user.getUserId());
-        ListMessagesResponse MsgResponse = service.users().messages().list("me").execute();
-        List<Message> messages = MsgResponse.getMessages();
-        System.out.println("message length:" + messages.size());
-        return messages;
-    }
-
-
-
 
 
 
@@ -95,17 +67,6 @@ public class GmailService {
 
 
         MimeMessage email = this.createEmailWithAttachment(toEmailAddress, messageSubject, bodyText);
-//        Properties props = new Properties();
-//        Session session = Session.getDefaultInstance(props, null);
-//        MimeMessage email = new MimeMessage(session);
-//
-////        email.setFrom(new InternetAddress(fromEmailAddress));
-//        email.addRecipient(javax.mail.Message.RecipientType.TO,
-//                new InternetAddress(toEmailAddress));
-//        email.setSubject(messageSubject);
-//        email.setText(bodyText,"text/html");
-
-
 
         // Encode and wrap the MIME message into a gmail message
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -144,13 +105,7 @@ public class GmailService {
 
         Multipart multipart = new MimeMultipart();
         multipart.addBodyPart(mimeBodyPart);
-
-
-
-
-        multipart.addBodyPart(mimeBodyPart);
         email.setContent(multipart,"text/html");
-
 
         return email;
     }

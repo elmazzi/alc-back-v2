@@ -93,11 +93,11 @@ public class UserServiceImpl implements UserService {
         if (loadedUser != null)
             return null;
         else {
-            String bodyMessage = "Your online registration on the site: https://engflexy.com is validated. \n" + "You can log into your account now.\n" +
-                    "Your account settings are :" + "\n" +
-                    "username : " + user.getUsername() + "\n" +
+            String bodyMessage = "Your online registration on the site: https://engflexy.com is validated. <br>" + "You can log into your account now.<br>" +
+                    "Your account settings are :" + "<br>" +
+                    "username : " + user.getUsername() + "<br>" +
                     "password : " + user.getPassword();
-//            this.gmailService.sendEmail(bodyMessage,"accepted on the platform engFlexy",user.getUsername());
+            this.gmailService.sendEmail(bodyMessage,"accepted on the platform engFlexy",user.getUsername());
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setImage(getTemporaryProfileImageUrl(user.getUsername()));
             roleService.save(user.getAuthorities());
@@ -105,20 +105,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public void prepareMessage(User user) {
-        System.out.println("prepare email ");
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(this.ENG_FLEXY_EMAIL);
-        message.setTo(user.getUsername());
-        message.setSubject("accepted on the platform e-learning");
-        message.setText("Your online registration on the site: https://engflexy.com is validated. \n" + "You can log into your account now.\n" +
-                "Your account settings are :" + "\n" +
-                "username : " + user.getUsername() + "\n" +
-                "password : " + user.getPassword());
-        mailSender.send(message);
-        System.out.println("email send");
 
-    }
 
     private String setProfileImageUrl(String username) {
         return ServletUriComponentsBuilder.fromCurrentContextPath().path(USER_IMAGE_PATH + username +
@@ -207,9 +194,9 @@ public class UserServiceImpl implements UserService {
             user.setPassword(password);
             System.out.println(user.getPassword());
             System.out.println(user.getUsername());
-            String bodyMessage = "Hi " + user.getNom() + " \n" + "Your new password to log into your account.\n" +
-                    "New password : " + password;
-//            this.gmailService.sendEmail(bodyMessage,"Reset password",user.getUsername());
+            String bodyMessage = "Hi " + user.getNom() + " <br>" + "Your new password to log into your account.<br>" +
+                    "<h3> New password : " + password + "</h3>";
+            this.gmailService.sendEmail(bodyMessage,"Reset password",user.getUsername());
             user.setPassword(passwordEncoder.encode(password));
             userDao.save(user);
             return password;

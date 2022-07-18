@@ -16,7 +16,10 @@ public class CorsConfig {
                 registry.addMapping("/**")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("*")
-                        .allowedOrigins("http://localhost:4200", "http://162.19.25.141", "http://162.19.25.141:4200", "https://engflexy.com", "http://engflexy.com");
+                        .allowedOrigins("http://localhost:4200",
+                                "https://engflexy.com/",
+                                "https://engflexy.com",
+                                "http://engflexy.com");
             }
         };
     }
