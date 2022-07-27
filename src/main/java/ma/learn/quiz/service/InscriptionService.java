@@ -72,7 +72,7 @@ public class InscriptionService extends AbstractService {
 
 
     public List<Inscription> findAllByEtatInscriptionLibelle(String libelle) {
-        return inscriptionDao.findAllByEtatInscriptionLibelle(libelle);
+        return inscriptionDao.findAllByEtatInscriptionLibelleOrderByIdDesc(libelle);
     }
 
     public List<Inscription> findByCriteria(Inscription inscription) {

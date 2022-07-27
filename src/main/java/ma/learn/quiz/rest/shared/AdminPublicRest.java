@@ -24,6 +24,8 @@ public class AdminPublicRest {
     public List<Admin> findAll() {
         return adminService.findAll();
     }
+
+
 @PostMapping("/")
     public int save(@RequestBody Admin prof) throws MessagingException, IOException {
         return adminService.save(prof);
