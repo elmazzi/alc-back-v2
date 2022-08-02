@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
                     "Your account settings are :" + "<br>" +
                     "username : " + user.getUsername() + "<br>" +
                     "password : " + user.getPassword();
-            this.gmailService.sendEmail(bodyMessage,"accepted on the platform engFlexy",user.getUsername());
+//            this.gmailService.sendEmail(bodyMessage,"accepted on the platform engFlexy",user.getUsername());
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setImage(getTemporaryProfileImageUrl(user.getUsername()));
             roleService.save(user.getAuthorities());
@@ -196,7 +196,7 @@ public class UserServiceImpl implements UserService {
             System.out.println(user.getUsername());
             String bodyMessage = "Hi " + user.getNom() + " <br>" + "Your new password to log into your account.<br>" +
                     "<h3> New password : " + password + "</h3>";
-            this.gmailService.sendEmail(bodyMessage,"Reset password",user.getUsername());
+//            this.gmailService.sendEmail(bodyMessage,"Reset password",user.getUsername());
             user.setPassword(passwordEncoder.encode(password));
             userDao.save(user);
             return password;
