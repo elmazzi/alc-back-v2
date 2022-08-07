@@ -1,13 +1,9 @@
 package ma.learn.quiz;
 
-import ma.learn.quiz.bean.TypeDeQuestion;
-import ma.learn.quiz.dao.TypeDeQuestionDao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.Configuration;
 
 import java.io.File;
 
@@ -23,6 +19,7 @@ public class QuizApplication extends SpringBootServletInitializer {
         new File(RECLAMATION_FOLDER).mkdirs();
 
     }
+
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return builder.sources(QuizApplication.class);
