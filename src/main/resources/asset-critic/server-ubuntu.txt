@@ -18,12 +18,14 @@
 					+- run 
 						I- java -jar "/home/ubuntu/engFlexy/alc-back-v2/target/demo-0.0.1-SNAPSHOT.jar"
 						important stop service engflexyback.service first
+						[in case of error: fuser -k 8036/tcp (to kill the process)]
 											
 															OU
 																													
 						I-  run engflexyback.service ^^^^voir line 40 pour commandes (3eme etape)
 				
-				2- EN CAS D'ERROR 
+				2- EN CAS D'ERROR
+				   
 				
 					i- move to parent folder ==> cd "/home/ubuntu/engFlexy/" 
 					
