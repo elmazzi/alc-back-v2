@@ -5,6 +5,7 @@ import ma.learn.quiz.bean.Question;
 import ma.learn.quiz.bean.Quiz;
 import ma.learn.quiz.bean.Section;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -86,10 +87,19 @@ public class QuizService {
     }
 
     public Quiz updateAll(Quiz quiz) {
-        Quiz quiz1;
-        quiz1 = quizDao.save(quiz);
-        List<Question> questionList = questionService.saveAll(quiz, quiz.getQuestions());
-        System.out.println(questionList.size());
+        List<Question> questionList1 = quiz.getQuestions();
+
+        System.out.println("QST SIZE" + questionList1.size());
+        for (Question q: questionList1
+        ) {
+            System.out.println(q.getId());
+            System.out.println(q.getReponses().size());
+            System.out.println(q.getTypeDeQuestion());
+            System.out.println(q.getLibelle());
+            System.out.println(q.getNumero());
+        }
+        List<Question> questionList = questionService.saveAll(quiz, questionList1);
+        Quiz quiz1 = quizDao.save(quiz);
         quiz1.setQuestions(questionList);
         return quiz1;
     }

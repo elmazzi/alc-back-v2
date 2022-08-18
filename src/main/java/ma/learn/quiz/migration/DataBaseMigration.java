@@ -7,8 +7,8 @@ package ma.learn.quiz.migration;
 
 import ma.learn.quiz.bean.*;
 import ma.learn.quiz.dao.*;
-import ma.learn.quiz.service.TranslationEnAr;
-import ma.learn.quiz.service.TypeHomeWorkService;
+import ma.learn.quiz.filter.TypeQuiz;
+import ma.learn.quiz.service.*;
 import ma.learn.quiz.migration.constant.Constants;
 import ma.learn.quiz.migration.util.FileUtil;
 import ma.learn.quiz.migration.util.DownloaderUtil;
@@ -23,6 +23,8 @@ import javax.persistence.Id;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 import java.util.logging.Level;
@@ -52,6 +54,12 @@ public class DataBaseMigration {
     private Long id;
     @Autowired
     private TypeDeQuestionDao typeDeQuestionDao;
+    @Autowired
+    private QuestionService questionService;
+    @Autowired
+    private ReponseService reponseService;
+    @Autowired
+    private QuizService quizService;
     @Autowired
     private HomeWorkQuestionDao homeWorkQuestionDao;
     @Autowired
@@ -84,54 +92,75 @@ public class DataBaseMigration {
                 String pathParcoursImages = imageDirRoot.getAbsolutePath() + "\\" + parcour[i] + "\\";
                 String pathParcours = Constants.root + parcour[i] + "\\";
                 FileUtil.mkdire(pathParcoursImages, "Lesson", true);
+
+                // LESSON
+
                 String pathLessonOrHomeWork = pathParcours + "Lesson";
-                String pathHomwork = pathParcours + "HOMEWORK";
                 String pathLessonOrHomeWorkImage = pathParcoursImages + "Lesson";
-                String pathHomeWorkImage = pathParcoursImages + "HOMEWORK";
                 File directoryPathSection = new File(pathLessonOrHomeWork);
-                File directoryPathHomework = new File(pathHomwork);
                 String[] section = directoryPathSection.list();
+
+                // HOMEWORK
+                String pathHomwork = pathParcours + "HOMEWORK";
+                String pathHomeWorkImage = pathParcoursImages + "HOMEWORK";
+                File directoryPathHomework = new File(pathHomwork);
                 String[] typeHomewrok = directoryPathHomework.list();
 
+                /**
+                 * Insert SECTION && QUIZ
+                 */
+                insertSections(parcour, i, pathLessonOrHomeWork, pathLessonOrHomeWorkImage, section);
 
-                for (int j = 0; j < section.length; j++) {
-                    System.out.println("  sectionName ::::: " + "Lesson" + " " + parcour[i] + " " + section[j]);
-                    String pathSection = pathLessonOrHomeWork + "\\" + section[j];
-                    String pathSectionImage = pathLessonOrHomeWorkImage + "\\" + section[j];
-                    if (new File(pathSection).exists()) {
-                        FileUtil.mkdire(pathSectionImage, pathLessonOrHomeWorkImage, true);
-                        System.out.println("pathSection ==> " + pathSection);
-                        System.out.println("pathImage ==>" + pathSectionImage);
-                        System.out.println("++++++++++++++++++++++++++++++");
-                        extractHtmlImageAndContent(parcour[i], section[j], pathSection, pathSectionImage);
-                    }
-                }
+                /**
+                 * Insert HOMEWORK
+                 */
 
-                for (int j = 0; j < typeHomewrok.length; j++) {
-                    String pathHomWork = pathHomwork + "\\" + typeHomewrok[j];
-                    String pathHomWorkImage = pathHomeWorkImage + "\\" + typeHomewrok[j];
-                    if (new File(pathHomWork).exists()) {
-                        FileUtil.mkdire(pathHomeWorkImage, pathHomWorkImage, true);
-                        System.out.println("++++++++++++++++++++++++++++++");
-                        System.out.println("pathHomeWork ==> " + pathHomWork);
-                        System.out.println("pathImage ==>" + pathHomWorkImage);
-                        File homeWorkFile = new File(pathHomWork);
-                        System.out.println(homeWorkFile.getName());
-                        if (homeWorkFile.getName().equals("WATCH IT.txt")) {
-                            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                            System.out.println(homeWorkFile.getName());
-                            this.getWatchItData(homeWorkFile, parcours);
-                        } else {
-                            extractHtmlImageAndContentForHomeWork(parcours.getId(), parcours.getLibelle(), typeHomewrok[j], pathHomWork, pathHomWorkImage);
-                        }
-                    }
-                }
+//                insertHomeWorks(parcours, pathHomwork, pathHomeWorkImage, typeHomewrok);
+
+
             }
         }
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         System.out.println("Finish Tnx For waiting");
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         return "process finish thanks for waiting";
+    }
+
+    private void insertHomeWorks(Parcours parcours, String pathHomwork, String pathHomeWorkImage, String[] typeHomewrok) {
+        for (int j = 0; j < typeHomewrok.length; j++) {
+            String pathHomWork = pathHomwork + "\\" + typeHomewrok[j];
+            String pathHomWorkImage = pathHomeWorkImage + "\\" + typeHomewrok[j];
+            if (new File(pathHomWork).exists()) {
+                FileUtil.mkdire(pathHomeWorkImage, pathHomWorkImage, true);
+                System.out.println("++++++++++++++++++++++++++++++");
+                System.out.println("pathHomeWork ==> " + pathHomWork);
+                System.out.println("pathImage ==>" + pathHomWorkImage);
+                File homeWorkFile = new File(pathHomWork);
+                System.out.println(homeWorkFile.getName());
+                if (homeWorkFile.getName().equals("WATCH IT.txt")) {
+                    System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    System.out.println(homeWorkFile.getName());
+                    this.getWatchItData(homeWorkFile, parcours);
+                } else {
+                    extractHtmlImageAndContentForHomeWork(parcours.getId(), parcours.getLibelle(), typeHomewrok[j], pathHomWork, pathHomWorkImage);
+                }
+            }
+        }
+    }
+
+    private void insertSections(String[] parcour, int i, String pathLessonOrHomeWork, String pathLessonOrHomeWorkImage, String[] section) {
+        for (int j = 0; j < section.length; j++) {
+            System.out.println("  sectionName ::::: " + "Lesson" + " " + parcour[i] + " " + section[j]);
+            String pathSection = pathLessonOrHomeWork + "\\" + section[j];
+            String pathSectionImage = pathLessonOrHomeWorkImage + "\\" + section[j];
+            if (new File(pathSection).exists()) {
+                FileUtil.mkdire(pathSectionImage, pathLessonOrHomeWorkImage, true);
+                System.out.println("pathSection ==> " + pathSection);
+                System.out.println("pathImage ==>" + pathSectionImage);
+                System.out.println("++++++++++++++++++++++++++++++");
+                extractHtmlImageAndContent(parcour[i], section[j], pathSection, pathSectionImage);
+            }
+        }
     }
 
     private void getWatchItData(File file, Parcours parcours) {
@@ -402,43 +431,72 @@ public class DataBaseMigration {
                                 parcours.setNombreCours(parcours.getNombreCours() + 1);
                                 parcoursDao.save(parcours);
                             }
-                            Section section = sectionDao.findSectionByLibelleAndCoursId(JsoupUtil.getElementContent(f, "p.title-progress"), cours.getId());
-                            if (section == null) {
-                                section = new Section();
-                                section.setLibelle(JsoupUtil.getElementContent(f, "p.title-progress"));
-                                section.setCategorieSection(categorieSection1);
-                                section.setCode(JsoupUtil.getElementContent(f, "p.title-progress"));
-                                section.setNumeroOrder(categorieSection1.getNumeroOrder());
-                                section.setContenu(JsoupUtil.getElementContentLesson(f, "div.wrapper-information"));
-                                section.setCours(cours);
+                            int firstIndex = directoryName.lastIndexOf("Lesson");
+                            String sectionName = directoryName.substring(firstIndex + 7);
+                            System.out.println("SECTION NAME: " + sectionName);
+                            if (!sectionName.equalsIgnoreCase("Let's practice")) {
+                                Section section = sectionDao.findSectionByLibelleAndCoursId(JsoupUtil.getElementContent(f, "p.title-progress"), cours.getId());
+                                if (section == null) {
+                                    section = new Section();
+                                    section.setLibelle(JsoupUtil.getElementContent(f, "p.title-progress"));
+                                    section.setCategorieSection(categorieSection1);
+                                    section.setCode(JsoupUtil.getElementContent(f, "p.title-progress"));
+                                    section.setNumeroOrder(categorieSection1.getNumeroOrder());
+                                    section.setContenu(JsoupUtil.getElementContentLesson(f, "div.wrapper-information"));
+                                    section.setCours(cours);
+                                    sectionDao.save(section);
+                                }
+
+
+                                String imageNameSource = null;
+                                if (!imageSrc.startsWith("https")) {
+                                    imageNameSource = directoryName + "\\" + imageSrc;
+                                } else {
+                                    String tmpFolderForDownladedImage = directoryName + "\\tmp\\" + FileUtil.fileNameWithOutExt(f.getName()) + "." + fileExtention;
+                                    FileUtil.mkdire(directoryName, "tmp", true);
+                                    DownloaderUtil.exec(imageSrc, tmpFolderForDownladedImage, fileExtention);
+                                    imageNameSource = tmpFolderForDownladedImage;
+                                }
+                                final String imageNameDestination = imagePath + "\\" + FileUtil.fileNameWithOutExt(f.getName()) + "." + fileExtention;
+                                FileUtil.copyFile(imageNameSource, imageNameDestination);
+                                String imgName = parcours.getLibelle() + cours.getLibelle() + section.getCategorieSection().getLibelle() + FileUtil.fileNameWithOutExt(f.getName()) + "." + fileExtention;
+
+                                String drivePath = this.addImgToGoogleDrive(parcours.getLibelle(), cours.getLibelle(), section.getCategorieSection().getLibelle(), imageNameDestination, imgName);
+                                System.out.println("_______________________________________________________________________");
+                                System.out.println(drivePath);
+                                section.setUrlImage(drivePath);
                                 sectionDao.save(section);
-                            }
-
-
-                            String imageNameSource = null;
-                            if (!imageSrc.startsWith("https")) {
-                                imageNameSource = directoryName + "\\" + imageSrc;
+                                System.out.println("_______________________________________________________________________");
                             } else {
-                                String tmpFolderForDownladedImage = directoryName + "\\tmp\\" + FileUtil.fileNameWithOutExt(f.getName()) + "." + fileExtention;
-                                System.out.println("4444444444 DOWNLOADING tmpFolderForDownladedImage ==>>>" + tmpFolderForDownladedImage);
-                                FileUtil.mkdire(directoryName, "tmp", true);
-                                DownloaderUtil.exec(imageSrc, tmpFolderForDownladedImage, fileExtention);
-                                imageNameSource = tmpFolderForDownladedImage;
-                            }
-                            final String imageNameDestination = imagePath + "\\" + FileUtil.fileNameWithOutExt(f.getName()) + "." + fileExtention;
-                            System.out.println("imageNameSource = " + imageNameSource + " && imageNameDestination " + imageNameDestination);
-                            System.out.println(parcours.getLibelle());
-                            System.out.println("Lesson");
-                            System.out.println(section.getCategorieSection().getLibelle());
-                            FileUtil.copyFile(imageNameSource, imageNameDestination);
-                            String imgName = parcours.getLibelle() + cours.getLibelle() + section.getCategorieSection().getLibelle() + FileUtil.fileNameWithOutExt(f.getName()) + "." + fileExtention;
 
-                            String drivePath = this.addImgToGoogleDrive(parcours.getLibelle(), cours.getLibelle(), section.getCategorieSection().getLibelle(), imageNameDestination, imgName);
-                            System.out.println("_______________________________________________________________________");
-                            System.out.println(drivePath);
-                            section.setUrlImage(drivePath);
-                            sectionDao.save(section);
-                            System.out.println("_______________________________________________________________________");
+                                /**
+                                 * INSERT QUIZ
+                                 */
+                                Section section = sectionDao.findSectionByLibelleAndCoursId(sectionName, cours.getId());
+                                if (section == null) {
+                                    section = new Section();
+                                    section.setLibelle(sectionName);
+                                    CategorieSection categorieSection2 = this.categorieSectionDoa.findCategorieSectionByLibelle(sectionName);
+                                    section.setCategorieSection(categorieSection2);
+                                    section.setCode(categorieSection2.getCode());
+                                    section.setNumeroOrder(categorieSection2.getNumeroOrder());
+                                    section.setCours(cours);
+                                    sectionDao.save(section);
+                                }
+                                // check type of quiz
+                                String typeQuiz = JsoupUtil.getElementContent(f, "p.title-progress");
+                                System.out.println("TYPE DE QUIZ: " + typeQuiz);
+                                if (typeQuiz.equalsIgnoreCase(TypeQuiz.TRANSLATE_THE_PHRASE)) {
+                                    insertTranslateThePhrase(section, f);
+                                } else if (typeQuiz.equalsIgnoreCase(TypeQuiz.CHOOSE_THE_CORRECT_ALTERNATIVE)) {
+                                    insertChooseAlternative(section, f);
+                                } else if (typeQuiz.equalsIgnoreCase(TypeQuiz.WRITE_THE_CORRECT_FORM)) {
+                                    insertTheCorrectForm(section, f);
+                                } else if (typeQuiz.equalsIgnoreCase(TypeQuiz.CORRECT_THE_MISTAKE)){
+                                    insertCorrectMistake(section, f);
+                                }
+                            }
+
                         }
 
 
@@ -447,6 +505,8 @@ public class DataBaseMigration {
                     }
                 });
     }
+
+
 
     private SuperCategorieSection initSuperCategorie(File f) throws IOException {
         SuperCategorieSection superCategorieSection;
@@ -466,5 +526,206 @@ public class DataBaseMigration {
         return id;
     }
 
+    private void insertChooseAlternative(Section section, File f) throws Exception {
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        LocalDate localDate = LocalDate.now();
+        Date date = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
+        TypeDeQuestion typeDeQuestion = this.typeDeQuestionDao.findByRef("t1");
+        List<Reponse> listReponse = new ArrayList<>();
+        //QUESTION
+        Question question = new Question();
+        String fullLibQst = JsoupUtil.getElementContent(f, "p.text-task");
+        String correctAnswer = JsoupUtil.getElementContent(f, "span.right-text");
 
+        String numQst = JsoupUtil.getElementContent(f, "p.count-progress");
+        Elements elements = JsoupUtil.getElements(f, "div.answer-training");
+        for (Element element : elements
+        ) {
+            for (Element child : element.children()
+            ) {
+                String reponseLib = child.select("p.text-variant").text();
+                String numero = child.select("div.hot-key-training.b-hot-key").text();
+                if (reponseLib.length() <= 0) {
+                    return;
+                }
+                Reponse reponse = new Reponse();
+                reponse.setNumero(Long.valueOf(numero));
+                reponse.setLib(reponseLib);
+                if (!reponseLib.equals(correctAnswer)) {
+                    reponse.setEtatReponse("false");
+                } else {
+                    reponse.setEtatReponse("true");
+                }
+                listReponse.add(reponse);
+            }
+        }
+        String strRepList = JsoupUtil.getElementContent(f, "span.empty-word");
+        String libQst = fullLibQst.replace(strRepList, ".....");
+        question.setLibelle(libQst);
+        question.setPointReponsefausse(0);
+        question.setPointReponseJuste(1);
+        question.setTypeDeQuestion(typeDeQuestion);
+        System.out.println("TYPE QST" + question.getTypeDeQuestion().getRef());
+        question.setNumero(Long.valueOf(numQst.substring(0, 1)));
+        question.setReponses(listReponse);
+        saveQuiz(section, date, question);
+    }
+
+    private void insertTheCorrectForm(Section section, File f) throws Exception {
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        LocalDate localDate = LocalDate.now();
+        Date date = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
+        TypeDeQuestion typeDeQuestion = this.typeDeQuestionDao.findByRef("t6");
+        List<Reponse> listReponse = new ArrayList<>();
+        //QUESTION
+        Question question = new Question();
+        String fullLibQst = JsoupUtil.getElementContent(f, "div.text-task");
+        System.out.println("LIB: " + fullLibQst);
+        String correctAnswer = JsoupUtil.getElementContent(f, "div.-center-tooltip.-answer-tooltip");
+        System.out.println("CORRECT ANSWER: " + correctAnswer);
+
+        String falseAnswer = "";
+        String numQst = JsoupUtil.getElementContent(f, "p.count-progress");
+        Elements elements = JsoupUtil.getElements(f, "div.text-input-wrap");
+        System.out.println("ELEMENTS: " + elements);
+
+        for (Element element : elements
+        ) {
+            for (Element child : element.children()
+            ) {
+                String reponseLib = child.select("div.text-input").text();
+
+                if (reponseLib.length() > 1) {
+                    if (!reponseLib.equalsIgnoreCase(correctAnswer)) {
+                        System.out.println("REPONSELIB1: " + reponseLib);
+                        falseAnswer = reponseLib;
+                    } else {
+                        System.out.println("REPONSELIB2: " + reponseLib);
+                        Reponse reponse = new Reponse();
+                        reponse.setNumero(1L);
+                        reponse.setLib(correctAnswer);
+                        reponse.setEtatReponse("true");
+                        listReponse.add(reponse);
+                    }
+                }
+            }
+        }
+        String strRepList = JsoupUtil.getElementContent(f, "div.input-wrap.js-wrap-input.is-incorrect");
+        System.out.println("STRREPLIST: " + strRepList);
+        String libQst = fullLibQst.replace(strRepList, "@" + falseAnswer + "@");
+        System.out.println("LIBQST: " + libQst);
+        String libQst2 = libQst.replace("Space", " ");
+        System.out.println("LIBQST2: " + libQst2);
+
+        question.setLibelle(libQst2);
+        question.setPointReponsefausse(0);
+        question.setPointReponseJuste(1);
+        question.setTypeDeQuestion(typeDeQuestion);
+        System.out.println("TYPE QST" + question.getTypeDeQuestion().getRef());
+        question.setNumero(Long.valueOf(numQst.substring(0, 1)));
+        question.setReponses(listReponse);
+        saveQuiz(section, date, question);
+    }
+
+    private void insertTranslateThePhrase(Section section, File f) throws IOException {
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        LocalDate localDate = LocalDate.now();
+        Date date = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
+        TypeDeQuestion typeDeQuestion = this.typeDeQuestionDao.findByRef("t3");
+        System.out.println(typeDeQuestion.getRef());
+        //QUESTION
+        Question question = new Question();
+        String libQst = JsoupUtil.getElementContent(f, "div.answer-task");
+        String numQst = JsoupUtil.getElementContent(f, "p.count-progress");
+        question.setLibelle(this.translate(libQst));
+        question.setPointReponsefausse(0);
+        question.setPointReponseJuste(1);
+        question.setNumero(Long.valueOf(numQst.substring(0, 1)));
+        question.setTypeDeQuestion(typeDeQuestion);
+        System.out.println("TYPE QST" + question.getTypeDeQuestion().getRef());
+        // REPONSE
+        Reponse reponse = new Reponse();
+        reponse.setEtatReponse("true");
+        reponse.setLib(libQst);
+        reponse.setNumero(1L);
+        List<Reponse> reponseList = new ArrayList<>();
+        reponseList.add(reponse);
+        question.setReponses(reponseList);
+        //QUIZ
+        saveQuiz(section, date, question);
+    }
+
+    private void insertCorrectMistake(Section section, File f) throws IOException {
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        LocalDate localDate = LocalDate.now();
+        Date date = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
+        TypeDeQuestion typeDeQuestion = this.typeDeQuestionDao.findByRef("t4");
+        System.out.println(typeDeQuestion.getRef());
+        //QUESTION
+        Question question = new Question();
+        String fullLibQst = JsoupUtil.getElementContent(f, "div.text-task-content");
+        System.out.println("FULLLIBQST: " + fullLibQst);
+
+        String fullLibAnswers = JsoupUtil.getElementContent(f, "div.input-wrap");
+        System.out.println("FULLLIBANSWERS: " + fullLibAnswers);
+
+        String falseInswer = JsoupUtil.getElementContent(f, "span.answer-grammar-mistake.is-incorrect");
+        System.out.println("FALSEINSWER: " + falseInswer);
+
+        String trueInswer = JsoupUtil.getElementContent(f, "div.b-tooltip.-answer-tooltip");
+        System.out.println("TRUEINSWER: " + trueInswer);
+
+        String libQst = fullLibQst.replace(fullLibAnswers, "@" + falseInswer + "@");
+        System.out.println("LIBQST: " + libQst);
+
+        String numQst = JsoupUtil.getElementContent(f, "p.count-progress");
+        question.setLibelle(libQst);
+        question.setPointReponsefausse(0);
+        question.setPointReponseJuste(1);
+        question.setNumero(Long.valueOf(numQst.substring(0, 1)));
+        question.setTypeDeQuestion(typeDeQuestion);
+        System.out.println("TYPE QST" + question.getTypeDeQuestion().getRef());
+        // REPONSE
+        Reponse reponse = new Reponse();
+        reponse.setEtatReponse("true");
+        reponse.setLib(trueInswer);
+        reponse.setNumero(1L);
+        List<Reponse> reponseList = new ArrayList<>();
+        reponseList.add(reponse);
+        question.setReponses(reponseList);
+        //QUIZ
+        saveQuiz(section, date, question);
+    }
+
+
+    private void saveQuiz(Section section, Date date, Question question) {
+        Quiz quiz = this.quizService.findBySectionId(section.getId());
+        List<Question> questionList = new ArrayList<>();
+        if (quiz == null) {
+            quiz = new Quiz();
+            quiz.setDateDebut(date);
+            quiz.setLib(section.getLibelle());
+            quiz.setSection(section);
+            quiz.setRef("quiz-" + section.getId());
+            questionList.add(question);
+            quiz.setQuestions(questionList);
+            this.quizService.saveAll(quiz);
+        } else {
+            questionList.add(question);
+            quiz.setQuestions(questionList);
+            for (Question q : quiz.getQuestions()
+            ) {
+                System.out.println(q.getId());
+                System.out.println(q.getReponses().size());
+                System.out.println(q.getTypeDeQuestion().getRef());
+                System.out.println(q.getLibelle());
+                System.out.println(q.getNumero());
+            }
+            this.quizService.updateAll(quiz);
+        }
+    }
+
+
+    @Autowired
+    private TypeDeQuestionService typeDeQuestionService;
 }

@@ -50,6 +50,8 @@ public class JsoupUtil {
         return document.select(selector);
     }
 
+
+
     public static String getImageSrc(File in) throws IOException {
         Element image = getImage(in);
         if (image == null) {

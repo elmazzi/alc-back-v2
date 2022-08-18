@@ -70,21 +70,21 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Value("${trust.store}")
-    private org.springframework.core.io.Resource trustStoreFile;
-    @Value("${trust.store.password}")
-    private String trustStorePassword;
-
-    RestTemplate restTemplate() throws Exception {
-        SSLContext sslContext = new SSLContextBuilder()
-                .loadTrustMaterial(trustStoreFile.getURL(), trustStorePassword.toCharArray())
-                .build();
-        SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(sslContext);
-        HttpClient httpClient = HttpClients.custom()
-                .setSSLSocketFactory(socketFactory)
-                .build();
-        HttpComponentsClientHttpRequestFactory factory =
-                new HttpComponentsClientHttpRequestFactory(httpClient);
-        return new RestTemplate(factory);
-    }
+//    @Value("${trust.store}")
+//    private org.springframework.core.io.Resource trustStoreFile;
+//    @Value("${trust.store.password}")
+//    private String trustStorePassword;
+//
+//    RestTemplate restTemplate() throws Exception {
+//        SSLContext sslContext = new SSLContextBuilder()
+//                .loadTrustMaterial(trustStoreFile.getURL(), trustStorePassword.toCharArray())
+//                .build();
+//        SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(sslContext);
+//        HttpClient httpClient = HttpClients.custom()
+//                .setSSLSocketFactory(socketFactory)
+//                .build();
+//        HttpComponentsClientHttpRequestFactory factory =
+//                new HttpComponentsClientHttpRequestFactory(httpClient);
+//        return new RestTemplate(factory);
+//    }
 }
