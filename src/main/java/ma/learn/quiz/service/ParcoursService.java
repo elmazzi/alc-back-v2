@@ -161,7 +161,7 @@ public class ParcoursService {
 
     }
 
-    List<String> courseList = new ArrayList<>() {{
+    List<String> courseList = new ArrayList<String>() {{
         add("Intro lesson");
         add("1 Saying Hello!");
         add("2 Hey! What's up?");
