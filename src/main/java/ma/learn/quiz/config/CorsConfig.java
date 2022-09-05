@@ -17,7 +17,9 @@ public class CorsConfig {
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("*")
                         .allowedOrigins("http://localhost:4200",
+                                "http://engflexy.com/",
                                 "https://engflexy.com/",
+                                "http://153.92.222.43/",
                                 "http://153.92.222.43/",
                                 "https://153.92.222.43/");
             }
