@@ -115,7 +115,7 @@ public class DataBaseMigration {
                  * Insert HOMEWORK
                  */
 
-//                insertHomeWorks(parcours, pathHomwork, pathHomeWorkImage, typeHomewrok);
+                insertHomeWorks(parcours, pathHomwork, pathHomeWorkImage, typeHomewrok);
 
 
             }
@@ -434,7 +434,7 @@ public class DataBaseMigration {
                             int firstIndex = directoryName.lastIndexOf("Lesson");
                             String sectionName = directoryName.substring(firstIndex + 7);
                             System.out.println("SECTION NAME: " + sectionName);
-                            if (!sectionName.equalsIgnoreCase("Let's practice")) {
+                            if (!sectionName.toUpperCase().contains("LET'S PRACTICE")) {
                                 Section section = sectionDao.findSectionByLibelleAndCoursId(JsoupUtil.getElementContent(f, "p.title-progress"), cours.getId());
                                 if (section == null) {
                                     section = new Section();
@@ -472,11 +472,11 @@ public class DataBaseMigration {
                                 /**
                                  * INSERT QUIZ
                                  */
-                                Section section = sectionDao.findSectionByLibelleAndCoursId(sectionName, cours.getId());
+                                Section section = sectionDao.findSectionByLibelleAndCoursId("Let's practice", cours.getId());
                                 if (section == null) {
                                     section = new Section();
-                                    section.setLibelle(sectionName);
-                                    CategorieSection categorieSection2 = this.categorieSectionDoa.findCategorieSectionByLibelle(sectionName);
+                                    section.setLibelle("Let's practice");
+                                    CategorieSection categorieSection2 = this.categorieSectionDoa.findCategorieSectionByLibelle("Let's practice");
                                     section.setCategorieSection(categorieSection2);
                                     section.setCode(categorieSection2.getCode());
                                     section.setNumeroOrder(categorieSection2.getNumeroOrder());
@@ -492,7 +492,7 @@ public class DataBaseMigration {
                                     insertChooseAlternative(section, f);
                                 } else if (typeQuiz.equalsIgnoreCase(TypeQuiz.WRITE_THE_CORRECT_FORM)) {
                                     insertTheCorrectForm(section, f);
-                                } else if (typeQuiz.equalsIgnoreCase(TypeQuiz.CORRECT_THE_MISTAKE)){
+                                } else if (typeQuiz.equalsIgnoreCase(TypeQuiz.CORRECT_THE_MISTAKE)) {
                                     insertCorrectMistake(section, f);
                                 }
                             }
@@ -505,7 +505,6 @@ public class DataBaseMigration {
                     }
                 });
     }
-
 
 
     private SuperCategorieSection initSuperCategorie(File f) throws IOException {

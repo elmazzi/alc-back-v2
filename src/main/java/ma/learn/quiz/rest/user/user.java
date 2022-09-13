@@ -1,5 +1,6 @@
 package ma.learn.quiz.rest.user;
 
+import freemarker.template.TemplateException;
 import ma.learn.quiz.bean.*;
 import ma.learn.quiz.exception.NotAnImageFileException;
 import ma.learn.quiz.service.AdminService;
@@ -54,7 +55,7 @@ public class user {
     }
 
     @PostMapping("/")
-    public User save(@RequestBody User user) throws MessagingException, IOException {
+    public User save(@RequestBody User user) throws MessagingException, IOException, TemplateException {
         return userService.save(user);
     }
 

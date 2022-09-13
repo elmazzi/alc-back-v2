@@ -181,14 +181,12 @@ VALUES (5, 'Watch it'),
 
 INSERT
 IGNORE INTO `user` (`dtype`, `id`, `account_non_expired`, `account_non_locked`, `addresse`, `age`, `credentials_non_expired`, `enabled`, `image`, `nom`, `numero`, `password`, `prenom`, `username`, `ville`, `ref`, `etat_etudiant_schedule`, `parcours`, `categorie_prof`, `role`, `group_option`, `teacher_locality`, `groupe_etude`, `country`, `date_naissance`, `level_max`, `level_min`, `pack_student`, `fonction`, `interet_etudiant`, `niveau_etude`, `statut_social`, `langue`, `skill`, `skype`, `type_teacher`) VALUES
-('Admin', 1, true, true, 'marrakech', 23, true, true, 'http://localhost:8036/user/image/admin@gmail.com/admin@gmail.com.jpg', 'Elmoudene', '0605120314', '$2a$10$VW1CnG0HpYa5eiGikTlzQOWjAjwjA/ZptHA09uD.LlBE/HWc3YiqC', 'Youssef', 'youssefelmoudene09@gmail.com', 'AIT OURIR', NULL, NULL, NULL, NULL, 'ADMIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('Prof', 2, true, true, NULL, 0, true, true, 'http://localhost:8036/user/image/teacher@gmail.com/teacher@gmail.com.jpg', 'teacher', '0605120314', '$2a$10$xpy0yulabuTwf8ikJM8j5eM337f81aETiLSRSHsvPaHhDqyUh6bDm', 'teacher', 'engflexy.contact@gmail.com', NULL, NULL, NULL, NULL, 1, 'TEACHER', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('Admin', 3, true, true, 'Marrakech', 22, true, true, 'http://localhost:8036/user/image/zouani@gmail.com/zouani@gmail.com.jpg', 'Zouani', '0760102030', '$2a$10$G6z1mCKHaDMLUZv9RiK1/OwjvXfK4tnNm/DMA.Wsm7KEadi4GL/Ua', 'Younes', 'alc.image.driver@gmail.com', 'Marrakech', NULL, NULL, NULL, NULL, 'ADMIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+('Admin', 1, true, true, 'Marrakech', 22, true, true, 'http://localhost:8036/user/image/zouani@gmail.com/zouani@gmail.com.jpg', 'Zouani', '0760102030', '$2a$10$Yn//JIg2kioe4w0yU8Rx3.KpmGvHo8eD/F/Ryk5qLpIrL7WzM7OE6', 'Younes', 'alc.image.driver@gmail.com', 'Marrakech', NULL, NULL, NULL, NULL, 'ADMIN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('Prof', 2, true, true, NULL, 0, true, true, 'http://localhost:8036/user/image/teacher@gmail.com/teacher@gmail.com.jpg', 'teacher', '0605120314', '$2a$10$41byyLEhF/lKgxXmm8.MfO5aJX5N7lZU3UuoHsKd7bxh52.ybmwne', 'teacher', 'engflexy.contact@gmail.com', NULL, NULL, NULL, NULL, 1, 'TEACHER', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --
--- INSERT
--- IGNORE INTO `user_authorities` (`user_id`, `authorities`)
--- VALUES (1, 1),
---        (2, 2),
---        (3, 1);
+INSERT
+IGNORE INTO `user_authorities` (`user_id`, `authorities`)
+VALUES (1, 1),
+       (2, 2);
 

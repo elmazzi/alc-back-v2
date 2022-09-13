@@ -9,6 +9,7 @@ import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import freemarker.template.TemplateException;
 import io.swagger.models.auth.In;
 import ma.learn.quiz.bean.*;
 import ma.learn.quiz.dao.InscriptionDao;
@@ -147,7 +148,7 @@ public class EtudiantService extends AbstractService {
 //        scheduleProfDao.save(scheduleProf);
 //    }
 
-    public User create(String pack,Etudiant etudiant) throws MessagingException, IOException {
+    public User create(String pack,Etudiant etudiant) throws MessagingException, IOException, TemplateException {
         Etudiant etudiant1 = this.findByLogin(etudiant.getUsername());
         if (etudiant1 != null) {
             return null;

@@ -10,6 +10,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.drive.DriveScopes;
+import freemarker.template.TemplateException;
 import ma.learn.quiz.bean.Admin;
 import ma.learn.quiz.service.AdminService;
 import ma.learn.quiz.migration.DataBaseMigration;
@@ -48,7 +49,7 @@ public class AdminAdminRest {
 
 
     @PostMapping("/")
-    public int save(@RequestBody Admin admin) throws MessagingException, IOException {
+    public int save(@RequestBody Admin admin) throws MessagingException, IOException, TemplateException {
         System.out.println(admin.getNom());
         System.out.println(admin.getUsername());
         return adminService.save(admin);

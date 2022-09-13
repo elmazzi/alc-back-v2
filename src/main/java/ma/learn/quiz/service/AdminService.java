@@ -1,5 +1,6 @@
 package ma.learn.quiz.service;
 
+import freemarker.template.TemplateException;
 import ma.learn.quiz.bean.Admin;
 import ma.learn.quiz.bean.Role;
 import ma.learn.quiz.bean.User;
@@ -41,7 +42,7 @@ public class AdminService {
         return adminDao.findAdminById(id);
     }
 
-    public int save(Admin admin) throws MessagingException, IOException {
+    public int save(Admin admin) throws MessagingException, IOException, TemplateException {
         if (findAdminById(admin.getId()) != null) {
             return -1;
         }

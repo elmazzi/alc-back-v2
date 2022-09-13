@@ -1,7 +1,11 @@
 package ma.learn.quiz.service;
 
 
+import freemarker.template.TemplateException;
 import ma.learn.quiz.bean.User;
+import ma.learn.quiz.configuration.ConstantFileNames;
+import ma.learn.quiz.configuration.EmailSenderService;
+import ma.learn.quiz.configuration.MailComponent;
 import ma.learn.quiz.dao.UserDao;
 import ma.learn.quiz.exception.NotAnImageFileException;
 import ma.learn.quiz.service.Util.GmailService;
@@ -57,7 +61,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private JwtUtil jwtUtil;
     @Autowired
-    private GmailService gmailService;
+    private EmailSenderService emailSenderService;
 
 
     @Override
@@ -85,7 +89,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(User user) throws MessagingException, IOException {
+    public User save(User user) throws MessagingException, IOException, TemplateException {
         System.out.println(user.getUsername());
         System.out.println(user.getPassword());
         System.out.println(user.getAuthorities());
@@ -97,7 +101,14 @@ public class UserServiceImpl implements UserService {
                     "Your account settings are :" + "<br>" +
                     "username : " + user.getUsername() + "<br>" +
                     "password : " + user.getPassword();
-//            this.gmailService.sendEmail(bodyMessage,"accepted on the platform engFlexy",user.getUsername());
+//            sent mail
+            MailComponent mailComponent = new MailComponent();
+            mailComponent.setPassword(user.getPassword());
+            mailComponent.setUsername(user.getUsername());
+            mailComponent.setTo(user.getUsername());
+            mailComponent.setSubject("Your online registration on the site: https://engflexy.com is validated.");
+            mailComponent.setFrom("engflexy.contact@gmail.com");
+            this.emailSenderService.sentJavaMail(mailComponent, ConstantFileNames.CONFIRMATION_TEMPLATE_MAIL);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setImage(getTemporaryProfileImageUrl(user.getUsername()));
             roleService.save(user.getAuthorities());

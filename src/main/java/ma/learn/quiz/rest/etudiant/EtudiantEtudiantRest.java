@@ -1,5 +1,6 @@
 package ma.learn.quiz.rest.etudiant;
 
+import freemarker.template.TemplateException;
 import ma.learn.quiz.bean.Etudiant;
 import ma.learn.quiz.bean.User;
 import ma.learn.quiz.service.EtudiantService;
@@ -25,7 +26,7 @@ public class EtudiantEtudiantRest {
 
 
     @PostMapping("/save/pack/{pack}")
-    public User create(@PathVariable String pack, @RequestBody Etudiant etudiant) throws MessagingException, IOException {
+    public User create(@PathVariable String pack, @RequestBody Etudiant etudiant) throws MessagingException, IOException, TemplateException {
         return etudiantService.create(pack,etudiant);
     }
 

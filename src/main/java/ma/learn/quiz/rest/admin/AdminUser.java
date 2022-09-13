@@ -1,5 +1,6 @@
 package ma.learn.quiz.rest.admin;
 
+import freemarker.template.TemplateException;
 import ma.learn.quiz.bean.User;
 import ma.learn.quiz.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class AdminUser {
     }
 
     @PostMapping("/")
-    public User save(@RequestBody  User user) throws MessagingException, IOException {
+    public User save(@RequestBody  User user) throws MessagingException, IOException, TemplateException {
         return userService.save(user);
     }
 
