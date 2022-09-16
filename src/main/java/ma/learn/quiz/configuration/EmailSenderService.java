@@ -30,8 +30,8 @@ public class EmailSenderService {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
-        mailSender.setUsername("noreply.engflexy@gmail.com");
-        mailSender.setPassword("gvzvjtwfpzzibwog"); //gvzvjtwfpzzibwog
+        mailSender.setUsername("engflexy.hello@gmail.com");
+        mailSender.setPassword("fkitdduinxhiquvs"); //gvzvjtwfpzzibwog
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
@@ -41,7 +41,7 @@ public class EmailSenderService {
         mailSender.setJavaMailProperties(props);
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mailMessage = new MimeMessageHelper(mimeMessage, "utf-8");
-        mailMessage.setFrom("noreply.engflexy@gmail.com");
+        mailMessage.setFrom("engflexy.hello@gmail.com");
         mailMessage.setTo(mailComponent.getTo());
         mailMessage.setSubject(mailComponent.getSubject());
         Template template = getTemplateByName(templateName);
