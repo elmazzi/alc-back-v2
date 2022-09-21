@@ -22,8 +22,8 @@ public class Question {
 	@Column(length=512)
     private String urlVideo;
     private Long numero;
-    private double pointReponseJuste;
-    private double pointReponsefausse;
+    private double pointReponseJuste = 1;
+    private double pointReponsefausse = 0;
 
     @ManyToOne
     private TypeDeQuestion typeDeQuestion;

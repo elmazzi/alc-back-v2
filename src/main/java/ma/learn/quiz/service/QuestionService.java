@@ -86,7 +86,9 @@ public class QuestionService {
             quizService.update(quiz);
             typeDeQuestionService.update(typeDeQuestion);
             questionDao.save(question);
-            reponseService.save(question, question.getReponses());
+            if (question.getReponses() != null) {
+                reponseService.save(question, question.getReponses());
+            }
             return 1;
         }
     }
@@ -94,20 +96,23 @@ public class QuestionService {
     public Question findQuestionById(Long Id) {
         return questionDao.findQuestionById(Id);
     }
+
     List<Question> questionList = new ArrayList<>();
 
     public List<Question> saveAll(Quiz quiz, List<Question> questions) {
         List<Question> questionList = new ArrayList<>();
         for (Question question : questions) {
-            Question question2 ;
+            Question question2;
             question.setQuiz(quiz);
             TypeDeQuestion typeDeQuestion = typeDeQuestionService.findByRef(question.getTypeDeQuestion().getRef());
             question.setTypeDeQuestion(typeDeQuestion);
             typeDeQuestionService.update(typeDeQuestion);
             System.out.println(question.getLibelle());
             question2 = questionDao.save(question);
-            List<Reponse> reponseList = reponseService.save(question, question.getReponses());
-            question2.setReponses(reponseList);
+            if (question.getReponses() != null) {
+                List<Reponse> reponseList = reponseService.save(question, question.getReponses());
+                question2.setReponses(reponseList);
+            }
             questionList.add(question2);
         }
         return questionList;
