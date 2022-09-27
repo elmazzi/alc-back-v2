@@ -22,13 +22,13 @@ IGNORE INTO `categorie_section` (`id`, `code`, `libelle`, `numero_order`, `super
 VALUES (1, 'Warm up', 'Warm up', 1, 159),
        (2, 'Get to know', 'Get to know', 4, 159),
        (3, 'Discussion', 'Discussion', 6, 159),
-       (4, 'Life Story', 'Life Story', 8, 160),
-       (5, 'Games', 'Games', 10, 160),
-       (6, 'Study the information', "Let's practice", 5, 159),
-       (7, 'Study the information', "Let's sum up", 7, 159),
-       (8, 'Additional', 'Vocabulary', 3, 159),
+       (4, 'Life Story', 'Life Story', 8, 160), --Additional
+       (5, 'Games', 'Games', 10, 160), --Additional
+       (6, "Let's practice", "Let's practice", 5, 159),
+       (7, 'Study the information', "Study the information", 7, 159),
+       (8, 'Vocabulary', 'Vocabulary', 3, 159),
        (9, 'Home Work Review', 'Home Work Review', 2, 159),
-       (10, 'Additional', 'Role Play', 9, 160);
+       (10, 'Role Play', 'Role Play', 9, 160); --Additional
 
 --
 -- Dumping data for table `centre`
@@ -170,7 +170,7 @@ IGNORE INTO `type_home_work` (`id`, `lib`)
 VALUES (5, 'Watch it'),
        (4, 'Phrasebook'),
        (3, 'Write it Up'),
-       (2, "Let\'s Practice"),
+       (2, "Let's Practice"),
        (1, 'Reading'),
        (6, 'Life Story');
 

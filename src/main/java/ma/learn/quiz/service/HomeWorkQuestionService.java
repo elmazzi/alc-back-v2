@@ -45,31 +45,35 @@ public class HomeWorkQuestionService {
 
     public void saveHomeWorkQuestion(HomeWork homeWork, List<HomeWorkQuestion> questions) {
         for (HomeWorkQuestion question : questions) {
-            List<HoweWorkQSTReponse> reponses = question.getReponses();
-            question.setHomeWork(homeWork);
-            TypeDeQuestion typeDeQuestion = typeDeQuestionService.findByRef(question.getTypeDeQuestion().getRef());
-            question.setTypeDeQuestion(typeDeQuestion);
-            typeDeQuestionService.update(typeDeQuestion);
-            question.setTypeDeQuestion(typeDeQuestion);
-            System.out.println("==============================");
-            System.out.println(question.getId());
-            System.out.println(question.getLibelle());
-            if (question.getId() != null) {
-                HomeWorkQuestion quest = this.findHomeWorkQuestionById(question.getId());
-                quest.setLibelle(question.getLibelle());
-                quest.setPointReponseJuste(question.getPointReponseJuste());
-                quest.setPointReponsefausse(question.getPointReponsefausse());
-                quest.setNumero(question.getNumero());
-                quest.setRef(question.getRef());
-                quest.setHomeWork(question.getHomeWork());
-                quest.setTypeDeQuestion(typeDeQuestion);
-                question = homeWorkQuestionDao.save(quest);
-            } else {
-                question = homeWorkQuestionDao.save(question);
-            }
-            if (reponses != null) {
-                homeWorkQSTReponseService.save(question, reponses);
-            }
+            addQstHomeWork(homeWork, question);
+        }
+    }
+
+    public void addQstHomeWork(HomeWork homeWork, HomeWorkQuestion question) {
+        List<HoweWorkQSTReponse> reponses = question.getReponses();
+        question.setHomeWork(homeWork);
+        TypeDeQuestion typeDeQuestion = typeDeQuestionService.findByRef(question.getTypeDeQuestion().getRef());
+        question.setTypeDeQuestion(typeDeQuestion);
+        typeDeQuestionService.update(typeDeQuestion);
+        question.setTypeDeQuestion(typeDeQuestion);
+        System.out.println("==============================");
+        System.out.println(question.getId());
+        System.out.println(question.getLibelle());
+        if (question.getId() != null) {
+            HomeWorkQuestion quest = this.findHomeWorkQuestionById(question.getId());
+            quest.setLibelle(question.getLibelle());
+            quest.setPointReponseJuste(question.getPointReponseJuste());
+            quest.setPointReponsefausse(question.getPointReponsefausse());
+            quest.setNumero(question.getNumero());
+            quest.setRef(question.getRef());
+            quest.setHomeWork(question.getHomeWork());
+            quest.setTypeDeQuestion(typeDeQuestion);
+            question = homeWorkQuestionDao.save(quest);
+        } else {
+            question = homeWorkQuestionDao.save(question);
+        }
+        if (reponses != null) {
+            homeWorkQSTReponseService.save(question, reponses);
         }
     }
 }

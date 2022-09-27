@@ -27,6 +27,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -82,7 +84,7 @@ public class UserServiceImpl implements UserService {
         return new ResponseEntity<>(loadUserByUsername, jwtHeader, OK);
     }
 
-     HttpHeaders getJwtHeader(User user) {
+    HttpHeaders getJwtHeader(User user) {
         HttpHeaders headers = new HttpHeaders();
         headers.add(JWT_TOKEN_HEADER, jwtUtil.generateToken(user));
         return headers;
@@ -117,14 +119,13 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
     private String setProfileImageUrl(String username) {
         return ServletUriComponentsBuilder.fromCurrentContextPath().path(USER_IMAGE_PATH + username +
                 FORWARD_SLASH + username + DOT + JPG_EXTENSION).toUriString();
     }
 
 
-     String getTemporaryProfileImageUrl(String username) {
+    String getTemporaryProfileImageUrl(String username) {
         return ServletUriComponentsBuilder.fromCurrentContextPath().path(DEFAULT_USER_IMAGE_PATH + username)
                 .toUriString();
     }
@@ -214,7 +215,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public Optional<User> findById(Long id){
+    public Optional<User> findById(Long id) {
         return this.userDao.findById(id);
     }
 

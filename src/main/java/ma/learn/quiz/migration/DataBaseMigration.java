@@ -14,8 +14,6 @@ import ma.learn.quiz.migration.util.FileUtil;
 import ma.learn.quiz.migration.util.DownloaderUtil;
 import ma.learn.quiz.migration.util.JsoupUtil;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,11 +44,15 @@ public class DataBaseMigration {
     @Autowired
     private CoursDao coursDao;
     @Autowired
+    private CoursService coursService;
+    @Autowired
     private SectionDao sectionDao;
     @Autowired
     private CentreDao centreDao;
     @Autowired
     private CategorieSectionDao categorieSectionDoa;
+    @Autowired
+    private SectionItemDao sectionItemDao;
     @Autowired
     private SuperCategorieSectionDao superCategorieSectionDao;
     private Long id;
@@ -64,6 +66,8 @@ public class DataBaseMigration {
     private QuizService quizService;
     @Autowired
     private HomeWorkQuestionDao homeWorkQuestionDao;
+    @Autowired
+    private HomeWorkQuestionService homeWorkQuestionService;
     @Autowired
     private HomeWorkDao homeWorkDao;
     @Autowired
@@ -139,12 +143,11 @@ public class DataBaseMigration {
                 System.out.println("pathImage ==>" + pathHomWorkImage);
                 File homeWorkFile = new File(pathHomWork);
                 System.out.println(homeWorkFile.getName());
-                if (homeWorkFile.getName().equals("WATCH IT.txt")) {
-                    System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                if (homeWorkFile.getName().equalsIgnoreCase("WATCH IT.txt")) {
                     System.out.println(homeWorkFile.getName());
                     this.getWatchItData(homeWorkFile, parcours);
                 } else {
-                    extractHtmlImageAndContentForHomeWork(parcours.getId(), parcours.getLibelle(), typeHomewrok[j], pathHomWork, pathHomWorkImage);
+                    extractHtmlImageAndContentForHomeWork(parcours.getId(), homeWorkFile, parcours.getLibelle(), typeHomewrok[j], pathHomWork, pathHomWorkImage);
                 }
             }
         }
@@ -211,7 +214,7 @@ public class DataBaseMigration {
     }
 
 
-    public void extractHtmlImageAndContentForHomeWork(Long parcourId, String parcours, String typeHomewrok, String pathHomWork, String pathHomWorkImage) {
+    public void extractHtmlImageAndContentForHomeWork(Long parcourId, File homeWorkFile, String parcours, String typeHomewrok, String pathHomWork, String pathHomWorkImage) {
         List<File> htmlFiles = FileUtil.findHtmlFiles(pathHomWork);
         htmlFiles.stream()
                 .sorted((f1, f2) -> FileUtil.compare(f1, f2))
@@ -225,79 +228,109 @@ public class DataBaseMigration {
                         // -----------------------------------------   Home Work --------------------------------
                         String courLib = JsoupUtil.getElementContent(f, "span.js-lesson-type.link-dropdown_text-link");
                         Cours cours = coursDao.findCoursByLibelleAndParcoursId(courLib, parcourId);
-                        HomeWork homeWork = homeWorkDao.findByLibelleAndCoursId(typeHomewrok, cours.getId());
-                        if (homeWork == null) {
-                            homeWork = new HomeWork();
-                            homeWork = saveHomeWork(homeWork, typeHomewrok, cours);
-                        }
-                        // -----------------------------------------   Type de Question --------------------------------
-                        String lib = JsoupUtil.getElementContent(f, "p.title-progress");
-                        String lib1 = JsoupUtil.getElementContent(f, "p.title-list");
-                        TypeDeQuestion typeDeQuestion;
-                        System.out.println(lib1);
-                        System.out.println(lib1.length());
-                        System.out.println(lib);
-                        System.out.println(lib.length());
-                        if (lib.length() != 0) {
-                            typeDeQuestion = typeDeQuestionDao.findByLibIgnoreCase(lib);
-                            if (typeDeQuestion == null) {
-                                typeDeQuestion = this.saveTypeQstHomeWork(lib);
-                            }
 
-                            if (imageNameDestination.length() > 0) {
-                                String imgName = parcours + cours.getLibelle() + typeHomewrok + FileUtil.fileNameWithOutExt(f.getName()) + "." + fileExtention;
-                                String drivePath = this.addImgToGoogleDrive(parcours, cours.getLibelle(), typeHomewrok, imageNameDestination, imgName);
-                                homeWork.setUrlImage(drivePath);
+                        if (homeWorkFile.getName().toUpperCase().contains("LET'S PRACTICE")) {
+                            /**
+                             * INSERT QUIZ
+                             */
+                            HomeWork homeWork = homeWorkDao.findByLibelleAndCoursId("Let's practice", cours.getId());
+                            if (homeWork == null) {
+                                homeWork = new HomeWork();
+                                homeWork.setLibelle("Let's practice");
+                                TypeHomeWork typeHomeWork = this.typeHomeWorkService.findByLibelle("Let's practice");
+                                homeWork.setTypeHomeWork(typeHomeWork);
+                                homeWork.setCours(cours);
                                 homeWork = homeWorkDao.save(homeWork);
                             }
-                            System.out.println("====================File PATH =======================");
-                            System.out.println(f.getName());
-
-
-                            System.out.println("++++++++++++++++++++++ HOME WORK QUESTION  ++++++++++++++++++++++");
-                            String homeWorkQstLibelle;
-                            if (Objects.equals(typeDeQuestion.getLib(), "Write it up")) {
-                                homeWorkQstLibelle = JsoupUtil.getElementContent(f, "p.text-task-write-it-up");
-                            } else {
-                                homeWorkQstLibelle = JsoupUtil.getElementContent(f, "div.wrapper-information > p");
-                                this.ref = JsoupUtil.getElementContent(f, "p.title-information > strong");
+                            // check type of quiz
+                            String typeQuiz = JsoupUtil.getElementContent(f, "p.title-progress");
+                            System.out.println("TYPE DE QUIZ: " + typeQuiz);
+                            if (typeQuiz.equalsIgnoreCase(TypeQuiz.TRANSLATE_THE_PHRASE)) {
+                                insertTranslateThePhraseForHomeWork(homeWork, f);
+                            } else if (typeQuiz.equalsIgnoreCase(TypeQuiz.CHOOSE_THE_CORRECT_ALTERNATIVE)) {
+                                insertChooseAlternativeForHomeWork(homeWork, f);
+                            } else if (typeQuiz.equalsIgnoreCase(TypeQuiz.WRITE_THE_CORRECT_FORM)) {
+                                insertTheCorrectFormForHomeWork(homeWork, f);
+                            } else if (typeQuiz.equalsIgnoreCase(TypeQuiz.CORRECT_THE_MISTAKE)) {
+                                insertCorrectMistakeForHomeWork(homeWork, f);
                             }
+                        } else {
 
-                            System.out.println(homeWorkQstLibelle);
-                            System.out.println(this.ref);
 
-                            if (homeWorkQstLibelle.length() <= 0) {
-                                return;
+                            HomeWork homeWork = homeWorkDao.findByLibelleAndCoursId(typeHomewrok, cours.getId());
+                            if (homeWork == null) {
+                                homeWork = new HomeWork();
+                                homeWork = saveHomeWork(homeWork, typeHomewrok, cours);
                             }
-                            HomeWorkQuestion homeWorkQuestion = homeWorkQuestionDao.findHomeWorkQuestionByLibelleAndHomeWorkId(homeWorkQstLibelle, homeWork.getId());
-                            if (homeWorkQuestion == null) {
-                                homeWorkQuestion = saveHomeWorkQuestion(homeWork, typeDeQuestion, 1, homeWorkQstLibelle);
-                            }
-                        } else if (lib1.length() != 0) {
-                            if (lib1.equals("Study the following phrases"))
-                                lib1 = "Translate the phrase";
-                            typeDeQuestion = typeDeQuestionDao.findByLibIgnoreCase(lib1);
-                            if (typeDeQuestion == null) {
-                                typeDeQuestion = this.saveTypeQstHomeWork(lib1);
-                            }
-                            Elements elements = JsoupUtil.getElements(f, "div.word-list.is-open");
-                            int index = 1;
+                            // -----------------------------------------   Type de Question --------------------------------
+                            String lib = JsoupUtil.getElementContent(f, "p.title-progress");
+                            String lib1 = JsoupUtil.getElementContent(f, "p.title-list");
+                            TypeDeQuestion typeDeQuestion;
+                            System.out.println(lib1);
+                            System.out.println(lib1.length());
+                            System.out.println(lib);
+                            System.out.println(lib.length());
+                            if (lib.length() != 0) {
+                                typeDeQuestion = typeDeQuestionDao.findByLibIgnoreCase(lib);
+                                if (typeDeQuestion == null) {
+                                    typeDeQuestion = this.saveTypeQstHomeWork(lib);
+                                }
 
-                            for (Element element : elements
-                            ) {
-                                for (Element child : element.children()
+                                if (imageNameDestination.length() > 0) {
+                                    String imgName = parcours + cours.getLibelle() + typeHomewrok + FileUtil.fileNameWithOutExt(f.getName()) + "." + fileExtention;
+                                    String drivePath = this.addImgToGoogleDrive(parcours, cours.getLibelle(), typeHomewrok, imageNameDestination, imgName);
+                                    homeWork.setUrlImage(drivePath);
+                                    homeWork = homeWorkDao.save(homeWork);
+                                }
+                                System.out.println("====================File PATH =======================");
+                                System.out.println(f.getName());
+
+
+                                System.out.println("++++++++++++++++++++++ HOME WORK QUESTION  ++++++++++++++++++++++");
+                                String homeWorkQstLibelle;
+                                if (Objects.equals(typeDeQuestion.getLib(), "Write it up")) {
+                                    homeWorkQstLibelle = JsoupUtil.getElementContent(f, "p.text-task-write-it-up");
+                                } else {
+                                    homeWorkQstLibelle = JsoupUtil.getElementContent(f, "div.wrapper-information > p");
+                                    this.ref = JsoupUtil.getElementContent(f, "p.title-information > strong");
+                                }
+
+                                System.out.println(homeWorkQstLibelle);
+                                System.out.println(this.ref);
+
+                                if (homeWorkQstLibelle.length() <= 0) {
+                                    return;
+                                }
+                                HomeWorkQuestion homeWorkQuestion = homeWorkQuestionDao.findHomeWorkQuestionByLibelleAndHomeWorkId(homeWorkQstLibelle, homeWork.getId());
+                                if (homeWorkQuestion == null) {
+                                    homeWorkQuestion = saveHomeWorkQuestion(homeWork, typeDeQuestion, 1, homeWorkQstLibelle);
+                                }
+                            } else if (lib1.length() != 0) {
+                                if (lib1.equals("Study the following phrases"))
+                                    lib1 = "Translate the phrase";
+                                typeDeQuestion = typeDeQuestionDao.findByLibIgnoreCase(lib1);
+                                if (typeDeQuestion == null) {
+                                    typeDeQuestion = this.saveTypeQstHomeWork(lib1);
+                                }
+                                Elements elements = JsoupUtil.getElements(f, "div.word-list.is-open");
+                                int index = 1;
+
+                                for (Element element : elements
                                 ) {
-                                    String homeWorkQstLibelle = child.select("p.word").text();
-                                    if (homeWorkQstLibelle.length() <= 0) {
-                                        return;
+                                    for (Element child : element.children()
+                                    ) {
+                                        String homeWorkQstLibelle = child.select("p.word").text();
+                                        if (homeWorkQstLibelle.length() <= 0) {
+                                            return;
+                                        }
+                                        HomeWorkQuestion homeWorkQuestion = homeWorkQuestionDao.findHomeWorkQuestionByLibelleAndHomeWorkId(homeWorkQstLibelle, homeWork.getId());
+                                        if (homeWorkQuestion == null) {
+                                            homeWorkQuestion = saveHomeWorkQuestion(homeWork, typeDeQuestion, index, homeWorkQstLibelle);
+                                        }
+                                        HoweWorkQSTReponse homeWorkReponse = new HoweWorkQSTReponse();
+                                        saveHomeWorkQstReponse(index, homeWorkQuestion, homeWorkReponse);
+                                        index++;
                                     }
-                                    HomeWorkQuestion homeWorkQuestion = homeWorkQuestionDao.findHomeWorkQuestionByLibelleAndHomeWorkId(homeWorkQstLibelle, homeWork.getId());
-                                    if (homeWorkQuestion == null) {
-                                        homeWorkQuestion = saveHomeWorkQuestion(homeWork, typeDeQuestion, index, homeWorkQstLibelle);
-                                    }
-                                    HoweWorkQSTReponse homeWorkReponse = new HoweWorkQSTReponse();
-                                    saveHomeWorkQstReponse(index, homeWorkQuestion, homeWorkReponse);
-                                    index++;
                                 }
                             }
                         }
@@ -395,23 +428,6 @@ public class DataBaseMigration {
                         if (parcours != null) {
                             String imageSrc = JsoupUtil.getImageSrc(f);
                             String fileExtention = FileUtil.getExtension(imageSrc);
-                            SuperCategorieSection superCategorieSection = superCategorieSectionDao.findSuperCategorieSectionByLibelle(JsoupUtil.getElementContent(f, "p.lessons-list_title-additional-list"));
-                            CategorieSection categorieSection1 = categorieSectionDoa.findCategorieSectionByLibelle(categorieSection);
-                            if (superCategorieSection == null) {
-                                superCategorieSection = initSuperCategorie(f);
-                            }
-
-                            if (categorieSection1 == null) {
-                                categorieSection1 = new CategorieSection();
-                                categorieSection1.setLibelle(categorieSection);
-                                categorieSection1.setCode(JsoupUtil.getElementContent(f, "p.title-progress"));
-                                categorieSection1.setSuperCategorieSection(superCategorieSection);
-                                categorieSectionDoa.save(categorieSection1);
-                            } else {
-                                categorieSection1.setSuperCategorieSection(superCategorieSection);
-                                categorieSection1.setCode(JsoupUtil.getElementContent(f, "p.lessons-list_title-additional-list"));
-                                categorieSectionDoa.save(categorieSection1);
-                            }
                             Cours cours = coursDao.findCoursByLibelleAndParcoursId(JsoupUtil.getElementContent(f, "div.link-dropdown_link-dropdown"), parcours.getId());
                             if (cours == null) {
                                 cours = new Cours();
@@ -423,13 +439,12 @@ public class DataBaseMigration {
                                     String myTxt = cours.getLibelle().substring(0, 2).replaceAll("\\s", "");
                                     cours.setNumeroOrder(Integer.parseInt(myTxt));
                                 }
-                                coursDao.save(cours);
+                                cours = coursService.create(cours);
                                 parcours.setNombreCours(parcours.getNombreCours() + 1);
                                 parcoursDao.save(parcours);
                             }
                             int firstIndex = directoryName.lastIndexOf("Lesson");
                             String sectionName = directoryName.substring(firstIndex + 7);
-                            System.out.println("SECTION NAME: " + sectionName);
                             if (sectionName.toUpperCase().contains("LET'S PRACTICE")) {
                                 /**
                                  * INSERT QUIZ
@@ -438,7 +453,7 @@ public class DataBaseMigration {
                                 if (section == null) {
                                     section = new Section();
                                     section.setLibelle("Let's practice");
-                                    CategorieSection categorieSection2 = this.categorieSectionDoa.findCategorieSectionByLibelle("Let's practice");
+                                    CategorieSection categorieSection2 = this.categorieSectionDoa.findCategorieSectionByLibelleIgnoreCase("Let's practice");
                                     section.setCategorieSection(categorieSection2);
                                     section.setCode(categorieSection2.getCode());
                                     section.setNumeroOrder(categorieSection2.getNumeroOrder());
@@ -464,6 +479,7 @@ public class DataBaseMigration {
                                     System.out.println("LIFE_STORY");
                                     section = new Section();
                                     section.setLibelle("Life Story");
+                                    CategorieSection categorieSection1 = categorieSectionDoa.findCategorieSectionByLibelleIgnoreCase(section.getLibelle());
                                     section.setCategorieSection(categorieSection1);
                                     section.setNumeroOrder(categorieSection1.getNumeroOrder());
                                     section.setCours(cours);
@@ -482,11 +498,66 @@ public class DataBaseMigration {
                                         }
                                     }
                                 }
+                            } else if (sectionName.toUpperCase().contains("VOCABULARY")) {
+                                Section section = sectionDao.findSectionByLibelleAndCoursId("Vocabulary", cours.getId());
+                                if (section == null) {
+                                    section = new Section();
+                                    section.setLibelle("Vocabulary");
+                                    CategorieSection categorieSection1 = categorieSectionDoa.findCategorieSectionByLibelleIgnoreCase(section.getLibelle());
+                                    section.setCategorieSection(categorieSection1);
+                                    section.setCode(JsoupUtil.getElementContent(f, "p.title-progress"));
+                                    section.setNumeroOrder(categorieSection1.getNumeroOrder());
+                                    section.setCours(cours);
+                                    section = sectionDao.save(section);
+                                }
+                                SectionItem sectionItem = new SectionItem();
+                                sectionItem.setSection(section);
+                                String word = JsoupUtil.getElementContent(f, "div.en-word");
+                                sectionItem.setResponse(word);
+                                sectionItem.setTranscription(JsoupUtil.getElementContent(f, "p.transcription"));
+                                sectionItem.setTranslation(this.translate(word));
+                                sectionItem.setExample(JsoupUtil.getElementContent(f, "div.wrapper-text-example"));
+                                String definition = JsoupUtil.getElementContent(f, "div.container-example > p.text-example"); //
+
+                                Elements elements = JsoupUtil.getElements(f, "div.wrapper-synonyms > div.audio-example");
+                                List<String> synonyms = new ArrayList<>();
+                                for (Element element : elements
+                                ) {
+                                    for (Element child : element.children()
+                                    ) {
+                                        String synonym = child.select("p.text-example").text();
+                                        synonyms.add(synonym);
+                                    }
+                                }
+                                sectionItem.setSynonyms(synonyms);
+                                sectionItem.setExplanation(definition);
+                                String imageNameSource = null;
+                                if (!imageSrc.startsWith("https")) {
+                                    imageNameSource = directoryName + "\\" + imageSrc;
+                                } else {
+                                    String tmpFolderForDownladedImage = directoryName + "\\tmp\\" + FileUtil.fileNameWithOutExt(f.getName()) + "." + fileExtention;
+                                    FileUtil.mkdire(directoryName, "tmp", true);
+                                    DownloaderUtil.exec(imageSrc, tmpFolderForDownladedImage, fileExtention);
+                                    imageNameSource = tmpFolderForDownladedImage;
+                                }
+                                final String imageNameDestination = imagePath + "\\" + FileUtil.fileNameWithOutExt(f.getName()) + "." + fileExtention;
+                                FileUtil.copyFile(imageNameSource, imageNameDestination);
+                                String imgName = parcours.getLibelle() + cours.getLibelle() + section.getCategorieSection().getLibelle() + FileUtil.fileNameWithOutExt(f.getName()) + "." + fileExtention;
+
+                                String drivePath = this.addImgToGoogleDrive(parcours.getLibelle(), cours.getLibelle(), sectionItem.getExample(), imageNameDestination, imgName);
+                                System.out.println("_____________________________SECTION ITEM__________________________________________");
+                                System.out.println(drivePath);
+                                sectionItem.setImageUrl(drivePath);
+                                System.out.println(sectionItem);
+                                System.out.println("___________________________________________________________________________________");
+                                sectionItemDao.save(sectionItem);
                             } else {
                                 Section section = sectionDao.findSectionByLibelleAndCoursId(JsoupUtil.getElementContent(f, "p.title-progress"), cours.getId());
                                 if (section == null) {
                                     section = new Section();
                                     section.setLibelle(JsoupUtil.getElementContent(f, "p.title-progress"));
+                                    System.out.println("SECTION NAME: " + sectionName);
+                                    CategorieSection categorieSection1 = categorieSectionDoa.findCategorieSectionByLibelleIgnoreCase(sectionName);
                                     section.setCategorieSection(categorieSection1);
                                     section.setCode(JsoupUtil.getElementContent(f, "p.title-progress"));
                                     section.setNumeroOrder(categorieSection1.getNumeroOrder());
@@ -677,6 +748,7 @@ public class DataBaseMigration {
         saveQuiz(section, question);
     }
 
+
     private void insertTheCorrectForm(Section section, File f) throws Exception {
         TypeDeQuestion typeDeQuestion = this.typeDeQuestionDao.findByRef("t6");
         List<Reponse> listReponse = new ArrayList<>();
@@ -753,6 +825,165 @@ public class DataBaseMigration {
         question.setReponses(reponseList);
         //QUIZ
         saveQuiz(section, question);
+    }
+
+    private void insertTranslateThePhraseForHomeWork(HomeWork homeWork, File f) throws IOException {
+        TypeDeQuestion typeDeQuestion = this.typeDeQuestionDao.findByRef("t3");
+        System.out.println(typeDeQuestion.getRef());
+        //QUESTION
+        HomeWorkQuestion question = new HomeWorkQuestion();
+        String libQst = JsoupUtil.getElementContent(f, "div.answer-task");
+        String numQst = JsoupUtil.getElementContent(f, "p.count-progress");
+        question.setLibelle(this.translate(libQst));
+        question.setPointReponsefausse(0);
+        question.setPointReponseJuste(1);
+        question.setNumero(Integer.parseInt(numQst.substring(0, 1)));
+        question.setTypeDeQuestion(typeDeQuestion);
+        System.out.println("TYPE QST" + question.getTypeDeQuestion().getRef());
+        // REPONSE
+        HoweWorkQSTReponse reponse = new HoweWorkQSTReponse();
+        reponse.setEtatReponse("true");
+        reponse.setLib(libQst);
+        reponse.setNumero(1);
+        List<HoweWorkQSTReponse> reponseList = new ArrayList<>();
+        reponseList.add(reponse);
+        question.setReponses(reponseList);
+        //QUIZ
+        homeWorkQuestionService.addQstHomeWork(homeWork, question);
+    }
+
+    private void insertChooseAlternativeForHomeWork(HomeWork homeWork, File f) throws Exception {
+        TypeDeQuestion typeDeQuestion = this.typeDeQuestionDao.findByRef("t1");
+        List<HoweWorkQSTReponse> listReponse = new ArrayList<>();
+        //QUESTION
+        HomeWorkQuestion question = new HomeWorkQuestion();
+        String fullLibQst = JsoupUtil.getElementContent(f, "p.text-task");
+        String correctAnswer = JsoupUtil.getElementContent(f, "span.right-text");
+
+        String numQst = JsoupUtil.getElementContent(f, "p.count-progress");
+        Elements elements = JsoupUtil.getElements(f, "div.answer-training");
+        for (Element element : elements
+        ) {
+            for (Element child : element.children()
+            ) {
+                String reponseLib = child.select("p.text-variant").text();
+                String numero = child.select("div.hot-key-training.b-hot-key").text();
+                if (reponseLib.length() <= 0) {
+                    return;
+                }
+                HoweWorkQSTReponse reponse = new HoweWorkQSTReponse();
+                reponse.setNumero(Integer.parseInt(numero));
+                reponse.setLib(reponseLib);
+                if (!reponseLib.equals(correctAnswer)) {
+                    reponse.setEtatReponse("false");
+                } else {
+                    reponse.setEtatReponse("true");
+                }
+                listReponse.add(reponse);
+            }
+        }
+        String strRepList = JsoupUtil.getElementContent(f, "span.empty-word");
+        String libQst = fullLibQst.replace(strRepList, ".....");
+        question.setLibelle(libQst);
+        question.setPointReponsefausse(0);
+        question.setPointReponseJuste(1);
+        question.setTypeDeQuestion(typeDeQuestion);
+        System.out.println("TYPE QST" + question.getTypeDeQuestion().getRef());
+        question.setNumero(Integer.parseInt(numQst.substring(0, 1)));
+        question.setReponses(listReponse);
+        homeWorkQuestionService.addQstHomeWork(homeWork, question);
+    }
+
+    private void insertTheCorrectFormForHomeWork(HomeWork homeWork, File f) throws Exception {
+        TypeDeQuestion typeDeQuestion = this.typeDeQuestionDao.findByRef("t6");
+        List<HoweWorkQSTReponse> listReponse = new ArrayList<>();
+        //QUESTION
+        HomeWorkQuestion question = new HomeWorkQuestion();
+        String fullLibQst = JsoupUtil.getElementContent(f, "div.text-task");
+        System.out.println("LIB: " + fullLibQst);
+        String correctAnswer = JsoupUtil.getElementContent(f, "div.-center-tooltip.-answer-tooltip");
+        System.out.println("CORRECT ANSWER: " + correctAnswer);
+
+        String falseAnswer = "";
+        String numQst = JsoupUtil.getElementContent(f, "p.count-progress");
+        Elements elements = JsoupUtil.getElements(f, "div.text-input-wrap");
+        System.out.println("ELEMENTS: " + elements);
+
+        for (Element element : elements
+        ) {
+            for (Element child : element.children()
+            ) {
+                String reponseLib = child.select("div.text-input").text();
+
+                if (reponseLib.length() > 1) {
+                    if (!reponseLib.equalsIgnoreCase(correctAnswer)) {
+                        System.out.println("REPONSELIB1: " + reponseLib);
+                        falseAnswer = reponseLib;
+                    } else {
+                        System.out.println("REPONSELIB2: " + reponseLib);
+                        HoweWorkQSTReponse reponse = new HoweWorkQSTReponse();
+                        reponse.setNumero(1);
+                        reponse.setLib(correctAnswer);
+                        reponse.setEtatReponse("true");
+                        listReponse.add(reponse);
+                    }
+                }
+            }
+        }
+        String strRepList = JsoupUtil.getElementContent(f, "div.input-wrap.js-wrap-input.is-incorrect");
+        System.out.println("STRREPLIST: " + strRepList);
+        String libQst = fullLibQst.replace(strRepList, "@" + falseAnswer + "@");
+        System.out.println("LIBQST: " + libQst);
+        String libQst2 = libQst.replace("Space", " ");
+        System.out.println("LIBQST2: " + libQst2);
+
+        question.setLibelle(libQst2);
+        question.setPointReponsefausse(0);
+        question.setPointReponseJuste(1);
+        question.setTypeDeQuestion(typeDeQuestion);
+        System.out.println("TYPE QST" + question.getTypeDeQuestion().getRef());
+        question.setNumero(Integer.parseInt(numQst.substring(0, 1)));
+        question.setReponses(listReponse);
+        homeWorkQuestionService.addQstHomeWork(homeWork, question);
+    }
+
+    private void insertCorrectMistakeForHomeWork(HomeWork homeWork, File f) throws IOException {
+        TypeDeQuestion typeDeQuestion = this.typeDeQuestionDao.findByRef("t4");
+        System.out.println(typeDeQuestion.getRef());
+        //QUESTION
+        HomeWorkQuestion question = new HomeWorkQuestion();
+        String fullLibQst = JsoupUtil.getElementContent(f, "div.text-task-content");
+        System.out.println("FULLLIBQST: " + fullLibQst);
+
+        String fullLibAnswers = JsoupUtil.getElementContent(f, "div.input-wrap");
+        System.out.println("FULLLIBANSWERS: " + fullLibAnswers);
+
+        String falseInswer = JsoupUtil.getElementContent(f, "span.answer-grammar-mistake.is-incorrect");
+        System.out.println("FALSEINSWER: " + falseInswer);
+
+        String trueInswer = JsoupUtil.getElementContent(f, "div.b-tooltip.-answer-tooltip");
+        System.out.println("TRUEINSWER: " + trueInswer);
+
+        String libQst = fullLibQst.replace(fullLibAnswers, "@" + falseInswer + "@");
+        System.out.println("LIBQST: " + libQst);
+
+        String numQst = JsoupUtil.getElementContent(f, "p.count-progress");
+        question.setLibelle(libQst);
+        question.setPointReponsefausse(0);
+        question.setPointReponseJuste(1);
+        question.setNumero(Integer.parseInt(numQst.substring(0, 1)));
+        question.setTypeDeQuestion(typeDeQuestion);
+        System.out.println("TYPE QST" + question.getTypeDeQuestion().getRef());
+        // REPONSE
+        HoweWorkQSTReponse reponse = new HoweWorkQSTReponse();
+        reponse.setEtatReponse("true");
+        reponse.setLib(trueInswer);
+        reponse.setNumero(1);
+        List<HoweWorkQSTReponse> reponseList = new ArrayList<>();
+        reponseList.add(reponse);
+        question.setReponses(reponseList);
+        //QUIZ
+        homeWorkQuestionService.addQstHomeWork(homeWork, question);
     }
 
     private void insertCorrectMistake(Section section, File f) throws IOException {

@@ -18,7 +18,7 @@ public interface CategorieSectionDao extends JpaRepository<CategorieSection,Long
      List<Cours> findBySuperCategorieSectionCode(String code); 
      int deleteBySuperCategorieSectionCode(String code);
      CategorieSection findCategorieSectionById(Long id);
-    CategorieSection findCategorieSectionByLibelle(String libelle);
+    CategorieSection findCategorieSectionByLibelleIgnoreCase(String libelle);
 
 
 }

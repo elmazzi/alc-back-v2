@@ -3,8 +3,8 @@ package ma.learn.quiz.filter;
 public class JwtConstant {
     public static final String USER_IMAGE_PATH = "/user/image/";
     public static final String RECLAMATION_IMAGE_PATH = "/reclamation/image/";
-    public static final String AUTORIZATION="Authorization";
-    public static final String BEARER="Bearer ";
+    public static final String AUTORIZATION = "Authorization";
+    public static final String BEARER = "Bearer ";
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
     public static final String JWT_TOKEN_HEADER = "Jwt-Token";
     public static final String JPG_EXTENSION = "jpg";

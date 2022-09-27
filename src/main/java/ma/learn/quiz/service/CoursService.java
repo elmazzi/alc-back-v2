@@ -117,8 +117,19 @@ public class CoursService {
         return c;
     }
 
-    public void create(Cours cours) {
-        coursDao.save(cours);
+    public Cours create(Cours cours) {
+        Cours cours1 = coursDao.save(cours);
+        if (cours1.getNumeroOrder() != 0) {
+            Section section = new Section();
+            section.setCours(cours1);
+            CategorieSection categorieSection = categorieSectionService.findByCode("Home Work Review");
+            section.setCategorieSection(categorieSection);
+            section.setNumeroOrder(categorieSection.getNumeroOrder());
+            section.setLibelle(categorieSection.getLibelle());
+            section.setCode(categorieSection.getCode());
+            sectionService.create(section);
+        }
+        return cours1;
     }
 
     public List<Cours> findAll() {

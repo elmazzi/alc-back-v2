@@ -26,6 +26,8 @@ public class SectionItem implements Serializable {
     @Lob
 	@Column(length=512)
     private String response;
+
+    private String transcription;
     @Lob
 	@Column(length=512)
     private String translation;
