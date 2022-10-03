@@ -50,6 +50,29 @@ public class EmailSenderService {
         mailSender.send(mimeMessage);
     }
 
+    @Async
+    public void sent(MailComponent mailComponent) throws MessagingException, IOException, TemplateException {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+        mailSender.setUsername("engflexy.hello@gmail.com");
+        mailSender.setPassword("fkitdduinxhiquvs"); //gvzvjtwfpzzibwog
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.debug", "true");
+        props.put("mail.smtp.ssl.enable", false);
+        mailSender.setJavaMailProperties(props);
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper mailMessage = new MimeMessageHelper(mimeMessage, "utf-8");
+        mailMessage.setFrom("engflexy.hello@gmail.com");
+        mailMessage.setTo(mailComponent.getTo());
+        mailMessage.setSubject(mailComponent.getSubject());
+        mailMessage.setText(mailComponent.getContent(), true);
+        mailSender.send(mimeMessage);
+    }
+
 
     public Template getTemplateByName(String templateName)
             throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException {

@@ -561,7 +561,21 @@ public class DataBaseMigration {
                                     section.setCategorieSection(categorieSection1);
                                     section.setCode(JsoupUtil.getElementContent(f, "p.title-progress"));
                                     section.setNumeroOrder(categorieSection1.getNumeroOrder());
-                                    section.setContenu(JsoupUtil.getElementContentLesson(f, "div.wrapper-information"));
+                                    if (sectionName.equalsIgnoreCase("Get to know")) {
+                                        Elements elements = JsoupUtil.getElements(f, "div.play-audio");
+                                        String text = " ";
+                                        for (Element element : elements
+                                        ) {
+                                            System.out.println(element);
+                                            for (Element child : element.children()
+                                            ) {
+                                                text = text.concat(child.select("span.audio").text() + " ");
+                                            }
+                                        }
+                                        section.setContenu(text);
+                                    } else {
+                                        section.setContenu(JsoupUtil.getElementContentLesson(f, "div.wrapper-information"));
+                                    }
                                     section.setCours(cours);
                                     sectionDao.save(section);
                                 }

@@ -16,7 +16,9 @@ public class CorsConfig {
                 registry.addMapping("/**")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("*")
-                        .allowedOrigins("http://localhost:4200",
+                        .allowedOrigins(
+                                "http://localhost:4200",
+                                "http://localhost:62175",
                                 "http://engflexy.com/",
                                 "https://engflexy.com/",
                                 "http://153.92.222.43/",

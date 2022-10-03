@@ -11,6 +11,7 @@ public class TypeHomeWork {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String lib;
+    private String code;
 
     public Long getId() {
         return id;
@@ -22,6 +23,14 @@ public class TypeHomeWork {
 
     public String getLib() {
         return lib;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public void setLib(String lib) {

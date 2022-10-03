@@ -1,9 +1,12 @@
 package ma.learn.quiz.service;
 
+import freemarker.template.TemplateException;
 import ma.learn.quiz.bean.Etudiant;
 import ma.learn.quiz.bean.InviteStudent;
 import ma.learn.quiz.bean.ReclamationProf;
 import ma.learn.quiz.bean.User;
+import ma.learn.quiz.configuration.EmailSenderService;
+import ma.learn.quiz.configuration.MailComponent;
 import ma.learn.quiz.dao.InviteStudentdDao;
 import ma.learn.quiz.dao.UserDao;
 import ma.learn.quiz.service.facade.UserService;
@@ -14,7 +17,9 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +28,7 @@ import static ma.learn.quiz.service.Util.UtilString.generateStringNumber;
 @Service
 public class InviteStudentService extends AbstractService {
     @Autowired
-    public JavaMailSender mailSender;
+    public EmailSenderService mailSender;
     @Autowired
     private InviteStudentdDao inviteStudentdDao;
     @Autowired
@@ -79,7 +84,7 @@ public class InviteStudentService extends AbstractService {
         return entityManager.createQuery(query).getResultList();
     }
 
-    public int saveInvitation(Long idStudent, String emailInvited) {
+    public int saveInvitation(Long idStudent, String emailInvited) throws MessagingException, TemplateException, IOException {
         Etudiant etudiant = etudiantService.findEtudiantById(idStudent);
         InviteStudent inviteStudent2 = findInviteStudentByEmailInvited(emailInvited);
         User userInvited = userDao.findByUsername(emailInvited);
@@ -104,10 +109,9 @@ public class InviteStudentService extends AbstractService {
         }
     }
 
-    public void sentMessageToInvited(String email, String emailInvited, String code) {
+    public void sentMessageToInvited(String email, String emailInvited, String code) throws MessagingException, TemplateException, IOException {
         System.out.println("prepare email ");
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("elearningmarrakech@gmail.com");
         message.setTo(emailInvited);
         message.setSubject("Invited to the platform e-learning");
         message.setText("Hey there welcome to our platform e-learning,you are invited by " + email + " .\n" +
@@ -115,18 +119,26 @@ public class InviteStudentService extends AbstractService {
                 "Your invitation code is:" + code + "\n" +
                 "You will get 3 free courses for your first purchase."
         );
-        mailSender.send(message);
+        MailComponent mailComponent = new MailComponent();
+        mailComponent.setTo(emailInvited);
+        mailComponent.setFrom("engflexy.contact@gmail.com");
+        mailComponent.setSubject("Invited to the platform engflexy");
+        mailComponent.setContent("Hey there welcome to our platform e-learning,you are invited by " + email + " .\n" +
+                "Click here : http://localhost:4200/#/public/connectAsInvited" + "\n" +
+                "Your invitation code is:" + code + "\n" +
+                "You will get 3 free courses for your first purchase.");
+        mailSender.sent(mailComponent);
         System.out.println("email send");
     }
 
-    public void sentMessageToUser(String email) {
+    public void sentMessageToUser(String email) throws MessagingException, TemplateException, IOException {
         System.out.println("prepare email ");
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("elearningmarrakech@gmail.com");
+        MailComponent message = new MailComponent();
+        message.setFrom("engflexy.contact@gmail.com");
         message.setTo(email);
         message.setSubject("Invitation sent successfully");
-        message.setText("Hey there thank you for invating this new student, you will get promotion for the next pay pack.");
-        mailSender.send(message);
+        message.setContent("Hey there thank you for invating this new student, you will get promotion for the next pay pack.");
+        mailSender.sent(message);
         System.out.println("email send");
     }
 }

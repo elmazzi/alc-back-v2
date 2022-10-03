@@ -166,13 +166,13 @@ VALUES (2, 'Write it up', 't2'),
 --
 
 INSERT
-IGNORE INTO `type_home_work` (`id`, `lib`)
-VALUES (5, 'Watch it'),
-       (4, 'Phrasebook'),
-       (3, 'Write it Up'),
-       (2, "Let's Practice"),
-       (1, 'Reading'),
-       (6, 'Life Story');
+IGNORE INTO `type_home_work` (`id`, `lib`,`code`)
+VALUES (5, 'Watch it', 'ADDITIONAL'),
+       (4, 'Phrasebook', 'ADDITIONAL'),
+       (3, 'Write it Up', 'OBLIGATORY'),
+       (2, "Let's Practice", 'OBLIGATORY'),
+       (1, 'Reading', 'ADDITIONAL'),
+       (6, 'Life Story','ADDITIONAL');
 
 
 
