@@ -21,6 +21,7 @@ public class CorsConfig {
                                 "http://localhost:62175",
                                 "http://engflexy.com/",
                                 "https://engflexy.com/",
+                                "https://engflexy.ma/",
                                 "http://153.92.222.43/",
                                 "http://153.92.222.43/",
                                 "https://153.92.222.43/");
