@@ -1,11 +1,14 @@
 package ma.learn.quiz.rest.admin;
 
+import freemarker.template.TemplateException;
 import ma.learn.quiz.bean.Contact;
 import ma.learn.quiz.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -28,6 +31,11 @@ public class ContactRest {
     @PostMapping("/")
     public Contact save(@RequestBody Contact entity) {
         return contactService.save(entity);
+    }
+
+    @PostMapping("/reply")
+    public Contact reply(@RequestBody Contact entity) throws MessagingException, TemplateException, IOException {
+        return contactService.reply(entity);
     }
 
     @DeleteMapping("/id/{id}")

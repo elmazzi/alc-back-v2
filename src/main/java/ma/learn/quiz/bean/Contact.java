@@ -17,11 +17,20 @@ public class Contact implements Serializable {
     private String setFrom;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private Date date;
+    private boolean replied = false;
 
 
     @Lob
     @Column(length=512)
     private String message;
+
+    public boolean isReplied() {
+        return replied;
+    }
+
+    public void setReplied(boolean replied) {
+        this.replied = replied;
+    }
 
     public String getSetFrom() {
         return setFrom;
