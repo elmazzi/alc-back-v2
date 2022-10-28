@@ -35,6 +35,10 @@ public class Inscription {
     @ManyToOne
     private  Fonction fonction;
 
+    @ManyToOne
+    private  Quiz quizNiveau;
+    private  double noteQuizNiveau;
+    private  boolean quizFinished;
     private String dateRegistration;
     @Temporal(TemporalType.DATE)
     private Date datedebutinscription;
@@ -47,6 +51,38 @@ public class Inscription {
     private String skype;
     public String getDateRegistration() {
         return dateRegistration;
+    }
+
+    public boolean isQuizFinished() {
+        return quizFinished;
+    }
+
+    public void setQuizFinished(boolean quizFinished) {
+        this.quizFinished = quizFinished;
+    }
+
+    public Quiz getQuizNiveau() {
+        return quizNiveau;
+    }
+
+    public void setQuizNiveau(Quiz quizNiveau) {
+        this.quizNiveau = quizNiveau;
+    }
+
+    public double getNoteQuizNiveau() {
+        return noteQuizNiveau;
+    }
+
+    public void setNoteQuizNiveau(double noteQuizNiveau) {
+        this.noteQuizNiveau = noteQuizNiveau;
+    }
+
+    public String getSkype() {
+        return skype;
+    }
+
+    public void setSkype(String skype) {
+        this.skype = skype;
     }
 
     public void setDateRegistration(String dateRegistration) {
