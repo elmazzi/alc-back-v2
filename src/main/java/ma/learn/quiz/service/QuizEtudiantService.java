@@ -104,4 +104,7 @@ public class QuizEtudiantService {
 	public QuizEtudiant quizByEtudiantIdAndQuizId(Long idEtudiant, Long idQuiz) {
 		return quizEtudiantDao.findByEtudiantIdAndQuizId(idEtudiant, idQuiz);
 	}
+	public QuizEtudiant quizByEtudiantIdAndQuizRef(Long idEtudiant, String ref) {
+		return quizEtudiantDao.findByEtudiantIdAndQuizRef(idEtudiant, ref);
+	}
 }

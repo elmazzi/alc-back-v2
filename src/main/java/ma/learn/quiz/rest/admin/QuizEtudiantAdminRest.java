@@ -25,6 +25,11 @@ public class QuizEtudiantAdminRest {
 		return quizEtudiantService.quizByEtudiantIdAndQuizId(idEtudiant, idQuiz);
 	}
 
+	@GetMapping("/etudiant/idEtudiant/{idEtudiant}/quiz/ref/{ref}")
+	public QuizEtudiant getQuizByEtudiantIdAndQuizRef(@PathVariable Long idEtudiant,@PathVariable String ref) {
+		return quizEtudiantService.quizByEtudiantIdAndQuizRef(idEtudiant, ref);
+	}
+
 	@GetMapping("/etudiant/id/{id}")
 	public List<QuizEtudiant> findByEtudiantId(@PathVariable Long id) {
 		return quizEtudiantService.findByEtudiantId(id);

@@ -98,15 +98,21 @@ VALUES (1, '1', 'Secondary'),
        (4, '4', 'Other');
 
 
-
-
+INSERT
+IGNORE INTO `level_test_configuration`(`id`, `note_max`, `note_min`, `parcours`)
+VALUES (1, 10, 0, 4220),
+       (2, 20, 10, 4805),
+       (3, 30, 20, 5390),
+       (4, 40, 30, 1),
+       (5, 50, 40, 5865);
 
 INSERT
-IGNORE INTO `role` (`id`, `authority`)
+IGNORE
+INTO `role` (`id`, `authority`)
 VALUES (1, 'ADMIN'),
-       (2, 'TEACHER'),
-       (3, 'STUDENT'),
-       (4, 'SUPER_ADMIN');
+    (2, 'TEACHER'),
+    (3, 'STUDENT'),
+    (4, 'SUPER_ADMIN');
 
 
 -- Dumping data for table `section`
