@@ -15,6 +15,13 @@ public class PackStudentAdminRest {
     @Autowired
     private PackStudentService packStudentService;
 
+
+
+    @GetMapping("/level/id/{id}")
+    public List<PackStudent> findByLevelId(@PathVariable Long id) {
+        return packStudentService.findByLevelId(id);
+    }
+    
     @GetMapping("/")
     public List<PackStudent> findAll() {
         return packStudentService.findAll();

@@ -119,8 +119,15 @@ public class FileUtil {
     }
 
     public static int compare(File f1, File f2) {
+
         String fileName1 = FileUtil.getFileName(f1.getName());
         String fileName2 = FileUtil.getFileName(f2.getName());
+        System.out.println("=========START========");
+        System.out.println(fileName1);
+        System.out.println(f1.getName());
+        System.out.println(f1.getAbsolutePath());
+        System.out.println("=======FINISH==========");
+
         if (!fileName1.contains("-") && !fileName2.contains("-")) {
             return (new Integer(fileName1).compareTo(new Integer(fileName2)));
         } else if (!fileName1.contains("-") && fileName2.contains("-")) {

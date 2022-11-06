@@ -42,6 +42,7 @@ public class EmailSenderService {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mailMessage = new MimeMessageHelper(mimeMessage, "utf-8");
         mailMessage.setFrom("engflexy.hello@gmail.com");
+        System.out.println(mailComponent.getTo());
         mailMessage.setTo(mailComponent.getTo());
         mailMessage.setSubject(mailComponent.getSubject());
         Template template = getTemplateByName(templateName);

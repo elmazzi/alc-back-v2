@@ -28,6 +28,10 @@ public class PackStudentService {
         return packStudentDao.findPackStudentByCode(code);
     }
 
+    public List<PackStudent> findByLevelId(Long id) {
+        return packStudentDao.findByLevelId(id);
+    }
+
     public PackStudent findPackStudentByPrix(Double prix) {
         return packStudentDao.findPackStudentByPrix(prix);
     }

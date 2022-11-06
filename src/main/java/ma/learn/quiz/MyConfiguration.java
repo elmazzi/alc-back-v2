@@ -15,6 +15,4 @@ class MyConfiguration {
     public DriveApiService DriveApiService() {
         return new DriveApiService();
     }
-
-
 }

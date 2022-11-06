@@ -17,6 +17,11 @@ public class Constants {
     public static List<String> sectionNames = Arrays.asList("Warm up", "Vocabulary", "Get to know", "Let's practice", "Discussion",
             "Let's sum up", "Life Story", "Role play", "Games");
     public static List<String> homeWork = Arrays.asList("PHRASEBOOK", "READING", "WRITE IT UP");
-    public static String root = "C:\\Users\\Khalid Zouani\\Desktop\\LangFlexy\\"; // C:\Kam ||  C:\Users\Khalid Zouani\Desktop\LangFlexy
+    public static String root = "C:\\Kam\\"; // C:\Kam ||  C:\Users\Khalid Zouani\Desktop\LangFlexy
     public static String root1 = "C:\\KamImages\\";
+
+    /**
+     * alc.image.driver@gmail.com
+     * alc@centre@2022
+     */
 }
