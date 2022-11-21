@@ -99,11 +99,7 @@ public class UserServiceImpl implements UserService {
         if (loadedUser != null)
             return null;
         else {
-            String bodyMessage = "Your online registration on the site: https://engflexy.com is validated. <br>" + "You can log into your account now.<br>" +
-                    "Your account settings are :" + "<br>" +
-                    "username : " + user.getUsername() + "<br>" +
-                    "password : " + user.getPassword();
-//            sent mail
+            System.out.println(user.getUsername());
             MailComponent mailComponent = new MailComponent();
             mailComponent.setPassword(user.getPassword());
             mailComponent.setUsername(user.getUsername());

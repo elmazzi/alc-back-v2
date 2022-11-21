@@ -103,8 +103,7 @@ public class user {
 
             case "STUDENT": {
                 Etudiant etudiant = new Etudiant(user);
-                String code = "indiv1";
-                etudiantService.create(code, etudiant);
+                etudiantService.create(etudiant);
                 return etudiant;
             }
             default:

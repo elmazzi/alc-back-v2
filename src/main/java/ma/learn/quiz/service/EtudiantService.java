@@ -141,19 +141,13 @@ public class EtudiantService extends AbstractService {
         return etudiantDao.findByNom(nom);
     }
 
-//    public void saveAll(ScheduleProf scheduleProf, Etudiant etudiant) {
-//        scheduleProf.setEtudiant(etudiant);
-//        EtatEtudiantSchedule etatEtudiantSchedule = etatEtudiantScheduleService.findByRef(scheduleProf.getEtudiant().getEtatEtudiantSchedule().getRef());
-//        etatEtudiantScheduleService.update(etatEtudiantSchedule);
-//        scheduleProfDao.save(scheduleProf);
-//    }
 
-    public User create(String pack,Etudiant etudiant) throws MessagingException, IOException, TemplateException {
+    public User create(Long pack,Etudiant etudiant) throws MessagingException, IOException, TemplateException {
         Etudiant etudiant1 = this.findByLogin(etudiant.getUsername());
         if (etudiant1 != null) {
             return null;
         } else {
-            PackStudent packStudent = packStudentService.findPackStudentByCode(pack);
+            PackStudent packStudent = packStudentService.findById(pack);
             Inscription inscription = new Inscription();
             EtatEtudiantSchedule etudiantSchedule = this.etatEtudiantScheduleService.findByRef(etudiant.getEtatEtudiantSchedule().getRef());
             Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
@@ -172,9 +166,6 @@ public class EtudiantService extends AbstractService {
             etudiant.setAuthorities(Arrays.asList(new Role(ROLE_STUDENT)));
             etudiant.setRole(ROLE_STUDENT);
             inscription.setGroupeEtude(etudiant.getGroupeEtude());
-/*
-            inscription.setParcours(etudiant.getParcours());
-*/
             etudiant.setNiveauEtude(niveauEtudeDao.findByCode(""));
             etudiant.setInteretEtudiant(interetEtudiantDao.findByCode(""));
             etudiant.setFonction(fonctionDao.findByCode(""));
@@ -188,10 +179,50 @@ public class EtudiantService extends AbstractService {
 
             if (packStudent != null){
                 inscription.setPackStudent(packStudent);
+                inscription.setParcours(packStudent.getLevel());
+                inscription.setQuizFinished(true);
                 packStudent.setTotalStudents(packStudent.getTotalStudents() + 1);
                 packStudentService.update(packStudent);
-
             }
+            inscriptionService.save(inscription);
+            return user;
+        }
+
+    }
+    public User create(Etudiant etudiant) throws MessagingException, IOException, TemplateException {
+        Etudiant etudiant1 = this.findByLogin(etudiant.getUsername());
+        if (etudiant1 != null) {
+            return null;
+        } else {
+            Inscription inscription = new Inscription();
+            EtatEtudiantSchedule etudiantSchedule = this.etatEtudiantScheduleService.findByRef(etudiant.getEtatEtudiantSchedule().getRef());
+            Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
+            GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(etudiant.getGroupeEtude().getId());
+
+            EtatInscription etatInscription = etatInscriptionService.findEtatInscriptionById((long) 1);
+            etudiant.setParcours(parcours);
+            etudiant.setGroupeEtude(groupeEtude);
+            inscription.setGroupeEtude(etudiant.getGroupeEtude());
+            if ( parcours!=null){
+                inscription.setParcours(etudiant.getParcours());
+            }
+            etudiant.setEtatEtudiantSchedule(etudiantSchedule);
+            String password = this.userService.generatePassword();
+            etudiant.setPassword(password);
+            etudiant.setAuthorities(Arrays.asList(new Role(ROLE_STUDENT)));
+            etudiant.setRole(ROLE_STUDENT);
+            inscription.setGroupeEtude(etudiant.getGroupeEtude());
+            etudiant.setNiveauEtude(niveauEtudeDao.findByCode(""));
+            etudiant.setInteretEtudiant(interetEtudiantDao.findByCode(""));
+            etudiant.setFonction(fonctionDao.findByCode(""));
+            etudiant.setStatutSocial(statutSocialDao.findByCode(""));
+            etudiant.setSkill(skillDao.findByCode(""));
+            User user = userService.save(etudiant);
+            System.out.println(user.getId());
+            Etudiant etudiant2 = new Etudiant(user);
+            inscription.setEtudiant(etudiant2);
+            inscription.setEtatInscription(etatInscription);
+
             inscriptionService.save(inscription);
             return user;
         }

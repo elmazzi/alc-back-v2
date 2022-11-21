@@ -22,51 +22,54 @@ public class ScheduleProfProfRest {
 		return scheduleProfService.update(scheduleProf);
 	}*/
 
-/*	@GetMapping("/id/{id}")
-	public List<ScheduleProf> findByScheduleId(Long id) {
-		return scheduleProfService.findByScheduleId(id);
-	}*/
-
-	@PostMapping("/save/")
-	public int saveAll(ScheduleProf scheduleProf) {
-		return scheduleProfService.saveAll(scheduleProf);
-	}
-
-	@GetMapping("/vo/")
-	public List<SchdeduleVo> findSchedule() {
-		return scheduleProfService.findSchedule();
-	}
-
-	@Autowired
-	private ScheduleProfService scheduleProfService;
-
-	@GetMapping("/ref/{ref}")
-	public ScheduleProf findByRef(@PathVariable String ref) {
-		return scheduleProfService.findByRef(ref);
-	}
-
-	@DeleteMapping("/ref/{ref}")
-	public int deleteByRef(@PathVariable String ref) {
-		return scheduleProfService.deleteByRef(ref);
-	}
-
-	@PostMapping("/")
-	public ScheduleProf save(@RequestBody ScheduleProf scheduleProf) {
-		return scheduleProfService.save(scheduleProf);
-	}
-
-	@GetMapping("/")
-	public List<ScheduleProf> findAll() {
-		return scheduleProfService.findAll();
-	}
+    @GetMapping("/id/{id}")
+    public ScheduleProf findByScheduleId(@PathVariable Long id) {
+        return scheduleProfService.findById(id).get();
+    }
 
 
-	@GetMapping("/prof/id/{id}")
-	public List<ScheduleProf> findByProfId(@PathVariable Long id) {
-		return scheduleProfService.findByProfId(id);
-	}
-	@PostMapping("/all/")
-	public List<ScheduleProf> findByCriteriaStudent( @RequestBody ScheduleProf schedule) {
-		return scheduleProfService.findByCriteriaStudent(schedule);
-	}
+    @PostMapping("/save/")
+    public int saveAll(ScheduleProf scheduleProf) {
+        return scheduleProfService.saveAll(scheduleProf);
+    }
+
+    @GetMapping("/vo/")
+    public List<SchdeduleVo> findSchedule() {
+        return scheduleProfService.findSchedule();
+    }
+
+
+    @GetMapping("/ref/{ref}")
+    public ScheduleProf findByRef(@PathVariable String ref) {
+        return scheduleProfService.findByRef(ref);
+    }
+
+    @DeleteMapping("/ref/{ref}")
+    public int deleteByRef(@PathVariable String ref) {
+        return scheduleProfService.deleteByRef(ref);
+    }
+
+    @PostMapping("/")
+    public ScheduleProf save(@RequestBody ScheduleProf scheduleProf) {
+        return scheduleProfService.save(scheduleProf);
+    }
+
+    @GetMapping("/")
+    public List<ScheduleProf> findAll() {
+        return scheduleProfService.findAll();
+    }
+
+
+    @GetMapping("/prof/id/{id}")
+    public List<ScheduleProf> findByProfId(@PathVariable Long id) {
+        return scheduleProfService.findByProfId(id);
+    }
+
+    @PostMapping("/all/")
+    public List<ScheduleProf> findByCriteriaStudent(@RequestBody ScheduleProf schedule) {
+        return scheduleProfService.findByCriteriaStudent(schedule);
+    }
+
+    @Autowired
+    private ScheduleProfService scheduleProfService;
 }

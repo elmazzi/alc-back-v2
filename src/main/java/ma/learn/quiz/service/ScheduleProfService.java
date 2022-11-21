@@ -2,6 +2,7 @@ package ma.learn.quiz.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import ma.learn.quiz.bean.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,10 @@ public class ScheduleProfService extends AbstractService {
 
     public ScheduleProf findByRef(String ref) {
         return scheduleProfDao.findByRef(ref);
+    }
+
+    public Optional<ScheduleProf> findById(Long aLong) {
+        return scheduleProfDao.findById(aLong);
     }
 
     @Transactional

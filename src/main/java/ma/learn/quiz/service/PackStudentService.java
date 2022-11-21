@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PackStudentService {
@@ -95,5 +96,10 @@ public class PackStudentService {
     @Transactional
     public int deleteByForGroupe(boolean forGroupe) {
         return packStudentDao.deleteByForGroupe(forGroupe);
+    }
+
+    public PackStudent findById(Long pack) {
+        Optional<PackStudent> pack1 = packStudentDao.findById(pack);
+        return pack1.orElse(null);
     }
 }

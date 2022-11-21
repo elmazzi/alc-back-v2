@@ -22,10 +22,10 @@ public class ScheduleProfEtudiantRest {
 		return scheduleProfService.update(scheduleProf);
 	}*/
 
-/*	@GetMapping("/id/{id}")
-	public List<ScheduleProf> findByScheduleId(Long id) {
-		return scheduleProfService.findByScheduleId(id);
-	}*/
+    @GetMapping("/id/{id}")
+    public ScheduleProf findByScheduleId(@PathVariable Long id) {
+        return scheduleProfService.findById(id).get();
+    }
 
     @PostMapping("/save/")
     public int saveAll(ScheduleProf scheduleProf) {

@@ -3,22 +3,18 @@ package ma.learn.quiz.configuration;
 import freemarker.core.ParseException;
 import freemarker.template.*;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 @Service
 @AllArgsConstructor
@@ -28,21 +24,21 @@ public class EmailSenderService {
     @Async
     public void sentJavaMail(MailComponent mailComponent, String templateName) throws MessagingException, IOException, TemplateException {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
-        mailSender.setUsername("engflexy.hello@gmail.com");
-        mailSender.setPassword("fkitdduinxhiquvs"); //gvzvjtwfpzzibwog
+        mailSender.setHost("smtp.titan.email");
+        mailSender.setPort(465);
+        mailSender.setUsername("info@engflexy.com");
+        mailSender.setPassword("4tjHc7Ai2U3xWkt");
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.debug", "true");
-        props.put("mail.smtp.ssl.enable", false);
+        props.put("mail.smtp.ssl.enable", true);
         mailSender.setJavaMailProperties(props);
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mailMessage = new MimeMessageHelper(mimeMessage, "utf-8");
-        mailMessage.setFrom("engflexy.hello@gmail.com");
         System.out.println(mailComponent.getTo());
+        mailMessage.setFrom("info@engflexy.com");
         mailMessage.setTo(mailComponent.getTo());
         mailMessage.setSubject(mailComponent.getSubject());
         Template template = getTemplateByName(templateName);
@@ -54,21 +50,21 @@ public class EmailSenderService {
     @Async
     public void sent(MailComponent mailComponent) throws MessagingException, IOException, TemplateException {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
-        mailSender.setUsername("engflexy.hello@gmail.com");
-        mailSender.setPassword("fkitdduinxhiquvs"); //gvzvjtwfpzzibwog
+        mailSender.setHost("smtp.titan.email");
+        mailSender.setPort(465);
+        mailSender.setUsername("info@engflexy.com");
+        mailSender.setPassword("4tjHc7Ai2U3xWkt");
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.debug", "true");
-        props.put("mail.smtp.ssl.enable", false);
+        props.put("mail.smtp.ssl.enable", true);
         mailSender.setJavaMailProperties(props);
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mailMessage = new MimeMessageHelper(mimeMessage, "utf-8");
-        mailMessage.setFrom("engflexy.hello@gmail.com");
         mailMessage.setTo(mailComponent.getTo());
+        mailMessage.setFrom("info@engflexy.com");
         mailMessage.setSubject(mailComponent.getSubject());
         mailMessage.setText(mailComponent.getContent(), true);
         mailSender.send(mimeMessage);
