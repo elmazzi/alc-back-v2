@@ -25,9 +25,13 @@ public class EtudiantEtudiantRest {
     public EtudiantService etudiantService;
 
 
-    @PostMapping("/save/pack/{packId}")
-    public User create(@PathVariable Long packId, @RequestBody Etudiant etudiant) throws MessagingException, IOException, TemplateException {
-        return etudiantService.create(packId,etudiant);
+    @PostMapping("/save/pack/{pack}")
+    public User create(@PathVariable String pack, @RequestBody Etudiant etudiant) throws MessagingException, IOException, TemplateException {
+        if (pack == null) {
+            return etudiantService.create(etudiant);
+        }
+        Long packId = Long.valueOf(pack);
+        return etudiantService.create(packId, etudiant);
     }
 
 
@@ -42,7 +46,7 @@ public class EtudiantEtudiantRest {
     }
 
     @GetMapping("/username/{username}/newpass/{newPassword}")
-    public int updatePassword(@PathVariable String username,@PathVariable String newPassword) {
+    public int updatePassword(@PathVariable String username, @PathVariable String newPassword) {
         return etudiantService.updatePassword(username, newPassword);
     }
 
