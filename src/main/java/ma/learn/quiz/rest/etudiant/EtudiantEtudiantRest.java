@@ -25,6 +25,12 @@ public class EtudiantEtudiantRest {
     public EtudiantService etudiantService;
 
 
+    @PostMapping("/save/")
+    public User create(@RequestBody Etudiant etudiant) throws MessagingException, IOException, TemplateException {
+        return etudiantService.create(etudiant);
+    }
+
+
     @PostMapping("/save/pack/{pack}")
     public User create(@PathVariable String pack, @RequestBody Etudiant etudiant) throws MessagingException, IOException, TemplateException {
         if (pack == null) {
