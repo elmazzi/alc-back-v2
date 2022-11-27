@@ -112,19 +112,12 @@ public class InviteStudentService extends AbstractService {
     public void sentMessageToInvited(String email, String emailInvited, String code) throws MessagingException, TemplateException, IOException {
         System.out.println("prepare email ");
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(emailInvited);
-        message.setSubject("Invited to the platform e-learning");
-        message.setText("Hey there welcome to our platform e-learning,you are invited by " + email + " .\n" +
-                "Click here : http://localhost:4200/#/public/connectAsInvited" + "\n" +
-                "Your invitation code is:" + code + "\n" +
-                "You will get 3 free courses for your first purchase."
-        );
         MailComponent mailComponent = new MailComponent();
         mailComponent.setTo(emailInvited);
         mailComponent.setFrom("engflexy.contact@gmail.com");
         mailComponent.setSubject("Invited to the platform engflexy");
         mailComponent.setContent("Hey there welcome to our platform e-learning,you are invited by " + email + " .\n" +
-                "Click here : http://localhost:4200/#/public/connectAsInvited" + "\n" +
+                "Click here : https://engflexy.com/public/connectAsInvited" + "\n" +
                 "Your invitation code is:" + code + "\n" +
                 "You will get 3 free courses for your first purchase.");
         mailSender.sent(mailComponent);
@@ -137,7 +130,7 @@ public class InviteStudentService extends AbstractService {
         message.setFrom("engflexy.contact@gmail.com");
         message.setTo(email);
         message.setSubject("Invitation sent successfully");
-        message.setContent("Hey there thank you for invating this new student, you will get promotion for the next pay pack.");
+        message.setContent("Hey there thank you for inviting this new student, you will get promotion for the next pay pack.");
         mailSender.sent(message);
         System.out.println("email send");
     }

@@ -117,7 +117,7 @@ public class user {
     }
 
     @GetMapping("/resetpassword/username/{username}")
-    public String resetPassword(@PathVariable String username) throws MessagingException, IOException {
+    public String resetPassword(@PathVariable String username) throws MessagingException, IOException, TemplateException {
         return userService.resetPassword(username);
     }
 

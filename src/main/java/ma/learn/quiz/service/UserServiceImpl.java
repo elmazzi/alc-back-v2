@@ -193,7 +193,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public String resetPassword(String username) throws MessagingException, IOException {
+    public String resetPassword(String username) throws MessagingException, IOException, TemplateException {
         User user = this.loadUserByUsername(username);
         if (user == null) {
             throw new MessagingException("User not found !");
@@ -202,9 +202,16 @@ public class UserServiceImpl implements UserService {
             user.setPassword(password);
             System.out.println(user.getPassword());
             System.out.println(user.getUsername());
-            String bodyMessage = "Hi " + user.getNom() + " <br>" + "Your new password to log into your account.<br>" +
-                    "<h3> New password : " + password + "</h3>";
-//            this.gmailService.sendEmail(bodyMessage,"Reset password",user.getUsername());
+            MailComponent mailComponent = new MailComponent();
+
+            mailComponent.setFrom("info@engflexy.com");
+            mailComponent.setTo(user.getUsername());
+            mailComponent.setSubject("Reset your password");
+            mailComponent.setContent("Hey " + user.getNom() +" welcome to our platform e-learning," +
+                    "Your new password to log into your account.<br>" +
+                            "<h3> New password : " + password + "</h3>");
+
+            this.emailSenderService.sent(mailComponent);
             user.setPassword(passwordEncoder.encode(password));
             userDao.save(user);
             return password;
