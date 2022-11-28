@@ -50,10 +50,7 @@ public class PackStudentService {
     }
 
     public PackStudent save(PackStudent packStudent) throws Exception {
-        PackStudent packStudent1 = findPackStudentByCode(packStudent.getCode());
-        if (packStudent1 != null) {
-            throw new Exception("Code already exist");
-        } else if (packStudent.getPrix() <= 0 || packStudent.getNombreCours() <= 0) {
+        if (packStudent.getPrix() <= 0 || packStudent.getNombreCours() <= 0) {
             throw new Exception("Number of courses can't be null");
         }
        return packStudentDao.save(packStudent);
@@ -84,8 +81,8 @@ public class PackStudentService {
     }
 
     @Transactional
-    public int deleteByCode(String code) {
-        return packStudentDao.deleteByCode(code);
+    public void deleteById(Long id) {
+         packStudentDao.deleteById(id);
     }
 
     @Transactional

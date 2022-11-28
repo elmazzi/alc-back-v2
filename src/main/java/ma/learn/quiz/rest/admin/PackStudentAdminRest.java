@@ -68,8 +68,8 @@ public class PackStudentAdminRest {
     }
 
     @DeleteMapping("/code/{code}")
-    public int deleteByCode(@PathVariable String code) {
-        return packStudentService.deleteByCode(code);
+    public void deleteByCode(@PathVariable Long code) {
+         packStudentService.deleteById(code);
     }
 
     @DeleteMapping("/prix/{prix}")
