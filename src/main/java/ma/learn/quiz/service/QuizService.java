@@ -75,22 +75,18 @@ public class QuizService {
 
     public int saveAll(Quiz quiz) {
         Section section = sectionService.findSectionById(quiz.getSection().getId());
-        if (findByRef(quiz.getRef()) != null) {
-            return -1;
-        } else {
-            quiz.setLib(section.getCategorieSection().getLibelle());
-            quiz.setSection(section);
-            quizDao.save(quiz);
-            questionService.saveAll(quiz, quiz.getQuestions());
-            return 1;
-        }
+        quiz.setLib(section.getCategorieSection().getLibelle());
+        quiz.setSection(section);
+        quizDao.save(quiz);
+        questionService.saveAll(quiz, quiz.getQuestions());
+        return 1;
     }
 
     public Quiz updateAll(Quiz quiz) {
         List<Question> questionList1 = quiz.getQuestions();
 
         System.out.println("QST SIZE" + questionList1.size());
-        for (Question q: questionList1
+        for (Question q : questionList1
         ) {
             System.out.println(q.getId());
             System.out.println(q.getReponses().size());
