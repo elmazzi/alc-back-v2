@@ -97,6 +97,7 @@ public class ProfService extends AbstractService{
             Role role = this.roleService.findByAuthority(ROLE_PROF);
             prof.setAuthorities(Arrays.asList(role));
             prof.setRole(RoleConstant.ROLE_PROF);
+            prof.setEnabled(false);
             prof.setImage(this.userServiceImpl.getTemporaryProfileImageUrl(prof.getUsername()));
            Prof loadUser =  profDao.save(prof);
             String token = jwtUtil.generateToken(loadUser);
@@ -106,11 +107,6 @@ public class ProfService extends AbstractService{
     }
 
     public List<SessionCours> calcStatistique(Salary salaryVo) {
-    	/*String query = "SELECT NEW ma.learn.quiz.bean.SalaryVo(COUNT(s.id)) FROM SessionCours s WHERE s.mois = ? and s.annee=?";
-    	System.out.println("query = " + query);
-    	int res = entityManager.createQuery(query).getResultList();
-    	System.out.println("res = " + res);
-    	return res; */
         String query = "SELECT Count(s.id) From SessionCours s where s.dateFin = '" + salaryVo.getAnnee() + "/" + salaryVo.getMois() + "/01'";
         return entityManager.createQuery(query).getResultList();
     }
@@ -146,29 +142,7 @@ public class ProfService extends AbstractService{
         return entityManager.createQuery(query).getSingleResult();
     }
 
-/*	public List<Paiement> paiementProfs() {
-		List<Paiement> ps = new ArrayList<>();
-		List<Prof> profs = this.findAll();
-		for (i = 0; i < profs.size(); i++) {//<1profs.size()
-			Paiement p = new Paiement();
-			p.setProf(profs.get(i));
-			List<SessionCours> sessionCours = sessionCoursService.findByProfId(profs.get(i).getId());//2
-			BigDecimal total = BigDecimal.ZERO;
-			int nonPaye = 0;
-			for (j = 0; j < sessionCours.size(); j++) {//<2
-				if (sessionCours.get(i).isPayer() == false) {
-					total = total.add(sessionCours.get(i).getDuree());
-					nonPaye++;
 
-				}
-			}
-			p.setNonPaye(nonPaye);
-			p.setTotalHeure(total);
-			p.setMontant(p.getTotalHeure().multiply((profs.get(i).getCategorieProf().getLessonRate())));
-			ps.add(p);
-		}
-		return ps;
-	}*/
 
     public List<SessionCours> findSessionsNonPayer(Long idProf) {
         String query = "SELECT s From SessionCours s where s.payer = 'false' and s.prof.id = '" + idProf + "'";
@@ -181,8 +155,6 @@ public class ProfService extends AbstractService{
     private ProfDao profDao;
     @Autowired
     private SessionCoursService sessionCoursService;
-    private int i;
-    private int j;
     @Autowired
     private UserService userService;
     @Autowired
