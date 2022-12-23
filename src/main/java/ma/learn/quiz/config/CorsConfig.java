@@ -18,14 +18,9 @@ public class CorsConfig {
                         .allowedHeaders("*")
                         .allowedOrigins(
                                 "http://localhost:4200",
-                                "http://localhost:62175",
                                 "http://engflexy.com/",
                                 "https://engflexy.com/",
-                                "https://engflexy.ma/",
-                                "http://engflexy.ma/",
-                                "http://153.92.222.43/",
-                                "http://153.92.222.43/",
-                                "https://153.92.222.43/");
+                                "https://www.engflexy.com/");
             }
         };
     }
