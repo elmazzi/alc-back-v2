@@ -1,12 +1,18 @@
 package ma.learn.quiz.service;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import freemarker.template.TemplateException;
 import ma.learn.quiz.bean.*;
+import ma.learn.quiz.configuration.ConstantFileNames;
+import ma.learn.quiz.configuration.EmailSenderService;
+import ma.learn.quiz.configuration.MailComponent;
 import ma.learn.quiz.filter.RoleConstant;
 import ma.learn.quiz.service.facade.RoleService;
 import ma.learn.quiz.service.facade.UserService;
@@ -98,6 +104,7 @@ public class ProfService extends AbstractService{
             prof.setAuthorities(Arrays.asList(role));
             prof.setRole(RoleConstant.ROLE_PROF);
             prof.setEnabled(false);
+            prof.setAccountNonLocked(false);
             prof.setImage(this.userServiceImpl.getTemporaryProfileImageUrl(prof.getUsername()));
            Prof loadUser =  profDao.save(prof);
             String token = jwtUtil.generateToken(loadUser);
@@ -171,4 +178,25 @@ public class ProfService extends AbstractService{
     private EtudiantService etudiantService;
     @Autowired
     private TrancheHoraireProfService trancheHoraireProfService;
+    @Autowired
+    private EmailSenderService emailSenderService;
+
+    public Prof allowTeacher(Prof prof) {
+        return profDao.save(prof);
+    }
+
+    public Prof lockTeacher(Prof prof) throws MessagingException, TemplateException, IOException {
+        MailComponent mailComponent = new MailComponent();
+        String ps = userServiceImpl.generatePassword();
+        prof.setPassword(passwordEncoder.encode(ps));
+        mailComponent.setPassword(ps);
+        mailComponent.setUsername(prof.getUsername());
+        mailComponent.setTo(prof.getUsername());
+        mailComponent.setSubject("Your online registration on the site: https://engflexy.com is validated.");
+        mailComponent.setFrom("info@engflexy.com");
+        this.emailSenderService.sentJavaMail(mailComponent, ConstantFileNames.CONFIRMATION_TEMPLATE_MAIL);
+        return profDao.save(prof);
+    }
+
+
 }

@@ -1,7 +1,9 @@
 package ma.learn.quiz.rest.admin;
 
 import freemarker.template.TemplateException;
+import ma.learn.quiz.bean.Prof;
 import ma.learn.quiz.bean.User;
+import ma.learn.quiz.service.ProfService;
 import ma.learn.quiz.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +25,6 @@ public class AdminUser {
 
     @PostMapping("/login")
     public ResponseEntity<User> signIn(@RequestBody User user) {
-        System.out.println(user.getPassword());
-        System.out.println(user.getUsername());
         return userService.signIn(user);
     }
 
@@ -39,6 +39,18 @@ public class AdminUser {
     }
 
 
+    @PostMapping("/allow")
+    public Prof allowUser(@RequestBody Prof prof) {
+        return profService.allowTeacher(prof);
+    }
+
+    @PostMapping("/lock")
+    public Prof lockUser(@RequestBody Prof prof) throws MessagingException, TemplateException, IOException {
+        return profService.lockTeacher(prof);
+    }
+
     @Autowired
     private UserServiceImpl userService;
+    @Autowired
+    private ProfService profService;
 }

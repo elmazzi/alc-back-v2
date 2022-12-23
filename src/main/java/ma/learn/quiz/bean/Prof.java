@@ -17,7 +17,6 @@ public class Prof extends User {
     @Column(length = 512)
     private String token;
 
-/*    -----------------tache hiba  ----------------*/
 
     @OneToOne
     @Nullable
@@ -28,7 +27,6 @@ public class Prof extends User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "prof")
     List<TrancheHoraireProf> trancheHoraireProfList = new ArrayList<>();
-/*===========================================================================*/
     @ManyToOne
     private CategorieProf categorieProf;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

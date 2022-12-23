@@ -84,6 +84,10 @@ public class UserServiceImpl implements UserService {
         return new ResponseEntity<>(loadUserByUsername, jwtHeader, OK);
     }
 
+    public User allowUser(User user){
+        return userDao.save(user);
+    }
+
     HttpHeaders getJwtHeader(User user) {
         HttpHeaders headers = new HttpHeaders();
         headers.add(JWT_TOKEN_HEADER, jwtUtil.generateToken(user));
