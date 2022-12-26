@@ -42,7 +42,12 @@ public class EmailSenderService {
         mailMessage.setTo(mailComponent.getTo());
         mailMessage.setSubject(mailComponent.getSubject());
         Template template = getTemplateByName(templateName);
-        String emailContent = fillMailContent(mailComponent, template);
+        String emailContent;
+        if (templateName.equals(ConstantFileNames.CONFIRMATION_TEMPLATE_MAIL)) {
+            emailContent = fillMailContent(mailComponent, template);
+        } else {
+            emailContent = fillMailContentForStudent(mailComponent, template);
+        }
         mailMessage.setText(emailContent, true);
         mailSender.send(mimeMessage);
     }
@@ -85,6 +90,20 @@ public class EmailSenderService {
 
         model.put("username", mailComponent.getUsername());
         model.put("password", mailComponent.getPassword());
+
+        String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+
+        StringBuffer content = new StringBuffer(html);
+
+        return content.toString();
+    }
+
+    public String fillMailContentForStudent(MailComponent mailComponent, Template template)
+            throws IOException, TemplateException {
+
+        Map<String, Object> model = new HashMap<>();
+
+        model.put("link", mailComponent.getLink());
 
         String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 

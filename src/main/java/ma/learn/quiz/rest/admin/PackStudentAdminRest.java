@@ -72,10 +72,7 @@ public class PackStudentAdminRest {
          packStudentService.deleteById(code);
     }
 
-    @DeleteMapping("/prix/{prix}")
-    public int deleteByPrix(@PathVariable Double prix) {
-        return packStudentService.deleteByPrix(prix);
-    }
+
 
     @DeleteMapping("/forgroupe/{forGroupe}")
     public int deleteByForGroupe(@PathVariable boolean forGroupe) {

@@ -1,10 +1,7 @@
 package ma.learn.quiz.bean;
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class PackStudent {
@@ -17,22 +14,25 @@ public class PackStudent {
     private String code;
     private String libelle;
     @Lob
-    @Column(length=512)
+    @Column(length = 512)
     private String description;
     @Lob
-    @Column(length=512)
+    @Column(length = 512)
     private String preRequisites;
     @Lob
-    @Column(length=512)
+    @Column(length = 512)
     private String whyTakeThisCourse;
     @Lob
-    @Column(length=512)
+    @Column(length = 512)
     private String expectations;
     @ManyToOne
     private Parcours level;
 
     private String imgUrl;
-    private Double prix;
+
+    @ManyToOne
+    private Price price;
+
     private int totalStudents;
     private String rating;
     private String oldPrice;
@@ -101,12 +101,12 @@ public class PackStudent {
         this.code = code;
     }
 
-    public Double getPrix() {
-        return prix;
+    public Price getPrice() {
+        return price;
     }
 
-    public void setPrix(Double prix) {
-        this.prix = prix;
+    public void setPrice(Price prix) {
+        this.price = prix;
     }
 
     public String getDescription() {

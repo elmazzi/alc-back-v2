@@ -34,7 +34,7 @@ public class PackStudentService {
     }
 
     public PackStudent findPackStudentByPrix(Double prix) {
-        return packStudentDao.findPackStudentByPrix(prix);
+        return packStudentDao.findPackStudentByPricePrice(prix);
     }
 
     public List<PackStudent> findPackStudentByForGroupe(boolean forgroupe) {
@@ -50,9 +50,6 @@ public class PackStudentService {
     }
 
     public PackStudent save(PackStudent packStudent) throws Exception {
-        if (packStudent.getPrix() <= 0 || packStudent.getNombreCours() <= 0) {
-            throw new Exception("Number of courses can't be null");
-        }
        return packStudentDao.save(packStudent);
     }
 
@@ -65,8 +62,8 @@ public class PackStudentService {
         if (packStudent.getNombreCours() > 0) {
             query += " AND p.nombreCours = " + packStudent.getNombreCours();
         }
-        if (packStudent.getPrix() != null) {
-            query += " AND p.prix = " + packStudent.getPrix();
+        if (packStudent.getPrice() != null) {
+            query += " AND p.prix = " + packStudent.getPrice().getPrice();
         }
         if (packStudent.getCode() != null && !(packStudent.getCode().isEmpty())) {
             query += " AND p.code LIKE '" + packStudent.getCode() + "'";
@@ -85,10 +82,7 @@ public class PackStudentService {
          packStudentDao.deleteById(id);
     }
 
-    @Transactional
-    public int deleteByPrix(Double prix) {
-        return packStudentDao.deleteByPrix(prix);
-    }
+
 
     @Transactional
     public int deleteByForGroupe(boolean forGroupe) {

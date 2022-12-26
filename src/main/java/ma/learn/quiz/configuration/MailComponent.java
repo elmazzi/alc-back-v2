@@ -13,6 +13,8 @@ public class MailComponent {
 
 	private String username;
 
+	private String link;
+
 	private String subject;
 
 	private String content;

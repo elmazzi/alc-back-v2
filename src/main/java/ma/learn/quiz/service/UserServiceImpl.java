@@ -2,7 +2,9 @@ package ma.learn.quiz.service;
 
 
 import freemarker.template.TemplateException;
+import ma.learn.quiz.bean.Etudiant;
 import ma.learn.quiz.bean.User;
+import ma.learn.quiz.configuration.CallConfiguration;
 import ma.learn.quiz.configuration.ConstantFileNames;
 import ma.learn.quiz.configuration.EmailSenderService;
 import ma.learn.quiz.configuration.MailComponent;
@@ -64,6 +66,10 @@ public class UserServiceImpl implements UserService {
     private JwtUtil jwtUtil;
     @Autowired
     private EmailSenderService emailSenderService;
+    @Autowired
+    private ConfirmationTokenService confirmationTokenService;
+    @Autowired
+    private CallConfiguration callConfiguration;
 
 
     @Override
@@ -84,7 +90,7 @@ public class UserServiceImpl implements UserService {
         return new ResponseEntity<>(loadUserByUsername, jwtHeader, OK);
     }
 
-    public User allowUser(User user){
+    public User allowUser(User user) {
         return userDao.save(user);
     }
 
@@ -103,18 +109,25 @@ public class UserServiceImpl implements UserService {
         if (loadedUser != null)
             return null;
         else {
-            System.out.println(user.getUsername());
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setImage(getTemporaryProfileImageUrl(user.getUsername()));
+            roleService.save(user.getAuthorities());
+            User userRequest = userDao.save(user);
+            // add new confirmation token
+            String token = confirmationTokenService.addNewConfirmationToken((Etudiant) userRequest);
+
+            String link = callConfiguration.getConfigurationByName("primary.link.for.validate.account") + userRequest.getId() + "/"
+                    + token;
+
             MailComponent mailComponent = new MailComponent();
             mailComponent.setPassword(user.getPassword());
             mailComponent.setUsername(user.getUsername());
             mailComponent.setTo(user.getUsername());
-            mailComponent.setSubject("Your online registration on the site: https://engflexy.com is validated.");
-            mailComponent.setFrom("engflexy.contact@gmail.com");
-            this.emailSenderService.sentJavaMail(mailComponent, ConstantFileNames.CONFIRMATION_TEMPLATE_MAIL);
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setImage(getTemporaryProfileImageUrl(user.getUsername()));
-            roleService.save(user.getAuthorities());
-            return userDao.save(user);
+            mailComponent.setLink(link);
+            mailComponent.setSubject("Hi " + user.getNom() + " please confirm your account on EngFlexy.");
+            mailComponent.setFrom("info@engflexy.com");
+            this.emailSenderService.sentJavaMail(mailComponent, ConstantFileNames.STUDENT_CONFIRMATION_TEMPLATE_MAIL);
+            return userRequest;
         }
     }
 
@@ -211,9 +224,9 @@ public class UserServiceImpl implements UserService {
             mailComponent.setFrom("info@engflexy.com");
             mailComponent.setTo(user.getUsername());
             mailComponent.setSubject("Reset your password");
-            mailComponent.setContent("Hey " + user.getNom() +" welcome to our platform e-learning," +
+            mailComponent.setContent("Hey " + user.getNom() + " welcome to our platform e-learning," +
                     "Your new password to log into your account.<br>" +
-                            "<h3> New password : " + password + "</h3>");
+                    "<h3> New password : " + password + "</h3>");
 
             this.emailSenderService.sent(mailComponent);
             user.setPassword(passwordEncoder.encode(password));

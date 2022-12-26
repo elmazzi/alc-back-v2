@@ -12,13 +12,18 @@ import java.util.List;
 public interface PackStudentDao extends JpaRepository<PackStudent, Long> {
 
     PackStudent findPackStudentByCode(String code);
-    PackStudent findPackStudentByPrix(Double prix);
+
+    PackStudent findPackStudentByPricePrice(Double prix);
+
     List<PackStudent> findPackStudentByForGroupe(boolean forgroupe);
+
     PackStudent findPackStudentByLibelle(String libelle);
+
     List<PackStudent> findByTotalStudents(int totalStudents);
+
     List<PackStudent> findByLevelId(Long id);
 
     int deleteByCode(String code);
-    int deleteByPrix(Double prix);
+
     int deleteByForGroupe(boolean forGroupe);
 }

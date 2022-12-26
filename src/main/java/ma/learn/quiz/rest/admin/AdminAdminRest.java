@@ -29,7 +29,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/admin")
-@CrossOrigin("http://localhost:4200")
 public class AdminAdminRest {
     @GetMapping("/numero/{numro}")
     public Admin findByNumero(@PathVariable String ref) {
