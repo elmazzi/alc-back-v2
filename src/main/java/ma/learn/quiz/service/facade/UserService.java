@@ -13,6 +13,7 @@ public interface UserService extends UserDetailsService {
     ResponseEntity<User> signIn(User user);
 
     User save(User user) throws MessagingException, IOException, TemplateException;
+    User saveWithPack(User user) throws MessagingException, IOException, TemplateException;
    List<User> findAll();
    String generatePassword();
    void deleteUserById(Long id);

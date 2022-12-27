@@ -102,9 +102,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User user) throws MessagingException, IOException, TemplateException {
-        System.out.println(user.getUsername());
-        System.out.println(user.getPassword());
-        System.out.println(user.getAuthorities());
         User loadedUser = userDao.findByUsername(user.getUsername());
         if (loadedUser != null)
             return null;
@@ -127,6 +124,28 @@ public class UserServiceImpl implements UserService {
             mailComponent.setSubject("Hi " + user.getNom() + " please confirm your account on EngFlexy.");
             mailComponent.setFrom("info@engflexy.com");
             this.emailSenderService.sentJavaMail(mailComponent, ConstantFileNames.STUDENT_CONFIRMATION_TEMPLATE_MAIL);
+            return userRequest;
+        }
+    }
+
+    @Override
+    public User saveWithPack(User user) throws MessagingException, IOException, TemplateException {
+        User loadedUser = userDao.findByUsername(user.getUsername());
+        if (loadedUser != null)
+            return null;
+        else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setImage(getTemporaryProfileImageUrl(user.getUsername()));
+            roleService.save(user.getAuthorities());
+            User userRequest = userDao.save(user);
+
+            MailComponent mailComponent = new MailComponent();
+            mailComponent.setPassword(user.getPassword());
+            mailComponent.setUsername(user.getUsername());
+            mailComponent.setTo(user.getUsername());
+            mailComponent.setSubject("Hi " + user.getNom() + " your account on EngFlexy is validated.");
+            mailComponent.setFrom("info@engflexy.com");
+            this.emailSenderService.sentJavaMail(mailComponent, ConstantFileNames.CONFIRMATION_TEMPLATE_MAIL);
             return userRequest;
         }
     }

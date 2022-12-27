@@ -1,7 +1,9 @@
 package ma.learn.quiz.service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,8 +46,8 @@ public class EtudiantService extends AbstractService {
     public FonctionDao fonctionDao;
     @Autowired
     public StatutSocialDao statutSocialDao;
-   @Autowired
-   public SkillDao skillDao;
+    @Autowired
+    public SkillDao skillDao;
     @Autowired
     public EtudiantDao etudiantDao;
     @Autowired
@@ -76,7 +78,8 @@ public class EtudiantService extends AbstractService {
     private UserServiceImpl userServiceImpl;
     @Autowired
     private UserDao userDao;
-
+    @Autowired
+    private ConfirmationTokenService confirmationTokenService;
 
 
     public List<Etudiant> findByParcoursCode(String code) {
@@ -106,7 +109,6 @@ public class EtudiantService extends AbstractService {
     public Etudiant findEtudiantById(Long id) {
         return etudiantDao.findEtudiantById(id);
     }
-
 
 
     public Prof findProfById(Long id) {
@@ -141,54 +143,61 @@ public class EtudiantService extends AbstractService {
         return etudiantDao.findByNom(nom);
     }
 
+    public Etudiant findById(Long id) throws Exception {
+        Optional<Etudiant> etudiant = etudiantDao.findById(id);
+        if (!etudiant.isPresent()) {
+           throw new Exception("User not found");
+        }
+        return etudiant.get();
+    }
 
-    public User create(Long pack,Etudiant etudiant) throws MessagingException, IOException, TemplateException {
+
+    public User create(Long pack, Etudiant etudiant) throws MessagingException, IOException, TemplateException {
         Etudiant etudiant1 = this.findByLogin(etudiant.getUsername());
+        PackStudent packStudent = packStudentService.findById(pack);
+        Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
+        User user ;
+        EtatInscription etatInscription = etatInscriptionService.findEtatInscriptionById((long) 1);
         if (etudiant1 != null) {
-            return null;
+            user = etudiant1;
         } else {
-            PackStudent packStudent = packStudentService.findById(pack);
-            Inscription inscription = new Inscription();
-            EtatEtudiantSchedule etudiantSchedule = this.etatEtudiantScheduleService.findByRef(etudiant.getEtatEtudiantSchedule().getRef());
-            Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
-            GroupeEtude groupeEtude = groupeEtudeService.findGroupeEtudeById(etudiant.getGroupeEtude().getId());
-
-            EtatInscription etatInscription = etatInscriptionService.findEtatInscriptionById((long) 1);
             etudiant.setParcours(parcours);
-            etudiant.setGroupeEtude(groupeEtude);
-            inscription.setGroupeEtude(etudiant.getGroupeEtude());
-            if ( parcours!=null){
-                inscription.setParcours(etudiant.getParcours());
-            }
-            etudiant.setEtatEtudiantSchedule(etudiantSchedule);
             String password = this.userService.generatePassword();
             etudiant.setPassword(password);
             etudiant.setAuthorities(Arrays.asList(new Role(ROLE_STUDENT)));
             etudiant.setRole(ROLE_STUDENT);
-            inscription.setGroupeEtude(etudiant.getGroupeEtude());
             etudiant.setNiveauEtude(niveauEtudeDao.findByCode(""));
             etudiant.setInteretEtudiant(interetEtudiantDao.findByCode(""));
             etudiant.setFonction(fonctionDao.findByCode(""));
             etudiant.setStatutSocial(statutSocialDao.findByCode(""));
             etudiant.setSkill(skillDao.findByCode(""));
-            User user = userService.save(etudiant);
-            System.out.println(user.getId());
-            Etudiant etudiant2 = new Etudiant(user);
-            inscription.setEtudiant(etudiant2);
-            inscription.setEtatInscription(etatInscription);
-
-            if (packStudent != null){
-                inscription.setPackStudent(packStudent);
-                inscription.setParcours(packStudent.getLevel());
-                inscription.setQuizFinished(true);
-                packStudent.setTotalStudents(packStudent.getTotalStudents() + 1);
-                packStudentService.update(packStudent);
-            }
-            inscriptionService.save(inscription);
-            return user;
+            user = userService.saveWithPack(etudiant);
         }
-
+        Etudiant etudiant2 = new Etudiant(user);
+        Inscription inscription = createPack(etudiant, packStudent, parcours, etatInscription, etudiant2);
+        inscriptionService.save(inscription);
+        return user;
     }
+
+    private Inscription createPack(Etudiant etudiant, PackStudent packStudent, Parcours parcours, EtatInscription etatInscription, Etudiant etudiant2) {
+        Inscription inscription = new Inscription();
+        inscription.setEtudiant(etudiant2);
+        inscription.setEtatInscription(etatInscription);
+        inscription.setGroupeEtude(etudiant.getGroupeEtude());
+        inscription.setGroupeEtude(etudiant.getGroupeEtude());
+        if (parcours != null) {
+            inscription.setParcours(etudiant.getParcours());
+        }
+        if (packStudent != null) {
+            inscription.setPackStudent(packStudent);
+            inscription.setParcours(packStudent.getLevel());
+            inscription.setQuizFinished(true);
+            packStudent.setTotalStudents(packStudent.getTotalStudents() + 1);
+            packStudentService.update(packStudent);
+        }
+        return inscription;
+    }
+
     public User create(Etudiant etudiant) throws MessagingException, IOException, TemplateException {
         Etudiant etudiant1 = this.findByLogin(etudiant.getUsername());
         if (etudiant1 != null) {
@@ -203,7 +212,7 @@ public class EtudiantService extends AbstractService {
             etudiant.setParcours(parcours);
             etudiant.setGroupeEtude(groupeEtude);
             inscription.setGroupeEtude(etudiant.getGroupeEtude());
-            if ( parcours!=null){
+            if (parcours != null) {
                 inscription.setParcours(etudiant.getParcours());
             }
             etudiant.setEtatEtudiantSchedule(etudiantSchedule);
@@ -217,12 +226,12 @@ public class EtudiantService extends AbstractService {
             etudiant.setFonction(fonctionDao.findByCode(""));
             etudiant.setStatutSocial(statutSocialDao.findByCode(""));
             etudiant.setSkill(skillDao.findByCode(""));
+            etudiant.setEnabled(false);
             User user = userService.save(etudiant);
             System.out.println(user.getId());
             Etudiant etudiant2 = new Etudiant(user);
             inscription.setEtudiant(etudiant2);
             inscription.setEtatInscription(etatInscription);
-
             inscriptionService.save(inscription);
             return user;
         }
@@ -245,8 +254,9 @@ public class EtudiantService extends AbstractService {
             return 1;
         }
     }
+
     public Etudiant updateEtudiant(Etudiant etudiant) {
-       Fonction fonction = fonctionDao.findByCode(etudiant.getFonction().getCode());
+        Fonction fonction = fonctionDao.findByCode(etudiant.getFonction().getCode());
         NiveauEtude niveauEtude = niveauEtudeDao.findByCode(etudiant.getNiveauEtude().getCode());
         StatutSocial statutSocial = statutSocialDao.findByCode(etudiant.getStatutSocial().getCode());
         InteretEtudiant interetEtudiant = interetEtudiantDao.findByCode(etudiant.getInteretEtudiant().getCode());
@@ -266,7 +276,7 @@ public class EtudiantService extends AbstractService {
         return this.etudiantDao.save(etudiant);
     }
 
-    public int updatePassword(String username, String newPassword){
+    public int updatePassword(String username, String newPassword) {
         User user = userServiceImpl.loadUserByUsername(username);
         user.setPassword(passwordEncoder.encode(newPassword));
         userDao.save(user);
@@ -291,8 +301,7 @@ public class EtudiantService extends AbstractService {
     public int deleteEtudiantById(Long id) {
         this.inscriptionService.deleteInscriptionByEtudiantId(id);
         List<GroupeEtudiantDetail> detailList = this.groupeEtudiantDetailService.findByEtudiantId(id);
-        for (GroupeEtudiantDetail groupeDetail: detailList)
-        {
+        for (GroupeEtudiantDetail groupeDetail : detailList) {
             GroupeEtudiant groupeEtudiant = this.groupeEtudiantService.findGroupeEtudiantById(groupeDetail.getGroupeEtudiant().getId());
             groupeEtudiant.setNombrePlaceNonVide(groupeEtudiant.getNombrePlaceNonVide() - 1);
             groupeEtudiant.setNombrePlacevide(groupeEtudiant.getNombrePlacevide() + 1);
@@ -315,17 +324,18 @@ public class EtudiantService extends AbstractService {
     public List<Etudiant> findEtudiantByGroupeEtudiantDetailsGroupeEtudiantParcours(String libelle) {
         return etudiantDao.findEtudiantByGroupeEtudiantDetailsGroupeEtudiantParcours(libelle);
     }
+
     public List<Etudiant> findByParcoursLibelle(String libelle) {
         return etudiantDao.findByParcoursLibelle(libelle);
     }
 
     public List<Etudiant> findByCriteria(Etudiant etudiant) {
         String query = this.init("Etudiant");
-        if (etudiant!= null) {
-            if(etudiant.getNom() != null){
+        if (etudiant != null) {
+            if (etudiant.getNom() != null) {
                 query += this.addCriteria("nom", etudiant.getNom(), "LIKE");
             }
-            if(etudiant.getPrenom() != null){
+            if (etudiant.getPrenom() != null) {
                 query += this.addCriteria("prenom", etudiant.getPrenom(), "LIKE");
             }
 
@@ -336,6 +346,17 @@ public class EtudiantService extends AbstractService {
     }
 
 
-
-
+    public Etudiant validateToken(String token) throws Exception {
+        ConfirmationToken confirmationToken = confirmationTokenService.getToken(token);
+        LocalDateTime localDateTime = LocalDateTime.now();
+        if (confirmationToken.getExpiresAt().isAfter(localDateTime)) {
+            throw new Exception("token expired");
+        } else {
+            confirmationToken.setConfirmedAt(localDateTime);
+            confirmationTokenService.save(confirmationToken);
+            Etudiant userFromToken = confirmationToken.getUser();
+            userFromToken.setEnabled(true);
+            return etudiantDao.save(userFromToken);
+        }
+    }
 }

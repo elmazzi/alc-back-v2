@@ -66,6 +66,7 @@ public class EtudiantEtudiantRest {
         return etudiantService.findByRef(ref);
     }
 
+
     @GetMapping("/nom/{nom}")
     public Etudiant findByNom(@PathVariable String nom) {
         return etudiantService.findByNom(nom);
@@ -90,6 +91,11 @@ public class EtudiantEtudiantRest {
     @GetMapping("/login/{login}/password/{password}")
     public Object findByCritere(@PathVariable String login, @PathVariable String password) {
         return etudiantService.findByCritere(login, password);
+    }
+
+    @GetMapping("/validate/{token}")
+    public Etudiant validate(@PathVariable String token) throws Exception {
+        return etudiantService.validateToken(token);
     }
 
     @PutMapping("/")

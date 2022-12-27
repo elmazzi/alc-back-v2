@@ -26,6 +26,10 @@ public class ConfirmationTokenService {
 		return confirmationToken.get();
 	}
 
+	public ConfirmationToken  save(ConfirmationToken entity) {
+		return confirmationTokenRepository.save(entity);
+	}
+
 	public String addNewConfirmationToken(Etudiant userRequest) {
 
 		// TODO: generate validation token

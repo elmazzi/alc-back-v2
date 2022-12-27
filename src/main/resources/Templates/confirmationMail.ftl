@@ -134,33 +134,6 @@
     <tr>
         <td bgcolor="#f4f4f4" align="center" style="padding: 0px 10px 0px 10px;">
             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-<#--                <tr>-->
-<#--                    <td bgcolor="#ffffff" align="left"-->
-<#--                        style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">-->
-<#--                        &lt;#&ndash;                        <p style="margin: 0;">We're excited to have you get started. First, you need to confirm your&ndash;&gt;-->
-<#--                        &lt;#&ndash;                            account. Just press the button below.</p>&ndash;&gt;-->
-<#--                        -->
-<#--                        <p style="margin: 0;">We're excited to have you get started. Your account settings are :</p>-->
-<#--                    </td>-->
-<#--                </tr>-->
-<#--                <tr>-->
-<#--                    <td bgcolor="#ffffff" align="left">-->
-<#--                        <table width="100%" border="0" cellspacing="0" cellpadding="0">-->
-<#--                            <tr>-->
-<#--                                <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 60px 30px;">-->
-<#--                                    <table border="0" cellspacing="0" cellpadding="0">-->
-<#--                                        <tr>-->
-<#--                                            <td align="center" style="border-radius: 3px;" bgcolor="#ff725e"><a-->
-<#--                                                        href="${link}" target="_blank"-->
-<#--                                                        style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #ff725e; display: inline-block;">Confirm-->
-<#--                                                    Account</a></td>-->
-<#--                                        </tr>-->
-<#--                                    </table>-->
-<#--                                </td>-->
-<#--                            </tr>-->
-<#--                        </table>-->
-<#--                    </td>-->
-<#--                </tr> <!-- COPY &ndash;&gt;-->
                 <tr>
                     <td bgcolor="#ffffff" align="left"
                         style="padding: 0px 30px 0px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
@@ -172,7 +145,6 @@
                         style="padding: 20px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
                         <p style="margin: 0;"><strong>Username : </strong> ${username}</p>
                         <p style="margin: 0;"><strong>Password : </strong> ${password}</p>
-                        <#--                            <p style="margin: 0;"><a href="#" target="_blank" style="color: #ff725e;">${link}</a></p>-->
                     </td>
                 </tr>
                 <tr>
