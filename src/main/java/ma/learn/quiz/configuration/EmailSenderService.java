@@ -26,8 +26,8 @@ public class EmailSenderService {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.titan.email");
         mailSender.setPort(465);
-        mailSender.setUsername("info@engflexy.com");
-        mailSender.setPassword("4tjHc7Ai2U3xWkt");
+        mailSender.setUsername("noreply@engflexy.com");
+        mailSender.setPassword("noreply27021985");
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
@@ -38,7 +38,7 @@ public class EmailSenderService {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mailMessage = new MimeMessageHelper(mimeMessage, "utf-8");
         System.out.println(mailComponent.getTo());
-        mailMessage.setFrom("info@engflexy.com");
+        mailMessage.setFrom("noreply@engflexy.com");
         mailMessage.setTo(mailComponent.getTo());
         mailMessage.setSubject(mailComponent.getSubject());
         Template template = getTemplateByName(templateName);
@@ -57,8 +57,8 @@ public class EmailSenderService {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.titan.email");
         mailSender.setPort(465);
-        mailSender.setUsername("info@engflexy.com");
-        mailSender.setPassword("4tjHc7Ai2U3xWkt");
+        mailSender.setUsername("noreply@engflexy.com");
+        mailSender.setPassword("noreply27021985");
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
@@ -69,7 +69,7 @@ public class EmailSenderService {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mailMessage = new MimeMessageHelper(mimeMessage, "utf-8");
         mailMessage.setTo(mailComponent.getTo());
-        mailMessage.setFrom("info@engflexy.com");
+        mailMessage.setFrom("noreply@engflexy.com");
         mailMessage.setSubject(mailComponent.getSubject());
         mailMessage.setText(mailComponent.getContent(), true);
         mailSender.send(mimeMessage);

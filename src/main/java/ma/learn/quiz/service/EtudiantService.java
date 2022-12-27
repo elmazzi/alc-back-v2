@@ -146,7 +146,7 @@ public class EtudiantService extends AbstractService {
     public Etudiant findById(Long id) throws Exception {
         Optional<Etudiant> etudiant = etudiantDao.findById(id);
         if (!etudiant.isPresent()) {
-           throw new Exception("User not found");
+            throw new Exception("User not found");
         }
         return etudiant.get();
     }
@@ -156,10 +156,12 @@ public class EtudiantService extends AbstractService {
         Etudiant etudiant1 = this.findByLogin(etudiant.getUsername());
         PackStudent packStudent = packStudentService.findById(pack);
         Parcours parcours = parcoursService.findParcoursById(etudiant.getParcours().getId());
-        User user ;
+        User user;
         EtatInscription etatInscription = etatInscriptionService.findEtatInscriptionById((long) 1);
         if (etudiant1 != null) {
-            user = etudiant1;
+            Inscription inscription = createPack(etudiant1, packStudent, parcours, etatInscription, etudiant1);
+            inscriptionService.save(inscription);
+            return etudiant1;
         } else {
             etudiant.setParcours(parcours);
             String password = this.userService.generatePassword();
@@ -172,11 +174,11 @@ public class EtudiantService extends AbstractService {
             etudiant.setStatutSocial(statutSocialDao.findByCode(""));
             etudiant.setSkill(skillDao.findByCode(""));
             user = userService.saveWithPack(etudiant);
+            Etudiant etudiant2 = new Etudiant(user);
+            Inscription inscription = createPack(etudiant, packStudent, parcours, etatInscription, etudiant2);
+            inscriptionService.save(inscription);
+            return user;
         }
-        Etudiant etudiant2 = new Etudiant(user);
-        Inscription inscription = createPack(etudiant, packStudent, parcours, etatInscription, etudiant2);
-        inscriptionService.save(inscription);
-        return user;
     }
 
     private Inscription createPack(Etudiant etudiant, PackStudent packStudent, Parcours parcours, EtatInscription etatInscription, Etudiant etudiant2) {
@@ -349,7 +351,7 @@ public class EtudiantService extends AbstractService {
     public Etudiant validateToken(String token) throws Exception {
         ConfirmationToken confirmationToken = confirmationTokenService.getToken(token);
         LocalDateTime localDateTime = LocalDateTime.now();
-        if (confirmationToken.getExpiresAt().isAfter(localDateTime)) {
+        if (confirmationToken.getExpiresAt().isBefore(localDateTime)) {
             throw new Exception("token expired");
         } else {
             confirmationToken.setConfirmedAt(localDateTime);

@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(User user) throws MessagingException, IOException, TemplateException {
+    public User save(User user) throws IOException, TemplateException {
         User loadedUser = userDao.findByUsername(user.getUsername());
         if (loadedUser != null)
             return null;
@@ -112,10 +112,8 @@ public class UserServiceImpl implements UserService {
             User userRequest = userDao.save(user);
             // add new confirmation token
             String token = confirmationTokenService.addNewConfirmationToken((Etudiant) userRequest);
-
             String link = callConfiguration.getConfigurationByName("primary.link.for.validate.account") + userRequest.getId() + "/"
                     + token;
-
             MailComponent mailComponent = new MailComponent();
             mailComponent.setPassword(user.getPassword());
             mailComponent.setUsername(user.getUsername());
@@ -123,7 +121,12 @@ public class UserServiceImpl implements UserService {
             mailComponent.setLink(link);
             mailComponent.setSubject("Hi " + user.getNom() + " please confirm your account on EngFlexy.");
             mailComponent.setFrom("info@engflexy.com");
-            this.emailSenderService.sentJavaMail(mailComponent, ConstantFileNames.STUDENT_CONFIRMATION_TEMPLATE_MAIL);
+            try {
+                this.emailSenderService.sentJavaMail(mailComponent, ConstantFileNames.STUDENT_CONFIRMATION_TEMPLATE_MAIL);
+            } catch (MessagingException messagingException) {
+                System.out.println("ERROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOR");
+                this.deleteUserById(userRequest.getId());
+            }
             return userRequest;
         }
     }
@@ -132,7 +135,7 @@ public class UserServiceImpl implements UserService {
     public User saveWithPack(User user) throws MessagingException, IOException, TemplateException {
         User loadedUser = userDao.findByUsername(user.getUsername());
         if (loadedUser != null)
-            return null;
+            return loadedUser;
         else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setImage(getTemporaryProfileImageUrl(user.getUsername()));
