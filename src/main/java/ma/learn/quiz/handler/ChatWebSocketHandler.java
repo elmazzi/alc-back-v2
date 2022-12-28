@@ -1,14 +1,16 @@
 package ma.learn.quiz.handler;
 
-import ma.learn.quiz.bean.Section;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class ChatWebSocketHandler extends TextWebSocketHandler {
 
@@ -16,11 +18,11 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        System.out.println(session.getId());
         if (!webSocketSessions.contains(session)) {
             webSocketSessions.add(session);
         }
     }
+
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {

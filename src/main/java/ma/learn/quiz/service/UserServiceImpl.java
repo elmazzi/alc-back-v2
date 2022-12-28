@@ -53,8 +53,6 @@ public class UserServiceImpl implements UserService {
     public Map<Long, User> connectedStudent = new HashMap<>();
     private Logger LOGGER = LoggerFactory.getLogger(getClass());
     @Autowired
-    public JavaMailSender mailSender;
-    @Autowired
     private UserDao userDao;
     @Autowired
     private RoleService roleService;
@@ -260,9 +258,5 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findById(Long id) {
         return this.userDao.findById(id);
     }
-
-
-    @Value("${spring.mail.username}")
-    private String ENG_FLEXY_EMAIL;
 
 }
