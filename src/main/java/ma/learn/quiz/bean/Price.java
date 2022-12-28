@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Price {
     private static final long serialVersionUID = 9031769415590864548L;
     @Id
